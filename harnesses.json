@@ -1,14 +1,14 @@
 {
-  "note": "Per-harness install targets. Verified on this machine 2026-08-31. Every harness discovers skills as <skillsRoot>/<skill-name>/SKILL.md, one level deep, non-recursive, with `name` and `description` frontmatter. That shared layout is why skills/ needs no per-harness transform.",
+  "note": "Per-harness targets and mechanisms. Every harness discovers skills as <skillsRoot>/<skill-name>/SKILL.md, one level deep, non-recursive, with `name` and `description` frontmatter. That shared layout is why skills/ needs no per-harness transform.",
   "distribution": {
     "note": "Where the pack goes. ~/.agents/skills is read natively by Codex, pi, and OMP, so one location covers three of four harnesses. Claude Code is the only holdout and needs its own root. Two locations, not four, and the second can be a symlink.",
     "canonical": "~/.agents/skills",
     "alsoRead": "~/.agent/skills",
     "readsAgentsSkills": {
-      "codex": "yes. Its skills loader builds `.agents` + `skills` as a repo skills root and handles a symlinked skill directory. Verified in the shipped darwin-arm64 binary, strings adjacent to core-skills/src/loader.rs error messages.",
-      "pi": "yes. `userAgentsSkillsDir = join(getHomeDir(), \".agents\", \"skills\")`, plus an ancestor walk of project `.agents/skills` up to the git root. Verified in the shipped dist bundle.",
-      "omp": "yes. The `agents` provider at priority 70, with its own enableAgentsUser and enableAgentsProject toggles independent of the claude, codex, and pi toggles. Verified in omp://skills.md.",
-      "claude": "no. 122 occurrences of \".claude\" and zero of \".agents\" in the shipped binary. Its skills root is `.claude` + `skills`."
+      "codex": "yes. Its skills loader joins `.agents` and `skills` into a skills root, and handles a symlinked skill directory. Readable in the strings of the codex native binary, next to the loader's error messages.",
+      "pi": "yes. `userAgentsSkillsDir = join(getHomeDir(), \".agents\", \"skills\")`, plus an ancestor walk of project `.agents/skills` up to the git root. Readable in pi's shipped dist bundle.",
+      "omp": "yes. The `agents` provider at priority 70, with its own enableAgentsUser and enableAgentsProject toggles independent of the claude, codex, and pi toggles. Documented in omp://skills.md.",
+      "claude": "no. Its skills root is `.claude` + `skills`, and its binary contains no reference to an agents directory."
     },
     "symlinksAreSafe": "Codex names a symlinked skill directory explicitly in its loader, and OMP deduplicates identical files by realpath. So one canonical copy in ~/.agents/skills plus a symlink at ~/.claude/skills/<name> serves every harness without a duplicate-name collision. Copies into several roots would collide by name.",
     "layout": "Identical everywhere. <root>/<skill-name>/SKILL.md, one level deep, non-recursive, `name` and `description` frontmatter."
