@@ -15,20 +15,44 @@ role does, and what happens when it has no value. This skill fills those slots.
 
 ## Where the block goes
 
-One user-scope file per harness. Detect which harness you are in and use its row.
+Prefer the shared standard. `~/.agents/AGENTS.md` is one file that every harness
+honoring the agents convention reads, so one write covers them instead of four
+copies that drift. Write there when the harness reads it and nothing shadows it.
 
-| harness | file |
-| --- | --- |
-| Claude Code | `~/.claude/CLAUDE.md` |
-| Codex | `~/.codex/AGENTS.md` |
-| pi | `~/.pi/agent/AGENTS.md` |
-| OMP | `~/.omp/agent/RULES.md` |
-| Cursor | `~/.cursor/rules/pstack-models.mdc` with `alwaysApply: true` |
+Two things stop that, and both are checkable.
 
-OMP's `RULES.md` is an always-apply rule re-attached near the current turn, so
-it holds across a long session. The other three are context files loaded once at
-session start, which is weaker but is what those harnesses provide. Cursor keeps
-upstream's original location.
+**Shadowing.** A harness that keeps only one user-scope context file will drop
+the shared one in favor of its own. OMP is the known case. Its native
+`~/.omp/agent/AGENTS.md` has the highest discovery priority, only one user
+context file survives across all providers, and the shared file loses. So on OMP
+the block goes in `~/.omp/agent/RULES.md`, which is an always-apply rule rather
+than a context file, does not compete in that dedup at all, and gets re-attached
+near the current turn so it holds across a long session.
+
+**No support.** Claude Code reads `~/.claude/CLAUDE.md` and has no agents-directory
+convention, so it needs its own copy.
+
+| harness | preferred target | why |
+| --- | --- | --- |
+| OMP | `~/.omp/agent/RULES.md` | sticky rule, and native `AGENTS.md` would shadow the shared file |
+| Codex | `~/.agents/AGENTS.md`, else `~/.codex/AGENTS.md` | reads the shared standard |
+| pi | `~/.agents/AGENTS.md`, else `~/.pi/agent/AGENTS.md` | reads the shared standard |
+| Claude Code | `~/.claude/CLAUDE.md` | no agents-directory convention |
+| Cursor | `~/.cursor/rules/pstack-models.mdc` with `alwaysApply: true` | upstream's original location |
+
+Prove the shared file is loaded before relying on it. Write the block, start a
+fresh session, and confirm the harness shows it in context. If you cannot confirm
+it, use the harness-specific fallback in the table. A block the harness never
+reads is worse than no block, because every role silently reverts to its absent
+path while the file suggests otherwise.
+
+Only role values belong here. Hooks, tool names, and subagent definitions are not
+shareable, because the formats differ per harness. Claude Code and Codex use an
+event map with a matcher and a shell command, in `settings.json` and `hooks.json`
+respectively. pi takes an array of TS module paths in `settings.json`. OMP loads a
+default-exported factory that registers handlers on a `HookAPI`. Nothing this
+skill writes depends on a hook, and if that changes it needs four writers, not
+one.
 
 These files belong to the user and hold their own content. Never overwrite one.
 Write only between the markers shown in step 5, and replace what is already

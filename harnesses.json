@@ -1,5 +1,18 @@
 {
   "note": "Per-harness install targets. Verified on this machine 2026-08-31. Every harness discovers skills as <skillsRoot>/<skill-name>/SKILL.md, one level deep, non-recursive, with `name` and `description` frontmatter. That shared layout is why skills/ needs no per-harness transform.",
+  "shared": {
+    "note": "Prefer the shared agents convention over a per-harness copy. One file beats four that drift. Two things defeat it, both checkable: a harness with no agents-directory convention, and a harness that keeps only one user-scope context file and shadows the shared one with its own.",
+    "skillsRoots": ["~/.agents/skills", "~/.agent/skills"],
+    "contextFile": "~/.agents/AGENTS.md",
+    "readsSharedRoot": {
+      "omp": "native, the `agents` provider with its own enableAgentsUser toggle, verified in omp://skills.md",
+      "codex": "yes, config.toml carries [[skills.config]] entries pointing into ~/.agents/skills",
+      "pi": "yes, it enumerates skills across sibling roots including ~/.codex/skills",
+      "claude": "no, ~/.claude only"
+    },
+    "shadowing": "On OMP only one user-scope context file survives across all providers and native ~/.omp/agent/AGENTS.md has the highest priority, so ~/.agents/AGENTS.md loses at user scope. Put user-scope config in ~/.omp/agent/RULES.md instead, which is an always-apply rule and never enters that dedup.",
+    "notShareable": "Hooks, tool names, and subagent definitions. Four incompatible hook formats, so anything depending on a hook needs four writers."
+  },
   "harnesses": [
     {
       "id": "claude",
