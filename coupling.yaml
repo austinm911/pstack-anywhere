@@ -111,7 +111,7 @@ capabilities:
       identity: { cursor: 'subagent_type: "poteto-agent"', claude: "a poteto-agent definition in the harness subagent dir", codex: "same", pi: "same", omp: "same" }
       model: { cursor: "explicit slug per role", claude: "role slots, see roles below", codex: "role slots", pi: "role slots", omp: "role slots, or the agent field" }
     consequence: >-
-      A ported poteto-agent definition has to exist per harness. harnesses.json
+      A ported poteto-agent definition has to exist per harness. harnesses.yaml
       records each subagent directory. Until it does, the identity parameter has
       no resolution and playbooks must say so rather than naming a type that is
       absent.

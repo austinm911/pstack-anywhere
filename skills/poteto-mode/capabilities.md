@@ -31,7 +31,7 @@ is upstream's original behavior.
 
 - **`worker_durability`.** Every playbook that spans a restart must externalize a worker's output the moment it lands, which upstream already requires, and must treat a lost session as lost work rather than as reattachable. The reattach-by-PR instruction becomes respawn-from-stored-brief.
 - **`wake_on_event`.** Upstream already documents the heartbeat as its own no-event path, so the degraded path is prose that already exists. Only the "pick the mechanism" step changes.
-- **`worker_defaults`.** A ported poteto-agent definition has to exist per harness. harnesses.json records each subagent directory. Until it does, the identity parameter has no resolution and playbooks must say so rather than naming a type that is absent.
+- **`worker_defaults`.** A ported poteto-agent definition has to exist per harness. harnesses.yaml records each subagent directory. Until it does, the identity parameter has no resolution and playbooks must say so rather than naming a type that is absent.
 - **`human_question`.** orchestrate.md parks human gates in gates.md so a completion flood cannot wipe pending question state. That file-backed gate is the portable part and matters more where the primitive degrades.
 
 ## Roles

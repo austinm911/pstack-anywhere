@@ -30,7 +30,7 @@ loader and OMP deduplicates by realpath, so one canonical copy behind two links
 is seen once. Four copies in four roots collide by skill name instead.
 
 Evidence for each claim, read out of the shipped binaries, is in
-`harnesses.json` under `distribution`.
+`harnesses.yaml` under `distribution`.
 
 Three names collide with common skills, `tdd`, `teach`, and `unslop`. Check your
 target root before linking.
@@ -40,7 +40,7 @@ target root before linking.
 ```
 skills/          the pack, one directory per skill, names byte-identical to upstream
 coupling.yaml    every Cursor primitive this port replaces, and how, per harness
-harnesses.json   distribution targets, config files, and hook mechanism per harness
+harnesses.yaml   distribution targets, config files, and hook mechanism per harness
 scripts/         renders capabilities.md, and lints for Cursor tokens creeping back
 UPSTREAM.md      pinned SHA, divergence log, open decisions
 ```

@@ -52,7 +52,7 @@ install, and record it here.
 root. Not copies. OMP discovers every other harness's skills root, so a copy per
 root makes OMP see the same skill four times and warn on the name; symlinks
 collapse by realpath and stay silent. Target roots and hook mechanisms are in
-`harnesses.json`. Populating `~/.agents/skills` alone covers OMP, so only
+`harnesses.yaml`. Populating `~/.agents/skills` alone covers OMP, so only
 Claude, Codex, and pi need a root of their own.
 
 No adapter-per-harness: harness difference is the root path and the hook format,
