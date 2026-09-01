@@ -1,0 +1,299 @@
+# Coupling ledger. The single source for everything in skills/ that upstream
+# resolved through a Cursor primitive, a Cursor-team plugin, or a path only a
+# Cursor plugin install provides.
+#
+# Three tiers, because they resolve differently:
+#
+#   capabilities      a harness primitive. Resolution varies per harness, so the
+#                     gap is declared per cell, never per row.
+#   roles             a named job whose tool is the user's choice. The pack names
+#                     the role and never a vendor. Values come from the override
+#                     file that /setup-pstack-anywhere writes.
+#   path_assumptions  a filesystem path that only a Cursor plugin install
+#                     provides. Not a capability, and it fails silently rather
+#                     than degrading, which makes it the most dangerous tier.
+#
+# Cell gap values:
+#   native       the harness has the primitive under its own name
+#   substitute   a different primitive does the same job
+#   degrade      no equivalent, and `use` names the weaker path explicitly
+#   drop         the step does not apply, and the playbook must say so
+#
+# `sites` exists so a refresh diff against upstream is actionable. A token that
+# moves to a new file is new port work, not a silent pass.
+
+version: 1
+
+upstream:
+  repo: https://github.com/cursor/plugins
+  path: pstack
+  sha: b9ddc83c32972210b8a94d389130713e8eed346e
+
+harnesses: [cursor, claude, codex, pi, omp]
+
+capabilities:
+  - id: spawn_worker
+    what: Spawn a delegate that owns a unit of work end to end.
+    cursor: { gap: native, use: 'Task with environment: "cloud"' }
+    claude: { gap: substitute, use: "Task tool, subagent_type" }
+    codex: { gap: substitute, use: "task tool" }
+    pi: { gap: substitute, use: "task tool" }
+    omp: { gap: substitute, use: "task tool, agent field selects the specialist" }
+    sites:
+      - SKILL.md
+      - playbooks/autopilot-full.md
+      - playbooks/autopilot-stack.md
+      - playbooks/shipping.md
+      - playbooks/orchestrate.md
+
+  - id: worker_durability
+    what: >-
+      A spawned worker that outlives the session. Upstream leans on this hard:
+      orchestrate.md tells a resumed coordinator that local agents are dead but
+      cloud work is not, and to reattach by PR and branch rather than agent id.
+    cursor: { gap: native, use: "cloud agents run off-machine and survive a restart" }
+    claude: { gap: drop, use: "subagents die with the session" }
+    codex: { gap: drop, use: "subagents die with the session" }
+    pi: { gap: drop, use: "subagents die with the session" }
+    omp: { gap: drop, use: "subagents die with the session" }
+    consequence: >-
+      Every playbook that spans a restart must externalize a worker's output the
+      moment it lands, which upstream already requires, and must treat a lost
+      session as lost work rather than as reattachable. The reattach-by-PR
+      instruction becomes respawn-from-stored-brief.
+    sites:
+      - playbooks/orchestrate.md
+      - playbooks/pause-safely.md
+      - playbooks/session-pickup.md
+
+  - id: probe_worker
+    what: >-
+      Read a worker's liveness without resuming it. Upstream is explicit that a
+      resume restarts an idle agent, so probing and resuming are different acts.
+    cursor: { gap: native, use: "dashboard shows agent state without a resume" }
+    claude: { gap: degrade, use: "job status only, no liveness for every delegate kind" }
+    codex: { gap: degrade, use: "job status only" }
+    pi: { gap: degrade, use: "job status only" }
+    omp: { gap: substitute, use: 'hub op:"jobs"' }
+    sites:
+      - playbooks/orchestrate.md
+      - playbooks/shipping.md
+
+  - id: wake_on_event
+    what: Sleep until an external event fires, rather than polling on a timer.
+    cursor: { gap: native, use: "/loop built-in" }
+    claude: { gap: degrade, use: "heartbeat sized to when the result is worth re-checking" }
+    codex: { gap: degrade, use: "heartbeat sized to when the result is worth re-checking" }
+    pi: { gap: degrade, use: "heartbeat sized to when the result is worth re-checking" }
+    omp: { gap: substitute, use: 'hub op:"wait"' }
+    consequence: >-
+      Upstream already documents the heartbeat as its own no-event path, so the
+      degraded path is prose that already exists. Only the "pick the mechanism"
+      step changes.
+    sites:
+      - SKILL.md
+      - playbooks/autonomous-run.md
+      - playbooks/visual-parity.md
+      - playbooks/shipping.md
+      - playbooks/babysit.md
+      - playbooks/bug-fix.md
+      - playbooks/multi-phase-plan.md
+      - playbooks/autopilot-full.md
+      - playbooks/autopilot-stack.md
+
+  - id: worker_defaults
+    what: >-
+      The parameters upstream sets on every Task call. Highest-traffic coupling
+      in the pack, since every playbook that delegates inherits them.
+    parameters:
+      background: { cursor: "run_in_background: true", claude: "run in background", codex: "async", pi: "async", omp: "async, or hub op:\"wait\" to block" }
+      readonly: { cursor: "agent mode strips MCP", claude: "read-only agent type", codex: "read-only agent type", pi: "read-only agent type", omp: "scout agent is read-only" }
+      identity: { cursor: 'subagent_type: "poteto-agent"', claude: "a poteto-agent definition in the harness subagent dir", codex: "same", pi: "same", omp: "same" }
+      model: { cursor: "explicit slug per role", claude: "role slots, see roles below", codex: "role slots", pi: "role slots", omp: "role slots, or the agent field" }
+    consequence: >-
+      A ported poteto-agent definition has to exist per harness. harnesses.json
+      records each subagent directory. Until it does, the identity parameter has
+      no resolution and playbooks must say so rather than naming a type that is
+      absent.
+    sites:
+      - SKILL.md
+      - playbooks/orchestrate.md
+      - playbooks/multi-phase-plan.md
+
+  - id: human_question
+    what: Put a structured question with options to the human.
+    cursor: { gap: native, use: "AskQuestion" }
+    claude: { gap: substitute, use: "the ask tool" }
+    codex: { gap: degrade, use: "a plain question in the reply" }
+    pi: { gap: degrade, use: "a plain question in the reply" }
+    omp: { gap: substitute, use: "the ask tool" }
+    consequence: >-
+      orchestrate.md parks human gates in gates.md so a completion flood cannot
+      wipe pending question state. That file-backed gate is the portable part and
+      matters more where the primitive degrades.
+    sites:
+      - SKILL.md
+      - playbooks/autonomous-run.md
+      - playbooks/orchestrate.md
+
+roles:
+  - id: review_automation
+    was: Bugbot
+    what: >-
+      An agentic reviewer that files PR comments. A GitHub-side service, not a
+      harness feature, so it is the user's choice on every harness including
+      Cursor. references/bugbot-triage.md generalizes to review-automation
+      triage; its content is how to assess untrusted review text, which no
+      harness changes. scripts/watch-pr/policy.ts already generalizes this with
+      an AUTOMATION_TOKENS list.
+    absent: >-
+      Apply the same skeptical triage to human review comments. The posture is
+      the portable part.
+    sites:
+      - SKILL.md
+      - references/bugbot-triage.md
+      - playbooks/babysit.md
+      - playbooks/multi-phase-plan.md
+      - playbooks/autopilot-full.md
+      - playbooks/autopilot-stack.md
+
+  - id: slop_strip
+    was: the deslop skill from the cursor-team-kit plugin
+    what: A pre-commit pass that strips generated slop from a diff.
+    absent: Apply the unslop skill to the diff directly.
+    sites:
+      - SKILL.md
+      - playbooks/opening-a-pr.md
+      - playbooks/multi-phase-plan.md
+      - playbooks/autopilot-full.md
+      - playbooks/autopilot-stack.md
+
+  - id: ui_driver
+    was: control-ui from cursor-team-kit
+    what: Drives a browser, Electron, or web UI for runtime verification.
+    absent: >-
+      Runtime UI verification is not available. Say so in the verification block
+      rather than claiming a pass; a verdict of type-check-only is honest.
+    sites:
+      - SKILL.md
+      - playbooks/shipping.md
+      - playbooks/opening-a-pr.md
+      - playbooks/multi-phase-plan.md
+      - playbooks/autopilot-full.md
+      - playbooks/orchestrate.md
+      - playbooks/visual-parity.md
+
+  - id: cli_driver
+    was: control-cli from cursor-team-kit
+    what: Drives a CLI or TUI for runtime verification.
+    absent: Same as ui_driver. Name the missing verification, do not imply one.
+    sites:
+      - SKILL.md
+      - playbooks/shipping.md
+      - playbooks/opening-a-pr.md
+      - playbooks/multi-phase-plan.md
+      - playbooks/autopilot-full.md
+      - playbooks/orchestrate.md
+
+  - id: skill_authoring
+    was: Cursor's built-in create-skill
+    what: The house rules for writing a SKILL.md.
+    absent: playbooks/authoring-a-skill.md carries the rules on its own.
+    sites:
+      - SKILL.md
+      - playbooks/authoring-a-skill.md
+
+  - id: model_roles
+    was: 'grok-4.6-fast-xhigh, claude-fable-5-thinking-max, gpt-5.6-sol-max'
+    what: >-
+      Upstream already assigns these slugs to roles. Port the roles into the
+      prose and leave the slugs to the override file, so a model release does
+      not churn every playbook.
+    slots:
+      - fast code
+      - strong judgment
+      - strong instruction following
+      - prose and judgment
+    absent: The parent chat model, which is what inherit-parent and auto already mean.
+    sites:
+      - SKILL.md
+      - skills/setup-pstack-anywhere/SKILL.md
+      - skills/poteto-mode/scripts/check-plan.mjs
+
+prerequisites:
+  - id: graphite
+    binary: gt
+    what: Stacked PR tooling. Upstream's stack playbooks assume it throughout.
+    absent: >-
+      Stack playbooks do not apply. Shipping, autopilot-stack, and the stack
+      safety section have no plain-git equivalent worth faking.
+    sites:
+      - SKILL.md
+      - playbooks/shipping.md
+      - playbooks/babysit.md
+      - playbooks/opening-a-pr.md
+      - playbooks/multi-phase-plan.md
+      - playbooks/autopilot-full.md
+      - playbooks/autopilot-stack.md
+      - playbooks/orchestrate.md
+
+  - id: github_cli
+    binary: gh
+    what: scripts/watch-pr reads PR state through it.
+    absent: The Babysit playbook's watcher cannot run.
+
+  - id: bun
+    binary: bun
+    what: Runtime for scripts/watch-pr and scripts/orch.
+    absent: Those levers cannot run. Both are TypeScript with a bun shebang.
+
+path_assumptions:
+  - id: pack_path
+    was: 'pstack/skills/...'
+    what: >-
+      Upstream reads its own playbooks and scripts through a repo-relative path,
+      which only exists when the pack is vendored into the working repo. Fails
+      silently for anyone who installed the pack into a harness skills dir.
+    resolution: >-
+      Harness-relative skill addressing. skill://poteto-mode/playbooks/x.md where
+      the harness provides it, otherwise the skill directory the harness already
+      resolves.
+    sites:
+      - playbooks/multi-phase-plan.md
+      - playbooks/autopilot-full.md
+      - playbooks/autopilot-stack.md
+
+  - id: trunk_reread
+    was: 'git show origin/main:pstack/skills/...'
+    what: >-
+      A multi-day program re-grounds on trunk's copy of a playbook rather than
+      its own possibly-stale context. Depends on pack_path being inside the repo.
+    resolution: >-
+      Drop the git indirection. Re-read the playbook through the harness's own
+      skill addressing, which is already current. The staleness the trunk read
+      guarded against was context staleness, not disk staleness, and a plain
+      re-read fixes that.
+    sites:
+      - playbooks/multi-phase-plan.md
+
+  - id: transcript_dir
+    was: 'agent-transcripts/'
+    what: Local transcripts a worker may need to read.
+    resolution: >-
+      Per-harness session directory. Left as a role-style slot because the path
+      is user and harness specific, and no playbook depends on its shape.
+    sites:
+      - playbooks/session-pickup.md
+      - playbooks/eval.md
+      - playbooks/orchestrate.md
+
+# Legitimate mentions of Cursor that the lint must not flag.
+lint_allowlist:
+  - path: skills/poteto-mode/playbooks/worktree-cleanup.md
+    why: '.cursor/worktrees/myrepo/x is a real disk path in an example about not hand-typing worktree paths.'
+  - path: skills/poteto-mode/scripts/
+    why: 'watch-pr detects review-automation authors by name; worktree-audit.sh uses shell -gt comparisons.'
+  - path: skills/poteto-mode/capabilities.md
+    why: 'Generated from this file. Its cursor column names Cursor on purpose.'
+  - path: skills/setup-pstack-anywhere/SKILL.md
+    why: 'Names the Cursor rule-file location, since Cursor is a supported target.'

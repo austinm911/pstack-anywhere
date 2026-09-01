@@ -1,65 +1,161 @@
 ---
-name: setup-pstack
-description: Configure which models pstack uses per role. Detects your available models and writes an always-applied rule that overrides the skill defaults. Use for /setup-pstack, "configure pstack models", or changing pstack's model choices.
+name: setup-pstack-anywhere
+description: Configure which tools and models pstack uses per role. Detects what this harness and machine actually have, then writes an override block your harness loads every session. Use for /setup-pstack-anywhere, "configure pstack", "pstack uses the wrong model", or telling pstack which review bot, UI driver, or slop-strip skill you use.
 ---
 
-# Setup pstack
+# Setup pstack anywhere
 
-Write `~/.cursor/rules/pstack-models.mdc`, an always-applied rule that sets pstack's model per role. The skills read it and fall back to their inline defaults when a line is absent, so this is an override layer, not a requirement.
+Write one override block that names your tool per role. The skills read it and
+fall back to their absent path when a line is missing, so this is an override
+layer, not a requirement. The pack works with no setup at all, it just verifies
+less and asks more.
+
+Read `skill://poteto-mode/capabilities.md` first. It lists every role, what the
+role does, and what happens when it has no value. This skill fills those slots.
+
+## Where the block goes
+
+One user-scope file per harness. Detect which harness you are in and use its row.
+
+| harness | file |
+| --- | --- |
+| Claude Code | `~/.claude/CLAUDE.md` |
+| Codex | `~/.codex/AGENTS.md` |
+| pi | `~/.pi/agent/AGENTS.md` |
+| OMP | `~/.omp/agent/RULES.md` |
+| Cursor | `~/.cursor/rules/pstack-models.mdc` with `alwaysApply: true` |
+
+OMP's `RULES.md` is an always-apply rule re-attached near the current turn, so
+it holds across a long session. The other three are context files loaded once at
+session start, which is weaker but is what those harnesses provide. Cursor keeps
+upstream's original location.
+
+These files belong to the user and hold their own content. Never overwrite one.
+Write only between the markers shown in step 5, and replace what is already
+between them on a re-run. If the file does not exist, create it with the block
+as its whole content.
+
+Offer project scope only if the user asks. The project equivalents are
+`.claude/CLAUDE.md`, `AGENTS.md`, and `.omp/RULES.md` at the repository root.
 
 ## Steps
 
-### 1. Detect available models
+### 1. Detect what this machine has
 
-Enumerate the model slugs you can pass to a `Task` subagent in this session; that is the dependable source. If Cursor also exposes a models API or CLI that lists the user's entitled models, prefer it for completeness. If you cannot detect any, ask the user to paste the slugs they have access to. Never write a real slug you have not confirmed is available. The aliases `inherit-parent` and `auto` are always valid even though they are not detected slugs.
+Roles divide by how you detect them.
+
+**Models.** Enumerate the model identifiers you can pass to a delegate in this
+session. That is the dependable source. If the harness exposes a model list
+command, prefer it for completeness. If you cannot detect any, ask the user to
+paste what they have. Never write a model you have not confirmed. The aliases
+`inherit-parent` and `auto` are always valid and both mean the role runs on the
+parent chat model, which is how Auto users stay on Auto.
+
+**Skills.** For `slop_strip`, `ui_driver`, `cli_driver`, and `skill_authoring`,
+read the skills this session discovered and look for one that does the job. Name
+the candidate and let the user confirm, since a plausible name is not proof.
+
+**Services and binaries.** For `review_automation`, ask. It is a GitHub-side
+service and nothing in the session proves which one the user's repos run. Check
+`gt`, `gh`, and `bun` on PATH and report which are missing, since each absence
+removes playbooks.
 
 ### 2. Load current state
 
-The default role-to-model mapping is the rule shape shown in step 5 below. If `~/.cursor/rules/pstack-models.mdc` already exists, read it and treat its values as the current choices. Otherwise start from those defaults.
+If the target file already holds a pstack block, read it and treat its values as
+the current choices. Otherwise start from the defaults in step 5.
 
 ### 3. Map and confirm
 
-Show every role with its current model, marking any real slug not in the detected set as needing a choice. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model, which is how Auto users stay on Auto) as the options. Prefer AskQuestion over free text. For panel roles (how critics, arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena selects one value from it whose model family differs from the parent's when possible. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
+Show every role with its current value, marking any value not in the detected
+set as needing a choice. Ask whether to accept as-is or change specific roles.
+Offer the detected values plus `inherit-parent` and `auto` for model roles, and
+`none` for every role, which selects the absent path in `capabilities.md`.
+
+Use your harness's structured question primitive where it has one, per the
+`human_question` row in `capabilities.md`. Where it does not, ask in prose and
+number the options.
+
+For panel roles (how critics, arena runners, architect runners, interrogate
+reviewers) the value is a list, and one delegate runs per entry, alias entries
+included, so the list length sets the fan-out. `arena cross-judge pool` is also
+a list, but Arena selects one value from it whose model family differs from the
+parent's when possible. `swarm workers` is the default for every worker unless a
+race or matrix names its own.
 
 ### 4. Validate
 
-Every real slug written must be in the detected set; `inherit-parent` and `auto` always pass. If a chosen real slug is not available, stop and ask again. A rule pointing at a model the user cannot use breaks every delegation that reads it.
+Every model written must be in the detected set. `inherit-parent`, `auto`, and
+`none` always pass. If a chosen model is not available, stop and ask again. A
+block pointing at a model the user cannot reach breaks every delegation that
+reads it.
 
-### 5. Write the rule
+Never write a tool you did not detect or the user did not confirm. A wrong value
+is worse than an absent one, because the absent path is honest and a wrong value
+sends the agent after something that is not there.
 
-Write `~/.cursor/rules/pstack-models.mdc` with `alwaysApply: true` and one line per role, using the same labels poteto-mode uses. Overwrite the whole file so re-runs stay idempotent. Shape:
+### 5. Write the block
+
+Replace everything between the markers. Keep the markers. Overwrite the whole
+block so re-runs stay idempotent.
 
 ```
----
-description: pstack per-role model choices (overrides skill defaults)
-alwaysApply: true
----
-# pstack model configuration. One line per role. Delete a line to fall back to the skill default.
-# `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit Task `model`). Alias entries in a panel list still count toward its fan-out.
-feature, refactoring: grok-4.6-fast-xhigh
-bug-fix: gpt-5.6-sol-max
-perf-issue: gpt-5.6-sol-max
-hillclimb: gpt-5.6-sol-max
-judgment and prose: claude-fable-5-thinking-max
-hardest tasks: claude-fable-5-thinking-max
-how explorer: grok-4.6-fast-xhigh
-how explainer: claude-fable-5-thinking-max
-how critics: claude-fable-5-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
-why investigators: grok-4.6-fast-xhigh
-why synthesizer: claude-fable-5-thinking-max
-reflect tooling: gpt-5.6-sol-max
-reflect judgment, divergent, synthesizer: claude-fable-5-thinking-max
-arena runners: claude-fable-5-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
-arena cross-judge pool: claude-fable-5-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
-swarm workers: grok-4.6-fast-xhigh
-architect runners: claude-fable-5-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
-interrogate reviewers: claude-fable-5-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
+<!-- pstack-anywhere:begin -->
+# pstack configuration. One line per role. Delete a line to fall back to the skill default.
+# `none` selects the absent path in skill://poteto-mode/capabilities.md.
+# `inherit-parent` or `auto` on a model role: the role runs on the parent chat model.
+
+## Tools
+review automation: none
+slop strip: none
+ui driver: none
+cli driver: none
+skill authoring: none
+
+## Models
+feature, refactoring: auto
+bug-fix: auto
+perf-issue: auto
+hillclimb: auto
+judgment and prose: auto
+hardest tasks: auto
+how explorer: auto
+how explainer: auto
+how critics: auto, auto, auto
+why investigators: auto
+why synthesizer: auto
+reflect tooling: auto
+reflect judgment, divergent, synthesizer: auto
+arena runners: auto, auto, auto
+arena cross-judge pool: auto, auto, auto
+swarm workers: auto
+architect runners: auto, auto, auto
+interrogate reviewers: auto, auto, auto
+<!-- pstack-anywhere:end -->
 ```
+
+Those are the defaults, not a recommendation. `auto` everywhere is the honest
+starting point on a harness whose models you have not detected. Panel roles show
+three entries because that is the smallest useful panel. Add entries to widen the
+fan-out.
+
+On Cursor, write the same body inside the `.mdc` frontmatter shape upstream used,
+with `description` and `alwaysApply: true`, and drop the HTML markers since the
+file is pstack's alone.
 
 ### 6. Confirm
 
-Tell the user the rule was written and that it applies to new sessions. Re-running this skill updates it.
+Say which file you wrote, which roles are set, and which are `none` with what
+that costs. Name any missing binary from step 1. State that the block applies to
+new sessions.
 
-### 7. Offer a verification skill (optional)
+### 7. Offer a verification skill
 
-Check whether the project has a way to drive the real app for proof (a `verify-*` skill, or an existing harness). If not, offer once: "want a project-local verification skill, so agents can drive the app the way a user does and prove changes work? I can generate one with /create-verification-skill." On yes, invoke `/create-verification-skill` (resolves wherever pstack is installed — workspace, user, or plugin). On no, move on without pushing.
+Check whether the project has a way to drive the real app for proof, a `verify-*`
+skill or an existing harness. If not, offer once. "Want a project-local
+verification skill, so agents can drive the app the way a user does and prove
+changes work? I can generate one with /create-verification-skill." On yes, invoke
+`/create-verification-skill`. On no, move on without pushing.
+
+This offer matters more when `ui_driver` and `cli_driver` are `none`, because a
+project-local verification skill is the only remaining path to runtime proof.
