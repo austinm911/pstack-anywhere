@@ -12,8 +12,10 @@ names that cell yet. An `observed_local` record is one machine's observation and
 never counts as verified.
 
 Cursor is upstream's own target. It has no harness registry entry and no saved
-source, so its column reports upstream behavior and no Cursor cell can carry a
-verification this repo performed.
+source, so its column reports upstream behavior and no Cursor cell can reach
+`static`, which is the parity method that reads a saved source. A Cursor cell
+can still reach `exercised`, on the same conformance run contract as every
+other harness.
 
 A cell reads `parity, replacement, verification`.
 
@@ -28,15 +30,19 @@ A cell reads `parity, replacement, verification`.
 | skills reached | 2: `poteto-mode`, `setup-pstack-anywhere` |
 | skills not reached | 13, 74 token hits |
 | regressions | 0 |
-| conformance | 9 scenarios over 9 high-risk cells, 0 run directories, 0 attestations |
+| conformance | 9 scenarios over 9 high-risk domains, 45 of 45 harness cells, 0 run directories, 0 attestations |
 
 ## Conformance
 
-9 cells carry a conformance scenario, defined in
-`conformance/scenarios.yaml`. Those are the domains where a wrong cell
-changes what a playbook does instead of failing loudly, which is every
-capability axis and every parameter of a parameter set. A scenario is a
-procedure and a rubric: it records no outcome, and it asserts no parity value.
+A domain is an axis and, for a parameter set, one of its parameters, with no
+harness in it: one domain is one row below and one cell per harness. The
+9 domains that carry a conformance scenario, defined in
+`conformance/scenarios.yaml`, are 45 of the 120
+harness cells in the tables above, and the scenarios apply to 45
+of them. Those are the domains where a wrong cell changes what a playbook does
+instead of failing loudly, which is every capability axis and every parameter of
+a parameter set. A scenario is a procedure and a rubric: it records no outcome,
+and it asserts no parity value.
 
 | scenario | domain | observations | artifacts | runs | Cursor | Claude Code | Codex | pi | Oh My Pi |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -54,14 +60,13 @@ procedure and a rubric: it records no outcome, and it asserts no parity value.
 `exercised` without a run directory that is complete against that scenario's
 evidence contract and a record citing it whose per-file digests still match the
 bytes on disk. Cursor is no exception: upstream's own target earns a run on the
-same artifacts as everyone else, and it is the one harness that can never reach
-`static`, because no upstream source is saved for it.
+same artifacts as everyone else.
 
 ### Evidence freshness
 
 | measure | value |
 | --- | --- |
-| scenarios | 9 defined, covering 9 high-risk cells |
+| scenarios | 9 defined, covering 9 high-risk domains, 45 of 45 harness cells |
 | attestations | none recorded |
 | evidence classes | none |
 | run directories | none under `evidence/runs` |

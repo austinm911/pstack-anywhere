@@ -97,7 +97,7 @@ function loadLedger() {
 
 // Volatile inputs. The attestation registry may be absent: every cell then
 // derives unverified, which is the honest default. The scenario file may not,
-// because its absence leaves every high-risk cell with no procedure at all and
+// because its absence leaves every high-risk domain with no procedure at all and
 // the coverage check below says so rather than passing vacuously.
 function loadEvidence(ledger) {
   const paths = ledger.evidence ?? {};
@@ -544,19 +544,22 @@ const OUTCOME_WHY =
 // changes what a playbook does instead of failing loudly. That is exactly the
 // capability axes and the parameters of a parameter set, so the scope is
 // derived from the ledger rather than restated. A new capability axis arrives
-// uncovered and the coverage check names it.
-function highRiskCells(ledger) {
-  const cells = [];
+// uncovered and the coverage check names it. These are domains, not cells: a
+// domain is an axis plus, for a parameter set, one parameter, with no harness
+// in it. Each one spans every harness, so the harness cells they cover is this
+// count multiplied by the harness list.
+function highRiskDomains(ledger) {
+  const domains = [];
   for (const axis of ledger.axes) {
     if (axis.kind === "capability") {
-      cells.push({ axis: axis.id, parameter: null, kind: axis.kind });
+      domains.push({ axis: axis.id, parameter: null, kind: axis.kind });
     } else if (axis.kind === "parameter_set") {
       for (const parameter of axis.parameters ?? []) {
-        cells.push({ axis: axis.id, parameter: parameter.id, kind: axis.kind });
+        domains.push({ axis: axis.id, parameter: parameter.id, kind: axis.kind });
       }
     }
   }
-  return cells;
+  return domains;
 }
 
 // A path plus what it holds, and nothing else. An artifact with no `holds` is a
@@ -634,10 +637,11 @@ function validateContract(where, contract, errors) {
 }
 
 // Everything a scenario has to declare before a run of it could mean anything,
-// plus the coverage join back onto the ledger. A scenario that resolves to no
-// axis, an axis with no scenario, and two scenarios over one cell are all the
-// same class of error: the conformance set and the ledger disagree about what
-// is being settled.
+// plus the coverage join back onto the ledger. Coverage is per domain, and
+// `applies_to` is what spreads one scenario over that domain's harness cells. A
+// scenario that resolves to no axis, a domain with no scenario, and two
+// scenarios over one domain are all the same class of error: the conformance
+// set and the ledger disagree about what is being settled.
 function validateScenarios(ledger, evidence, errors) {
   const at = ledger.evidence?.scenarios;
   const empty = { byId: new Map(), contract: null, coverage: [], voidConditions: [], harnesses: [] };
@@ -647,7 +651,7 @@ function validateScenarios(ledger, evidence, errors) {
   }
   const doc = evidence.scenarioDoc;
   if (!doc) {
-    errors.push(`${at}: declared in coupling.yaml and not on disk, so no high-risk axis has a procedure`);
+    errors.push(`${at}: declared in coupling.yaml and not on disk, so no high-risk domain has a procedure`);
     return empty;
   }
 
@@ -815,19 +819,19 @@ function validateScenarios(ledger, evidence, errors) {
   }
 
   const scenarios = [...byId.values()];
-  const coverage = highRiskCells(ledger).map((cell) => {
-    const covering = scenarios.filter((s) => s.axis === cell.axis && s.parameter === cell.parameter);
+  const coverage = highRiskDomains(ledger).map((domain) => {
+    const covering = scenarios.filter((s) => s.axis === domain.axis && s.parameter === domain.parameter);
     if (covering.length === 0) {
       errors.push(
-        `${at}.scenarios: nothing covers ${cellLabel(cell)}, which coupling.yaml declares as a ${cell.kind}`,
+        `${at}.scenarios: nothing covers ${cellLabel(domain)}, which coupling.yaml declares as a ${domain.kind}`,
       );
     }
     if (covering.length > 1) {
       errors.push(
-        `${at}.scenarios: ${covering.map((s) => s.id).join(" and ")} both cover ${cellLabel(cell)}, a cell has one procedure`,
+        `${at}.scenarios: ${covering.map((s) => s.id).join(" and ")} both cover ${cellLabel(domain)}, a domain has one procedure`,
       );
     }
-    return { ...cell, scenario: covering[0] ?? null };
+    return { ...domain, scenario: covering[0] ?? null };
   });
 
   return { byId, contract, coverage, voidConditions, harnesses };
@@ -1977,10 +1981,11 @@ function skillSection(model, group) {
   return parts.join("\n").trimEnd();
 }
 
-// One row per high-risk cell: the scenario that covers it, and per harness the
-// verification that cell currently carries. A harness column reads what the
-// evidence says, never whether the scenario was attempted, so `unverified`
-// there means nobody has run it and not that it failed.
+// One row per high-risk domain, not per cell: the scenario that covers the
+// domain, and per harness the verification that domain's cell on that harness
+// currently carries. A harness column reads what the evidence says, never
+// whether the scenario was attempted, so `unverified` there means nobody has
+// run it and not that it failed.
 function conformanceTable(model) {
   const harnesses = model.ledger.harnesses;
   const rows = model.conformance.coverage.map(({ axis, parameter, scenario }) => {
@@ -2012,7 +2017,11 @@ function freshnessTable(model) {
 
   return [
     head(["measure", "value"]),
-    row(["scenarios", `${counts.scenarios} defined, covering ${counts.highRisk} high-risk cells`]),
+    row([
+      "scenarios",
+      `${counts.scenarios} defined, covering ${counts.highRiskDomains} high-risk domains, ` +
+        `${counts.scenarioCells} of ${counts.highRiskCells} harness cells`,
+    ]),
     row(["attestations", counts.attestations === 0 ? "none recorded" : `${counts.attestations} recorded`]),
     row(["evidence classes", tiers.size === 0 ? "none" : spread(tiers)]),
     row([
@@ -2090,7 +2099,9 @@ function renderReport(model) {
     row(["regressions", String(counts.regressions)]),
     row([
       "conformance",
-      `${counts.scenarios} scenarios over ${counts.highRisk} high-risk cells, ${counts.runs} run directories, ${counts.attestations} attestations`,
+      `${counts.scenarios} scenarios over ${counts.highRiskDomains} high-risk domains, ` +
+        `${counts.scenarioCells} of ${counts.highRiskCells} harness cells, ` +
+        `${counts.runs} run directories, ${counts.attestations} attestations`,
     ]),
   ].join("\n");
 
@@ -2112,8 +2123,10 @@ names that cell yet. An \`observed_local\` record is one machine's observation a
 never counts as verified.
 
 Cursor is upstream's own target. It has no harness registry entry and no saved
-source, so its column reports upstream behavior and no Cursor cell can carry a
-verification this repo performed.
+source, so its column reports upstream behavior and no Cursor cell can reach
+\`static\`, which is the parity method that reads a saved source. A Cursor cell
+can still reach \`exercised\`, on the same conformance run contract as every
+other harness.
 
 A cell reads \`parity, replacement, verification\`.
 
@@ -2123,11 +2136,15 @@ ${totals}
 
 ## Conformance
 
-${counts.highRisk} cells carry a conformance scenario, defined in
-\`${model.ledger.evidence.scenarios}\`. Those are the domains where a wrong cell
-changes what a playbook does instead of failing loudly, which is every
-capability axis and every parameter of a parameter set. A scenario is a
-procedure and a rubric: it records no outcome, and it asserts no parity value.
+A domain is an axis and, for a parameter set, one of its parameters, with no
+harness in it: one domain is one row below and one cell per harness. The
+${counts.highRiskDomains} domains that carry a conformance scenario, defined in
+\`${model.ledger.evidence.scenarios}\`, are ${counts.highRiskCells} of the ${counts.cells}
+harness cells in the tables above, and the scenarios apply to ${counts.scenarioCells}
+of them. Those are the domains where a wrong cell changes what a playbook does
+instead of failing loudly, which is every capability axis and every parameter of
+a parameter set. A scenario is a procedure and a rubric: it records no outcome,
+and it asserts no parity value.
 
 ${conformanceTable(model)}
 
@@ -2135,8 +2152,7 @@ ${conformanceTable(model)}
 \`exercised\` without a run directory that is complete against that scenario's
 evidence contract and a record citing it whose per-file digests still match the
 bytes on disk. Cursor is no exception: upstream's own target earns a run on the
-same artifacts as everyone else, and it is the one harness that can never reach
-\`static\`, because no upstream source is saved for it.
+same artifacts as everyone else.
 
 ### Evidence freshness
 
@@ -2275,7 +2291,15 @@ function tally(model) {
     exercised: cells.filter((c) => c.exercised).length,
     attestations: model.evidence.attestations.length,
     scenarios: model.conformance.byId.size,
-    highRisk: model.conformance.coverage.length,
+    // A domain is axis plus parameter with no harness in it, so the cells those
+    // domains span is the domain count times the harness list. `scenarioCells`
+    // is narrower: the cells a scenario actually applies to.
+    highRiskDomains: model.conformance.coverage.length,
+    highRiskCells: model.conformance.coverage.length * model.ledger.harnesses.length,
+    scenarioCells: model.conformance.coverage.reduce(
+      (n, entry) => n + (entry.scenario?.appliesTo.length ?? 0),
+      0,
+    ),
     runs: model.runs.size,
   };
 }
@@ -2617,7 +2641,12 @@ function probeList(model, json) {
     return 0;
   }
 
-  console.log(`${rows.length} high-risk cells, ${model.conformance.byId.size} scenarios`);
+  const scenarioCells = rows.reduce((n, entry) => n + entry.applies_to.length, 0);
+  const domainCells = rows.length * model.ledger.harnesses.length;
+  console.log(
+    `${rows.length} high-risk domains, ${scenarioCells} of ${domainCells} harness cells, ` +
+      `${model.conformance.byId.size} scenarios`,
+  );
   for (const entry of rows) {
     console.log("");
     console.log(`${entry.scenario ?? "UNCOVERED"}  ${entry.domain}`);

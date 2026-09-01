@@ -9,10 +9,14 @@
 # changes what a playbook does rather than failing loudly, so prose alone is not
 # good enough. Every other axis in coupling.yaml stays prose-resolved.
 #
-# Coverage is checked, not asserted. The high-risk set is derived from
-# coupling.yaml as every capability axis plus every parameter of a parameter
-# set, and `bun scripts/coupling.mjs check` fails when a cell has no scenario
-# or when two scenarios cover one cell. A capability axis added upstream
+# Coverage is checked, not asserted. The unit of coverage is the domain, not the
+# cell: one scenario per high-risk domain, where a domain is a capability axis
+# or one parameter of a parameter set with no harness in it. A scenario's
+# `applies_to` expands that single procedure across the harness cells it is
+# runnable on. The high-risk set is derived from coupling.yaml as every
+# capability axis plus every parameter of a parameter set, and
+# `bun scripts/coupling.mjs check` fails when a domain has no scenario
+# or when two scenarios cover one domain. A capability axis added upstream
 # therefore arrives uncovered and is named, rather than silently missed.
 #
 # What this file is not:

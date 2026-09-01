@@ -70,8 +70,11 @@ upstream:
 
 # `registry` is whether the harness has a harnesses.yaml entry, and
 # `evidence_dir` whether pinned upstream source is saved for it. Cursor has
-# neither: it is upstream's own target, so its column is upstream behavior
-# rather than a claim this repo verified. No cursor cell can reach `static`.
+# neither: it is upstream's own target, so its column reports upstream behavior
+# rather than a parity claim this repo checked against saved source. No cursor
+# cell can reach `static`, which is the method that reads that source. A cursor
+# cell can still reach `exercised`, on the same conformance run contract as
+# every other harness.
 harnesses:
   - id: cursor
     label: Cursor
