@@ -1,6 +1,6 @@
 # pstack-anywhere
 
-**pstack for Codex, Claude Code, OMP, pi, and other agent harnesses.**
+**pstack for Claude Code, Codex, pi, OMP, and other agent harnesses.**
 
 [pstack](https://github.com/cursor/plugins/tree/main/pstack) by
 [Lauren Tan (@poteto)](https://x.com/poteto) is a pack of skills and principles
@@ -9,30 +9,29 @@ router, and playbooks for stacked PRs and subagent fleets. It ships as a Cursor
 plugin and assumes Cursor primitives throughout.
 
 This is a port. Same skills, same mode names, same playbook vocabulary, with the
-Cursor-specific parts moved behind a capability shim so one adapter file adds a
-harness.
-
-## pstack for Codex? pstack for Claude Code?
-
-Yes, that is what this repo is. See `adapters/`.
+Cursor-specific parts named and replaced.
 
 ## Layout
 
 ```
-skills/     canonical pack, skill names byte-identical to upstream
-shims/      the four capabilities that carry the Cursor coupling
-adapters/   claude/ codex/ pi/ omp/ — per-harness placement + shim impls
-scripts/    orch + watch-pr, harness-neutral bun/TypeScript
-docs/       upstream guide, mirrored
-UPSTREAM.md pinned SHA, divergence log, coupling map
+skills/          the pack, one directory per skill, names byte-identical to upstream
+harnesses.json   install target, context file, and hook mechanism per harness
+UPSTREAM.md      pinned SHA, divergence log, Cursor coupling, open decisions
 ```
+
+Every harness discovers skills the same way, `<root>/<skill-name>/SKILL.md` one
+level deep, so the pack needs no per-harness transform. Skills are
+self-contained: `skills/poteto-mode/scripts/` and
+`skills/show-me-your-work/scripts/` travel with their skill, so a skill
+directory can be copied or linked anywhere on its own.
 
 ## Status
 
-Scaffold. Skills copied verbatim at upstream `b9ddc83`. Shim contracts and the
-Claude adapter are the next step; nothing is projected to a harness yet.
+Skills copied verbatim at upstream `b9ddc83`. Nothing is installed to a harness
+yet, and the Cursor-coupled capabilities still name Cursor. Both are tracked in
+`UPSTREAM.md`.
 
 ## Credit
 
 MIT, same as upstream. All skill content is Lauren Tan's work unless a file says
-otherwise. Divergence is tracked in `UPSTREAM.md`.
+otherwise.

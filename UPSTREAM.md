@@ -8,9 +8,8 @@ Upstream version: pstack 0.14.5
 ## Refresh
 
 ```sh
-git -C ~/.repo-autopsy/cursor/plugins pull
 # diff upstream against the pinned SHA before copying anything
-git -C ~/.repo-autopsy/cursor/plugins diff b9ddc83..HEAD -- pstack/skills
+git -C <clone-of-cursor/plugins> diff b9ddc83..HEAD -- pstack/skills
 ```
 
 Skill directory names are byte-identical to upstream so this diff stays cheap.
@@ -21,8 +20,10 @@ Do not rename skills or modes. `/poteto-mode` stays `/poteto-mode`.
 | Path | Change | Why |
 |---|---|---|
 | `automations/benny/` | dropped | Pure Cursor Automations + Cursor Slack actions, nothing portable |
-| `skills/setup-pstack` | renamed `setup-pstack-anywhere` | Installs adapters, not a Cursor plugin |
-| `.cursor-plugin/plugin.json` | dropped | Replaced by `adapters/` |
+| `.cursor-plugin/plugin.json` | dropped | Cursor packaging |
+| `docs/` (upstream guide) | dropped | Mirrored prose plus 2.3MB of images, readable upstream at the pinned SHA |
+| `scripts/` (repo root) | dropped | Byte-identical duplicate of `skills/poteto-mode/scripts/`; skills stay self-contained |
+| `skills/setup-pstack` | renamed `setup-pstack-anywhere` | Installs skills, not a Cursor plugin |
 
 ## Cursor coupling to resolve
 
@@ -40,8 +41,20 @@ Named Cursor built-ins also referenced: `create-skill`, the built-in `babysit`
 `cursor-team-kit` plugin, the `mcps/` directory for MCP discovery, and model
 slugs read from the Cursor model picker into `.cursor/rules/pstack-models.mdc`.
 
-## Collisions with existing local skills
+## Open decisions
 
-`tdd`, `teach`, and `unslop` already exist in `~/.pi/agent/skills` or
-`~/.agents/skills`. Decide ownership before the first projection, or two
-definitions load at once with no way to tell which fired.
+**Name collisions.** `tdd`, `teach`, and `unslop` are common skill names. If a
+harness already loads a skill by one of those names, two definitions load at
+once with no way to tell which fired. Decide ownership per name before the first
+install, and record it here.
+
+**Install model.** One canonical store, per-skill symlinks into each harness
+root. Not copies. OMP discovers every other harness's skills root, so a copy per
+root makes OMP see the same skill four times and warn on the name; symlinks
+collapse by realpath and stay silent. Target roots and hook mechanisms are in
+`harnesses.json`. Populating `~/.agents/skills` alone covers OMP, so only
+Claude, Codex, and pi need a root of their own.
+
+No adapter-per-harness: harness difference is the root path and the hook format,
+not the skill content. The installer needs a manifest of the names this repo
+owns and a pre-flight collision check against every target root.

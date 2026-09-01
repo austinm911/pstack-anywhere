@@ -1,0 +1,101 @@
+{
+  "note": "Per-harness install targets. Verified on this machine 2026-08-31. Every harness discovers skills as <skillsRoot>/<skill-name>/SKILL.md, one level deep, non-recursive, with `name` and `description` frontmatter. That shared layout is why skills/ needs no per-harness transform.",
+  "harnesses": [
+    {
+      "id": "claude",
+      "name": "Claude Code",
+      "configDir": "~/.claude",
+      "skillsRoot": "~/.claude/skills",
+      "contextFile": "~/.claude/CLAUDE.md",
+      "settings": "~/.claude/settings.json",
+      "hooks": {
+        "config": "~/.claude/settings.json#hooks",
+        "form": "event map of { matcher, hooks: [{ type: \"command\", command }] }",
+        "scriptDir": "~/.claude/hooks",
+        "eventsSeen": ["PreToolUse", "PreCompact", "SessionStart", "SubagentStart"]
+      },
+      "subagentsDir": "~/.claude/agents",
+      "commandsDir": "~/.claude/commands",
+      "projectDir": ".claude",
+      "notes": ["Project context is <cwd>/.claude/CLAUDE.md with no ancestor walk-up."]
+    },
+    {
+      "id": "codex",
+      "name": "Codex",
+      "configDir": "~/.codex",
+      "skillsRoot": "~/.codex/skills",
+      "contextFile": "~/.codex/AGENTS.md",
+      "settings": "~/.codex/config.toml",
+      "hooks": {
+        "config": "~/.codex/hooks.json",
+        "form": "same event map as Claude: { hooks: { PreToolUse: [{ matcher, hooks: [...] }] } }",
+        "scriptDir": "~/.codex/hooks"
+      },
+      "subagentsDir": "~/.codex/agents",
+      "commandsDir": "~/.codex/prompts",
+      "projectDir": null,
+      "notes": [
+        "User-scope context only. Project context comes from a standalone AGENTS.md, not <cwd>/.codex/AGENTS.md.",
+        "Also carries config.json alongside config.toml."
+      ]
+    },
+    {
+      "id": "pi",
+      "name": "pi",
+      "configDir": "~/.pi/agent",
+      "skillsRoot": "~/.pi/agent/skills",
+      "contextFile": "~/.pi/agent/AGENTS.md",
+      "settings": "~/.pi/agent/settings.json",
+      "hooks": {
+        "config": "~/.pi/agent/settings.json#hooks",
+        "form": "array of TS/JS module paths, e.g. [\"~/.pi/agent/hooks/rewind/index.ts\"]",
+        "scriptDir": "~/.pi/agent/hooks"
+      },
+      "subagentsDir": "~/.pi/agent/agents",
+      "commandsDir": "~/.pi/agent/prompts",
+      "projectDir": ".pi",
+      "notes": ["Agent state lives one level down at ~/.pi/agent, not ~/.pi."]
+    },
+    {
+      "id": "omp",
+      "name": "Oh My Pi",
+      "configDir": "~/.omp/agent",
+      "skillsRoot": "~/.agents/skills",
+      "contextFile": "~/.omp/agent/AGENTS.md",
+      "settings": "~/.omp/agent/config.yml",
+      "hooks": {
+        "config": "~/.omp/agent/config.yml#extensions",
+        "form": "default-exported TS factory taking HookAPI, registering pi.on(event, handler)",
+        "scriptDir": ".omp/hooks/pre"
+      },
+      "subagentsDir": "~/.omp/agent/agents",
+      "commandsDir": null,
+      "projectDir": ".omp",
+      "readsOtherRoots": [
+        "~/.omp/agent/skills",
+        "~/.claude/skills",
+        "~/.codex/skills",
+        "~/.pi/agent/skills",
+        "~/.agent/skills",
+        "~/.agents/skills"
+      ],
+      "providerPriority": {
+        "native": 100,
+        "omp-plugins": 90,
+        "claude": 80,
+        "agents": 70,
+        "claude-plugins": 70,
+        "codex": 70,
+        "opencode": 55,
+        "github": 30,
+        "omp-managed": 5
+      },
+      "notes": [
+        "OMP is the union: it discovers every other harness's skills root, so it needs no install of its own once one of them is populated.",
+        "~/.agent[s]/skills is the shared cross-harness location and OMP's own toggle (enableAgentsUser), independent of the Claude/Codex/pi toggles.",
+        "Dedup is by skill name, first match wins by provider priority, and identical files are collapsed by realpath. Symlinks from one canonical store are therefore safe; copies into several roots are not.",
+        "Sticky rules come only from RULES.md at ~/.omp/agent or the nearest non-empty project .omp/."
+      ]
+    }
+  ]
+}
