@@ -1,0 +1,44 @@
+# pstack-anywhere Agent Charter
+
+A port of pstack (Cursor plugin) to Claude Code, Codex, pi, and OMP. Read
+`README.md` first, then `UPSTREAM.md` before touching anything under `skills/`.
+
+## Rules
+
+1. **Upstream owns skill content.** Skill and mode names stay byte-identical to
+   the pinned SHA. Skill text changes only to replace a Cursor primitive, and
+   each replacement is an axis occurrence in `coupling.yaml`. Any other
+   divergence is a row in the `UPSTREAM.md` divergence table first.
+2. **`coupling.yaml` is the ledger; status is derived.** Its header defines the
+   schema and the keys the engine rejects. `PORTABILITY.md` and the README
+   status block are rendered from it. Edit the ledger, then render.
+3. **Unverified is the default.** A cell earns verification only through a
+   record in `evidence/attestations.yaml` citing an artifact under
+   `evidence/runs/`. Records index, never judge. An empty registry says nothing
+   was looked at.
+4. **A harness claim cites its pin.** Anything asserted about how Claude,
+   Codex, pi, or OMP loads skills, roots, or hooks points at a file under
+   `references/harnesses/<id>/` at the recorded pin. Cursor is upstream's own
+   baseline and has no evidence dir.
+
+## Work
+
+- `bun run check` is the gate. Green before you report done. It blocks on a
+  regression in a ported skill, a stale occurrence, or unrendered output;
+  skills the port has not reached are counted, not gated. `bun run lint`
+  lists those findings.
+- `bun run render` after any change to `coupling.yaml`,
+  `evidence/attestations.yaml`, or `conformance/scenarios.yaml`; commit the
+  rendered output with the change.
+- A new capability axis arrives uncovered. Add its scenario to
+  `conformance/scenarios.yaml` as a procedure and a rubric; outcomes live in
+  `evidence/runs/`.
+- Skills stay self-contained: a skill's scripts live under that skill.
+- Install is symlinks from the one canonical `skills/` copy. Roots and hook
+  formats are in `harnesses.yaml`. The `tdd`, `teach`, `unslop` collisions are
+  an open decision in `UPSTREAM.md`; resolve them there before an install.
+
+## Maintenance
+
+- Edit `.ruler/AGENTS.md`, never generated `AGENTS.md` or `CLAUDE.md`.
+- Run `bun run agents:sync` after each rule change.

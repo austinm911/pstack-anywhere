@@ -1,0 +1,956 @@
+# Conformance scenarios. The executable half of the portability contract.
+#
+# coupling.yaml says what a capability resolves to per harness. It cannot say
+# whether anyone ever watched that resolution work. This file defines the runs
+# that would settle it, in enough detail that two operators on two machines
+# produce comparable records.
+#
+# Scope: the high-risk axes only. High-risk means a wrong cell here silently
+# changes what a playbook does rather than failing loudly, so prose alone is not
+# good enough. Every other axis in coupling.yaml stays prose-resolved.
+#
+# Coverage is checked, not asserted. The high-risk set is derived from
+# coupling.yaml as every capability axis plus every parameter of a parameter
+# set, and `bun scripts/coupling.mjs check` fails when a cell has no scenario
+# or when two scenarios cover one cell. A capability axis added upstream
+# therefore arrives uncovered and is named, rather than silently missed.
+#
+# What this file is not:
+#   - It records no outcome. A scenario is a procedure and a rubric. Results
+#     live in evidence/runs/<run-id>/ and are indexed by evidence/attestations.yaml.
+#     The engine rejects an outcome-shaped key by name, so what happened
+#     cannot be stored beside the procedure that produced it.
+#   - It asserts no parity value. parity_criteria maps observations onto the four
+#     coupling.yaml parity values; a parity value is earned by a recorded run,
+#     never by this file.
+#   - An unexecuted scenario is not a failure. It is unverified, which is the
+#     honest default for every axis and harness until a run exists.
+#
+# Join keys. A scenario binds to coupling.yaml by `axis`, and for the
+# worker_defaults parameter set additionally by `parameter`. A run binds to a
+# scenario by `scenario` plus `harness`. Nothing joins on array position.
+
+version: 1
+
+# Harness ids are the ones coupling.yaml declares. cursor is the upstream
+# baseline and gets no exemption here: a cursor cell earns `exercised` on the
+# same artifacts as everyone else, and until a cursor run exists its cells are
+# upstream-derived like the rest.
+harnesses: [cursor, claude, codex, pi, omp]
+
+# ---------------------------------------------------------------------------
+
+# How a completed run maps onto a coupling.yaml parity value. The mapping is
+# per harness and per scenario, never per row, because one harness can be native
+# on spawn_worker and drop on worker_durability.
+parity_rubric:
+  native: >-
+    Every required observation is satisfied, by a single first-class primitive
+    the harness documents for this purpose, with no operator-supplied glue
+    beyond the scenario's own setup.
+  substitute: >-
+    Every required observation is satisfied, but through a primitive whose name
+    or shape differs from upstream's. Only the differences enumerated in the
+    scenario's parity.allowed may be involved. A difference not enumerated there
+    is not a substitute, it is a finding: record it and leave the cell
+    unresolved until the scenario is amended.
+  degrade: >-
+    At least one required observation is satisfied only through a weaker path,
+    and the run names that path explicitly. A degrade record is incomplete
+    without the `weaker_path` field, because degrade read as "roughly fine" is
+    the failure mode this whole file exists to stop.
+  drop: >-
+    At least one required observation is unsatisfiable on this harness, with the
+    run recording why. Drop is a real, defensible answer. It is not an absence
+    of data, and an unexecuted scenario must never be recorded as drop.
+
+# Conditions that void a run outright. A void run is not a drop and not a
+# degrade. It is a run that proves nothing and must be re-executed.
+void_conditions:
+  - id: missing_observation
+    when: >-
+      A required observation is neither satisfied with a source nor recorded as
+      unsatisfiable with a reason; or it is recorded as both observed and
+      unsatisfiable at once; or it is recorded as unsatisfiable where the
+      scenario declares no `unsatisfiable_when` for it.
+    why: >-
+      Silence is the cheapest way to manufacture a pass, and a waiver the
+      scenario never authorized is silence with a sentence in front of it.
+  - id: self_report_only
+    when: >-
+      The only source for an observation is the agent's own narration of what it
+      did, where the scenario names an out-of-band source.
+    why: An agent describing a tool call is not evidence that the tool ran.
+  - id: setup_not_reached
+    when: The scenario's preconditions were not all true at the recorded start timestamp.
+    why: A worker that was already finished cannot demonstrate durability.
+  - id: operator_intervention
+    when: The operator supplied a step not in the scenario and did not amend the scenario first.
+    why: An unrecorded workaround turns a degrade into a false native.
+  - id: digest_mismatch
+    when: An artifact's recorded digest does not match the file in evidence/runs/.
+    why: The record and the artifact have diverged; neither can be trusted.
+  - id: superseded
+    when: >-
+      A later complete run of the same scenario on the same harness names this
+      run in `supersedes`. A correction is strictly later than the run it
+      corrects, on date then counter, and a prepared, incomplete, or void
+      directory naming `supersedes` corrects nothing.
+    why: >-
+      The correction is the run that says it corrects. A record citing the run
+      that was corrected would ground a claim its own author already withdrew.
+      The same-cell and ordering constraints are what keep this a correction
+      rather than a way to erase an unrelated run.
+
+# What `probe inspect <run-id>` reports for a run directory. The state is
+# judged from the directory on every read and is never written into it.
+run_states:
+  absent: >-
+    Nothing under evidence/runs/ that the engine enumerates as a run. A name
+    with no directory behind it, an entry that is a regular file, and a symlink
+    pointing at a directory elsewhere all read the same way: there is no run to
+    judge, and citing the id is an error rather than a judgement of whatever
+    the path resolves to.
+  unexecuted: >-
+    A manifest whose started_at and ended_at are unset. This is what
+    `probe prepare <scenario> <harness>` leaves behind, and it proves nothing.
+  incomplete: >-
+    Run, and the evidence contract is not satisfied: run.yaml absent, a
+    required field unset or malformed, or a required artifact missing or
+    holding nothing. An artifact that is empty, whitespace-only, or a symlink
+    rather than a regular file of this run's own is not a produced artifact,
+    and neither is anything in the directory that is not a regular file.
+  void: >-
+    A void_condition fired, or the run id, scenario, harness, or observation
+    set does not hold together. The run proves nothing and must be re-executed.
+    A run a later complete run supersedes is void here too, whatever its own
+    directory holds. Void is neither a drop nor a degrade.
+  complete: >-
+    Every required artifact is a regular file with content in it, run.yaml and
+    observations.yaml both satisfy the contract, and no later complete run
+    supersedes this one. This is the only state an `exercised` attestation may
+    cite, and it is still not a verification: the citing record must also carry
+    the sha256 of every file in the directory.
+
+# ---------------------------------------------------------------------------
+
+# What every run must produce, regardless of scenario. Each scenario adds its
+# own artifacts on top of this through `evidence.artifacts`.
+evidence_contract:
+  run_dir: evidence/runs/<run-id>/
+  run_id:
+    form: <scenario-id>.<harness-id>.<YYYY-MM-DD>.<counter>
+    example: spawn_worker.omp.2026-09-14.01
+    constraint: >-
+      One path segment and nothing else: scenario id and harness id are
+      [a-z0-9_]+, the date is YYYY-MM-DD, the counter is two or more digits. A
+      run id carrying a slash or a `..` segment is void, and so is one whose
+      scenario and harness do not match the run.yaml inside the directory.
+    note: >-
+      The counter disambiguates repeats on one day. A re-run never overwrites a
+      run dir; supersession is expressed by a later run, and the earlier record
+      stays readable.
+
+  # Every path below has to exist in the run dir as a regular file AND carry
+  # something. A required artifact that is empty, holds only whitespace, or is
+  # a symlink to a file elsewhere leaves the run incomplete: it is a filename,
+  # not a record of anything, and a directory of them is the cheapest hollow
+  # run there is. Where the honest result is no output, the artifact says so in
+  # one line, so an empty artifact always means nobody looked.
+  required_artifacts:
+    - path: run.yaml
+      holds: >-
+        The run manifest, one flat map, every field below present and filled
+        from the run itself: `scenario`, `harness`, and `run_id`, all three
+        equal to what the run id encodes; `coupling_version`, the coupling.yaml
+        version the run was authored against; `started_at` and `ended_at` as
+        UTC timestamps with an offset, in that order; `operator`, `machine`,
+        `os`; `harness_version` as the harness itself reports it; every field
+        named in required_metadata below; and `supersedes`, naming the earlier
+        run this one corrects or null, under the rules in `supersession`. A
+        version the operator typed from memory is not a version. `probe prepare`
+        writes this file with every field present and null, which is what makes
+        the run read as unexecuted until it is run.
+    - path: observations.yaml
+      holds: >-
+        `observations:`, one entry per observation id the scenario declares, in
+        scenario order, with none added, omitted, or reordered. An entry is
+        exactly `{id, observed, source}` or exactly `{id, unsatisfiable}` and
+        nothing else. `observed` is the raw recorded value, a scalar, and `false`
+        is a reading like any other: several observations are answered by not
+        seeing the thing. `source` is which artifact and where in it, written
+        out as text, because a locator that is not text locates nothing. Under
+        the second shape, `unsatisfiable` is the reason, also written out as
+        text. No entry carries both shapes, because that says both that the
+        observation was made and that it could not be, and no entry carries any
+        other key. The second shape is legal only where the scenario declares an
+        `unsatisfiable_when` for that observation id; a waiver anywhere else
+        voids the run. A missing entry voids the run; see
+        void_conditions.missing_observation.
+    - path: invocation.json
+      holds: >-
+        The verbatim tool name and full argument object for every primitive the
+        run exercised, in call order, with timestamps. Argument names matter as
+        much as values, because the parity question is usually about shape.
+    - path: transcript.md
+      holds: >-
+        The verbatim session excerpt covering the run window, including the
+        agent's turns, tool results, and any refusal or error text. Redact
+        secrets in place and mark each redaction; do not summarize.
+
+  # Each entry is one `field: what it holds` pair, and the field name is the
+  # key the engine then requires in every run.yaml. Adding a pair here adds a
+  # required manifest field; prose here would be a requirement nothing checks.
+  required_metadata:
+    - harness_version_source: >-
+        The command that printed the version and its raw output, so a later
+        reader can tell a CLI version from an npm package version.
+    - clock: >-
+        Timestamps in UTC. Several scenarios turn on ordering between two
+        events, so a run with only relative durations cannot be checked.
+    - environment_deltas: >-
+        Any non-default harness configuration in effect, quoted from the config
+        file. A run under a customized agent set is not a run of the default.
+
+  digests:
+    algorithm: sha256
+    covers: >-
+      Every file in the run dir, not only the declared artifacts. An exercised
+      attestation carries one path and digest per file, with nothing in the
+      directory left out and nothing recorded that is not there, so a file that
+      appeared after the record was written is something the record answers for.
+    authored_by: >-
+      The tooling, never a person. `probe inspect <run-id>` recomputes and
+      prints every digest. A hand-written digest is a claim about a file rather
+      than a reading of one.
+
+  unsatisfiable_observations: >-
+    Recorded, never dropped. An observation that cannot be made on a harness is
+    the single most informative thing a run produces, and it is what separates
+    drop from unverified. It is also the one thing a run may leave unobserved,
+    so the licence is narrow three ways: an observation is waivable only where
+    the scenario declares the `unsatisfiable_when` that makes it so, that
+    declaration is a written condition rather than a bare flag, and the run's
+    waiver is the reason in text, so `unsatisfiable: false` or `0` waives
+    nothing. No scenario may declare every one of its observations waivable,
+    which would be a procedure a run completes by observing nothing. Meeting a
+    condition the scenario never anticipated is grounds for amending the
+    scenario, not for writing the excuse into the run.
+
+  supersession: >-
+    A run is never edited after its digests are recorded. A correction is a new
+    run whose run.yaml sets `supersedes` to the earlier run id. That id has to
+    name an existing run directory of the same scenario on the same harness,
+    must not be the run's own id, and must be strictly earlier in run order:
+    date first, then the counter compared as a number, so `.010` corrects `.09`
+    and never the other way round. A correction therefore always comes after
+    what it corrects, and two runs can never withdraw each other. The
+    correction takes effect only once it is itself complete: a prepared,
+    incomplete, or void directory naming `supersedes` withdraws nothing, and
+    that authority is read from each directory on its own, so a corrector that
+    a third run later corrects still corrected its own target. One run has one
+    corrector: two complete runs both naming the same earlier run is a
+    contradiction with no reading, and the check stops on it rather than
+    letting the order the directories happen to enumerate in pick a winner.
+    The superseded run stays readable and is void: `probe inspect` reports it
+    as void with condition `superseded` and names the run that corrected it,
+    and an exercised attestation citing it is rejected the same way.
+    Withdrawing a run and still being able to cite it would make the correction
+    cosmetic.
+
+# ---------------------------------------------------------------------------
+
+scenarios:
+  - id: spawn_worker
+    axis: spawn_worker
+    applies_to: [cursor, claude, codex, pi, omp]
+    risk: >-
+      Five playbooks delegate. If a harness cannot hand a unit of work to a
+      delegate that owns it end to end, those playbooks silently become
+      single-agent playbooks and the coordinator does the work it was supposed
+      to be supervising.
+    question: >-
+      Can the parent hand a self-contained brief to a delegate that runs in its
+      own context, and does the delegate's result come back to the parent?
+    setup:
+      preconditions:
+        - A scratch git repo, clean tree, no other agents running.
+        - A file probe.txt exists containing exactly the line "seed".
+        - The parent session has performed no prior work in this repo.
+      steps:
+        - >-
+          Instruct the parent to spawn exactly one worker whose entire brief is:
+          replace the contents of probe.txt with the current UTC timestamp, then
+          report the exact line written. The brief must not be visible to the
+          parent as an instruction the parent may execute itself.
+        - Instruct the parent explicitly not to read or write probe.txt itself.
+        - Let the worker finish. Record the parent's turn immediately after.
+    observations:
+      - id: spawn.primitive
+        observe: The exact tool name invoked and the full argument object.
+        grounds: Whether the resolution named in coupling.yaml is the one that actually ran.
+      - id: spawn.separate_context
+        observe: >-
+          Whether the worker received the parent's conversation. Determine it
+          from the worker's own transcript if the harness exposes one, otherwise
+          by putting a nonce in the parent's earlier turns and asking the worker
+          in its brief to report any nonce it can see.
+        grounds: Whether this is delegation or a prompt-in-the-same-context.
+        unsatisfiable_when: The harness exposes neither a worker transcript nor a worker-side reply channel.
+      - id: spawn.result_returned
+        observe: The verbatim value the parent received back, and its type (structured object or text).
+        grounds: Whether the coordinator can act on a worker's output without out-of-band retrieval.
+      - id: spawn.side_effect_matches
+        observe: probe.txt contents after the run, compared against what the worker reported.
+        grounds: >-
+          Whether the worker really acted, or reported an action it did not take.
+          This is the observation that catches a delegate with no tools.
+      - id: spawn.parent_abstained
+        observe: Whether any parent-side tool call touched probe.txt.
+        grounds: Voids the run if the parent did the work; see void_conditions.setup_not_reached.
+    parity:
+      allowed:
+        - The primitive has a different name.
+        - Argument keys have different names or a different nesting.
+        - The delegate is selected by agent type, by model, or by prompt alone.
+        - The result returns as text rather than as a structured object.
+      prohibited:
+        - The parent performs the work and narrates it as delegation.
+        - The worker shares the parent's context.
+        - The result is only reachable by reading a file the worker happened to write.
+    parity_criteria:
+      native: One documented delegation primitive satisfies all five observations.
+      substitute: All five satisfied, differences confined to parity.allowed.
+      degrade: >-
+        spawn.result_returned satisfied only by out-of-band retrieval, or
+        spawn.separate_context only partly satisfied. Name the weaker path.
+      drop: No primitive produces spawn.primitive and spawn.side_effect_matches together.
+    evidence:
+      extends: evidence_contract
+      artifacts:
+        - path: probe.before.txt
+          holds: probe.txt as it stood at the recorded start timestamp.
+        - path: probe.after.txt
+          holds: probe.txt after the worker's report was received.
+        - path: worker-report.txt
+          holds: The verbatim result the parent received.
+
+  - id: worker_defaults_background
+    axis: worker_defaults
+    parameter: background
+    applies_to: [cursor, claude, codex, pi, omp]
+    risk: >-
+      Every delegating playbook assumes the coordinator keeps working while
+      workers run. A background flag that silently blocks converts a parallel
+      plan into a serial one at full cost and with no error.
+    question: >-
+      Does control return to the parent before the worker completes, and can the
+      parent still collect the worker's result afterwards?
+    setup:
+      preconditions:
+        - A scratch dir with no parent-alive.txt and no worker-done.txt.
+        - A clock the operator can read to the second.
+      steps:
+        - >-
+          Spawn one worker, using the harness's background or async form, whose
+          brief is: wait 60 seconds, then write the current UTC timestamp into
+          worker-done.txt and report it.
+        - >-
+          Immediately in the parent's next turn, have the parent write the
+          current UTC timestamp into parent-alive.txt. This turn is the whole
+          measurement; it must not be batched with the spawn.
+        - Have the parent collect the worker's result once the worker finishes.
+    observations:
+      - id: background.control_returned_at
+        observe: Timestamp of the parent's first turn after the spawn call returned.
+        grounds: Whether the spawn call blocked.
+      - id: background.worker_finished_at
+        observe: Timestamp inside worker-done.txt.
+        grounds: The comparison point. Control must return strictly before this.
+      - id: background.parent_acted_at
+        observe: Timestamp inside parent-alive.txt.
+        grounds: Proves the parent was usable during the worker's run, not merely unblocked on paper.
+      - id: background.collection_mechanism
+        observe: >-
+          How the parent obtained the worker's result: the spawn call's own
+          return, a dedicated wait or join operation, a status poll, or reading
+          a file the worker wrote.
+        grounds: Separates a real async result channel from an out-of-band one.
+      - id: background.result_intact
+        observe: Whether the collected result equals what the worker reported, in full.
+        grounds: Catches a background path that truncates or drops worker output.
+    parity:
+      allowed:
+        - Background is the default and a flag makes it blocking, or the reverse.
+        - Collection needs an explicit wait or join call rather than arriving unprompted.
+        - The result is delivered as a notification into the parent's next turn.
+      prohibited:
+        - A documented background flag whose call still blocks to completion.
+        - Silent truncation of worker output on the async path.
+    parity_criteria:
+      native: control_returned_at < worker_finished_at, parent_acted_at between them, result collected through a first-class result channel, intact.
+      substitute: Same, with collection through a differently named wait or join.
+      degrade: >-
+        Non-blocking, but the result is only reachable by reading a file the
+        worker wrote, or partly truncated. Name the weaker path.
+      drop: control_returned_at is not strictly before worker_finished_at.
+    evidence:
+      extends: evidence_contract
+      artifacts:
+        - path: parent-alive.txt
+          holds: The parent's timestamp, written mid-run.
+        - path: worker-done.txt
+          holds: The worker's completion timestamp.
+        - path: timeline.yaml
+          holds: >-
+            The four timestamps in one place with their sources, so the ordering
+            claim can be checked without re-reading the transcript.
+
+  - id: worker_defaults_readonly
+    axis: worker_defaults
+    parameter: readonly
+    applies_to: [cursor, claude, codex, pi, omp]
+    risk: >-
+      Read-only workers are how the playbooks make scouting and review safe to
+      run unattended. If the constraint is advice to the model rather than a
+      tool-layer denial, an unattended run can write.
+    question: >-
+      When the parent constrains a worker to read only, does a write attempt
+      fail at the tool layer?
+    setup:
+      preconditions:
+        - A scratch dir with no must-not-exist.txt.
+        - The harness's read-only worker configuration in place, quoted into run.yaml.
+      steps:
+        - >-
+          Spawn a worker under the read-only configuration whose brief is: write
+          the word "written" into must-not-exist.txt, then report the exact
+          result including any error text verbatim.
+        - >-
+          If the worker declines without attempting, re-run once with a brief
+          that states the operator has authorized the write and requires the
+          attempt. A model that refuses on its own judgment has not
+          demonstrated the constraint.
+    observations:
+      - id: readonly.attempt_made
+        observe: Whether a write tool call appears in invocation.json.
+        grounds: A refusal with no attempt tests the model's disposition, not the harness.
+        unsatisfiable_when: The worker cannot be induced to attempt the write across both trials.
+      - id: readonly.denial_layer
+        observe: >-
+          Whether the refusal came from the harness (tool absent from the
+          worker's tool set, or a tool error) or from the model's own text.
+          Record the verbatim refusal and its source.
+        grounds: The whole point of the axis. Prompt-level refusal is not enforcement.
+      - id: readonly.tool_surface
+        observe: The worker's available tool list under the read-only configuration, if the harness exposes it.
+        grounds: Shows whether the constraint is structural.
+        unsatisfiable_when: The harness does not expose a worker's tool list.
+      - id: readonly.file_absent
+        observe: Whether must-not-exist.txt exists after the run.
+        grounds: The outcome that actually matters.
+      - id: readonly.mechanism
+        observe: How the constraint was expressed, quoted from the spawn arguments or the agent definition.
+        grounds: Lets a reader reproduce it and compare shapes across harnesses.
+    parity:
+      allowed:
+        - The constraint is a named agent type, a tool allowlist, or a stripped tool surface.
+        - The denial surfaces as a missing tool rather than as an error from a present tool.
+      prohibited:
+        - The constraint is only wording in the brief.
+        - must-not-exist.txt exists after the run.
+    parity_criteria:
+      native: attempt_made true, denial_layer is the harness, file_absent true.
+      substitute: Same, through a differently shaped constraint.
+      degrade: >-
+        file_absent true but denial_layer is the model, meaning the constraint
+        held by disposition. Name that as the weaker path.
+      drop: The file exists after the run, or no read-only configuration exists to apply.
+    evidence:
+      extends: evidence_contract
+      artifacts:
+        - path: refusal.txt
+          holds: The verbatim refusal or error, with its source labelled.
+        - path: tool-surface.json
+          holds: The worker's tool list, or an explicit record that the harness does not expose one.
+        - path: dir-listing.after.txt
+          holds: >-
+            A listing of the scratch dir after the run. If the listing is empty,
+            one line saying so and naming the command that produced it.
+
+  - id: worker_defaults_identity
+    axis: worker_defaults
+    parameter: identity
+    applies_to: [cursor, claude, codex, pi, omp]
+    risk: >-
+      Upstream names a specific worker definition on every delegation. A harness
+      that accepts an unknown name and quietly spawns a default worker produces
+      a worker with none of the intended instructions, and nothing in the
+      transcript says so. Silent substitution is worse than a hard failure.
+    question: >-
+      Can the parent select a named, pre-defined worker definition, and can the
+      run prove the definition's content reached the worker?
+    setup:
+      preconditions:
+        - >-
+          The harness's subagent directory as recorded in harnesses.yaml. If
+          harnesses.yaml records it as null for this harness, the run records
+          that fact with its source line and proceeds to the negative trial only.
+        - >-
+          A definition named poteto-probe installed there, in the harness's own
+          format, whose instructions require the worker to begin every report
+          with the literal token POTETO-PROBE-OK and to report nothing else on
+          its first line.
+      steps:
+        - Spawn a worker selecting poteto-probe by name, with a trivial brief.
+        - >-
+          Negative trial: spawn again selecting poteto-absent, a name with no
+          definition on disk. Record exactly what happens.
+    observations:
+      - id: identity.definition_path
+        observe: The absolute path the definition was installed at, and its verbatim contents.
+        grounds: Makes the run reproducible and pins the format the harness expects.
+        unsatisfiable_when: The harness has no subagent definition directory.
+      - id: identity.selection_argument
+        observe: The argument name and value used to select the definition.
+        grounds: The shape comparison against upstream's selection parameter.
+      - id: identity.token_present
+        observe: Whether the worker's report begins with POTETO-PROBE-OK.
+        grounds: >-
+          The only proof the definition's instructions reached the worker.
+          Selection being accepted proves nothing on its own.
+      - id: identity.unknown_name_behavior
+        observe: >-
+          On the negative trial: hard error, warning plus fallback, or silent
+          fallback to a default worker. Record the verbatim output either way.
+        grounds: >-
+          Distinguishes a real identity mechanism from one that cannot fail
+          loudly. Silent fallback is the dangerous case and must be recorded
+          even when the positive trial succeeded.
+    parity:
+      allowed:
+        - The definition file format differs, including its frontmatter keys.
+        - The selection argument has a different name.
+        - The definition lives under a per-harness directory rather than a shared one.
+      prohibited:
+        - The name is accepted and the definition never loads, with no signal.
+        - The token check is satisfied by putting the token in the brief instead of the definition.
+    parity_criteria:
+      native: token_present true and unknown_name_behavior is a hard error.
+      substitute: token_present true, unknown name produces at least a visible warning, differences confined to parity.allowed.
+      degrade: token_present true but unknown names fall back silently. Name that as the weaker path.
+      drop: No subagent definition directory exists, or token_present is false.
+    evidence:
+      extends: evidence_contract
+      artifacts:
+        - path: definition.txt
+          holds: The verbatim installed definition, plus its install path.
+        - path: positive-report.txt
+          holds: The worker's verbatim first line and full report.
+        - path: negative-trial.txt
+          holds: >-
+            Verbatim output of the poteto-absent spawn. If it produced no
+            output, one line saying so and naming the command.
+
+  - id: worker_defaults_model
+    axis: worker_defaults
+    parameter: model
+    applies_to: [cursor, claude, codex, pi, omp]
+    risk: >-
+      Role-to-model assignment is what makes the delegation plan economical. A
+      selection that is accepted and ignored means every worker runs on the
+      parent's model, which is a cost and quality change with no signal.
+    question: >-
+      Can the parent choose which model a worker runs on, and can the run prove
+      from a source other than the model's own words which model ran?
+    setup:
+      preconditions:
+        - >-
+          Two model identifiers valid on this harness that differ observably,
+          quoted into run.yaml with where they came from.
+        - >-
+          A harness-side record of model usage: a usage or cost readout, a
+          session log, a status line, or provider-side billing. Identify it
+          before the run. Without one, this scenario's central observation is
+          unsatisfiable and the run must say so rather than fall back to
+          self-report.
+      steps:
+        - Spawn a worker with the first model selection and a trivial brief.
+        - Spawn a second worker with the second selection and the same brief.
+        - Capture the harness-side usage record for both.
+        - Negative trial: spawn with a model identifier that does not exist.
+    observations:
+      - id: model.selection_argument
+        observe: The argument name and value used, per trial.
+        grounds: The shape comparison.
+      - id: model.harness_reported
+        observe: >-
+          The model each worker actually ran on, read from the harness-side or
+          provider-side record identified in preconditions. Name the source.
+        grounds: The authoritative observation for this axis.
+        unsatisfiable_when: No harness-side or provider-side model record is reachable.
+      - id: model.self_report
+        observe: What each worker says its own model is, when asked.
+        grounds: >-
+          Recorded for contrast only, and explicitly not authoritative. Models
+          misreport their own identity. A run whose only source is this
+          observation is void; see void_conditions.self_report_only.
+      - id: model.selections_differed
+        observe: Whether harness_reported differs between the two trials.
+        grounds: A selection that is accepted but ignored looks identical to one that works, except here.
+      - id: model.unknown_slug_behavior
+        observe: >-
+          On the negative trial: hard error, warning plus fallback, or silent
+          fallback. Record the verbatim output either way.
+        grounds: Same silent-substitution risk as identity.
+    parity:
+      allowed:
+        - Selection is by explicit slug, by a role or tier name, or bundled into the worker definition.
+        - The two trials resolve to models from different providers.
+      prohibited:
+        - Treating the worker's self-report as the harness-side record.
+        - Recording a parity value when model.harness_reported is unsatisfiable.
+    parity_criteria:
+      native: harness_reported matches each selection and selections_differed is true, unknown slug hard-errors.
+      substitute: Same, through role names or a differently shaped argument.
+      degrade: >-
+        Selection works but is only observable through a coarse source, or
+        unknown slugs fall back silently. Name the weaker path.
+      drop: Selection is accepted and harness_reported is identical across trials, or no selection mechanism exists.
+    evidence:
+      extends: evidence_contract
+      artifacts:
+        - path: usage-record.txt
+          holds: The verbatim harness-side or provider-side model record for both trials, with its source named.
+        - path: self-reports.txt
+          holds: Both workers' self-reported identities, labelled non-authoritative.
+        - path: negative-trial.txt
+          holds: >-
+            Verbatim output of the unknown-slug spawn. If it produced no output,
+            one line saying so and naming the command.
+
+  - id: worker_durability
+    axis: worker_durability
+    applies_to: [cursor, claude, codex, pi, omp]
+    risk: >-
+      The highest-risk axis in the ledger. Upstream's resumed coordinator is told
+      that cloud work survives a restart and to reattach by PR and branch. A
+      coordinator that believes that on a harness where workers die with the
+      session will wait for output that no longer exists, and will report a lost
+      worker as pending.
+    question: >-
+      Does a spawned worker keep running after the parent session ends, and can
+      a new session reach its output?
+    setup:
+      preconditions:
+        - A scratch dir with no heartbeat.log and no done.txt.
+        - The parent's process id recorded before the spawn.
+        - Nothing else on the machine writing to the scratch dir.
+      steps:
+        - >-
+          Spawn one background worker whose brief is: append a UTC timestamp
+          line to heartbeat.log every 30 seconds for 5 minutes, then write
+          done.txt and report.
+        - Confirm at least two heartbeat lines exist, so the worker is demonstrably running.
+        - >-
+          End the parent session. Record the method exactly: a clean quit
+          command, a terminal close, or a signal to a named pid. The method is
+          part of the finding, because a clean quit may drain workers that a
+          signal would orphan.
+        - Wait past the worker's expected finish, plus a 2 minute margin.
+        - Start a fresh session and attempt to reach the worker or its output.
+    observations:
+      - id: durability.parent_terminated_at
+        observe: The UTC timestamp of parent termination, the method, and the pid.
+        grounds: The comparison point for everything else in this scenario.
+      - id: durability.heartbeats_after_termination
+        observe: >-
+          The count of heartbeat.log lines whose timestamp is strictly later
+          than parent_terminated_at, with those lines quoted.
+        grounds: >-
+          The only proof of survival. A worker that finished before termination
+          demonstrates nothing; if this count is zero because the worker had
+          already completed, the run is void, not a drop.
+      - id: durability.completion_marker
+        observe: Whether done.txt exists and what it contains.
+        grounds: Distinguishes a worker that survived from one that survived briefly and was reaped.
+      - id: durability.reattach
+        observe: >-
+          From the fresh session, whether the worker can be enumerated, its
+          state read, or its result collected, and by what handle: agent id,
+          job id, an external artifact such as a branch or PR, or none.
+        grounds: >-
+          Survival and reattachability are separate. Upstream's reattach-by-PR
+          instruction depends on this observation, not on the previous one.
+      - id: durability.result_recoverable
+        observe: >-
+          Whether the worker's final report text is recoverable at all after the
+          parent is gone, and from where.
+        grounds: >-
+          Decides whether a playbook must externalize worker output at the
+          moment it lands, or may collect it later.
+    parity:
+      allowed:
+        - Reattachment is by an external artifact such as a branch or PR rather than by agent id.
+        - The worker survives but its report text is only recoverable from a log.
+      prohibited:
+        - Recording survival when every heartbeat predates parent_terminated_at.
+        - Inferring survival from a completion marker without timestamped heartbeats.
+    parity_criteria:
+      native: heartbeats_after_termination is non-zero, completion_marker present, reattach possible by some handle.
+      substitute: Same, with reattachment only through an external artifact.
+      degrade: >-
+        The worker survives but nothing reattaches and the report is
+        unrecoverable, leaving only its side effects. Name the weaker path.
+      drop: heartbeats_after_termination is zero on a worker that was verifiably mid-run at termination.
+    evidence:
+      extends: evidence_contract
+      artifacts:
+        - path: heartbeat.log
+          holds: The complete log, unedited.
+        - path: termination.yaml
+          holds: Method, pid, UTC timestamp, and how the timestamp was taken.
+        - path: reattach-attempt.md
+          holds: The fresh session's verbatim attempt to enumerate or reach the worker, including failures.
+
+  - id: probe_worker
+    axis: probe_worker
+    applies_to: [cursor, claude, codex, pi, omp]
+    risk: >-
+      Upstream is explicit that resuming an idle agent restarts it, so probing
+      and resuming are different acts. A coordinator that checks on five workers
+      with a primitive that resumes them has just restarted five workers and
+      will read the restart as progress.
+    question: >-
+      Can the parent read a worker's liveness without changing it?
+    setup:
+      preconditions:
+        - A scratch dir with no probe-activity.log.
+        - One background worker running, spawned as in worker_defaults_background.
+      steps:
+        - >-
+          Spawn a worker whose brief is: append a UTC timestamp line to
+          probe-activity.log every 10 seconds for 3 minutes, then report.
+        - Wait 30 seconds without probing. Record the log's line count and last timestamp.
+        - Probe the worker three times, roughly 20 seconds apart, recording each result verbatim.
+        - Let the worker finish, then probe once more.
+        - Compare the log's line cadence across the unprobed and probed windows.
+    observations:
+      - id: probe.mechanism
+        observe: The exact primitive used to probe, with arguments.
+        grounds: The shape comparison against upstream's dashboard read.
+      - id: probe.states_reported
+        observe: The verbatim state value from each of the four probes.
+        grounds: >-
+          Whether the probe distinguishes running from finished, which is the
+          minimum a coordinator needs to decide whether to wait.
+      - id: probe.granularity
+        observe: >-
+          Which distinctions the state value supports: running, idle or awaiting
+          input, finished, failed. List the ones observed and the ones the
+          harness documents but this run did not exercise.
+        grounds: Separates a rich agent state from a binary job-exists check.
+      - id: probe.side_effect
+        observe: >-
+          Whether probing changed the worker: extra or duplicated log lines, a
+          cadence break, a restart from the beginning, or a resume entry in the
+          worker's transcript. Compare the unprobed and probed windows directly.
+        grounds: >-
+          The central observation. A probe that resumes is not a probe, however
+          informative its return value.
+      - id: probe.post_completion
+        observe: What the fourth probe returns after the worker has finished.
+        grounds: >-
+          Catches a probe that reports a finished worker as running, or that
+          restarts a completed worker.
+    parity:
+      allowed:
+        - The probe returns a coarse job status rather than rich agent state, provided running and finished are distinguishable.
+        - The probe covers only some delegate kinds, provided the run names which.
+      prohibited:
+        - Any probe that resumes, restarts, or advances the worker.
+        - A probe whose only return is that a handle exists.
+    parity_criteria:
+      native: All four probes return a state, running and finished are distinguishable, side_effect is none.
+      substitute: Same, through a differently named status primitive.
+      degrade: >-
+        Liveness is readable for only some delegate kinds, or granularity is
+        existence-only. Name the weaker path and which kinds are covered.
+      drop: Probing resumes the worker, or no primitive reads state without resuming.
+    evidence:
+      extends: evidence_contract
+      artifacts:
+        - path: probe-activity.log
+          holds: The complete log, unedited, spanning the unprobed and probed windows.
+        - path: probes.yaml
+          holds: Each probe's UTC timestamp, arguments, and verbatim return.
+        - path: cadence.md
+          holds: The line-interval comparison between the unprobed and probed windows.
+
+  - id: wake_on_event
+    axis: wake_on_event
+    applies_to: [cursor, claude, codex, pi, omp]
+    risk: >-
+      Nine sites depend on this, more than any other axis. A wait implemented as
+      a polling loop still works, but it burns a turn per poll for the whole
+      wait, which changes the cost and the practical length of every autonomous
+      run. The difference is invisible in a transcript summary and obvious in a
+      turn count.
+    question: >-
+      Can the parent sleep until an external event fires, consuming nothing
+      while it waits?
+    setup:
+      preconditions:
+        - The parent's turn count and token usage readable before and after the wait.
+        - An event the operator can trigger at a chosen moment.
+      steps:
+        - >-
+          Have the parent enter a wait for the event, using whatever the harness
+          offers. Record the wait call and its arguments.
+        - Leave it waiting at least 120 seconds with no operator action.
+        - Trigger the event and record the trigger's UTC timestamp to the second.
+        - Record the parent's first post-wake action and its timestamp.
+        - >-
+          Second trial: enter the same wait and never trigger. Record what
+          happens and when, out to at least twice the first trial's wait.
+    observations:
+      - id: wake.mechanism
+        observe: The exact wait primitive and arguments, and the event kind it accepts.
+        grounds: The shape comparison against upstream's built-in loop.
+      - id: wake.turns_during_wait
+        observe: >-
+          The parent's turn count and token usage across the wait window, from
+          the harness's own accounting rather than by eye.
+        grounds: >-
+          The discriminator between an event wait and a polling loop. Zero
+          intervening turns is the whole claim.
+        unsatisfiable_when: The harness exposes no turn or token accounting.
+      - id: wake.latency
+        observe: Trigger timestamp to the parent's first post-wake action.
+        grounds: >-
+          A long latency on a wait with zero turns indicates a coarse poll
+          interval inside the primitive, which is worth recording even though it
+          is not a parity failure.
+      - id: wake.event_kinds
+        observe: >-
+          Which event kinds the wait accepts: a worker finishing, a peer
+          message, a file change, a timer, an arbitrary external signal. List
+          the ones the run exercised separately from the ones only documented.
+        grounds: >-
+          A wait that only wakes on harness-internal events still serves most
+          sites, but not the ones waiting on something outside the harness.
+      - id: wake.timeout_behavior
+        observe: >-
+          On the second trial, whether the wait expires, blocks indefinitely, or
+          returns something the parent could mistake for the event.
+        grounds: >-
+          An autonomous run that blocks forever on an event that never fires is
+          the failure mode this axis is guarding.
+    parity:
+      allowed:
+        - The event set is limited to harness-internal events, provided the run lists them.
+        - The wait must be re-entered after each wake rather than looping on its own.
+        - A bounded timeout on the wait, provided the parent can distinguish timeout from event.
+      prohibited:
+        - A wait implemented as parent-side sleep-and-recheck turns, recorded as anything other than degrade.
+        - A timeout return the parent cannot distinguish from the event firing.
+    parity_criteria:
+      native: A first-class wait with zero turns during the wait and a distinguishable timeout.
+      substitute: Same, through a differently named primitive or a narrower event set.
+      degrade: >-
+        The wait consumes parent turns. Record the measured interval and the
+        turn count, and name the heartbeat as the weaker path.
+      drop: No wait exists and the parent cannot idle at all without ending its turn.
+    evidence:
+      extends: evidence_contract
+      artifacts:
+        - path: wait-accounting.yaml
+          holds: Turn count and token usage before, during, and after the wait, with the accounting source named.
+        - path: timeline.yaml
+          holds: Wait entry, trigger, and first post-wake action, in UTC.
+        - path: no-trigger-trial.md
+          holds: >-
+            The second trial verbatim, including how it ended. If nothing was
+            emitted, one line saying so and naming how the trial was ended.
+
+  - id: human_question
+    axis: human_question
+    applies_to: [cursor, claude, codex, pi, omp]
+    risk: >-
+      An autonomous run pauses at a human gate. If the question is not
+      structured, the agent has to parse a free-text answer back onto its
+      options, and if pending state does not survive a burst of worker
+      completions, the gate is lost and the run proceeds on an assumption.
+    question: >-
+      Can the agent present a question with enumerated options, receive a
+      machine-distinguishable answer, and keep the gate pending until it is
+      answered?
+    setup:
+      preconditions:
+        - A decision point in a scratch task with three genuinely distinct options.
+        - Three spawnable workers with short briefs, for the flood trial.
+      steps:
+        - Have the agent put the three-option question to the operator.
+        - Operator selects the second option. Record exactly what the agent received.
+        - >-
+          Flood trial: at a fresh question, spawn three workers that will
+          complete while the question is pending, then answer. Record whether
+          the question survived and whether the answer still reached the agent.
+        - Cancel trial: at a third question, dismiss or ignore without answering. Record what the agent does.
+    observations:
+      - id: question.mechanism
+        observe: The primitive used, with arguments, or an explicit record that the question was plain reply text.
+        grounds: The shape comparison against upstream's structured ask.
+      - id: question.options_discrete
+        observe: >-
+          Whether the operator saw enumerated choices with stable identifiers,
+          or prose the operator had to answer freely.
+        grounds: Whether the option set is machine-defined or reconstructed.
+      - id: question.answer_shape
+        observe: >-
+          The exact value the agent received: an option identifier, the option's
+          text, or free text the agent then mapped back to an option. If mapping
+          occurred, record the agent's mapping turn.
+        grounds: >-
+          The mapping step is where a degraded path can silently pick the wrong
+          option, so it must be visible rather than inferred.
+      - id: question.pending_survives_flood
+        observe: >-
+          After three worker completions land, whether the question is still
+          pending and whether the operator's later answer still reaches the
+          agent's decision point.
+        grounds: >-
+          The reason the playbooks park human gates in a file. This observation
+          decides whether that file-backed gate is required on this harness or
+          merely belt-and-braces.
+      - id: question.unanswered_behavior
+        observe: >-
+          On the cancel trial: whether the agent waits, times out, asks again,
+          or proceeds on an assumed answer. Quote the agent's turn verbatim.
+        grounds: >-
+          Proceeding on an assumption is the failure this axis exists to catch,
+          and it is the one an operator will not notice in the moment.
+    parity:
+      allowed:
+        - The question is delivered as prose and answered as free text, provided the mapping turn is recorded.
+        - Option identifiers are positional numbers rather than named keys.
+        - Cancelling is expressed by an empty answer rather than a distinct signal.
+      prohibited:
+        - The agent proceeds past the gate on an assumed answer.
+        - Recording a structured mechanism when the run shows free-text mapping.
+    parity_criteria:
+      native: Discrete options, an option identifier returned, the gate survives the flood, and no answer means no progress.
+      substitute: Same, through a differently named ask primitive.
+      degrade: >-
+        Prose question with free-text mapping, or the gate does not survive the
+        flood and needs the file-backed gate to hold it. Name the weaker path.
+      drop: No way to pause for a human answer, or the agent proceeds on an assumption.
+    evidence:
+      extends: evidence_contract
+      artifacts:
+        - path: question-render.txt
+          holds: What the operator actually saw, verbatim, for each of the three trials.
+        - path: answer-received.txt
+          holds: The exact value that reached the agent, plus any mapping turn.
+        - path: flood-trial.md
+          holds: The three completions and the pending question's state around them, in UTC order.

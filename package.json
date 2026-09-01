@@ -1,0 +1,15 @@
+{
+  "name": "pstack-anywhere",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "agents:sync": "ruler apply --local-only --agents claude,codex",
+    "check": "bun scripts/coupling.mjs check --gate",
+    "lint": "bun scripts/coupling.mjs check",
+    "render": "bun scripts/coupling.mjs render",
+    "status": "bun scripts/coupling.mjs status"
+  },
+  "devDependencies": {
+    "@intellectronica/ruler": "^0.3.44"
+  }
+}

@@ -1,0 +1,8 @@
+# Conformance run artifacts land here, one directory per run.
+#
+# Directory name is the run id from conformance/scenarios.yaml:
+#   <scenario-id>.<harness-id>.<YYYY-MM-DD>.<counter>
+#
+# The directory is empty because no scenario has been run. A run directory is
+# never edited after its digests are recorded; a correction is a new run whose
+# run.yaml names the run it supersedes.
