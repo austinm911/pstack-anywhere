@@ -1,6 +1,6 @@
 <!-- Generated from coupling.yaml by scripts/render-capabilities.mjs. Do not edit. -->
 
-# Capabilities
+# Capability map
 
 Read your own harness column. Everything upstream resolved through a Cursor
 primitive resolves here instead.
@@ -18,7 +18,9 @@ is upstream's original behavior.
 | `wake_on_event` | /loop built-in | degraded, heartbeat sized to when the result is worth re-checking | degraded, heartbeat sized to when the result is worth re-checking | degraded, heartbeat sized to when the result is worth re-checking | hub op:"wait" |
 | `human_question` | AskQuestion | the ask tool | degraded, a plain question in the reply | degraded, a plain question in the reply | the ask tool |
 
-### Parameters on every delegate call
+### `worker_defaults`
+
+The parameters upstream sets on every Task call. Highest-traffic coupling in the pack, since every playbook that delegates inherits them.
 
 | parameter | cursor | claude | codex | pi | omp |
 | --- | --- | --- | --- | --- | --- |

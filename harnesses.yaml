@@ -1,13 +1,30 @@
 # Per-harness targets and mechanisms.
 #
-# Every harness discovers skills as <skillsRoot>/<skill-name>/SKILL.md, one level
-# deep, non-recursive, with `name` and `description` frontmatter. That shared
-# layout is why skills/ needs no per-harness transform.
+# Every field here is either verified against pinned upstream source or marked
+# unverified. The evidence lives in references/harnesses/<id>/, which holds the
+# upstream files themselves plus a MANIFEST.md with the pin, a refetch block, and
+# a line-cited finding per claim. Correct this file only against those sources.
+#
+# Skill layout: a skill is <skillsRoot>/<skill-name>/SKILL.md with `name` and
+# `description` frontmatter. Claude, Codex, and OMP scan one level deep and read
+# only that filename. pi is looser, it also walks nested Markdown, but it stops
+# at any directory holding a SKILL.md, so the shared layout works everywhere and
+# skills/ needs no per-harness transform.
 #
 # Two separate concerns live here. Distribution is a skills directory, and it is
 # nearly the same everywhere. Configuration is role values, which have to sit in
 # loaded context rather than a skills directory, so they land in a context file
 # or a rule file and carry their own hazards.
+
+# How this file is kept honest.
+references:
+  dir: references/harnesses
+  manifest: references/harnesses/<id>/MANIFEST.md
+  refetch: >-
+    Each MANIFEST.md carries a shell block that re-pulls every saved file at a
+    new ref, plus the one-liner that reads the current head SHA. Bump the ref,
+    re-run the block, diff, then update this file.
+  lastChecked: 2026-08-31
 
 # Where the pack goes.
 #
@@ -18,31 +35,38 @@ distribution:
   canonical: ~/.agents/skills
   alsoRead: ~/.agent/skills
 
-  # Whether the harness reads the shared root, with a source you can check on
-  # your own platform.
+  # Whether the harness reads the shared root, with the pinned source that says so.
   readsAgentsSkills:
     codex: >-
-      Yes. Its skills loader joins `.agents` and `skills` into a skills root, and
-      handles a symlinked skill directory. Readable in the strings of the codex
-      native binary, next to the loader's error messages.
+      Yes, in source. At user scope the loader pushes
+      home_dir.join(AGENTS_DIR_NAME).join(SKILLS_DIR_NAME), and it also walks
+      every directory from project root through cwd for .agents/skills. The
+      Codex-home root is the deprecated one, kept only for backward
+      compatibility. See codex/src/codex-rs/ext/skills/src/host_roots.rs:95-108
+      and :137-184.
     pi: >-
-      Yes. `userAgentsSkillsDir = join(getHomeDir(), ".agents", "skills")`, plus
-      an ancestor walk of project `.agents/skills` up to the git root. Readable
-      in pi's shipped dist bundle.
+      Yes. Documented global roots are ~/.pi/agent/skills/ and ~/.agents/skills/,
+      plus a trusted ancestor walk of project .agents/skills up to the Git root.
+      See pi/src/packages/coding-agent/docs/skills.md:24-42.
     omp: >-
-      Yes. The `agents` provider at priority 70, with its own enableAgentsUser
-      and enableAgentsProject toggles independent of the claude, codex, and pi
-      toggles. Documented in omp://skills.md.
+      Yes. The `agents` provider maps both .agent and .agents under each user
+      home, at priority 70, gated by its own enableAgentsUser and
+      enableAgentsProject toggles independent of the claude and codex toggles.
+      See omp/src/packages/coding-agent/src/discovery/agents.ts:26-29 and
+      :138-179.
     claude: >-
-      No. Its skills root is `.claude` + `skills`, and its binary contains no
-      reference to an agents directory.
+      No. Unverifiable from upstream source either way, since the CLI ships
+      bundled and the public repo carries no skills loader. Treated as no, so
+      Claude gets its own root.
 
   symlinksAreSafe: >-
-    Codex names a symlinked skill directory explicitly in its loader, and OMP
-    deduplicates identical files by realpath. So one canonical copy in
-    ~/.agents/skills plus a symlink at ~/.claude/skills/<name> serves every
-    harness without a duplicate-name collision. Copies into several roots would
-    collide by name instead.
+    OMP resolves every discovered skill with fs.realpath, keeps a realPathSet,
+    and silently skips a path that resolves to a file it already loaded. So one
+    canonical copy in ~/.agents/skills plus a symlink at ~/.claude/skills/<name>
+    loads once, with one winning name. Copies have distinct realpaths, so they do
+    not collapse and instead fall through name-based first-wins, with a warning
+    on a custom-directory collision. See
+    omp/src/packages/coding-agent/src/extensibility/skills.ts:225-264.
 
 # Where role values go. Not a skills directory, because the values have to be in
 # loaded context for a skill to read them.
@@ -51,15 +75,27 @@ configuration:
     On OMP only one user-scope context file survives across all providers, and
     native ~/.omp/agent/AGENTS.md has the highest priority, so
     ~/.agents/AGENTS.md loses at user scope. Put user-scope config in
-    ~/.omp/agent/RULES.md, which is an always-apply rule and never enters that
-    dedup.
+    ~/.omp/agent/RULES.md, which is forced alwaysApply and never enters that
+    dedup. See omp/src/packages/coding-agent/src/discovery/builtin.ts:387-418
+    and :905-936.
   notShareable: >-
-    Hooks, tool names, and subagent definitions. Four incompatible hook formats,
-    so anything depending on a hook needs four writers.
+    Hooks, tool names, and subagent definitions. Four incompatible hook
+    mechanisms, so anything depending on a hook needs four writers.
 
 harnesses:
   - id: claude
     name: Claude Code
+    upstream:
+      repo: https://github.com/anthropics/claude-code
+      ref: f275fa282e76c5e5456912268f2c367a7f4f4797
+      refDate: 2026-08-31
+      cliVersionChecked: 2.1.234
+      npm: '@anthropic-ai/claude-code'
+      reference: references/harnesses/claude/MANIFEST.md
+      sourceAvailability: >-
+        Docs, example settings, and example plugins only. The CLI ships bundled,
+        so the repo proves authoring contracts, not loader behavior. Most paths
+        below are observed on this machine, not proven in source.
     configDir: ~/.claude
     skillsRoot: ~/.claude/skills
     contextFile: ~/.claude/CLAUDE.md
@@ -68,86 +104,258 @@ harnesses:
     commandsDir: ~/.claude/commands
     projectDir: .claude
     hooks:
-      config: ~/.claude/settings.json#hooks
-      form: 'event map of { matcher, hooks: [{ type: "command", command }] }'
+      config: ~/.claude/settings.json
+      form: >-
+        In settings.json the event names are top-level keys, with no `hooks`
+        wrapper. The `hooks` wrapper is the plugin form, used by a plugin's
+        hooks/hooks.json. Either way an event entry is
+        { matcher, hooks: [{ type: "command", command }] }.
       scriptDir: ~/.claude/hooks
       eventsSeen: [PreToolUse, PreCompact, SessionStart, SubagentStart]
+    verified:
+      - >-
+        commandsDir confirmed. Personal commands are ~/.claude/commands/.
+        (plugin-dev/skills/command-development/SKILL.md:62-66)
+      - >-
+        projectDir confirmed for documented components, project commands at
+        .claude/commands/ and plugin settings at .claude/<plugin>.local.md.
+        (command-development/SKILL.md:54-60, plugin-settings/SKILL.md:9-18)
+      - >-
+        Hook event-entry shape confirmed, matcher plus nested command objects.
+        (hook-development/SKILL.md:342-381, plugins/hookify/hooks/hooks.json:3-12)
+      - >-
+        settings.json#hooks was wrong as written. The docs show direct top-level
+        event keys for settings. (hook-development/SKILL.md:60-119)
+      - >-
+        SubagentStart is absent from the documented event list, though the other
+        three are present. It is an observation from this machine only.
+        (hook-development/SKILL.md:630-644)
+    unverified: >-
+      configDir, skillsRoot, contextFile, settings, subagentsDir, the user hook
+      script directory, duplicate-skill precedence, scan depth, and settings
+      merge order. None are in the public repo.
     notes:
-      - Project context is <cwd>/.claude/CLAUDE.md with no ancestor walk-up.
+      - >-
+        The CLAUDE.md no-walk-up claim is contradicted for the documented
+        code-review workflow, which gathers root and nested CLAUDE.md files and
+        applies parent-path guidance. General runtime behavior is unverifiable
+        here. (plugins/code-review/commands/code-review.md:24-34)
 
   - id: codex
     name: Codex
+    upstream:
+      repo: https://github.com/openai/codex
+      ref: e017e93aceafb2fe04bed1c926e448a5fb4f913d
+      refDate: 2026-09-01
+      cliVersionChecked: 0.151.0
+      npm: '@openai/codex'
+      reference: references/harnesses/codex/MANIFEST.md
+      sourceAvailability: Full Rust source.
     configDir: ~/.codex
-    skillsRoot: ~/.codex/skills
+    skillsRoot: ~/.agents/skills
+    legacySkillsRoot: >-
+      ~/.codex/skills, loaded but marked in source as the deprecated user skills
+      location. Do not install here.
+      (ext/skills/src/host_roots.rs:95-101)
     contextFile: ~/.codex/AGENTS.md
     settings: ~/.codex/config.toml
     subagentsDir: ~/.codex/agents
     commandsDir: ~/.codex/prompts
-    projectDir: null
+    projectDir: .codex
     hooks:
       config: ~/.codex/hooks.json
-      form: 'the same event map as Claude, under a top-level hooks key'
-      scriptDir: ~/.codex/hooks
-    notes:
+      form: >-
+        HooksFile.hooks is the event map, each event holds matcher groups, each
+        matcher group holds a `hooks` handler array. Same shape as Claude's
+        plugin form. (config/src/hook_config.rs:10-17, :35-61, :153-163)
+      scriptDir: null
+    verified:
       - >-
-        User-scope context only. Project context comes from a standalone
-        AGENTS.md, not <cwd>/.codex/AGENTS.md.
-      - Also carries config.json alongside config.toml.
+        configDir confirmed, the default resolver appends .codex to home.
+        (utils/home-dir/src/lib.rs:5-17, :47-57)
+      - >-
+        settings confirmed, CONFIG_TOML_FILE is config.toml and the user layer is
+        ${CODEX_HOME}/config.toml. (config/src/lib.rs:40,
+        config/src/loader/mod.rs:314-325)
+      - >-
+        hooks.json confirmed, each config folder is joined with the literal
+        hooks.json and parsed as JSON. (hooks/src/engine/discovery.rs:338-367)
+      - >-
+        projectDir was null and is wrong. Project .codex/config.toml is a real
+        config layer, and project skills roots are discovered from project root
+        through cwd. (config/src/loader/mod.rs:118-120, :364-438,
+        ext/skills/src/host_roots.rs:86-93, :137-184)
+      - >-
+        The user-scope-context-only note is wrong. Project context is loaded from
+        AGENTS.override.md or AGENTS.md at every directory from project root
+        through cwd, and user instructions are a separate host-provided input.
+        (core/src/agents_md.rs:53-60, :185-235, :267-280, :294-305)
+      - >-
+        There is no config.json. The only JSON filename in source is hooks.json.
+        (config/src/lib.rs:40, hooks/src/engine/discovery.rs:338-367)
+      - >-
+        hooks.scriptDir does not exist. Command handlers carry inline command
+        strings, plugin handlers use environment variables.
+        (config/src/hook_config.rs:164-185, hooks/src/engine/discovery.rs:261-269)
+    unverified: >-
+      subagentsDir and commandsDir. /agents and /subagents are declared as slash
+      commands, but the inspected source has no directory loader for either, and
+      no prompt-file loader. Also unproven that the host passes
+      ~/.codex/AGENTS.md as the user instructions.
+    env:
+      CODEX_HOME: Overrides the config folder that every user-scope path derives from.
 
   - id: pi
     name: pi
+    upstream:
+      repo: https://github.com/earendil-works/pi
+      ref: 853a80d26c90a14c1886f0ebb8ffaae133ca2185
+      refDate: 2026-08-28
+      cliVersionChecked: 0.84.4
+      npm: '@earendil-works/pi-coding-agent'
+      reference: references/harnesses/pi/MANIFEST.md
+      sourceAvailability: Full TypeScript source.
     configDir: ~/.pi/agent
     skillsRoot: ~/.pi/agent/skills
     contextFile: ~/.pi/agent/AGENTS.md
     settings: ~/.pi/agent/settings.json
-    subagentsDir: ~/.pi/agent/agents
+    subagentsDir: null
     commandsDir: ~/.pi/agent/prompts
     projectDir: .pi
+    # pi has no hooks. The equivalent is extensions, and it is a different shape.
     hooks:
-      config: ~/.pi/agent/settings.json#hooks
-      form: 'array of TS or JS module paths, such as ~/.pi/agent/hooks/rewind/index.ts'
-      scriptDir: ~/.pi/agent/hooks
-    notes:
-      - Agent state lives one level down at ~/.pi/agent, not ~/.pi.
+      config: ~/.pi/agent/settings.json#extensions
+      form: >-
+        An array of TS or JS module paths under the `extensions` settings key.
+        Each module is loaded with jiti, must default-export a factory, and the
+        factory receives ExtensionAPI and calls api.on(event, handler),
+        registerTool, or registerCommand. Registrations commit atomically.
+        (core/extensions/loader.ts:490-518, :545-563, :280-305)
+      scriptDir: ~/.pi/agent/extensions
+    verified:
+      - >-
+        configDir confirmed. CONFIG_DIR_NAME defaults to .pi and getAgentDir()
+        appends the literal agent, so state is one level down at ~/.pi/agent, not
+        ~/.pi. (config.ts:496-500, :523-530)
+      - >-
+        settings confirmed, getSettingsPath() joins the agent dir with
+        settings.json, project settings deep-merge over global.
+        (config.ts:547-549, core/settings-manager.ts:213-222, :393-409)
+      - >-
+        settings.json#hooks does not exist. The Settings interface has no hooks
+        property, it has extensions?: string[].
+        (core/settings-manager.ts:94-124)
+      - >-
+        ~/.pi/agent/hooks does not exist. Auto-discovery uses agentDir/extensions/
+        and cwd/.pi/extensions/. (core/extensions/loader.ts:666-719, :755-805)
+      - >-
+        subagentsDir was ~/.pi/agent/agents and is wrong. There is no subagent
+        loader and no agents setting. The `agentsFiles` surface is loaded context
+        files, not subagents. (core/resource-loader.ts:40-50, :119-156,
+        core/settings-manager.ts:119-124)
+      - >-
+        commandsDir confirmed for prompt templates. agentDir/prompts/ is the
+        global root, slash-command names come from Markdown basenames, scanned
+        non-recursively. (core/prompt-templates.ts:104-129, :177-203)
+      - >-
+        Duplicate skill names keep the first loaded and log a collision naming
+        winner and loser. Exact duplicate files via symlinks are skipped
+        silently. (core/skills.ts:414-447)
+    contextFilePrecedence: >-
+      Per searched directory, the first existing file of AGENTS.override.md,
+      AGENTS.md, AGENTS.MD, CLAUDE.md, CLAUDE.MD. The user scope searches agentDir
+      first, then pi walks upward from cwd, outermost first, deduplicated.
+      (core/resource-loader.ts:71-90, :119-156)
+    env:
+      PI_CODING_AGENT_DIR: >-
+        Overrides the agent dir. Derived as ${APP_NAME.toUpperCase()}_CODING_AGENT_DIR.
+        (config.ts:496-505, :519-530)
 
   - id: omp
     name: Oh My Pi
+    upstream:
+      repo: https://github.com/can1357/oh-my-pi
+      ref: eea5628f13043286e17c4a2ea4fc28b15fda33ca
+      refDate: 2026-09-01
+      cliVersionChecked: 18.0.11
+      npm: '@oh-my-pi/pi-coding-agent'
+      reference: references/harnesses/omp/MANIFEST.md
+      sourceAvailability: Full TypeScript source.
     configDir: ~/.omp/agent
     skillsRoot: ~/.agents/skills
     contextFile: ~/.omp/agent/AGENTS.md
     settings: ~/.omp/agent/config.yml
     subagentsDir: ~/.omp/agent/agents
-    commandsDir: null
+    commandsDir: ~/.omp/agent/commands
     projectDir: .omp
     hooks:
       config: ~/.omp/agent/config.yml#extensions
-      form: 'default-exported TS factory taking HookAPI, registering pi.on(event, handler)'
+      form: >-
+        Extension packages are listed under the `extensions` key in config.yml.
+        Native hooks are files, discovered under each config directory's
+        hooks/pre and hooks/post, where the basename before the final extension
+        names the tool. A hook module default-exports a factory taking HookAPI
+        and registers pi.on(event, handler).
+        (discovery/omp-extension-roots.ts:179-233, discovery/builtin.ts:675-719,
+        extensibility/hooks/loader.ts:146-167, extensibility/hooks/types.ts:472-507)
       scriptDir: .omp/hooks/pre
+      userScriptDir: ~/.omp/agent/hooks/pre
+    # Skill roots OMP scans, by provider. Note the absence of any .pi root.
     readsOtherRoots:
       - ~/.omp/agent/skills
       - ~/.claude/skills
       - ~/.codex/skills
-      - ~/.pi/agent/skills
       - ~/.agent/skills
       - ~/.agents/skills
     providerPriority:
       native: 100
       omp-plugins: 90
       claude: 80
+      agent-plugins: 75
       agents: 70
       claude-plugins: 70
       codex: 70
       opencode: 55
       github: 30
       omp-managed: 5
+    verified:
+      - >-
+        Every priority number above is a literal PRIORITY constant.
+        agent-plugins: 75 was missing from the earlier table.
+        (discovery/builtin.ts:39-42, omp-plugins.ts:43-47, claude.ts:33-35,
+        agent-plugins.ts:36-41, agents.ts:26-28, claude-plugins.ts:32-34,
+        codex.ts:41-43, opencode.ts:43-45, github.ts:40-42,
+        autolearn/managed-skills.ts:16-26)
+      - >-
+        ~/.pi/agent/skills was in readsOtherRoots and is wrong. There is no pi
+        provider and no .pi source path. The enablePi* toggles map to OMP's own
+        native provider, not to pi. (discovery/helpers.ts:31-50,
+        discovery/builtin.ts:294-300, extensibility/skills.ts:168-181)
+      - >-
+        commandsDir was null and is wrong. Native commands load non-recursive
+        Markdown from ~/.omp/agent/commands and .omp/commands.
+        (discovery/builtin.ts:339-358, discovery/helpers.ts:477-505)
+      - >-
+        scanSkillsFromDir only loads <dir>/<name>/SKILL.md from immediate
+        children, directories or symlinks, hidden children skipped.
+        (discovery/helpers.ts:377-435)
+      - >-
+        subagentsDir confirmed. Task agents are *.md with YAML frontmatter
+        requiring name and description, precedence project, user, extension
+        packages, installed plugins, Claude marketplace, bundled.
+        (task/discovery.ts:4-18, :41-67, :93-138, task/agents.ts:21-30, :106-125)
+      - >-
+        Rules confirmed. Only ~/.omp/agent/RULES.md and the nearest project
+        .omp/RULES.md, each forced alwaysApply. (discovery/builtin.ts:387-418)
     notes:
       - >-
-        OMP is the union. It discovers every other harness's skills root, so it
-        needs no root of its own once one of them is populated.
+        OMP is the union of native, Claude, Codex, Agent Dirs, Agent Plugins,
+        Claude marketplace, OpenCode, and GitHub roots. It is not a superset of
+        pi. Populating ~/.agents/skills is what makes OMP see this pack.
       - >-
         Dedup is by skill name, first match wins by provider priority, and
-        identical files are collapsed by realpath. Symlinks from one canonical
-        store are therefore safe. Copies into several roots are not.
-      - >-
-        Sticky rules come only from RULES.md at ~/.omp/agent or the nearest
-        non-empty project .omp/ directory.
+        identical files are collapsed by realpath before any warning. Symlinks
+        from one canonical store are safe. Copies into several roots are not.
+    env:
+      PI_CONFIG_DIR: Overrides the .omp config root. (utils/src/dirs.ts:1-5, :280-288)
+      PI_CODING_AGENT_DIR: Overrides ~/.omp/agent. (utils/src/dirs.ts:567-570)

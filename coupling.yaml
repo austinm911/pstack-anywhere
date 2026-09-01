@@ -31,6 +31,28 @@ upstream:
 
 harnesses: [cursor, claude, codex, pi, omp]
 
+# Frontmatter is a fourth coupling surface, and the lint cannot see it, because
+# these keys never contain the word Cursor. Checked once and recorded here so a
+# reader does not have to re-derive it.
+frontmatter:
+  portable:
+    keys: [name, description, disable-model-invocation]
+    note: >-
+      All three are Agent Skills standard fields. Every target honors
+      disable-model-invocation, so the mode gating that keeps a skill out of
+      automatic model invocation ports with no change: Claude and pi accept both
+      the kebab-case and camelCase spellings, Codex carries it alongside its own
+      allow_implicit_invocation, and OMP normalizes the kebab-case form to its
+      internal `hide`. 39 of the 45 skills depend on this.
+  cursorOnly:
+    keys: [mode, icon, color, reminder]
+    note: >-
+      Cursor presentation only, and inert rather than broken elsewhere. OMP
+      preserves unrecognized keys as unknown metadata and the other three ignore
+      them. Left in place: removing them would widen the refresh diff against
+      upstream for no behavior change, and they are correct when the target is
+      Cursor.
+
 capabilities:
   - id: spawn_worker
     what: Spawn a delegate that owns a unit of work end to end.

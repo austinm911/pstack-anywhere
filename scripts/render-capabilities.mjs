@@ -26,14 +26,24 @@ function capabilityTable() {
   return [head(["capability", ...harnesses]), ...rows].join("\n");
 }
 
-function parameterTable() {
-  const withParams = ledger.capabilities.filter((c) => c.parameters);
-  return withParams
+// A capability whose coupling is a set of call parameters rather than one
+// per-harness cell renders as its own titled sub-table. The title carries the
+// capability id, because playbooks cite these by name.
+function parameterTables() {
+  return ledger.capabilities
+    .filter((c) => c.parameters)
     .map((c) => {
       const rows = Object.entries(c.parameters).map(([name, byHarness]) =>
         row([`\`${name}\``, ...harnesses.map((h) => byHarness[h] ?? "-")])
       );
-      return [head(["parameter", ...harnesses]), ...rows].join("\n");
+      return [
+        `### \`${c.id}\``,
+        "",
+        c.what.trim(),
+        "",
+        head(["parameter", ...harnesses]),
+        ...rows,
+      ].join("\n");
     })
     .join("\n\n");
 }
@@ -62,7 +72,7 @@ function prerequisiteList() {
 
 const out = `<!-- Generated from coupling.yaml by scripts/render-capabilities.mjs. Do not edit. -->
 
-# Capabilities
+# Capability map
 
 Read your own harness column. Everything upstream resolved through a Cursor
 primitive resolves here instead.
@@ -74,9 +84,7 @@ is upstream's original behavior.
 
 ${capabilityTable()}
 
-### Parameters on every delegate call
-
-${parameterTable()}
+${parameterTables()}
 
 ### What the gaps cost
 

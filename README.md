@@ -29,8 +29,9 @@ Symlinks rather than copies. Codex handles a symlinked skill directory in its
 loader and OMP deduplicates by realpath, so one canonical copy behind two links
 is seen once. Four copies in four roots collide by skill name instead.
 
-Evidence for each claim, read out of the shipped binaries, is in
-`harnesses.yaml` under `distribution`.
+Evidence for each claim is pinned upstream source, saved under
+`references/harnesses/<id>/`, and cited line by line in each `MANIFEST.md`.
+`harnesses.yaml` carries the conclusions under `distribution`.
 
 Three names collide with common skills, `tdd`, `teach`, and `unslop`. Check your
 target root before linking.
@@ -41,14 +42,16 @@ target root before linking.
 skills/          the pack, one directory per skill, names byte-identical to upstream
 coupling.yaml    every Cursor primitive this port replaces, and how, per harness
 harnesses.yaml   distribution targets, config files, and hook mechanism per harness
+references/      pinned upstream source per harness, with the pin and a refetch block
 scripts/         renders capabilities.md, and lints for Cursor tokens creeping back
 UPSTREAM.md      pinned SHA, divergence log, open decisions
 ```
 
-Every harness discovers skills the same way, `<root>/<skill-name>/SKILL.md` one
-level deep, so the pack needs no per-harness transform. Skills are
-self-contained, so `skills/poteto-mode/scripts/` travels with its skill and a
-skill directory works anywhere on its own.
+Claude, Codex, and OMP discover skills as `<root>/<skill-name>/SKILL.md`, one
+level deep. pi also walks nested Markdown but stops at any directory holding a
+`SKILL.md`, so that one layout works everywhere and the pack needs no
+per-harness transform. Skills are self-contained, so `skills/poteto-mode/scripts/`
+travels with its skill and a skill directory works anywhere on its own.
 
 ## Status
 

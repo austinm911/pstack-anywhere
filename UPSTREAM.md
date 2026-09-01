@@ -49,11 +49,15 @@ once with no way to tell which fired. Decide ownership per name before the first
 install, and record it here.
 
 **Install model.** One canonical store, per-skill symlinks into each harness
-root. Not copies. OMP discovers every other harness's skills root, so a copy per
-root makes OMP see the same skill four times and warn on the name; symlinks
-collapse by realpath and stay silent. Target roots and hook mechanisms are in
-`harnesses.yaml`. Populating `~/.agents/skills` alone covers OMP, so only
-Claude, Codex, and pi need a root of their own.
+root. Not copies. `~/.agents/skills` is a native user-scope root for Codex, pi,
+and OMP, verified in source at the pins recorded in `references/harnesses/`, so
+it plus `~/.claude/skills` covers all four. OMP also scans the Claude and Codex
+roots, so a copy per root makes it see the same skill several times and warn on
+the name; symlinks collapse by realpath and stay silent. Target roots and hook
+mechanisms are in `harnesses.yaml`.
+
+OMP does not scan any `.pi` root, so pi and OMP do not share through
+`~/.pi/agent/skills`. They share through `~/.agents/skills`.
 
 No adapter-per-harness: harness difference is the root path and the hook format,
 not the skill content. The installer needs a manifest of the names this repo
