@@ -1,16 +1,21 @@
 {
   "note": "Per-harness install targets. Verified on this machine 2026-08-31. Every harness discovers skills as <skillsRoot>/<skill-name>/SKILL.md, one level deep, non-recursive, with `name` and `description` frontmatter. That shared layout is why skills/ needs no per-harness transform.",
-  "shared": {
-    "note": "Prefer the shared agents convention over a per-harness copy. One file beats four that drift. Two things defeat it, both checkable: a harness with no agents-directory convention, and a harness that keeps only one user-scope context file and shadows the shared one with its own.",
-    "skillsRoots": ["~/.agents/skills", "~/.agent/skills"],
-    "contextFile": "~/.agents/AGENTS.md",
-    "readsSharedRoot": {
-      "omp": "native, the `agents` provider with its own enableAgentsUser toggle, verified in omp://skills.md",
-      "codex": "yes, config.toml carries [[skills.config]] entries pointing into ~/.agents/skills",
-      "pi": "yes, it enumerates skills across sibling roots including ~/.codex/skills",
-      "claude": "no, ~/.claude only"
+  "distribution": {
+    "note": "Where the pack goes. ~/.agents/skills is read natively by Codex, pi, and OMP, so one location covers three of four harnesses. Claude Code is the only holdout and needs its own root. Two locations, not four, and the second can be a symlink.",
+    "canonical": "~/.agents/skills",
+    "alsoRead": "~/.agent/skills",
+    "readsAgentsSkills": {
+      "codex": "yes. Its skills loader builds `.agents` + `skills` as a repo skills root and handles a symlinked skill directory. Verified in the shipped darwin-arm64 binary, strings adjacent to core-skills/src/loader.rs error messages.",
+      "pi": "yes. `userAgentsSkillsDir = join(getHomeDir(), \".agents\", \"skills\")`, plus an ancestor walk of project `.agents/skills` up to the git root. Verified in the shipped dist bundle.",
+      "omp": "yes. The `agents` provider at priority 70, with its own enableAgentsUser and enableAgentsProject toggles independent of the claude, codex, and pi toggles. Verified in omp://skills.md.",
+      "claude": "no. 122 occurrences of \".claude\" and zero of \".agents\" in the shipped binary. Its skills root is `.claude` + `skills`."
     },
-    "shadowing": "On OMP only one user-scope context file survives across all providers and native ~/.omp/agent/AGENTS.md has the highest priority, so ~/.agents/AGENTS.md loses at user scope. Put user-scope config in ~/.omp/agent/RULES.md instead, which is an always-apply rule and never enters that dedup.",
+    "symlinksAreSafe": "Codex names a symlinked skill directory explicitly in its loader, and OMP deduplicates identical files by realpath. So one canonical copy in ~/.agents/skills plus a symlink at ~/.claude/skills/<name> serves every harness without a duplicate-name collision. Copies into several roots would collide by name.",
+    "layout": "Identical everywhere. <root>/<skill-name>/SKILL.md, one level deep, non-recursive, `name` and `description` frontmatter."
+  },
+  "configuration": {
+    "note": "Separate concern from distribution. Role values have to sit in loaded context, not in a skills directory, so they go in the harness's context file or rule file. See skills/setup-pstack-anywhere/SKILL.md.",
+    "shadowing": "On OMP only one user-scope context file survives across all providers and native ~/.omp/agent/AGENTS.md has the highest priority, so ~/.agents/AGENTS.md loses at user scope. Put user-scope config in ~/.omp/agent/RULES.md, which is an always-apply rule and never enters that dedup.",
     "notShareable": "Hooks, tool names, and subagent definitions. Four incompatible hook formats, so anything depending on a hook needs four writers."
   },
   "harnesses": [
