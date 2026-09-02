@@ -71,9 +71,9 @@ Tools, not harness features. Missing one removes the playbooks that depend on it
 
 - **pack_path.** Upstream used `pstack/skills/...`.
   - cursor: pstack/skills/... in the vendored pack
-  - claude: the file's path under ~/.claude/skills/poteto-mode; no skill:// scheme, and the skill is hidden from the model's listing
-  - codex: the file's path under ~/.agents/skills/poteto-mode; listed to the model as Poteto Mode
-  - pi: degraded, the file's path under ~/.pi/agent/skills/poteto-mode; no scheme, the skill is hidden from the model, and nothing tells the agent where the skill root is
-  - omp: skill://Poteto Mode/<file>, keyed by the frontmatter name; skill://poteto-mode/ fails with Unknown skill
+  - claude: ../<name>/<file> under ~/.claude/skills; the skill is hidden from the model's listing, so the path is the only pointer
+  - codex: ../<name>/<file> under ~/.agents/skills; listed to the model as Poteto Mode
+  - pi: ../<name>/<file> under ~/.agents/skills; the skill is hidden from the model's listing, so the path is the only pointer
+  - omp: ../<name>/<file> under ~/.agents/skills; skill://Poteto Mode/<file> also works, keyed by frontmatter name
 - **trunk_reread.** Upstream used `git show origin/main:pstack/skills/...`. Drop the git indirection. Re-read the playbook through the harness's own skill addressing, which is already current. The staleness the trunk read guarded against was context staleness, not disk staleness, and a plain re-read fixes that.
 - **transcript_dir.** Upstream used `agent-transcripts/`. Per-harness session directory. Left as a role-style slot because the path is user and harness specific, and no playbook depends on its shape.

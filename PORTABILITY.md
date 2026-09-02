@@ -124,7 +124,7 @@ Next:
 | `worker_defaults.identity` (parameter_set) | native, subagent_type: "poteto-agent", unverified | substitute, a poteto-agent definition in the harness subagent dir, unverified | substitute, a poteto-agent definition in the harness subagent dir, unverified | extension, a poteto-agent definition where the extension reads its agents, else no identity, the parent model does the work, unverified | substitute, a poteto-agent definition in the harness subagent dir, unverified |
 | `worker_defaults.model` (parameter_set) | native, explicit slug per role, unverified | substitute, role slots, unverified | substitute, role slots, unverified | substitute, role slots, unverified | substitute, role slots, or the agent field, unverified |
 | `human_question` (capability) | native, AskQuestion, unverified | substitute, the ask tool, unverified | substitute, request_user_input tool, root thread only, mode-gated, unverified | extension, an ask tool an extension registers via registerTool, else a plain question in the reply, unverified | substitute, the ask tool, unverified |
-| `pack_path` (path_assumption) | native, pstack/skills/... in the vendored pack, unverified | substitute, the file's path under ~/.claude/skills/poteto-mode; no skill:// scheme, and the skill is hidden from the model's listing, exercised | substitute, the file's path under ~/.agents/skills/poteto-mode; listed to the model as Poteto Mode, exercised | degrade, the file's path under ~/.pi/agent/skills/poteto-mode; no scheme, the skill is hidden from the model, and nothing tells the agent where the skill root is, exercised | substitute, skill://Poteto Mode/<file>, keyed by the frontmatter name; skill://poteto-mode/ fails with Unknown skill, exercised |
+| `pack_path` (path_assumption) | native, pstack/skills/... in the vendored pack, unverified | substitute, ../<name>/<file> under ~/.claude/skills; the skill is hidden from the model's listing, so the path is the only pointer, exercised | substitute, ../<name>/<file> under ~/.agents/skills; listed to the model as Poteto Mode, exercised | substitute, ../<name>/<file> under ~/.agents/skills; the skill is hidden from the model's listing, so the path is the only pointer, exercised | substitute, ../<name>/<file> under ~/.agents/skills; skill://Poteto Mode/<file> also works, keyed by frontmatter name, exercised |
 
 The other 14 domains resolve the same way on every harness:
 
@@ -161,7 +161,7 @@ A scenario defines what to run and what to inspect; it does not claim a result.
 | `worker_defaults.identity` | `worker_defaults_identity` | 4 | 0 | all harnesses: unverified |
 | `worker_defaults.model` | `worker_defaults_model` | 5 | 0 | all harnesses: unverified |
 | `human_question` | `human_question` | 5 | 0 | all harnesses: unverified |
-| `pack_path` | `skill_identify` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `pack_path` | `skill_identify` | 5 | 8 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
 
 Cursor follows the same evidence rules as every other harness, and cannot reach `static` only because this repo has no saved Cursor source to cite.
 
@@ -170,9 +170,9 @@ Cursor follows the same evidence rules as every other harness, and cannot reach 
 | measure | value |
 | --- | --- |
 | scenarios | 10 defined |
-| attestations | 15 recorded |
-| evidence classes | 15 exercised |
-| run directories | 15 complete |
+| attestations | 19 recorded |
+| evidence classes | 15 exercised, 4 superseded |
+| run directories | 19 complete |
 | cells exercised | 15 of 120, a subset of the 15 verified cells in Totals |
 
 Every recorded grounding still holds against the files on disk.

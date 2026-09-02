@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: identify.skill_loaded
+    observed: 'true; read $HOME/.agents/skills/poteto-mode/capabilities.md after listing that root'
+    source: invocation.json calls
+  - id: identify.column
+    observed: 'harness: pi; matches this run'
+    source: identify.txt line 1
+  - id: identify.cell_text
+    observed: 'verbatim match with the pi spawn_worker cell in capabilities.md'
+    source: identify.txt line 2 against skills/poteto-mode/capabilities.md
+  - id: identify.evidence
+    observed: 'PI_CODING_AGENT=true in the session environment'
+    source: identify.txt line 3
+  - id: identify.reference_resolved
+    observed: 'by path under the harness skill root; no scheme, found by listing $HOME/.agents/skills'
+    source: invocation.json calls

@@ -295,7 +295,7 @@ harnesses:
       reference: references/harnesses/pi/MANIFEST.md
       sourceAvailability: Full TypeScript source.
     configDir: ~/.pi/agent
-    skillsRoot: ~/.pi/agent/skills
+    skillsRoot: ~/.agents/skills
     contextFile: ~/.pi/agent/AGENTS.md
     settings: ~/.pi/agent/settings.json
     subagentsDir: null

@@ -1,0 +1,3 @@
+harness: claude
+spawn_worker: Agent tool (named Task in older docs), subagent_type
+evidence: I am Claude Code with an Agent tool taking subagent_type, and the skill loaded from ~/.claude/skills/poteto-mode, matching the claude column's pack_path.

@@ -10,7 +10,7 @@ fall back to their absent path when a line is missing, so this is an override
 layer, not a requirement. The pack works with no setup at all, it just verifies
 less and asks more.
 
-Read `skill://poteto-mode/capabilities.md` first. It lists every role, what the
+Read `../poteto-mode/capabilities.md` (every `../<skill>/` path in this pack is relative to this skill's own directory, so it names a sibling under the same skill root) first. It lists every role, what the
 role does, and what happens when it has no value. This skill fills those slots.
 
 ## Where the block goes
@@ -126,7 +126,7 @@ block so re-runs stay idempotent.
 ```
 <!-- pstack-anywhere:begin -->
 # pstack configuration. One line per role. Delete a line to fall back to the skill default.
-# `none` selects the absent path in skill://poteto-mode/capabilities.md.
+# `none` selects the absent path in ../poteto-mode/capabilities.md.
 # `inherit-parent` or `auto` on a model role: the role runs on the parent chat model.
 
 ## Tools

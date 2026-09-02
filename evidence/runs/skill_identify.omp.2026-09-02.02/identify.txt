@@ -1,0 +1,3 @@
+harness: omp
+spawn_worker: task tool, agent field selects the specialist
+evidence: skill://Poteto Mode/<file> addressing resolved, which the paths section documents only for omp.

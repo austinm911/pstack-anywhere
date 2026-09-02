@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: identify.skill_loaded
+    observed: 'true; cat capabilities.md under ~/.claude/skills/poteto-mode'
+    source: invocation.json calls
+  - id: identify.column
+    observed: 'harness: claude; matches this run'
+    source: identify.txt line 1
+  - id: identify.cell_text
+    observed: 'verbatim match with the claude spawn_worker cell in capabilities.md'
+    source: identify.txt line 2 against skills/poteto-mode/capabilities.md
+  - id: identify.evidence
+    observed: 'Agent tool with subagent_type plus the skill loading from ~/.claude/skills'
+    source: identify.txt line 3
+  - id: identify.reference_resolved
+    observed: 'by path under the harness skill root; no scheme'
+    source: invocation.json calls

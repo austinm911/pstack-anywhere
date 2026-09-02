@@ -1,0 +1,3 @@
+harness: pi
+spawn_worker: not on by default: a task tool an extension registers, else do the work inline, sequentially, and say no worker ran
+evidence: The PI_CODING_AGENT=true environment variable identified this harness as pi.

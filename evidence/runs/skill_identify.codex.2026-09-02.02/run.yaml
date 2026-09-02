@@ -1,0 +1,24 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: skill_identify
+harness: codex
+run_id: skill_identify.codex.2026-09-02.02
+coupling_version: 2
+started_at: 2026-09-02T20:01:36.406Z
+ended_at: 2026-09-02T20:02:00.696Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: codex-cli 0.152.1
+harness_version_source: codex --version -> codex-cli 0.152.1
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .codex/auth.json and these written files: .codex/config.toml = \"approval_policy = \\\"never\\\"\\nsandbox_mode = \\\"danger-full-access\\\"\\n[features]\\nmulti_agent = true\\n\", plus herdr's codex state-reporting integration (herdr integration install codex); skill poteto-mode symlinked at /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-l5GIa1/.agents/skills; no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-l5GIa1/bin/codex"
+supersedes: null
+skills: 
+  - name: poteto-mode
+    root: /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-l5GIa1/.agents/skills
+    digest: 356d69eb1f81381dd6333bb36e197331314aa12a8106622db4b37ab63a2a61b2

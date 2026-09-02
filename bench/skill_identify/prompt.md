@@ -6,8 +6,8 @@ from the operator's setup is reachable.
 Do the following, in order.
 
 1. Read poteto-mode's `capabilities.md` through whatever skill addressing this
-   harness supports (`skill://poteto-mode/capabilities.md` where available, or
-   the skill path the harness already resolves). Do not search the filesystem
+   harness supports (the skill root this harness loads skills from; every harness
+   here installs it as a directory under that root). Do not search the filesystem
    for a copy outside the skill, and do not consult anything outside the skill
    and this session for the column choice.
 

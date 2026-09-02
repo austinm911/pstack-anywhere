@@ -784,3 +784,119 @@ attestations:
       environment variables in its log) read the file by the same path and
       answered correctly, so the pi cell is degrade: the path works when
       followed, and nothing in the harness leads the agent to it.
+  - id: skill_identify-omp-2026-09-02-02
+    supersedes: skill_identify-omp-2026-09-02
+    method: exercised
+    axis: pack_path
+    harness: omp
+    scenario: skill_identify
+    run: skill_identify.omp.2026-09-02.02
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 0b5396f236f651c9df73b01d63f53844ac26395c803d42d02580dca2870d0cc3
+      - path: identify.txt
+        digest: 3c8a2367ef5d427f4cd858cb9fd6709a958db61254c3d6797bb9646a457a804d
+      - path: invocation.json
+        digest: 09508940072b6f49b1c83956dd1d22df82c12bb8bec3344c1c892deb24b41b75
+      - path: observations.yaml
+        digest: 6309c6a084473f972f7246ac856ed6d744bb2c69239b67760ba806517bfc40de
+      - path: run.yaml
+        digest: a3e18dd401044b80685ff50cd6187c8be74844a01b7d69b5d18b1e4d517893dc
+      - path: session/2026-09-02T19-58-24-114Z_01a063b3-8372-7146-a3d8-feb2e1598bda.jsonl
+        digest: d85984a75dba396e8219bca60d634b31020d5464d4b1e5e7083cf4d727754737
+      - path: transcript.md
+        digest: 17b920b4ec8d1627b626d94ead2d52ef524b6775e7aa89781eecc79d47b8a3a6
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Rerun after the pack's skill addressing changed to ../<name>/<file> and
+      the pi bench root moved to ~/.agents/skills. bench/run.mjs under a scratch
+      HOME with only auth and the symlinked skill, environment cleared to the
+      runner's allowlist, TERM now read from the pane.
+      omp 18.1.2, opus:low. Verbatim column and cell; skill://poteto-mode/ failed, skill://Poteto Mode/ resolved.
+  - id: skill_identify-claude-2026-09-02-02
+    supersedes: skill_identify-claude-2026-09-02
+    method: exercised
+    axis: pack_path
+    harness: claude
+    scenario: skill_identify
+    run: skill_identify.claude.2026-09-02.02
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 6cf2f5267f2b3813ef17585e9b7537956aa2090c8f017b5708967b14de6de744
+      - path: identify.txt
+        digest: 7241f3ffe02ffb7b8077f2c998dfa35120b6e02a7a93d50ce36682c9393bd5c8
+      - path: invocation.json
+        digest: 477e838380d063b73e86c3f009dd7304e669717524fcff24196277071cecdab5
+      - path: observations.yaml
+        digest: 6a9e65d7745929f8d29ecd2a1ca149c360cac3abda123ac8f0c26b76c4453291
+      - path: run.yaml
+        digest: d4b8c256b9d7814f3c125422fa18cb334715d1bee17272a7ad4d6d8c27931360
+      - path: session/85497c0f-6cec-4157-9a90-b9158185f0d6.jsonl
+        digest: 9966acb2ae8a20ccdeb20bc44e449930dbe614911f09f4956adb60f7610423a8
+      - path: transcript.md
+        digest: 6b429ee5602bfb7c5bf08f2b6cbf7c197c802e850e7df5e9bf3997342f003c8e
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Rerun after the pack's skill addressing changed to ../<name>/<file> and
+      the pi bench root moved to ~/.agents/skills. bench/run.mjs under a scratch
+      HOME with only auth and the symlinked skill, environment cleared to the
+      runner's allowlist, TERM now read from the pane.
+      Claude Code 2.1.258, opus. Verbatim column and cell through ~/.claude/skills/poteto-mode on the first attempt.
+  - id: skill_identify-codex-2026-09-02-02
+    supersedes: skill_identify-codex-2026-09-02
+    method: exercised
+    axis: pack_path
+    harness: codex
+    scenario: skill_identify
+    run: skill_identify.codex.2026-09-02.02
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 2e3ad7adcdbcf3708f1dc2974b651e19a6fe9eca0732653c9d4d332604829149
+      - path: identify.txt
+        digest: bb8781b0004297e7a707f67fb8dd8025dd78c75f1c4d09c75b6702cc59a45cd8
+      - path: invocation.json
+        digest: 2458ea15cc640341cc6689fbcdd72bfcdb971c2facc166da20e3e98227d2f574
+      - path: observations.yaml
+        digest: 9be393503cc72f7190b6261a24ac0477a26003d64f87226014b81b503aea6b0e
+      - path: run.yaml
+        digest: 785a151030de0ef84c7aaea6450a4185f2621918bcdf650cd4b99062f7262ff1
+      - path: session/2026/09/02/rollout-2026-09-02T13-01-41-01a063b6-8750-7f21-b4c4-8894d3f4495c.jsonl
+        digest: 4e8060b8daae2d89852553a9f586cd8df28a0f7d2090e681b7df600f8461f1fe
+      - path: transcript.md
+        digest: 09ad96a91ed86c722ac452b33ac77650c549f8c7ab67274eb476b7795c6a99f9
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Rerun after the pack's skill addressing changed to ../<name>/<file> and
+      the pi bench root moved to ~/.agents/skills. bench/run.mjs under a scratch
+      HOME with only auth and the symlinked skill, environment cleared to the
+      runner's allowlist, TERM now read from the pane.
+      Codex 0.152.1, gpt-5.6-terra. Verbatim column and cell; read the file by path under ~/.agents/skills. Two earlier attempts never started: TERM=dumb reached codex through the wrapper, fixed in this change.
+  - id: skill_identify-pi-2026-09-02-02
+    supersedes: skill_identify-pi-2026-09-02
+    method: exercised
+    axis: pack_path
+    harness: pi
+    scenario: skill_identify
+    run: skill_identify.pi.2026-09-02.02
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 0b63015febe1ad4b5554184b532ad6a96c31c928430a8c5109fe0123a8f0e743
+      - path: identify.txt
+        digest: c97d8aebcc06f6d3fd98686910f95d74e7e38d06dbcf841d4bc16a7b6725ff74
+      - path: invocation.json
+        digest: d7f988ed5987d39f6036da5f44e75b7310c3531c006eef428de69cb23bf0796a
+      - path: observations.yaml
+        digest: 2c3e04ad9dced032e72ea4c60e030691ba448dc855c3b21a3d92608505f1427e
+      - path: run.yaml
+        digest: f6e5454ee6e916f1276942836797d358ffecaf27ccabfc4385c1a7a65b539e20
+      - path: session/2026-09-02T20-01-09-084Z_01a063b6-07dc-735c-bdf4-f7d740c74bbe.jsonl
+        digest: ffeabc39fd7f086bfb963673e6024a381b0c8a5164c4d60bd2fd0d2d26160464
+      - path: transcript.md
+        digest: 21bf1bec95208ff2be3687c14e69cc8031bb162fdd219e1be76ae59273c61c06
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Rerun after the pack's skill addressing changed to ../<name>/<file> and
+      the pi bench root moved to ~/.agents/skills. bench/run.mjs under a scratch
+      HOME with only auth and the symlinked skill, environment cleared to the
+      runner's allowlist, TERM now read from the pane.
+      pi 0.84.4, gpt-5.6-luna, no extension. Verbatim column and cell, capabilities.md read from $HOME/.agents/skills/poteto-mode after listing that root. Supersedes the .01 degrade: the file is reachable from a root pi reads. One discarded attempt read a stray copy under the operator's TMPDIR left by manual tests; that copy was removed and the run redone.

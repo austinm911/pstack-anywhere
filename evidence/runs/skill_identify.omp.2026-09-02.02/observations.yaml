@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: identify.skill_loaded
+    observed: 'true; read skill://Poteto Mode/capabilities.md after skill://poteto-mode/ failed'
+    source: invocation.json calls
+  - id: identify.column
+    observed: 'harness: omp; matches this run'
+    source: identify.txt line 1
+  - id: identify.cell_text
+    observed: 'verbatim match with the omp spawn_worker cell in capabilities.md'
+    source: identify.txt line 2 against skills/poteto-mode/capabilities.md
+  - id: identify.evidence
+    observed: 'the skill:// resolution the paths section documents only for omp'
+    source: identify.txt line 3
+  - id: identify.reference_resolved
+    observed: 'through skill://, keyed by the frontmatter name'
+    source: invocation.json calls

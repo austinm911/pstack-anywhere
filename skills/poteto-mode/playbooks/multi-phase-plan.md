@@ -1,13 +1,15 @@
 ### Multi-phase or multi-PR plan
 
+Every `../<skill>/` path below is relative to this skill's directory: a sibling under the same skill root.
+
 **You own the plan, not the code. The plan is a checklist an owner runs box by box and the operator audits from the evidence.** For work that spans phases or stacked PRs. The plan is the deliverable. Do not implement.
 
 1. When the change is one or two files with an obvious approach, skip the plan. Say so and stop.
-2. Settle open questions by prototype before you write. For a question about layout, timing, behavior, or whether an API works, run `skill://poteto-mode/playbooks/prototype.md`. Keep the branch, the SHA, and the screenshots for Appendix A. Ask the operator only about a product or preference call that no run can settle. Give options (the **never-block-on-the-human** principle skill).
-3. Explore in subagents with the `spawn_worker` capability. Use the `worker_defaults` parameters and an explicit model role per the Subagents section (the **guard-the-context-window** principle skill). Read `skill://poteto-mode/capabilities.md` for harness resolution and `skill://setup-pstack-anywhere/SKILL.md` for role values. Each returns file pointers, conventions, test commands, and entry points. No inlined dumps.
-4. Copy the skeleton below into the plan file and fill every placeholder. Unless the operator names a path, write the file under the agent store's `docs/`. Keep every heading and every sub-block in the order shown. One section per PR. One PR is one change with its own evidence (the **sequence-verifiable-units** principle skill). Name the execution playbook in **How to read this**. Pick between `skill://poteto-mode/playbooks/autopilot-full.md` and `skill://poteto-mode/playbooks/autopilot-stack.md` per the rule at the end of `skill://poteto-mode/playbooks/autopilot-stack.md`. A standing program takes `skill://poteto-mode/playbooks/orchestrate.md`.
+2. Settle open questions by prototype before you write. For a question about layout, timing, behavior, or whether an API works, run `../poteto-mode/playbooks/prototype.md`. Keep the branch, the SHA, and the screenshots for Appendix A. Ask the operator only about a product or preference call that no run can settle. Give options (the **never-block-on-the-human** principle skill).
+3. Explore in subagents with the `spawn_worker` capability. Use the `worker_defaults` parameters and an explicit model role per the Subagents section (the **guard-the-context-window** principle skill). Read `../poteto-mode/capabilities.md` for harness resolution and `../setup-pstack-anywhere/SKILL.md` for role values. Each returns file pointers, conventions, test commands, and entry points. No inlined dumps.
+4. Copy the skeleton below into the plan file and fill every placeholder. Unless the operator names a path, write the file under the agent store's `docs/`. Keep every heading and every sub-block in the order shown. One section per PR. One PR is one change with its own evidence (the **sequence-verifiable-units** principle skill). Name the execution playbook in **How to read this**. Pick between `../poteto-mode/playbooks/autopilot-full.md` and `../poteto-mode/playbooks/autopilot-stack.md` per the rule at the end of `../poteto-mode/playbooks/autopilot-stack.md`. A standing program takes `../poteto-mode/playbooks/orchestrate.md`.
 5. Write under `/technical-writing` in full, then `/unslop`. The body is one Diátaxis mode, how-to. Appendices hold explanation and reference. Two rules apply verbatim. "i dont want any abstract metaphors" and "write like hemingway". Each heading states the task or the finding. No long dashes. No mid-sentence colons.
-6. Run `bun skill://poteto-mode/scripts/check-plan.mjs <plan.md>` and fix every line it prints (the **encode-lessons-in-structure** principle skill). It enforces the skeleton's shape, the verification rule in every verification block, and the punctuation rules.
+6. Run `bun ../poteto-mode/scripts/check-plan.mjs <plan.md>` and fix every line it prints (the **encode-lessons-in-structure** principle skill). It enforces the skeleton's shape, the verification rule in every verification block, and the punctuation rules.
 7. Hand back. Post the plan path and the script's output, then stop. Execution starts on the operator's explicit go, under the execution playbook the plan names.
 
 **Verification.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked (the **prove-it-works** principle skill). That sentence is the verification rule. Every verification block opens with it. The live block is mandatory. Ten lanes on `your fast code model` at the PR head drive the real surface through your UI driver or CLI driver, per the **swarm** skill. Each lane is one box with a concrete scenario, the screenshot it saves, and its pass predicate. The perf block names the metric, the probe, the trunk baseline measured first, and the rule with the number that fails. A PR that changes an interaction is review-gated. The operator reviews it in chat with screenshots and a video before merge. A PR that changes no interaction writes `**Review gate.** None. <PR id> is not review-gated.` and no boxes under it.
@@ -23,7 +25,7 @@
 
 One box is one unit of work. Every box names the evidence that checks it. A nested box is a sub-step of the box above it. Check a box only when its evidence exists, a file, a log line, a screenshot, a test run, or a SHA. The body is a how-to. The appendices explain and record.
 
-The program runs `skill://poteto-mode/playbooks/<execution playbook>.md`. <Who merges, and which PR ids are the operator's items that stop at merge-ready.>
+The program runs `../poteto-mode/playbooks/<execution playbook>.md`. <Who merges, and which PR ids are the operator's items that stop at merge-ready.>
 
 Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked.
 
@@ -34,11 +36,11 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 - [ ] State the protocol and this plan to the operator, then stop. Start execution only on her explicit go.
 - [ ] On her go, arm a `/goal` with this exact text. "<The plan path, the PR ids in order, the verification rule, who merges, and the done condition.>"
 - [ ] Read these at program start. Re-read them at every tick.
-  - [ ] `skill://poteto-mode/playbooks/<execution playbook>.md`
-  - [ ] `skill://swarm/SKILL.md`
-  - [ ] `skill://<control skill path>`
-  - [ ] `skill://poteto-mode/playbooks/opening-a-pr.md`
-  - [ ] `skill://<each other leaf skill the program uses>`
+  - [ ] `../poteto-mode/playbooks/<execution playbook>.md`
+  - [ ] `../swarm/SKILL.md`
+  - [ ] `../<control skill>/SKILL.md`
+  - [ ] `../poteto-mode/playbooks/opening-a-pr.md`
+  - [ ] `../<each other leaf skill the program uses>/SKILL.md`
 - [ ] Arm the 30-minute audit tick with the `wake_on_event` capability. Use the harness's event-wake mechanism when available. Otherwise use a heartbeat sized to when the result is worth re-checking. Never leave the cadence to memory.
 - [ ] Use this tick prompt, verbatim. "Re-read the execution playbook through skill addressing and the armed /goal. Audit the operation against both and fix drift in this tick. Probe every active lane and judge progress by side effects only. Stand down a stuck lane and dispatch its replacement now. Then send the operator a status message, whether or not anything changed, with the queue table of PR, owner, state, and head SHA, the verdicts since the last tick, what merged, open operator gates, and blockers."
 - [ ] On the operator's hold or stand-down, send every owner a zero-writes order at once.
@@ -62,9 +64,9 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 
 ### Verdict and merge, for every PR
 
-- [ ] At the merge-ready head SHA, run the swarm per `skill://swarm/SKILL.md`. One gates lane. The ten live lanes from the PR's **Verify, live** block. The perf lane from its **Verify, perf** block. One audit lane that reads the diff and the receipts and distrusts the PR body.
+- [ ] At the merge-ready head SHA, run the swarm per `../swarm/SKILL.md`. One gates lane. The ten live lanes from the PR's **Verify, live** block. The perf lane from its **Verify, perf** block. One audit lane that reads the diff and the receipts and distrusts the PR body.
 - [ ] Clean only when every lane is `PASS`. Findings go back to the owner. A new head gets a fresh swarm and a fresh verdict.
-- [ ] <The merge or append rule from the execution playbook, with the patch-id rule from `skill://poteto-mode/playbooks/shipping.md`.>
+- [ ] <The merge or append rule from the execution playbook, with the patch-id rule from `../poteto-mode/playbooks/shipping.md`.>
 
 ### Boot recipe, for every live lane
 
@@ -149,7 +151,7 @@ Each live lane runs on its own cloud VM at the PR head. Drive through your UI dr
 
 ## Appendix D. Links and reading list
 
-<Docs to read before editing. Which PRs get `skill://how/SKILL.md` and `skill://interrogate/SKILL.md`. The trail per `skill://show-me-your-work/SKILL.md`.>
+<Docs to read before editing. Which PRs get `../how/SKILL.md` and `../interrogate/SKILL.md`. The trail per `../show-me-your-work/SKILL.md`.>
 ````
 
 **Reply:** the plan path, the PR ids with their dependencies and the review-gated set, what the prototypes proved and what stays unproven, and the check script's output.

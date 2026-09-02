@@ -114,7 +114,10 @@ const setupScratch = (scenario) => {
 // harness that prints its environment would write those into the evidence. So
 // the launch goes through a wrapper that execs the real binary under `env -i`
 // with these names and nothing else.
-const ENV_KEEP = ["HOME", "PATH", "TERM", "COLORTERM", "LANG", "LC_ALL", "LC_CTYPE", "TMPDIR", "SHELL", "USER", "LOGNAME"];
+const ENV_KEEP = ["HOME", "PATH", "LANG", "LC_ALL", "LC_CTYPE", "TMPDIR", "SHELL", "USER", "LOGNAME"];
+// The terminal is the pane's, not the runner's: a runner launched from a tool
+// carries TERM=dumb, and codex refuses to start under it.
+const PANE_KEEP = ["TERM", "COLORTERM"];
 // herdr sets the pane id on the pane process, after the wrapper file exists, so
 // these are read at exec time rather than written in. The names herdr uses now
 // plus whatever else it already put in this process.
@@ -161,13 +164,13 @@ const writeCliWrapper = (home, cli) => {
       "IFS=",
       "exec /usr/bin/env -i \\",
       ...kept.map((name) => `  ${name}=${shq(values[name])} \\`),
-      ...HERDR_KEEP.map((name) => `  \${${name}:+${name}=$${name}} \\`),
+      ...[...PANE_KEEP, ...HERDR_KEEP].map((name) => `  \${${name}:+${name}=$${name}} \\`),
       `  ${shq(real)} "$@"`,
       "",
     ].join("\n"),
     { mode: 0o755 },
   );
-  return { bin, real, allowlist: [...kept, ...HERDR_KEEP] };
+  return { bin, real, allowlist: [...kept, ...PANE_KEEP, ...HERDR_KEEP] };
 };
 
 // Where herdr expects each harness's home to be before it will install its
