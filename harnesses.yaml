@@ -85,6 +85,13 @@ configuration:
 harnesses:
   - id: claude
     name: Claude Code
+    # How bench/run.mjs launches this harness under herdr. The ledger engine
+    # ignores this block; only the bench runner reads it.
+    cli:
+      kind: claude
+      model_flag: '--model {model}'
+      version_command: claude --version
+      extra_args: []
     upstream:
       repo: https://github.com/anthropics/claude-code
       ref: f275fa282e76c5e5456912268f2c367a7f4f4797
@@ -143,6 +150,11 @@ harnesses:
 
   - id: codex
     name: Codex
+    cli:
+      kind: codex
+      model_flag: '-m {model}'
+      version_command: codex --version
+      extra_args: []
     upstream:
       repo: https://github.com/openai/codex
       ref: e017e93aceafb2fe04bed1c926e448a5fb4f913d
@@ -212,6 +224,11 @@ harnesses:
 
   - id: pi
     name: pi
+    cli:
+      kind: pi
+      model_flag: '--model {model}'
+      version_command: pi --version
+      extra_args: []
     upstream:
       repo: https://github.com/earendil-works/pi
       ref: 853a80d26c90a14c1886f0ebb8ffaae133ca2185
@@ -278,6 +295,11 @@ harnesses:
 
   - id: omp
     name: Oh My Pi
+    cli:
+      kind: omp
+      model_flag: '--model {model}'
+      version_command: omp --version
+      extra_args: []
     upstream:
       repo: https://github.com/can1357/oh-my-pi
       ref: eea5628f13043286e17c4a2ea4fc28b15fda33ca

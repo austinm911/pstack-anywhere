@@ -7,7 +7,8 @@
     "check": "bun scripts/coupling.mjs check --gate",
     "lint": "bun scripts/coupling.mjs check",
     "render": "bun scripts/coupling.mjs render",
-    "status": "bun scripts/coupling.mjs status"
+    "status": "bun scripts/coupling.mjs status",
+    "test": "bun test test/"
   },
   "devDependencies": {
     "@intellectronica/ruler": "^0.3.44"

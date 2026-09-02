@@ -39,7 +39,9 @@ import { join, dirname, relative, basename, extname } from "node:path";
 import { createHash } from "node:crypto";
 import { parseArgs } from "node:util";
 
-const ROOT = join(dirname(new URL(import.meta.url).pathname), "..");
+// COUPLING_ROOT points the engine at another checkout, which is how the tests
+// run it against fixture repos without copying this file.
+const ROOT = process.env.COUPLING_ROOT ?? join(dirname(new URL(import.meta.url).pathname), "..");
 const PARITY = ["native", "substitute", "extension", "degrade", "drop"];
 // The grounding each method carries. A key belonging to another method is a
 // record grounded two ways at once, where only one of them is ever checked.

@@ -190,7 +190,7 @@ lint's reach, so no hit can arise there either way:
 | --- | --- | --- |
 | `skills/poteto-mode/capabilities.md` | allowlisted whole-file | Generated from coupling.yaml. Its cursor column names Cursor on purpose. |
 | `skills/poteto-mode/playbooks/worktree-cleanup.md` | allowlisted whole-file | .cursor/worktrees/myrepo/x is a real disk path in an example about not hand-typing worktree paths. |
-| `skills/poteto-mode/scripts/` | allowlisted directory prefix, and nothing under it is Markdown, so `lint.scan` never reaches it either | watch-pr detects review-automation authors by name; worktree-audit.sh uses shell -gt comparisons. |
+| `skills/poteto-mode/scripts/` | allowlisted directory prefix | watch-pr detects review-automation authors by name; worktree-audit.sh uses shell -gt comparisons. |
 | `skills/setup-pstack-anywhere/SKILL.md` | allowlisted whole-file | Names the Cursor rule-file location, since Cursor is a supported target. |
 
 ### `poteto-mode`
