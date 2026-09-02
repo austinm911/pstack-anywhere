@@ -298,3 +298,75 @@ attestations:
       its own context, the structured result came back through hub wait, and
       the parent never touched probe.txt. Says nothing about durability or
       any other harness.
+  - id: worker_defaults_background-omp-2026-09-02
+    method: exercised
+    axis: worker_defaults
+    parameter: background
+    harness: omp
+    scenario: worker_defaults_background
+    run: worker_defaults_background.omp.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 035948466e103679f62b9fb923959d7a898f1f9c7fdf163b85446dd3bc7a8947
+      - path: invocation.json
+        digest: a2b615d9db6cd3a5263adaa0d69a29a6cd0b338cc5176c12bbf841404a9c1702
+      - path: observations.yaml
+        digest: 8fd217b054dbd426472bc20c0eb75ea4cf7744e5729db1be73180c2bc230a663
+      - path: parent-alive.txt
+        digest: f87e4a956c29d71c86ab68ef7d4b85ab25dd2bac572aece24ce149394925447c
+      - path: run.yaml
+        digest: c07b7f723bc67aa2a7ac88a9cb58a5071d323e983ccebec1390cda0cd553adb2
+      - path: session/2026-09-02T05-40-09-511Z_01a060a1-c4a7-7515-ab37-5b4f7755dfa5/TimestampWorker.jsonl
+        digest: c7785b3c62d820c6cd57938657cc0e834cb6d9c3da56ac0f103fdd550e2b8edf
+      - path: session/2026-09-02T05-40-09-511Z_01a060a1-c4a7-7515-ab37-5b4f7755dfa5/TimestampWorker.md
+        digest: 1cb1122db3eec427371b5db1fe70383c24d4cabc81e302d035fc6077ba1ebac7
+      - path: session/2026-09-02T05-40-09-511Z_01a060a1-c4a7-7515-ab37-5b4f7755dfa5.jsonl
+        digest: 6914f59be708677aa29b5175e48ebd01e5f60dab1839268c21ccf600e16d028f
+      - path: timeline.yaml
+        digest: ec2fa211aea7bd68d54b118c456245e24e703ad95f051592ddf566863814d4a8
+      - path: transcript.md
+        digest: e929e225dd39e21a27c2726f15195ca85bb6e2e0df27c35c83f834ad5eaffe83
+      - path: worker-done.txt
+        digest: 40b29f2dfa4b21b5ed87437f7dd9bce59530f01288a44a247ab95e4dac403eea
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane, omp 18.1.2 with opus:low.
+      Grounds the omp background cell only: the task call returned in 17 ms,
+      the parent wrote its file 60 s before the worker finished, and the result
+      came back intact through a separate hub wait.
+  - id: worker_defaults_readonly-omp-2026-09-02
+    method: exercised
+    axis: worker_defaults
+    parameter: readonly
+    harness: omp
+    scenario: worker_defaults_readonly
+    run: worker_defaults_readonly.omp.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 428842a081e0fe71806d05948bf7204d7a8766e14709c88d15ec31ac23be523c
+      - path: dir-listing.after.txt
+        digest: 7aea6d0f6d8824c4b6a9d4d60a61601ea0d91ae15919464224748c31d2fbae31
+      - path: invocation.json
+        digest: 92d30567eff2587b71eb5744bc42c7ad52752885436988aa274b5038be9a14ee
+      - path: observations.yaml
+        digest: bb8a4acf598e0f70fd83823079cc8b62d4885e718d703adfe59a1028ca04068d
+      - path: refusal.txt
+        digest: ae46f7a7a6050afbeb90c172caf4d04f507ae5fc362a7d644d5b5341dc8f032e
+      - path: run.yaml
+        digest: 98293dbff13d9321fb9519a9831edbca05bd86d96e3e2233a573a381f30a8a4d
+      - path: session/2026-09-02T05-41-38-789Z_01a060a3-2165-74cb-ac5f-a40da86dda23/WriteProbe.jsonl
+        digest: da709d20f591070bf1f5bed8301e4639bdf00820341569bb80b078a081c91ff7
+      - path: session/2026-09-02T05-41-38-789Z_01a060a3-2165-74cb-ac5f-a40da86dda23/WriteProbe.md
+        digest: 50e0e2307edeea281f7666d894ffd6f113f44355a117fe59b56fd7a3f3ed3fdd
+      - path: session/2026-09-02T05-41-38-789Z_01a060a3-2165-74cb-ac5f-a40da86dda23.jsonl
+        digest: 8b6029ce32744aa705bf3e4ac964e188626818602ad9aa1cb300edecfdadfed6
+      - path: tool-surface.json
+        digest: 15c943463f71ffc6c9187f8eaca7c0f2c11d7df107e7128713de4c37822f37ac
+      - path: transcript.md
+        digest: ea854750ec910cb19b67516b9669f38a57f5c6afa98e36bc57b2083b55b1127c
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane, omp 18.1.2 with opus:low.
+      Grounds the omp readonly cell only: agent scout, readOnly true in the
+      harness's own session header, and the worker's write call failed at the
+      tool layer with the file never created.

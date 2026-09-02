@@ -107,7 +107,8 @@ const harnessVersion = (cli) => {
 // be open, so the name carries harness and counter, not only the scenario.
 const agentName = (runId) => {
   const [scenario, harness, , counter] = runId.split(".");
-  return `b-${scenario.replaceAll("_", "-")}-${harness}-${counter}`.slice(0, 32).toLowerCase();
+  const tail = `-${harness}-${counter}`;
+  return `b-${scenario.replaceAll("_", "-")}`.slice(0, 32 - tail.length).toLowerCase() + tail;
 };
 
 const startAgent = (name, cli, pane, model) => {

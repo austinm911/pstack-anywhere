@@ -1,0 +1,3 @@
+SOURCE: tool error (the `write` tool was present in the worker's tool set but refused the filesystem write; text relayed verbatim by the worker)
+
+This `write` tool is limited to the xd:// device transport: call it with path `xd://<tool>` and the device's JSON arguments in `content` (`read xd://` lists mounted devices). Active plan mode additionally permits local:// sandbox drafts. Filesystem writes are not available elsewhere.

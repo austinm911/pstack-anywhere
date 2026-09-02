@@ -1,0 +1,25 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: worker_defaults_background
+harness: omp
+run_id: worker_defaults_background.omp.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T05:40:03.581Z
+ended_at: 2026-09-02T05:41:32.997Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: omp/18.1.2
+harness_version_source: omp --version -> omp/18.1.2
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: >-
+  ~/.omp/agent/agents holds six custom agent definitions (browse-task,
+  planner, research-task, task-fable, task-opus, task-sol); none was used
+  by this run, whose delegates are omp built-ins. ~/.omp/agent/config.yml
+  sets tools.xdevDocs: catalog and advisor.enabled: false, neither of which
+  touches delegation. MCP servers executor, codedb, deepwiki were connected.
+supersedes: null

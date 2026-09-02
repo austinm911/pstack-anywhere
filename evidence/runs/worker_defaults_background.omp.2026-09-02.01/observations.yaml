@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: background.control_returned_at
+    observed: '2026-09-02T05:40:21.605Z, the bash call that wrote parent-alive.txt; the task call itself returned at 05:40:17.920Z with "Spawned agent TimestampWorker" and no result'
+    source: invocation.json calls[1] ts, and timeline.yaml
+  - id: background.worker_finished_at
+    observed: '2026-09-02T05:41:21Z'
+    source: worker-done.txt
+  - id: background.parent_acted_at
+    observed: '2026-09-02T05:40:21Z, sixty seconds before the worker finished'
+    source: parent-alive.txt
+  - id: background.collection_mechanism
+    observed: 'a separate hub op:wait call issued at 05:40:24.260Z and returning at 05:41:29.448Z with the settled job result; not the spawn return, not a poll, not a file read'
+    source: invocation.json calls[2], the session log toolResult for hub, and the DONE line in transcript.md
+  - id: background.result_intact
+    observed: 'true; the object the parent received under hub wait is {file: worker-done.txt, timestamp: 2026-09-02T05:41:21Z, verified: ...} and equals the data the worker passed to its yield call'
+    source: session/<id>.jsonl toolResult for hub, compared with session/<id>/TimestampWorker.jsonl yield arguments

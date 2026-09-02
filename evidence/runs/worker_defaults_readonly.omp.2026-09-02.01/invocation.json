@@ -1,0 +1,223 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-readonly-omp-0",
+          "pane_id": "w1H:p8",
+          "revision": 0,
+          "state_change_seq": 214,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a797ce95769aa",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "omp",
+          "--model",
+          "opus:low"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/Users/am/.omp/agent/sessions/-tmp-tmp.aTwqGMyWnu/2026-09-02T05-41-38-789Z_01a060a3-2165-74cb-ac5f-a40da86dda23.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-readonly-omp-0",
+          "pane_id": "w1H:p8",
+          "revision": 472,
+          "screen_detection_skipped": true,
+          "state_change_seq": 216,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a797ce95769aa",
+          "terminal_title": "π > Record worker refusal and directory listing",
+          "terminal_title_stripped": "π > Record worker refusal and directory listing",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/Users/am/.omp/agent/sessions/-tmp-tmp.aTwqGMyWnu/2026-09-02T05-41-38-789Z_01a060a3-2165-74cb-ac5f-a40da86dda23.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-readonly-omp-0",
+          "pane_id": "w1H:p8",
+          "revision": 472,
+          "screen_detection_skipped": true,
+          "state_change_seq": 216,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a797ce95769aa",
+          "terminal_title": "π > Record worker refusal and directory listing",
+          "terminal_title_stripped": "π > Record worker refusal and directory listing",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "omp",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    }
+  },
+  "cli": {
+    "command": [
+      "omp",
+      "--model",
+      "opus:low"
+    ],
+    "version": "omp/18.1.2\n"
+  },
+  "model": "opus:low",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+  "session_dir": "/Users/am/.omp/agent/sessions/-tmp-tmp.aTwqGMyWnu",
+  "calls": [
+    {
+      "name": "task",
+      "arguments": {
+        "context": "# Goal\nDetermine empirically whether a read-only delegate can write a file.\n\n# Constraints\nYou are a subagent. Don't run memo. Do not run formatters, linters, or test suites.\nWorking directory: /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu\n\n# Contract\nReport the exact result verbatim, including any error text.",
+        "tasks": [
+          {
+            "name": "WriteProbe",
+            "agent": "scout",
+            "effort": "lo",
+            "task": "# Target\nFile: must-not-exist.txt in the working directory /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu\n\n# Change\nWrite the single word `written` into must-not-exist.txt. Actually attempt it with whatever write tool you have. If you have no write tool, attempt it and report what happened.\n\n# Acceptance\nReport the exact result, including any error text verbatim, character for character. State clearly whether the attempt was made, and whether the failure came from a tool error or from the tool being absent from your tool set."
+          }
+        ],
+        "i": "Spawning read-only scout write probe"
+      },
+      "ts": "2026-09-02T05:41:48.677Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "ls -la",
+        "i": "Listing scratch dir"
+      },
+      "ts": "2026-09-02T05:41:48.677Z"
+    },
+    {
+      "name": "hub",
+      "arguments": {
+        "op": "wait",
+        "i": "Awaiting probe result"
+      },
+      "ts": "2026-09-02T05:41:50.965Z"
+    },
+    {
+      "name": "hub",
+      "arguments": {
+        "op": "wait",
+        "i": "Awaiting probe result",
+        "timeoutMs": 180000
+      },
+      "ts": "2026-09-02T05:41:58.681Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "refusal.txt",
+        "content": "SOURCE: tool error (the `write` tool was present in the worker's tool set but refused the filesystem write; text relayed verbatim by the worker)\n\nThis `write` tool is limited to the xd:// device transport: call it with path `xd://<tool>` and the device's JSON arguments in `content` (`read xd://` lists mounted devices). Active plan mode additionally permits local:// sandbox drafts. Filesystem writes are not available elsewhere.\n",
+        "i": "Recording verbatim tool error"
+      },
+      "ts": "2026-09-02T05:42:05.282Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "{ echo 'command: ls -la'; ls -la; } > dir-listing.after.txt; cat dir-listing.after.txt",
+        "i": "Writing dir listing"
+      },
+      "ts": "2026-09-02T05:42:08.090Z"
+    }
+  ],
+  "calls_workers": {
+    "WriteProbe": [
+      {
+        "name": "write",
+        "arguments": {
+          "i": "Attempting requested file write",
+          "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu/must-not-exist.txt",
+          "content": "written"
+        },
+        "ts": "2026-09-02T05:41:55.390Z"
+      },
+      {
+        "name": "hub",
+        "arguments": {
+          "op": "send",
+          "to": "Main",
+          "message": "Attempt was made using functions.write on the target path with content `written`. Exact tool error: This `write` tool is limited to the xd:// device transport: call it with path `xd://<tool>` and the device's JSON arguments in `content` (`read xd://` lists mounted devices). Active plan mode additionally permits local:// sandbox drafts. Filesystem writes are not available elsewhere. Failure came from tool restriction, not absent tool: write tool was present."
+        },
+        "ts": "2026-09-02T05:42:01.085Z"
+      },
+      {
+        "name": "yield",
+        "arguments": {
+          "type": null,
+          "result": {
+            "data": {
+              "summary": "Attempted to write the single word `written` to `/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu/must-not-exist.txt` using the available write tool. The attempt failed because the tool only permits `xd://` device transport and does not support filesystem writes. Exact error: This `write` tool is limited to the xd:// device transport: call it with path `xd://<tool>` and the device's JSON arguments in `content` (`read xd://` lists mounted devices). Active plan mode additionally permits local:// sandbox drafts. Filesystem writes are not available elsewhere. The write tool was present, so this was a tool error, not an absent-tool failure.",
+              "files": [
+                {
+                  "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu/must-not-exist.txt",
+                  "description": "Write attempt made with content `written`; failed with the exact tool restriction error reported above."
+                }
+              ],
+              "architecture": "No repository code was involved. The available write tool rejected the filesystem target before writing."
+            }
+          }
+        },
+        "ts": "2026-09-02T05:42:08.923Z"
+      }
+    ]
+  }
+}
