@@ -1,0 +1,3 @@
+Wrote to /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.igDbANmtn5/probe.txt
+
+Exact line: `2026-09-02T05:54:21Z`

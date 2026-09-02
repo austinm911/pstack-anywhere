@@ -1,0 +1,28 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: spawn_worker
+harness: codex
+run_id: spawn_worker.codex.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T06:03:58.435Z
+ended_at: 2026-09-02T06:04:54.901Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: codex-cli 0.152.1
+harness_version_source: codex --version -> codex-cli 0.152.1
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: >-
+  ~/.codex/config.toml sets approval_policy = "never" and sandbox_mode =
+  "danger-full-access" (the TUI banner reads "permissions: YOLO mode"),
+  model_reasoning_effort = "medium", model_verbosity = "low", and
+  [features] multi_agent = true, which is what exposes spawn_agent and
+  wait_agent. Hooks from ~/.codex/hooks.json were unreviewed; the run
+  dismissed the hooks-review screen with esc, leaving 9 of them inactive.
+  Codex was updated from 0.151.0 to 0.152.1 minutes before the run because
+  0.151.0 self-updated and exited on every launch.
+supersedes: null

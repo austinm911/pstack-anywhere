@@ -95,6 +95,11 @@ harnesses:
       # observed on this machine, not pinned
       # slug: every non-alphanumeric byte of the resolved cwd becomes "-"
       session_dir: ~/.claude/projects/{cwd_slug}
+      # Claude Code asks for folder trust the first time it sees a directory, and
+      # that dialog eats the first prompt. bench/run.mjs answers it before prompting.
+      startup:
+        - match: 'trust this folder'
+          keys: [down, enter]
     upstream:
       repo: https://github.com/anthropics/claude-code
       ref: f275fa282e76c5e5456912268f2c367a7f4f4797
@@ -158,6 +163,15 @@ harnesses:
       model_flag: '-m {model}'
       version_command: codex --version
       extra_args: []
+      # Codex asks "Do you trust the contents of this directory?" in a new
+      # folder, with "Yes, continue" already selected; Enter accepts it.
+      startup:
+        - match: 'trust the contents of this directory'
+          keys: [enter]
+        # A hooks-review screen follows when config hooks are unreviewed; esc
+        # closes it and leaves those hooks inactive, which run.yaml must record.
+        - match: 'hooks need review'
+          keys: [esc]
       # observed on this machine, not pinned
       # not keyed by cwd; every session lands under YYYY/MM/DD/rollout-*.jsonl
       session_dir: ~/.codex/sessions

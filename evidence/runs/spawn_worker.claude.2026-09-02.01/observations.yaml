@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: spawn.primitive
+    observed: 'Agent, arguments {description: "Update probe.txt", prompt: "replace the contents of probe.txt with the current UTC timestamp, then report the exact line written", subagent_type: general-purpose}; the tool is named Agent in Claude Code 2.1.258, not Task as the ledger cell says'
+    source: invocation.json calls[0] name and arguments; same tool_use in session/87a78a79-7a98-4ef8-8c07-6df4ae7010d7.jsonl
+  - id: spawn.separate_context
+    observed: 'worker transcript starts with one user turn holding only the brief; none of the parent prompt (no "Spawn exactly one worker", no "worker-report") appears in it'
+    source: session/87a78a79-7a98-4ef8-8c07-6df4ae7010d7/subagents/agent-a89731a7a3940903c.jsonl, the user messages
+  - id: spawn.result_returned
+    observed: 'text, not a structured object; the Agent call returned only "Async agent launched successfully" with an agentId, and the result arrived through a separate TaskOutput call (task_id a89731a7a3940903c, block true) whose tool_result carries <status>completed</status> and the worker text "Wrote to .../probe.txt / Exact line: `2026-09-02T05:54:21Z`"'
+    source: invocation.json calls[0] and calls[2]; the tool_result blocks for toolu_017rhjWtCdjBUuSTVvMtzdBp and toolu_01X61eNx9qi5P3bDZp2Nz3YX in the top-level session log; worker-report.txt
+  - id: spawn.side_effect_matches
+    observed: 'probe.after.txt is exactly 2026-09-02T05:54:21Z, equal to the line the worker reported; probe.before.txt is seed'
+    source: probe.before.txt and probe.after.txt compared to worker-report.txt
+  - id: spawn.parent_abstained
+    observed: 'parent-side calls were Agent, ToolSearch, TaskOutput, Bash writing worker-report.txt; no parent call names probe.txt'
+    source: invocation.json calls[0..3] arguments; the only write of probe.txt is calls_workers.agent-a89731a7a3940903c[0]

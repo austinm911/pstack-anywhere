@@ -110,7 +110,7 @@ axes:
     what: Spawn a delegate that owns a unit of work end to end.
     resolution:
       cursor: { parity: native, use: 'Task with environment: "cloud"' }
-      claude: { parity: substitute, use: "Task tool, subagent_type" }
+      claude: { parity: substitute, use: "Agent tool (named Task in older docs), subagent_type" }
       codex: { parity: substitute, use: "task tool" }
       pi: { parity: extension, use: "a task tool an extension registers", fallback: "do the work inline, sequentially, and say no worker ran" }
       omp: { parity: substitute, use: "task tool, agent field selects the specialist" }

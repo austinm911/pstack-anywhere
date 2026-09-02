@@ -15,6 +15,13 @@ The runner refuses to start outside herdr (`HERDR_ENV=1`), splits a pane on the
 scratch dir, starts the harness there, sends the prompt, and waits. The pane is
 left open so you can read the session yourself.
 
+Before prompting it waits for the split pane's shell to go idle, and if herdr
+misdetects the harness kind it waits for `agent get` to agree and renames the
+pane instead of failing. A `startup:` list in a `cli:` block answers first-run
+dialogs: each entry is a regex plus the keys to send (Claude's folder-trust
+prompt is `keys: [down, enter]`), and the ones that fired land in
+`invocation.json` as `startup_answers`.
+
 ## What gets written
 
 Into `evidence/runs/<run-id>/`, created by `probe prepare`:

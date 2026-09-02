@@ -1,0 +1,26 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: spawn_worker
+harness: pi
+run_id: spawn_worker.pi.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T05:57:15.190Z
+ended_at: 2026-09-02T05:58:03.382Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: 0.84.4
+harness_version_source: pi --version -> 0.84.4
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: >-
+  ~/.pi/agent/settings.json loads many extensions, among them
+  npm:@andrewjacop/pi-herdr 0.4.0, which registered the herdr_delegate tool
+  this run used; a stock pi install has no delegation tool at all. Model
+  given as openai-codex/gpt-5.6-luna because the bare slug matches three
+  authenticated providers and pi exits with an error on the ambiguity.
+extension: '@andrewjacop/pi-herdr 0.4.0, tool herdr_delegate'
+supersedes: null

@@ -33,7 +33,7 @@ saved evidence for it:
 | --- | --- |
 | ledger | v2, upstream `b9ddc83` |
 | domains | 24, from 21 axes, because `worker_defaults` resolves per parameter |
-| harness cells | 3 verified of 120 (24 domains x 5 harnesses) |
+| harness cells | 6 verified of 120 (24 domains x 5 harnesses) |
 | occurrences | 67 resolved, 25 unresolved, 0 missing, 2 not checked |
 | token hits | 53 attributed to a domain, 21 unattributed Cursor mentions, 74 in total |
 | skills reached | 2 of 45: `poteto-mode` (67 of 68 checked), `setup-pstack-anywhere` (0 of 1 checked) |
@@ -115,7 +115,7 @@ Next:
 
 | domain | Cursor (upstream) | Claude Code | Codex | pi | Oh My Pi |
 | --- | --- | --- | --- | --- | --- |
-| `spawn_worker` (capability) | native, Task with environment: "cloud", unverified | substitute, Task tool, subagent_type, unverified | substitute, task tool, unverified | extension, a task tool an extension registers, else do the work inline, sequentially, and say no worker ran, unverified | substitute, task tool, agent field selects the specialist, exercised |
+| `spawn_worker` (capability) | native, Task with environment: "cloud", unverified | substitute, Agent tool (named Task in older docs), subagent_type, exercised | substitute, task tool, exercised | extension, a task tool an extension registers, else do the work inline, sequentially, and say no worker ran, exercised | substitute, task tool, agent field selects the specialist, exercised |
 | `worker_durability` (capability) | native, cloud agents run off-machine and survive a restart, unverified | drop, subagents die with the session, unverified | drop, subagents die with the session, unverified | drop, subagents die with the session, unverified | drop, subagents die with the session, unverified |
 | `probe_worker` (capability) | native, dashboard shows agent state without a resume, unverified | degrade, job status only, no liveness for every delegate kind, unverified | degrade, job status only, unverified | extension, the job status the task extension exposes, else none, wait for the result, unverified | substitute, hub op:"jobs", unverified |
 | `wake_on_event` (capability) | native, /loop built-in, unverified | degrade, heartbeat sized to when the result is worth re-checking, unverified | degrade, heartbeat sized to when the result is worth re-checking, unverified | degrade, heartbeat sized to when the result is worth re-checking, unverified | substitute, hub op:"wait", unverified |
@@ -152,7 +152,7 @@ A scenario defines what to run and what to inspect; it does not claim a result.
 
 | domain | observations | runs | verification |
 | --- | --- | --- | --- |
-| `spawn_worker` | 5 | 1 | Cursor: unverified; Claude Code: unverified; Codex: unverified; pi: unverified; Oh My Pi: exercised |
+| `spawn_worker` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
 | `worker_durability` | 5 | 0 | all harnesses: unverified |
 | `probe_worker` | 5 | 0 | all harnesses: unverified |
 | `wake_on_event` | 5 | 0 | all harnesses: unverified |
@@ -169,10 +169,10 @@ Cursor follows the same evidence rules as every other harness, and cannot reach 
 | measure | value |
 | --- | --- |
 | scenarios | 9 defined, one per high-risk domain |
-| attestations | 3 recorded |
-| evidence classes | 3 exercised |
-| run directories | 3 complete |
-| cells exercised | 3 of 120, a subset of the 3 verified cells in Totals |
+| attestations | 6 recorded |
+| evidence classes | 6 exercised |
+| run directories | 6 complete |
+| cells exercised | 6 of 120, a subset of the 6 verified cells in Totals |
 
 Every recorded grounding still holds against the files on disk.
 

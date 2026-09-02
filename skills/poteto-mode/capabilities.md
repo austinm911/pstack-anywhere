@@ -15,7 +15,7 @@ that does the job, use it and skip the fallback.
 
 | capability | cursor | claude | codex | pi | omp |
 | --- | --- | --- | --- | --- | --- |
-| `spawn_worker` | Task with environment: "cloud" | Task tool, subagent_type | task tool | not on by default: a task tool an extension registers, else do the work inline, sequentially, and say no worker ran | task tool, agent field selects the specialist |
+| `spawn_worker` | Task with environment: "cloud" | Agent tool (named Task in older docs), subagent_type | task tool | not on by default: a task tool an extension registers, else do the work inline, sequentially, and say no worker ran | task tool, agent field selects the specialist |
 | `worker_durability` | cloud agents run off-machine and survive a restart | subagents die with the session | subagents die with the session | subagents die with the session | subagents die with the session |
 | `probe_worker` | dashboard shows agent state without a resume | degraded, job status only, no liveness for every delegate kind | degraded, job status only | not on by default: the job status the task extension exposes, else none, wait for the result | hub op:"jobs" |
 | `wake_on_event` | /loop built-in | degraded, heartbeat sized to when the result is worth re-checking | degraded, heartbeat sized to when the result is worth re-checking | degraded, heartbeat sized to when the result is worth re-checking | hub op:"wait" |

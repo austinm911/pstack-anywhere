@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: spawn.primitive
+    observed: 'spawn_agent, arguments {task_name: worker, agent_type: worker, fork_turns: none, message: <the brief; Codex stores the message field encrypted in its rollout log, so the argument object is complete in shape but the message text is only readable through the worker session, whose user turn is the brief verbatim>}'
+    source: invocation.json calls_workers["rollout-...cb56025b4cca"][0] (the parent rollout; the runner filed both codex rollouts under calls_workers because codex nests sessions by date); session/2026/09/01/rollout-2026-09-01T23-04-09-...cb56025b4cca.jsonl function_call spawn_agent
+  - id: spawn.separate_context
+    observed: 'the worker is a separate thread 01a060b7-d9eb-7572-ae41-94c0f6935886 whose session_meta.source is subagent.thread_spawn with parent_thread_id set, agent_role worker, spawned with fork_turns: none; its user turns hold the brief and the harness preamble, and none of the parent prompt (no "Spawn exactly one worker", no "worker-report")'
+    source: session/2026/09/01/rollout-2026-09-01T23-04-16-...94c0f6935886.jsonl session_meta and user messages
+  - id: spawn.result_returned
+    observed: 'text; spawn_agent returned only {task_name: /root/worker}, wait_agent returned {message: "Wait completed.", timed_out: false}, and the result arrived as an agent_message item injected into the parent thread reading "Message Type: FINAL_ANSWER / Task name: /root / Sender: /root/worker / Payload: 2026-09-02T06:04:24Z"'
+    source: the parent rollout response_items after the wait_agent function_call_output; worker-report.txt
+  - id: spawn.side_effect_matches
+    observed: 'probe.after.txt is exactly 2026-09-02T06:04:24Z, equal to the payload the parent received and to the worker''s final assistant text; probe.before.txt is seed'
+    source: probe.before.txt, probe.after.txt, worker-report.txt, the worker rollout''s last assistant message
+  - id: spawn.parent_abstained
+    observed: 'parent-side calls were spawn_agent, wait_agent, and one exec script applying a patch that adds worker-report.txt; no parent call names probe.txt'
+    source: invocation.json calls_workers["rollout-...cb56025b4cca"] arguments; the probe.txt delete-and-add patch is in the worker rollout only

@@ -370,3 +370,108 @@ attestations:
       Grounds the omp readonly cell only: agent scout, readOnly true in the
       harness's own session header, and the worker's write call failed at the
       tool layer with the file never created.
+  - id: spawn_worker-claude-2026-09-02
+    method: exercised
+    axis: spawn_worker
+    harness: claude
+    scenario: spawn_worker
+    run: spawn_worker.claude.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: ac5c2dedd2e406d51ef1549d3c1671abe9900cb0c37225b1cc952018b6f15e19
+      - path: invocation.json
+        digest: 4fa08ea1aa9e2e7efbba93342f8b64719c92dfe380db9fbd3d465f953bb7567c
+      - path: observations.yaml
+        digest: ed232e1d11e96c9276c96d4d518551f7f6220ab874e73887afa33198ae169231
+      - path: probe.after.txt
+        digest: 31dabcc94d820967bf97cb5e9456c08d28313d7f1c3ec6cee0054b591fd878d1
+      - path: probe.before.txt
+        digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684
+      - path: run.yaml
+        digest: e1debe4778a254f722d79ec122fe5062c967a284865e106bf09e518521380561
+      - path: session/87a78a79-7a98-4ef8-8c07-6df4ae7010d7/subagents/agent-a89731a7a3940903c.jsonl
+        digest: ce77618019955e5287e2692e19e551bd09371718b2d146a014800118a08b56cc
+      - path: session/87a78a79-7a98-4ef8-8c07-6df4ae7010d7/subagents/agent-a89731a7a3940903c.meta.json
+        digest: 9221b29b09fba81870b20f2254962758890c409c557af4a1b7659c49e0a8fdca
+      - path: session/87a78a79-7a98-4ef8-8c07-6df4ae7010d7.jsonl
+        digest: 0253a10c43067d9c964ef1d524da0f35d9437d7a5fa814872762454035a23262
+      - path: transcript.md
+        digest: e5ebd899fba2d034065a265789cea0a12499cc6092c6e3d336645beedcd7db09
+      - path: worker-report.txt
+        digest: ae7c9cebaaa60dc9c5809332f725c2b1bac3c248466c13dda4dedebe9489f033
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane, Claude Code 2.1.258 with
+      --model opus. Grounds the claude spawn_worker cell only. The primitive is
+      named Agent in this version, not Task as the cell text says; the result
+      came back as text through a separate TaskOutput call, not from the spawn
+      call itself.
+  - id: spawn_worker-codex-2026-09-02
+    method: exercised
+    axis: spawn_worker
+    harness: codex
+    scenario: spawn_worker
+    run: spawn_worker.codex.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: f6f9a0a3098d082f5615a26b4dc33ec756ca2ad9843dce4475f08e795f4a2817
+      - path: invocation.json
+        digest: 84ea39b068e947ff7fbaedbf227584d25827ef855414b270cdcc2184a22288b6
+      - path: observations.yaml
+        digest: 8a2a7669ca2fe9b3f69528e582c04971e6d67b92bcacd5a4a634cb388f62dfed
+      - path: probe.after.txt
+        digest: 3dfb1ead4df6f142d9c4e0174abe188c4d0a00d77d44f4049a56a933580ec74e
+      - path: probe.before.txt
+        digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684
+      - path: run.yaml
+        digest: 1fc5cc286d1e78d624b9205c8a0c0467bb1f64f73635a320a50c942f58b1c4a5
+      - path: session/2026/09/01/rollout-2026-09-01T23-04-09-01a060b7-bd69-7e42-a38d-cb56025b4cca.jsonl
+        digest: cdf6d2a568ac1028431a00e3f8fdfa78f5b22b582fe253c6aa3cf4f512b1f04e
+      - path: session/2026/09/01/rollout-2026-09-01T23-04-16-01a060b7-d9eb-7572-ae41-94c0f6935886.jsonl
+        digest: 1db5b2888f2beaa53b5bd6be8065c32d55036516a74ade33570bf5933a24d6ad
+      - path: transcript.md
+        digest: 1727c7cbbc0dac1cb8cc5a1a291e59b3883bcfe36299efdb76aa6a4e293374a1
+      - path: worker-report.txt
+        digest: 3dfb1ead4df6f142d9c4e0174abe188c4d0a00d77d44f4049a56a933580ec74e
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane, Codex 0.152.1 with
+      -m gpt-5.6-terra and multi_agent enabled in config. Grounds the codex
+      spawn_worker cell only: spawn_agent with fork_turns none, a separate
+      thread, and the result injected as a FINAL_ANSWER agent_message after
+      wait_agent.
+  - id: spawn_worker-pi-2026-09-02
+    method: exercised
+    axis: spawn_worker
+    harness: pi
+    scenario: spawn_worker
+    run: spawn_worker.pi.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: dd1591ee62efd46e4fe7c8e3e51a4cb20e7bff0fa268af5ecf864cfe3e99dd25
+      - path: invocation.json
+        digest: e5978b39138e6bb544855e0aff8cae40bf0e9faba4a4bae45496925481a68710
+      - path: observations.yaml
+        digest: 06080677852fe30c36965854175ab4f08ce42385ea08b63750d823a3385e7ab3
+      - path: probe.after.txt
+        digest: 3a79db814931b4f24a5685ab433dde6964029ff0bdb60286b3d52c93bb92f5b6
+      - path: probe.before.txt
+        digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684
+      - path: run.yaml
+        digest: 1a17225acf41112001d31658f9b737a16c1f3c397c47431a3786c90f36fd04e5
+      - path: session/2026-09-02T05-57-16-425Z_01a060b1-7009-7180-b33a-c745595cc0b4.jsonl
+        digest: 657d9f930b7ff20baf7030a673390c93fc229399338f821aeb476d93640a35ff
+      - path: session/2026-09-02T05-57-37-040Z_01a060b1-c090-7880-8f5c-8677892c1609.jsonl
+        digest: b45fed9fc8ad3cb7c554a75c546f354daf825d422ae85db87d0a02ed9b1e2e9f
+      - path: transcript.md
+        digest: d14185f53b3cac1441c8a05e222e1a06a98b1a66b9eaafea15b5e5b4837baa81
+      - path: worker-report.txt
+        digest: 07c596bef5902fe11a8cde3f4b61ea5c4eef6c456dd37eae4669b39c0659dbba
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane, pi 0.84.4 with the
+      @andrewjacop/pi-herdr 0.4.0 extension supplying herdr_delegate. Grounds
+      the pi spawn_worker cell as an extension path only, and the run shows the
+      result channel is unreliable: the tool returned "$timestamp" while the
+      worker's real reply was the timestamp. Side effect matched, result did
+      not. A stock pi has no delegation tool at all.

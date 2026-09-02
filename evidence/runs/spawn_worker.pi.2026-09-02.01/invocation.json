@@ -1,0 +1,153 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_status": "unknown",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+          "pane_id": "w1H:pK",
+          "revision": 0,
+          "state_change_seq": 0,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a79b50e5f03b5",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "start_recovered": true,
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/Users/am/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.TEPaVcg1rx--/2026-09-02T05-57-16-425Z_01a060b1-7009-7180-b33a-c745595cc0b4.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+          "name": "b-spawn-worker-pi-01",
+          "pane_id": "w1H:pK",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 256,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a79b50e5f03b5",
+          "terminal_title": "π - tmp.TEPaVcg1rx",
+          "terminal_title_stripped": "π - tmp.TEPaVcg1rx",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/Users/am/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.TEPaVcg1rx--/2026-09-02T05-57-16-425Z_01a060b1-7009-7180-b33a-c745595cc0b4.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+          "name": "b-spawn-worker-pi-01",
+          "pane_id": "w1H:pK",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 256,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a79b50e5f03b5",
+          "terminal_title": "π - tmp.TEPaVcg1rx",
+          "terminal_title_stripped": "π - tmp.TEPaVcg1rx",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "pi",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": []
+  },
+  "cli": {
+    "command": [
+      "herdr",
+      "agent",
+      "start",
+      "b-spawn-worker-pi-01",
+      "--kind",
+      "pi",
+      "--pane",
+      "w1H:pK",
+      "--timeout",
+      "60000",
+      "--",
+      "--model",
+      "openai-codex/gpt-5.6-luna"
+    ],
+    "version": "0.84.4\n"
+  },
+  "model": "openai-codex/gpt-5.6-luna",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+  "session_dir": "/Users/am/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.TEPaVcg1rx--",
+  "calls": [
+    {
+      "name": "herdr_delegate",
+      "arguments": {
+        "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+        "prompt": "replace the contents of probe.txt with the current UTC timestamp, then report the exact line written",
+        "timeoutMs": 120000,
+        "closeOnSuccess": true
+      },
+      "ts": "2026-09-02T05:57:30.948Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx/worker-report.txt",
+        "content": "$timestamp"
+      },
+      "ts": "2026-09-02T05:57:59.118Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "timestamp=$(date -u '+%Y-%m-%dT%H:%M:%SZ'); printf '%s\\n' \"$timestamp\" > probe.txt; printf '%s\\n' \"$timestamp\""
+      },
+      "ts": "2026-09-02T05:57:48.361Z"
+    }
+  ],
+  "calls_workers": {}
+}

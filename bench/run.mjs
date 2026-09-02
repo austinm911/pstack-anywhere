@@ -49,14 +49,19 @@ const exec = (argv, cwd = ROOT) => {
 // `agent read --format text`, which answers raw terminal text.
 const herdr = (...args) => {
   const r = exec(["herdr", ...args]);
-  if (r.code !== 0) throw new Error(`herdr ${args[0]} ${args[1]} failed (${r.code}): ${r.err.trim() || r.out.trim()}`);
+  if (r.code !== 0) {
+    const detail = r.err.trim() || r.out.trim();
+    // herdr answers a failure as {"error":{"code":...}} on stderr, and startup recovery branches on that code.
+    const code = tryOr(() => JSON.parse(detail).error.code, null);
+    throw Object.assign(new Error(`herdr ${args[0]} ${args[1]} failed (${r.code}): ${detail}`), { code });
+  }
   return JSON.parse(r.out);
 };
 
 // A pane whose agent start failed hosts no agent, so `agent read` has no target
 // there. `pane read` is the same scrollback without that requirement.
-const readText = (target, lines) => {
-  const args = [target, "--source", "recent-unwrapped", "--lines", String(lines), "--format", "text"];
+const readText = (target, lines, source = "recent-unwrapped") => {
+  const args = [target, "--source", source, "--lines", String(lines), "--format", "text"];
   const r = exec(["herdr", "agent", "read", ...args]);
   return r.code === 0 ? r.out : exec(["herdr", "pane", "read", ...args]).out;
 };
@@ -111,19 +116,54 @@ const agentName = (runId) => {
   return `b-${scenario.replaceAll("_", "-")}`.slice(0, 32 - tail.length).toLowerCase() + tail;
 };
 
-const startAgent = (name, cli, pane, model) => {
-  const args = [
-    ...cli.model_flag.replace("{model}", model).split(/\s+/).filter(Boolean),
-    ...(cli.extra_args ?? []),
-  ];
-  const argv = ["agent", "start", name, "--kind", cli.kind, "--pane", pane, "--timeout", "60000", "--", ...args];
-  try {
-    return { start: herdr(...argv), argv };
-  } catch (error) {
-    console.error(error.message);
-    console.error(readText(pane, 60));
-    process.exit(6);
+// `agent start` rejects a pane that is not an available shell, and a pane split a second ago is still loading its shell prompt, so wait until the shell is its own foreground process.
+const waitForShell = (pane) => {
+  let info = null;
+  for (const until = Date.now() + 15000; Date.now() < until; Bun.sleepSync(250)) {
+    info = tryOr(() => herdr("pane", "process-info", "--pane", pane).result.process_info, null);
+    if (info?.foreground_processes?.length === 1 && info.foreground_processes[0].pid === info.shell_pid) return;
   }
+  die(6, `pane ${pane} never became an idle shell within 15s; last process-info:\n${JSON.stringify(info)}`);
+};
+
+const startAgent = (name, cli, pane, model) => {
+  waitForShell(pane);
+  const args = [...cli.model_flag.replace("{model}", model).split(/\s+/).filter(Boolean), ...(cli.extra_args ?? [])];
+  const argv = ["agent", "start", name, "--kind", cli.kind, "--pane", pane, "--timeout", "60000", "--", ...args];
+  // herdr's own shell-availability check lags process-info by a second or two
+  // after a split, so a busy answer gets a few more tries before it counts.
+  let error;
+  for (let tries = 0; tries < 12; tries += 1, Bun.sleepSync(1000)) {
+    try {
+      return { start: herdr(...argv), argv, recovered: false };
+    } catch (caught) {
+      error = caught;
+      if (error.code !== "agent_pane_busy") break;
+    }
+  }
+  // A blocked startup (a dialog) answers agent_not_ready but keeps the name, so
+  // the dialog step that follows can use it. A wrong first detection of the kind
+  // leaves the agent running but unnamed: wait for detection to agree, then name it.
+  if (error.code === "agent_not_ready") return { start: { error: error.message }, argv, recovered: true };
+  for (const until = Date.now() + 30000; error.code === "agent_kind_mismatch" && Date.now() < until; Bun.sleepSync(500)) {
+    const got = tryOr(() => herdr("agent", "get", pane), null);
+    if (got?.result?.agent?.agent === cli.kind) return herdr("agent", "rename", pane, name), { start: got, argv, recovered: true };
+  }
+  die(6, `${error.message}\n${readText(pane, 60)}`);
+};
+
+// A harness meeting a directory for the first time can open a dialog that would swallow the prompt. The wording lives in harnesses.yaml, matched case-insensitively, so a new dialog is a config line.
+const answerStartup = (name, dialogs) => {
+  const answered = [];
+  for (let round = 0; dialogs.length && round < 6; round += 1) {
+    const text = readText(name, 60, "visible");
+    const hit = dialogs.find((d) => new RegExp(d.match, "i").test(text));
+    if (!hit) break;
+    herdr("agent", "send-keys", name, ...hit.keys);
+    answered.push(hit.match);
+    Bun.sleepSync(1000);
+  }
+  return answered;
 };
 
 const scenarioArtifacts = (scenario) => {
@@ -237,7 +277,11 @@ const version = harnessVersion(cli);
 const pane = herdr("pane", "split", "--current", "--direction", "right", "--cwd", scratch, "--no-focus").result.pane
   .pane_id;
 const name = agentName(runId);
-const { start, argv } = startAgent(name, cli, pane, model);
+const { start, argv, recovered } = startAgent(name, cli, pane, model);
+const startupAnswers = answerStartup(name, cli.startup ?? []);
+// Prompting a blocked agent types the prompt into whatever dialog is still up, so a pane that will not settle stops the run here.
+const settled = tryOr(() => herdr("agent", "wait", name, "--timeout", "30000").result?.agent?.agent_status ?? "unknown", (error) => `wait failed: ${error.code ?? error.message}`);
+if (!["idle", "working", "unknown"].includes(settled)) die(6, `agent ${name} is not ready to prompt (${settled}):\n${readText(name, 60, "visible")}`);
 
 // A prompt that times out still leaves a transcript worth harvesting, so the
 // failure is recorded and the run continues.
@@ -250,7 +294,11 @@ try {
   status = `prompt failed: ${error.message}`;
 }
 
-writeFileSync(join(ROOT, runDir, "transcript.md"), `${TRANSCRIPT_HEADER}\n\n${readText(name, 2000)}`);
+// An agent that exited (a crash, a self-update, a bad model flag) has no name
+// to read through, so the pane is read instead and the run stays unexecuted.
+const gone = tryOr(() => (herdr("agent", "get", name), false), true);
+writeFileSync(join(ROOT, runDir, "transcript.md"), `${TRANSCRIPT_HEADER}\n\n${gone ? readText(pane, 2000) : readText(name, 2000)}`);
+if (gone) die(6, `agent ${name} is gone from pane ${pane}; transcript.md holds the pane text, run.yaml is left unexecuted\n${readText(pane, 40, "visible")}`);
 const get = herdr("agent", "get", name);
 const explain = herdr("agent", "explain", name, "--json");
 
@@ -262,7 +310,7 @@ writeFileSync(
   join(ROOT, runDir, "invocation.json"),
   `${JSON.stringify(
     {
-      herdr: { start, prompt: prompted, get, explain },
+      herdr: { start, ...(recovered ? { start_recovered: true } : {}), prompt: prompted, get, explain, startup_answers: startupAnswers },
       // herdr reports the argv it handed the harness; the herdr call is the fallback.
       cli: { command: start.result?.argv ?? ["herdr", ...argv], version: version.raw },
       model,
@@ -281,6 +329,11 @@ const artifacts = scenarioArtifacts(scenario);
 const written = harvestArtifacts(scratch, runDir, artifacts);
 const endedAt = new Date().toISOString();
 
+// A failed prompt leaves the manifest unexecuted so the next attempt reuses
+// this directory instead of bumping the counter for a run that never happened.
+if (status.startsWith("prompt failed")) {
+  die(6, `${status}\nrun dir ${runDir} kept unexecuted; transcript.md and invocation.json hold what the pane showed`);
+}
 rewriteManifest(join(ROOT, runDir, "run.yaml"), {
   scenario,
   harness,
@@ -303,3 +356,6 @@ console.log(`artifacts  ${["run.yaml", "transcript.md", "invocation.json", ...wr
 const calls = (session.calls?.length ?? 0) + Object.values(session.workers).reduce((n, c) => n + c.length, 0);
 console.log(`session    ${session.files} file(s) copied, ${calls} call(s) extracted${session.note ? ` (${session.note})` : ""}`);
 console.log(`next: write observations.yaml by hand, then bun scripts/coupling.mjs probe inspect ${runId}`);
+// Harvest is done, and a column of finished panes squeezes every later split
+// into unreadable widths. BENCH_KEEP_PANE=1 leaves it for a look.
+if (process.env.BENCH_KEEP_PANE !== "1") tryOr(() => herdr("pane", "close", pane), null);
