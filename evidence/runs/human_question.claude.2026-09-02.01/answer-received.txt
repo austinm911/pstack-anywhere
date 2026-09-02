@@ -1,0 +1,6 @@
+trial: 1
+mechanism: AskUserQuestion
+arrived: tool result
+received: "beta.txt"
+mapped_to: beta.txt
+assumed: no

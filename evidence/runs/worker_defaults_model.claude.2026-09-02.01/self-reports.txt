@@ -1,0 +1,4 @@
+self-report, not authoritative: what each worker said about its own model
+A	selected model: opus	worker line 2: claude-opus-5
+B	selected model: sonnet	worker line 2: Claude Sonnet 5 (claude-sonnet-5)
+C	selected model: poteto-nonexistent-model	did not run (hard error at spawn; no line 2)

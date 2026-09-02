@@ -1,0 +1,20 @@
+hard error
+The spawn was rejected before any worker ran; no worker output was produced.
+Spawn call: Agent(description="Worker C model self-report", prompt="Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.", subagent_type="general-purpose", model="poteto-nonexistent-model")
+
+Verbatim error text:
+InputValidationError: [
+  {
+    "code": "invalid_value",
+    "values": [
+      "sonnet",
+      "opus",
+      "haiku",
+      "fable"
+    ],
+    "path": [
+      "model"
+    ],
+    "message": "Invalid option: expected one of \"sonnet\"|\"opus\"|\"haiku\"|\"fable\""
+  }
+]

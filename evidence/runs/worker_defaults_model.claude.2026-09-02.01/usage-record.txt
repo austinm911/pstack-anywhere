@@ -1,0 +1,13 @@
+source: harness session log, /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-vIE3Jw/.claude/projects, every *.jsonl written after the prompt was sent (find -newer), tokens "model"/"modelId" counted per file with grep -oE | sort | uniq -c
+selections: A=opus B=sonnet C=poteto-nonexistent-model
+harness: claude
+
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-vIE3Jw/.claude/projects/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-Q2TXCX61Fs/4c29d19c-028f-4a3f-acc9-d69ef81a56d9.jsonl
+  10 "model":"claude-opus-5"
+   1 "model":"opus"
+   1 "model":"poteto-nonexistent-model"
+   1 "model":"sonnet"
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-vIE3Jw/.claude/projects/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-Q2TXCX61Fs/4c29d19c-028f-4a3f-acc9-d69ef81a56d9/subagents/agent-a49c3ed7251104725.jsonl
+   1 "model":"claude-sonnet-5"
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-vIE3Jw/.claude/projects/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-Q2TXCX61Fs/4c29d19c-028f-4a3f-acc9-d69ef81a56d9/subagents/agent-ae8fc3b092e9709d9.jsonl
+   1 "model":"claude-opus-5"

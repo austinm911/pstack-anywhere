@@ -1,0 +1,33 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: worker_defaults_model
+harness: claude
+run_id: worker_defaults_model.claude.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T21:40:50.391Z
+ended_at: 2026-09-02T21:41:23.375Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: 2.1.258 (Claude Code)
+harness_version_source: claude --version -> 2.1.258 (Claude Code)
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with  and these written files: .claude.json = \"{\\\"hasCompletedOnboarding\\\":true,\\\"bypassPermissionsModeAccepted\\\":true,\\\"theme\\\":\\\"dark\\\"}\", plus herdr's claude state-reporting integration (herdr integration install claude), launched with --dangerously-skip-permissions; no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, CLAUDE_CODE_OAUTH_TOKEN, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-vIE3Jw/bin/claude; driven by bench/worker_defaults_model/drive.mjs, every operator action timed in drive.log"
+supersedes: null
+drive: 
+  models: 
+    a: opus
+    b: sonnet
+    source: 
+      a: "run.yaml model of every claude run (evidence/runs/spawn_worker.claude.2026-09-02.01); that run's session/*.jsonl records message.model claude-opus-5 for it"
+      b: "Agent tool `model` argument in evidence/runs/worker_defaults_readonly.claude.2026-09-02.01/invocation.json calls; that run's session/<sid>/subagents/agent-*.jsonl records message.model claude-sonnet-5 for it"
+  harness_record: "session log under /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-vIE3Jw/.claude/projects, files newer than the turn start; the run dir's session/ is the same capture"
+  turn: 
+    status: done
+    settled_by: herdr agent prompt --wait
+  usage_record: 3 session file(s)
+  spawn_args: "Spawn primitive: the Agent tool, which takes a `model` argument directly.\nNo worker-definition file was used; the model was named as an argument on each\nspawn call. Arguments below are verbatim as passed.\n\n--- Worker A ---\ntool: Agent\n  description: Worker A model self-report\n  prompt: Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\n  subagent_type: general-purpose\n  model: opus\n\n--- Worker B ---\ntool: Agent\n  description: Worker B model self-report\n  prompt: Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\n  subagent_type: general-purpose\n  model: sonnet\n\n--- Worker C (negative trial) ---\ntool: Agent\n  description: Worker C model self-report\n  prompt: Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\n  subagent_type: general-purpose\n  model: poteto-nonexistent-model\n"

@@ -129,6 +129,17 @@ harnesses:
       # "command"). The CLI source is unpublished; the pin's only mention is
       # references/harnesses/claude/src/CHANGELOG.md.L1298-L1306.md (upstream line 1302)
       quit_command: /exit
+      # With background work still running, /exit opens a dialog: 1 "Exit and
+      # stop tasks" (the default, Enter alone takes it), 2 "Move to background
+      # and exit", 3 "Stay". Option 2 is the only one that can show a worker
+      # outliving its parent (worker_durability), so the runner picks it. Same
+      # shape as startup:, observed on this machine (CLI source unpublished);
+      # codex, pi and OMP quit without a confirmation in their pinned sources
+      # (codex tui/src/chatwidget/slash_dispatch.rs request_quit_without_confirmation,
+      # pi interactive-mode.ts shutdown(), omp interactive-mode.ts shutdown()).
+      quit_dialog:
+        - match: 'Move to background and exit'
+          keys: [down, enter]
     upstream:
       ref: f275fa282e76c5e5456912268f2c367a7f4f4797
       refDate: 2026-08-31

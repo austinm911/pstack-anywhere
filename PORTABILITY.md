@@ -101,14 +101,14 @@ A scenario defines what to run and what to inspect; it does not claim a result.
 | domain | scenario | observations | runs | verification |
 | --- | --- | --- | --- | --- |
 | `spawn_worker` | `spawn_worker` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_durability` | `worker_durability` | 5 | 0 | all harnesses: unverified |
-| `probe_worker` | `probe_worker` | 5 | 0 | all harnesses: unverified |
-| `wake_on_event` | `wake_on_event` | 5 | 0 | all harnesses: unverified |
+| `worker_durability` | `worker_durability` | 5 | 1 | all harnesses: unverified |
+| `probe_worker` | `probe_worker` | 5 | 1 | all harnesses: unverified |
+| `wake_on_event` | `wake_on_event` | 5 | 1 | all harnesses: unverified |
 | `worker_defaults.background` | `worker_defaults_background` | 5 | 3 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: unverified; Oh My Pi: exercised |
 | `worker_defaults.readonly` | `worker_defaults_readonly` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_defaults.identity` | `worker_defaults_identity` | 4 | 0 | all harnesses: unverified |
-| `worker_defaults.model` | `worker_defaults_model` | 5 | 0 | all harnesses: unverified |
-| `human_question` | `human_question` | 5 | 0 | all harnesses: unverified |
+| `worker_defaults.identity` | `worker_defaults_identity` | 4 | 1 | all harnesses: unverified |
+| `worker_defaults.model` | `worker_defaults_model` | 5 | 1 | all harnesses: unverified |
+| `human_question` | `human_question` | 5 | 1 | all harnesses: unverified |
 | `pack_path` | `skill_identify` | 5 | 8 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
 
 Cursor follows the same evidence rules as every other harness, and cannot reach `static` only because this repo has no saved Cursor source to cite.
@@ -120,10 +120,10 @@ Cursor follows the same evidence rules as every other harness, and cannot reach 
 | scenarios | 10 defined |
 | attestations | 19 recorded |
 | evidence classes | 15 exercised, 4 superseded |
-| run directories | 19 complete |
+| run directories | 1 unexecuted, 24 complete |
 | cells exercised | 15 of 120, a subset of the 15 verified cells in Totals |
 
-Every recorded grounding still holds against the files on disk.
+1 of 25 run directories are not complete against their scenario's evidence contract, so nothing may be attested from them: `human_question.claude.2026-09-02.01` (unexecuted).
 
 Every digest is sha256, recomputed from disk on each run.
 

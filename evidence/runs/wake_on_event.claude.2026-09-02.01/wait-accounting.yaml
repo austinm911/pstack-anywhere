@@ -1,0 +1,173 @@
+# Sources. herdr: `herdr agent get` (agent_status, revision, state_change_seq);
+# it exposes no turn or token counter. session_log: every *.jsonl under the
+# scratch HOME at the snapshot, assistant entries counted and the last usage
+# object seen. Zero growth in assistant_entries across during_wait minus
+# before_wait, beyond the single turn that entered the wait, is the claim.
+sources:
+  herdr: herdr agent get, fields agent_status, revision, state_change_seq
+  session_log: [".claude/history.jsonl",".claude/projects/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-xUBQEBV8jV/b946c0a8-7d84-4403-a4e2-a6d4a9382bd8.jsonl"]
+wait_call: |
+  python3 "/private/tmp/claude-502/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-xUBQEBV8jV/b946c0a8-7d84-4403-a4e2-a6d4a9382bd8/scratchpad/kq_wait.py" "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV/event.flag" 1200
+  shell command
+  NOTE_DELETE, NOTE_WRITE, NOTE_EXTEND, NOTE_ATTRIB, NOTE_LINK, NOTE_RENAME, NOTE_REVOKE, NOTE_FUNLOCK (EVFILT_VNODE event kinds per kqueue(2); this call registers DELETE, WRITE, EXTEND, ATTRIB, LINK, RENAME)
+snapshots:
+  before_wait: {
+    "label": "before_wait",
+    "at": "2026-09-02T21:58:24.368Z",
+    "files": [],
+    "lines": 0,
+    "assistant_entries": 0,
+    "usage": null,
+    "herdr": {
+      "agent_status": "idle",
+      "revision": 1,
+      "state_change_seq": 658
+    }
+  }
+  during_wait: {
+    "label": "during_wait",
+    "at": "2026-09-02T22:00:24.409Z",
+    "files": [
+      ".claude/history.jsonl",
+      ".claude/projects/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-xUBQEBV8jV/b946c0a8-7d84-4403-a4e2-a6d4a9382bd8.jsonl"
+    ],
+    "lines": 59,
+    "assistant_entries": 19,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 534,
+      "cache_read_input_tokens": 55701,
+      "output_tokens": 62,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 534,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 62,
+          "cache_read_input_tokens": 55701,
+          "cache_creation_input_tokens": 534,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 534
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    },
+    "herdr": {
+      "agent_status": "done",
+      "revision": 2,
+      "state_change_seq": 662
+    }
+  }
+  after_wake: {
+    "label": "after_wake",
+    "at": "2026-09-02T22:00:24.450Z",
+    "files": [
+      ".claude/history.jsonl",
+      ".claude/projects/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-xUBQEBV8jV/b946c0a8-7d84-4403-a4e2-a6d4a9382bd8.jsonl"
+    ],
+    "lines": 59,
+    "assistant_entries": 19,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 534,
+      "cache_read_input_tokens": 55701,
+      "output_tokens": 62,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 534,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 62,
+          "cache_read_input_tokens": 55701,
+          "cache_creation_input_tokens": 534,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 534
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    },
+    "herdr": {
+      "agent_status": "done",
+      "revision": 2,
+      "state_change_seq": 662
+    }
+  }
+  after_trial2: {
+    "label": "after_trial2",
+    "at": "2026-09-02T22:00:52.639Z",
+    "files": [
+      ".claude/history.jsonl",
+      ".claude/projects/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-xUBQEBV8jV/b946c0a8-7d84-4403-a4e2-a6d4a9382bd8.jsonl"
+    ],
+    "lines": 88,
+    "assistant_entries": 27,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 498,
+      "cache_read_input_tokens": 59496,
+      "output_tokens": 60,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 498,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 60,
+          "cache_read_input_tokens": 59496,
+          "cache_creation_input_tokens": 498,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 498
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    },
+    "herdr": {
+      "agent_status": "done",
+      "revision": 2,
+      "state_change_seq": 664
+    }
+  }
+assistant_entries_during_wait: 19
+assistant_entries_wait_to_wake: 0
+state_change_seq_during_wait: 4

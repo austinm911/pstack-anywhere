@@ -94,6 +94,34 @@ export default async function drive(ctx) {
     );
     return state;
   };
+  // herdr keeps calling the agent blocked after a question was answered (seen
+  // on claude, where the pane showed the turn done), and refuses the next
+  // prompt with agent_blocked. The text then goes in through the pane like an
+  // operator typing it, and the turn's end is read off the pane: the trial's
+  // options for a question turn, the DONE reply line otherwise.
+  const DONE_LINE = /^\s*(⏺\s*)?DONE\b/m;
+  const seenOnPane = (options) => (text) => (DONE_LINE.test(text) ? "done" : options && findQuestion(text, options) ? "blocked" : null);
+  const sendTurn = (label, text, options) => {
+    const turn = startTurn(text);
+    turn.promise = turn.promise.then(async () => {
+      const status = turn.settled?.status;
+      if (typeof status !== "string" || !status.startsWith("prompt failed:") || !status.includes("agent_blocked")) return;
+      turn.settled = null;
+      ctx.note(`${label}.delivered_as`, "typed (herdr reported blocked)");
+      await ctx.type(text);
+      const expect = seenOnPane(options);
+      let seen = null;
+      for (const until = Date.now() + TURN_TIMEOUT_MS; !(seen = expect(await ctx.visible(60))) && Date.now() < until; ) await ctx.sleep(POLL_MS);
+      turn.settled = { status: seen ?? `typed, nothing settled on the pane within ${TURN_TIMEOUT_MS} ms`, settled_by: "typed into the pane" };
+    });
+    return turn;
+  };
+  // What herdr believes a few seconds after the answer went in, so an
+  // observation can say whether a blocked report outlived the question.
+  const statusAfterAnswer = async (n) => {
+    await ctx.sleep(3000);
+    ctx.note(`trial${n}.herdr_status_3s_after_answer`, ctx.status()?.agent_status ?? "no agent");
+  };
   // herdr settles a prompt as blocked while a question is pending, so a turn
   // that settled before the answer, or as blocked in the same instant as the
   // keys, still needs ctx.wait for the DONE end.
@@ -130,6 +158,7 @@ export default async function drive(ctx) {
     const settledBefore = turn.settled !== null;
     const how = await answer(trial, seen);
     ctx.note("trial1.answer", `${how}; turn ${settledBefore ? `had settled (${JSON.stringify(turn.settled?.status)}) before the answer` : "was still pending"}`);
+    await statusAfterAnswer(1);
     const end = await finishTurn(turn, settledBefore);
     ctx.note("trial1.end", end);
     ctx.note("trial1.answer_reached_agent", await received(1));
@@ -138,7 +167,7 @@ export default async function drive(ctx) {
   // Trial 2: three workers complete under the pending question.
   {
     const trial = TRIALS[1];
-    const turn = startTurn(FLOOD_PROMPT);
+    const turn = sendTurn("trial2.turn", FLOOD_PROMPT, trial.options);
     flood("turn 2 prompt sent");
     const seen = await waitForQuestion(trial, turn);
     flood(seen.q ? `question rendered (${seen.selectable ? "selectable list" : "plain list"})` : "question not detected within 60 s");
@@ -160,6 +189,7 @@ export default async function drive(ctx) {
     flood(`answered: ${how}`);
     ctx.note("trial2.question_survived_flood", survived);
     ctx.note("trial2.answer", `${how}; turn ${settledBefore ? `had settled (${JSON.stringify(turn.settled?.status)}) before the answer` : "was still pending"}`);
+    await statusAfterAnswer(2);
     const end = await finishTurn(turn, settledBefore);
     const reached = await received(2);
     flood(`turn ended: ${JSON.stringify(end)}; answer ${reached ? "reached the agent (trial: 2 block in answer-received.txt)" : "did NOT reach the agent (no trial: 2 block)"}`);
@@ -171,7 +201,7 @@ export default async function drive(ctx) {
   // Trial 3: dismiss the question, then tell the agent to proceed.
   {
     const trial = TRIALS[2];
-    const turn = startTurn(CANCEL_PROMPT);
+    const turn = sendTurn("trial3.turn", CANCEL_PROMPT, trial.options);
     const seen = await waitForQuestion(trial, turn);
     render(`trial 3 question${seen.q ? "" : " (not detected within 60 s; pane at timeout)"}`, seen.text);
     await ctx.keys(["esc"]);
@@ -186,7 +216,10 @@ export default async function drive(ctx) {
     let end;
     if (turn.settled !== null || turn.error) {
       ctx.note("trial3.proceed_sent_as", "prompt");
-      end = await ctx.prompt(PROCEED_PROMPT, { timeoutMs: TURN_TIMEOUT_MS });
+      const proceed = sendTurn("trial3.proceed", PROCEED_PROMPT, null);
+      await proceed.promise;
+      if (proceed.error) throw proceed.error;
+      end = proceed.settled;
     } else {
       ctx.note("trial3.proceed_sent_as", "typed into the pending turn");
       await ctx.type(PROCEED_PROMPT);

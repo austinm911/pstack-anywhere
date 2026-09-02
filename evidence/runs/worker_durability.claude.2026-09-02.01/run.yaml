@@ -1,0 +1,55 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: worker_durability
+harness: claude
+run_id: worker_durability.claude.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T22:13:18.786Z
+ended_at: 2026-09-02T22:25:28.108Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: 2.1.258 (Claude Code)
+harness_version_source: claude --version -> 2.1.258 (Claude Code)
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with  and these written files: .claude.json = \"{\\\"hasCompletedOnboarding\\\":true,\\\"bypassPermissionsModeAccepted\\\":true,\\\"theme\\\":\\\"dark\\\"}\", plus herdr's claude state-reporting integration (herdr integration install claude), launched with --dangerously-skip-permissions; no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, CLAUDE_CODE_OAUTH_TOKEN, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-Oo356k/bin/claude; driven by bench/worker_durability/drive.mjs, every operator action timed in drive.log"
+supersedes: null
+drive: 
+  parent_pid: 11414
+  parent_pid_source: "herdr pane process-info --pane w1H:p36, taken 2026-09-02T22:13:23.856Z"
+  spawn_prompted_at: 2026-09-02T22:13:23.856Z
+  spawn_turn: 
+    status: done
+    settled_by: DONE reply line on the pane
+  heartbeats_before_termination: 6
+  heartbeat_lines_before_termination: 
+    - 2026-09-02T22:13:52Z
+    - 2026-09-02T22:14:22Z
+    - 2026-09-02T22:14:52Z
+    - 2026-09-02T22:15:22Z
+    - 2026-09-02T22:15:52Z
+    - 2026-09-02T22:16:22Z
+  terminated: 
+    method: command
+    at: 2026-09-02T22:16:23.902Z
+    command: /exit
+    exited: false
+  parent_pid_alive_after_quit: true
+  waiting_until: 2026-09-02T22:20:23.856Z
+  heartbeats_total: 7
+  heartbeats_after_termination: 1
+  done_txt: null
+  restarted: 
+    name: 
+      name: b-worker-durability-claude-01r1
+      status: idle
+      startup_answers: 
+        []
+    at: 2026-09-02T22:20:27.779Z
+  reattach_turn: 
+    status: "prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"timeout\",\"message\":\"timed out waiting for agent status\"},\"id\":\"cli:agent:prompt\"}"
+    settled_by: null

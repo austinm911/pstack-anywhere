@@ -150,6 +150,14 @@ export default async function drive(ctx) {
     ended = "aborted by the driver with esc after the budget elapsed";
     seenDuring.push(ctx.visible(60));
     if (!settledSecond) await second.catch(() => null);
+    // The run's status is the driver's last prompt, and the aborted one timed
+    // out by design. A closing turn records what the agent saw of the abort and
+    // ends the run settled.
+    const closing = await ctx.prompt(
+      "The operator aborted your second wait; the event was never triggered. Do not wait again. Append one line to woke-at.txt saying the wait was interrupted and what, if anything, it returned. Then reply with exactly one line: DONE <one-sentence summary>.",
+      { timeoutMs: 120_000 },
+    );
+    ctx.note("trial2.closing", `${now()} status=${closing.status}`);
   }
   const secondWokeAt = readScratch(ctx, "woke-at.txt");
   const flagAfter = existsSync(flag);

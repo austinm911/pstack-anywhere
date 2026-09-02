@@ -1,0 +1,547 @@
+{
+  "herdr": {
+    "start": {
+      "error": "herdr agent start failed (1): {\"error\":{\"code\":\"agent_not_ready\",\"message\":\"agent b-worker-defaults-mode-claude-01 is blocked during startup and is not ready for prompts\"},\"id\":\"cli:agent:start\"}"
+    },
+    "start_recovered": true,
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "claude",
+          "agent_session": {
+            "agent": "claude",
+            "kind": "id",
+            "source": "herdr:claude",
+            "value": "4c29d19c-028f-4a3f-acc9-d69ef81a56d9"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Q2TXCX61Fs",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Q2TXCX61Fs",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-mode-claude-01",
+          "pane_id": "w1H:p2N",
+          "revision": 2,
+          "state_change_seq": 595,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a86e39419bb116",
+          "terminal_title": "✳ Model selection worker harness trial",
+          "terminal_title_stripped": "Model selection worker harness trial",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "claude",
+          "agent_session": {
+            "agent": "claude",
+            "kind": "id",
+            "source": "herdr:claude",
+            "value": "4c29d19c-028f-4a3f-acc9-d69ef81a56d9"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Q2TXCX61Fs",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Q2TXCX61Fs",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-mode-claude-01",
+          "pane_id": "w1H:p2N",
+          "revision": 2,
+          "state_change_seq": 595,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a86e39419bb116",
+          "terminal_title": "✳ Model selection worker harness trial",
+          "terminal_title_stripped": "Model selection worker harness trial",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "claude",
+      "cached_remote_version": "2026.08.31.1",
+      "evaluated_rules": [
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "^[\\x{2800}-\\x{28FF}\\x{25D0}-\\x{25D3}] "
+            ],
+            "region_bytes": 40,
+            "region_preview": "✳ Model selection worker harness trial"
+          },
+          "id": "osc_title_working",
+          "matched": false,
+          "priority": 1100,
+          "region": "osc_title",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 2,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 573,
+            "region_preview": "  argument and self-reported\n  claude-opus-5 and claude-sonnet-5,\n  while C (poteto-nonexistent-model)\n  hard-errored at input validation with\n  no worker output; results recorded in\n  negative-trial.txt, self-reports.txt,\n  and spawn-args...."
+          },
+          "id": "live_turn_working",
+          "matched": false,
+          "priority": 970,
+          "region": "bottom_non_empty_lines(12)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^\\s*[\\x{002A}\\x{00B7}\\x{2722}\\x{2736}\\x{273B}\\x{273D}]\\s+Waiting for [1-9]\\d* background agents? to finish\\s*$"
+            ],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 36,
+            "region_preview": "✻ Sautéed for 27s · done 2:41 PM"
+          },
+          "id": "background_agents_working",
+          "matched": false,
+          "priority": 965,
+          "region": "last_non_empty_above_prompt_box",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 6,
+            "regex": [
+              "(?m)^[\\x{002A}\\x{00B7}\\x{2722}\\x{2736}\\x{273B}\\x{273D}][ \\t]+\\S[^\\n]*?(?:\\n[ \\t]+[^\\n]*?){0,3}·(?:[ \\t]+|\\n[ \\t]*)[1-9]\\d*(?:[ \\t]+|\\n[ \\t]*)MCP(?:[ \\t]+|\\n[ \\t]*)tasks?(?:[ \\t]+|\\n[ \\t]*)still(?:[ \\t]+|\\n[ \\t]*)running[ \\t]*$"
+            ],
+            "region_bytes": 573,
+            "region_preview": "  argument and self-reported\n  claude-opus-5 and claude-sonnet-5,\n  while C (poteto-nonexistent-model)\n  hard-errored at input validation with\n  no worker output; results recorded in\n  negative-trial.txt, self-reports.txt,\n  and spawn-args...."
+          },
+          "id": "background_mcp_task_working",
+          "matched": false,
+          "priority": 965,
+          "region": "bottom_non_empty_lines(12)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^\\s*/btw(?:\\s|$)",
+              "(?i)esc to close\\s*$"
+            ],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 327,
+            "region_preview": "✻ Sautéed for 27s · done 2:41 PM\n\n────────────────────────────────────────\n❯\n────────────────────────────────────────\n  ⏵⏵ bypass permissions on          ·\n"
+          },
+          "id": "btw_overlay_working",
+          "matched": false,
+          "priority": 975,
+          "region": "bottom_non_empty_lines(5)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 5,
+            "contains": [
+              "showing detailed transcript"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 168,
+            "region_preview": "❯\n────────────────────────────────────────\n  ⏵⏵ bypass permissions on          ·\n"
+          },
+          "id": "transcript_viewer",
+          "matched": false,
+          "priority": 1000,
+          "region": "bottom_non_empty_lines(3)",
+          "state": "unknown"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 2,
+            "contains": [
+              "esc to cancel"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 43,
+            "region_preview": "  ⏵⏵ bypass permissions on          ·\n"
+          },
+          "id": "live_blocked_form",
+          "matched": false,
+          "priority": 980,
+          "region": "after_last_horizontal_rule",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [
+              "run a dynamic workflow?",
+              "esc to cancel"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 1132,
+            "region_preview": "  hand-written,\n  never generated. -->\n\n⏺ 2 background agents launched (↓ to\n  manage)\n   ├ Worker A model self-report\n   └ Worker B model self-report\n\n⏺ Now the negative trial.\n  ⎿  Initializing…\n  ⎿  Invalid tool parameters\n\n⏺ Agent \"Work..."
+          },
+          "id": "dynamic_workflow_prompt",
+          "matched": false,
+          "priority": 980,
+          "region": "whole_recent",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 1,
+            "any_count": 0,
+            "contains": [
+              "esc to cancel"
+            ],
+            "line_regex": [
+              "(?i)^\\s*MCP server [\"\\x{201C}].+[\"\\x{201D}] requests your input\\s*$"
+            ],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 1132,
+            "region_preview": "  hand-written,\n  never generated. -->\n\n⏺ 2 background agents launched (↓ to\n  manage)\n   ├ Worker A model self-report\n   └ Worker B model self-report\n\n⏺ Now the negative trial.\n  ⎿  Initializing…\n  ⎿  Invalid tool parameters\n\n⏺ Agent \"Work..."
+          },
+          "id": "mcp_elicitation_prompt",
+          "matched": false,
+          "priority": 980,
+          "region": "whole_recent",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^\\s*❯"
+            ],
+            "not_count": 5,
+            "regex": [],
+            "region_bytes": 4,
+            "region_preview": "❯\n"
+          },
+          "id": "live_prompt_box",
+          "matched": true,
+          "priority": 950,
+          "region": "prompt_box_body",
+          "state": "idle"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [
+              "select model",
+              "enter to set as default",
+              "esc to cancel"
+            ],
+            "line_regex": [],
+            "not_count": 2,
+            "regex": [],
+            "region_bytes": 1132,
+            "region_preview": "  hand-written,\n  never generated. -->\n\n⏺ 2 background agents launched (↓ to\n  manage)\n   ├ Worker A model self-report\n   └ Worker B model self-report\n\n⏺ Now the negative trial.\n  ⎿  Initializing…\n  ⎿  Invalid tool parameters\n\n⏺ Agent \"Work..."
+          },
+          "id": "model_picker_menu",
+          "matched": false,
+          "priority": 900,
+          "region": "whole_recent",
+          "state": "unknown"
+        },
+        {
+          "evidence": {
+            "all_count": 1,
+            "any_count": 5,
+            "contains": [
+              "do you want to proceed?"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 1132,
+            "region_preview": "  hand-written,\n  never generated. -->\n\n⏺ 2 background agents launched (↓ to\n  manage)\n   ├ Worker A model self-report\n   └ Worker B model self-report\n\n⏺ Now the negative trial.\n  ⎿  Initializing…\n  ⎿  Invalid tool parameters\n\n⏺ Agent \"Work..."
+          },
+          "id": "bash_permission_prompt",
+          "matched": false,
+          "priority": 850,
+          "region": "whole_recent",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 1,
+            "any_count": 0,
+            "contains": [
+              "do you want to proceed?",
+              "esc to cancel"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 43,
+            "region_preview": "  ⏵⏵ bypass permissions on          ·\n"
+          },
+          "id": "generic_permission_prompt",
+          "matched": false,
+          "priority": 840,
+          "region": "after_last_horizontal_rule",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 9,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 1,
+            "regex": [],
+            "region_bytes": 1132,
+            "region_preview": "  hand-written,\n  never generated. -->\n\n⏺ 2 background agents launched (↓ to\n  manage)\n   ├ Worker A model self-report\n   └ Worker B model self-report\n\n⏺ Now the negative trial.\n  ⎿  Initializing…\n  ⎿  Invalid tool parameters\n\n⏺ Agent \"Work..."
+          },
+          "id": "legacy_no_prompt_blocker",
+          "matched": false,
+          "priority": 300,
+          "region": "whole_recent",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "^\\x{2733} "
+            ],
+            "region_bytes": 40,
+            "region_preview": "✳ Model selection worker harness trial"
+          },
+          "id": "osc_title_idle",
+          "matched": true,
+          "priority": 250,
+          "region": "osc_title",
+          "state": "idle"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "^4;0"
+            ],
+            "region_bytes": 0,
+            "region_preview": ""
+          },
+          "id": "osc_progress_idle",
+          "matched": false,
+          "priority": 250,
+          "region": "osc_progress",
+          "state": "idle"
+        }
+      ],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": "remote:/Users/am/.local/state/herdr/agent-detection/remote/claude.toml",
+      "manifest_version": "2026.08.31.1",
+      "matched_rule": {
+        "id": "live_prompt_box",
+        "priority": 950,
+        "region": "prompt_box_body",
+        "state": "idle"
+      },
+      "remote_update_error": null,
+      "remote_update_status": "current",
+      "screen_detection_skipped": false,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": true,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [
+      "trust this folder"
+    ],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "claude",
+            "agent_session": {
+              "agent": "claude",
+              "kind": "id",
+              "source": "herdr:claude",
+              "value": "4c29d19c-028f-4a3f-acc9-d69ef81a56d9"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Q2TXCX61Fs",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Q2TXCX61Fs",
+            "interactive_ready": true,
+            "name": "b-worker-defaults-mode-claude-01",
+            "pane_id": "w1H:p2N",
+            "revision": 2,
+            "state_change_seq": 595,
+            "tab_id": "w1H:t3",
+            "terminal_id": "term_65a86e39419bb116",
+            "terminal_title": "✳ Model selection worker harness trial",
+            "terminal_title_stripped": "Model selection worker harness trial",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "herdr",
+      "agent",
+      "start",
+      "b-worker-defaults-mode-claude-01",
+      "--kind",
+      "claude",
+      "--pane",
+      "w1H:p2N",
+      "--timeout",
+      "60000",
+      "--",
+      "--model",
+      "opus",
+      "--dangerously-skip-permissions"
+    ],
+    "version": "2.1.258 (Claude Code)\n"
+  },
+  "model": "opus",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Q2TXCX61Fs",
+  "home": {
+    "seeded": [],
+    "written": {
+      ".claude.json": "{\"hasCompletedOnboarding\":true,\"bypassPermissionsModeAccepted\":true,\"theme\":\"dark\"}"
+    }
+  },
+  "drive": {
+    "script": "bench/worker_defaults_model/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "models": {
+        "a": "opus",
+        "b": "sonnet",
+        "source": {
+          "a": "run.yaml model of every claude run (evidence/runs/spawn_worker.claude.2026-09-02.01); that run's session/*.jsonl records message.model claude-opus-5 for it",
+          "b": "Agent tool `model` argument in evidence/runs/worker_defaults_readonly.claude.2026-09-02.01/invocation.json calls; that run's session/<sid>/subagents/agent-*.jsonl records message.model claude-sonnet-5 for it"
+        }
+      },
+      "harness_record": "session log under /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-vIE3Jw/.claude/projects, files newer than the turn start; the run dir's session/ is the same capture",
+      "turn": {
+        "status": "done",
+        "settled_by": "herdr agent prompt --wait"
+      },
+      "usage_record": "3 session file(s)",
+      "spawn_args": "Spawn primitive: the Agent tool, which takes a `model` argument directly.\nNo worker-definition file was used; the model was named as an argument on each\nspawn call. Arguments below are verbatim as passed.\n\n--- Worker A ---\ntool: Agent\n  description: Worker A model self-report\n  prompt: Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\n  subagent_type: general-purpose\n  model: opus\n\n--- Worker B ---\ntool: Agent\n  description: Worker B model self-report\n  prompt: Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\n  subagent_type: general-purpose\n  model: sonnet\n\n--- Worker C (negative trial) ---\ntool: Agent\n  description: Worker C model self-report\n  prompt: Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\n  subagent_type: general-purpose\n  model: poteto-nonexistent-model\n"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "CLAUDE_CODE_OAUTH_TOKEN",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-vIE3Jw/.claude/projects/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-Q2TXCX61Fs",
+  "calls": [
+    {
+      "name": "Agent",
+      "arguments": {
+        "description": "Worker A model self-report",
+        "prompt": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.",
+        "subagent_type": "general-purpose",
+        "model": "opus"
+      },
+      "ts": "2026-09-02T21:41:03.161Z"
+    },
+    {
+      "name": "Agent",
+      "arguments": {
+        "description": "Worker B model self-report",
+        "prompt": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.",
+        "subagent_type": "general-purpose",
+        "model": "sonnet"
+      },
+      "ts": "2026-09-02T21:41:03.857Z"
+    },
+    {
+      "name": "Agent",
+      "arguments": {
+        "description": "Worker C model self-report",
+        "prompt": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.",
+        "subagent_type": "general-purpose",
+        "model": "poteto-nonexistent-model"
+      },
+      "ts": "2026-09-02T21:41:07.472Z"
+    },
+    {
+      "name": "Bash",
+      "arguments": {
+        "command": "cat > negative-trial.txt <<'EOF'\nhard error\nThe spawn was rejected before any worker ran; no worker output was produced.\nSpawn call: Agent(description=\"Worker C model self-report\", prompt=\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\", subagent_type=\"general-purpose\", model=\"poteto-nonexistent-model\")\n\nVerbatim error text:\nInputValidationError: [\n  {\n    \"code\": \"invalid_value\",\n    \"values\": [\n      \"sonnet\",\n      \"opus\",\n      \"haiku\",\n      \"fable\"\n    ],\n    \"path\": [\n      \"model\"\n    ],\n    \"message\": \"Invalid option: expected one of \\\"sonnet\\\"|\\\"opus\\\"|\\\"haiku\\\"|\\\"fable\\\"\"\n  }\n]\nEOF\ncat > self-reports.txt <<'EOF'\nself-report, not authoritative: what each worker said about its own model\nA\tselected model: opus\tworker line 2: claude-opus-5\nB\tselected model: sonnet\tworker line 2: Claude Sonnet 5 (claude-sonnet-5)\nC\tselected model: poteto-nonexistent-model\tdid not run (hard error at spawn; no line 2)\nEOF\ncat > spawn-args.txt <<'EOF'\nSpawn primitive: the Agent tool, which takes a `model` argument directly.\nNo worker-definition file was used; the model was named as an argument on each\nspawn call. Arguments below are verbatim as passed.\n\n--- Worker A ---\ntool: Agent\n  description: Worker A model self-report\n  prompt: Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\n  subagent_type: general-purpose\n  model: opus\n\n--- Worker B ---\ntool: Agent\n  description: Worker B model self-report\n  prompt: Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\n  subagent_type: general-purpose\n  model: sonnet\n\n--- Worker C (negative trial) ---\ntool: Agent\n  description: Worker C model self-report\n  prompt: Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\n  subagent_type: general-purpose\n  model: poteto-nonexistent-model\nEOF\nls -l negative-trial.txt self-reports.txt spawn-args.txt",
+        "description": "Write the three record files"
+      },
+      "ts": "2026-09-02T21:41:19.587Z"
+    }
+  ],
+  "calls_workers": {
+    "agent-a49c3ed7251104725": [],
+    "agent-ae8fc3b092e9709d9": []
+  }
+}

@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: model.selection_argument
+    observed: 'Agent tool, argument model, per trial: A model: "opus", B model: "sonnet", C (negative) model: "poteto-nonexistent-model"; all three with subagent_type: "general-purpose" and the same brief. The two valid identifiers and their sources are recorded under drive.models in run.yaml'
+    source: invocation.json calls[0..2].arguments.model; run.yaml drive.models and drive.spawn_args
+  - id: model.harness_reported
+    observed: 'From the harness''s own session log, not the workers'' words: the subagent log whose meta.json says description "Worker A model self-report", model "opus" (agent-ae8fc3b092e9709d9) records message.model "claude-opus-5" on its assistant turn; the one whose meta says "Worker B model self-report", model "sonnet" (agent-a49c3ed7251104725) records message.model "claude-sonnet-5". usage-record.txt is the driver''s grep count of "model" tokens over the same files: 1 "claude-sonnet-5" in the B log, 1 "claude-opus-5" in the A log'
+    source: session/4c29d19c-028f-4a3f-acc9-d69ef81a56d9/subagents/agent-ae8fc3b092e9709d9.{meta.json,jsonl} and agent-a49c3ed7251104725.{meta.json,jsonl} message.model; usage-record.txt
+  - id: model.self_report
+    observed: 'non-authoritative: worker A answered "alpha\nclaude-opus-5", worker B answered "alpha\nClaude Sonnet 5 (claude-sonnet-5)", worker C never ran so gave no line 2. These happen to agree with the harness record but are not the basis for harness_reported'
+    source: self-reports.txt; the assistant text in each subagent jsonl under session/
+  - id: model.selections_differed
+    observed: 'true; harness-recorded message.model is claude-opus-5 for the opus selection and claude-sonnet-5 for the sonnet selection'
+    source: session/4c29d19c-028f-4a3f-acc9-d69ef81a56d9/subagents/*.jsonl message.model; usage-record.txt
+  - id: model.unknown_slug_behavior
+    observed: 'hard error at input validation, no worker spawned and no fallback: the Agent call with model "poteto-nonexistent-model" returned a tool_result with is_error: true reading "<tool_use_error>InputValidationError: [ { "code": "invalid_value", "values": [ "sonnet", "opus", "haiku", "fable" ], "path": [ "model" ], "message": "Invalid option: expected one of \"sonnet\"|\"opus\"|\"haiku\"|\"fable\"" } ]". Only two subagent logs exist under session/'
+    source: negative-trial.txt; session/4c29d19c-028f-4a3f-acc9-d69ef81a56d9.jsonl tool_result toolu_01UKkLWXtFB8xxrAFbJSsGHQ (is_error true)

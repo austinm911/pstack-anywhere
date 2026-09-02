@@ -1,0 +1,527 @@
+{
+  "herdr": {
+    "start": {
+      "error": "herdr agent start failed (1): {\"error\":{\"code\":\"agent_not_ready\",\"message\":\"agent b-worker-defaults-iden-claude-01 is blocked during startup and is not ready for prompts\"},\"id\":\"cli:agent:start\"}"
+    },
+    "start_recovered": true,
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "claude",
+          "agent_session": {
+            "agent": "claude",
+            "kind": "id",
+            "source": "herdr:claude",
+            "value": "9a5e4379-048b-4645-9e41-f9fa86e9bbb6"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Wis42SUieB",
+          "focused": true,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Wis42SUieB",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-iden-claude-01",
+          "pane_id": "w1H:p2H",
+          "revision": 2,
+          "state_change_seq": 585,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a86dd44924b111",
+          "terminal_title": "✳ Poteto-probe worker spawning task",
+          "terminal_title_stripped": "Poteto-probe worker spawning task",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "claude",
+          "agent_session": {
+            "agent": "claude",
+            "kind": "id",
+            "source": "herdr:claude",
+            "value": "9a5e4379-048b-4645-9e41-f9fa86e9bbb6"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Wis42SUieB",
+          "focused": true,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Wis42SUieB",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-iden-claude-01",
+          "pane_id": "w1H:p2H",
+          "revision": 2,
+          "state_change_seq": 585,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a86dd44924b111",
+          "terminal_title": "✳ Poteto-probe worker spawning task",
+          "terminal_title_stripped": "Poteto-probe worker spawning task",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "claude",
+      "cached_remote_version": "2026.08.31.1",
+      "evaluated_rules": [
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "^[\\x{2800}-\\x{28FF}\\x{25D0}-\\x{25D3}] "
+            ],
+            "region_bytes": 37,
+            "region_preview": "✳ Poteto-probe worker spawning task"
+          },
+          "id": "osc_title_working",
+          "matched": false,
+          "priority": 1100,
+          "region": "osc_title",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 2,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 1111,
+            "region_preview": "⏺ The definition was selected by the Agent tool's subagent_type argument —\n  subagent_type: \"poteto-probe\" for the first spawn and subagent_type:\n  \"poteto-absent\" for the negative trial, which returned an immediate error (that\n  agent type..."
+          },
+          "id": "live_turn_working",
+          "matched": false,
+          "priority": 970,
+          "region": "bottom_non_empty_lines(12)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^\\s*[\\x{002A}\\x{00B7}\\x{2722}\\x{2736}\\x{273B}\\x{273D}]\\s+Waiting for [1-9]\\d* background agents? to finish\\s*$"
+            ],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 34,
+            "region_preview": "✻ Brewed for 15s · done 2:39 PM"
+          },
+          "id": "background_agents_working",
+          "matched": false,
+          "priority": 965,
+          "region": "last_non_empty_above_prompt_box",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 6,
+            "regex": [
+              "(?m)^[\\x{002A}\\x{00B7}\\x{2722}\\x{2736}\\x{273B}\\x{273D}][ \\t]+\\S[^\\n]*?(?:\\n[ \\t]+[^\\n]*?){0,3}·(?:[ \\t]+|\\n[ \\t]*)[1-9]\\d*(?:[ \\t]+|\\n[ \\t]*)MCP(?:[ \\t]+|\\n[ \\t]*)tasks?(?:[ \\t]+|\\n[ \\t]*)still(?:[ \\t]+|\\n[ \\t]*)running[ \\t]*$"
+            ],
+            "region_bytes": 1111,
+            "region_preview": "⏺ The definition was selected by the Agent tool's subagent_type argument —\n  subagent_type: \"poteto-probe\" for the first spawn and subagent_type:\n  \"poteto-absent\" for the negative trial, which returned an immediate error (that\n  agent type..."
+          },
+          "id": "background_mcp_task_working",
+          "matched": false,
+          "priority": 965,
+          "region": "bottom_non_empty_lines(12)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^\\s*/btw(?:\\s|$)",
+              "(?i)esc to close\\s*$"
+            ],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 625,
+            "region_preview": "✻ Brewed for 15s · done 2:39 PM\n\n──────────────────────────────────────────────────────────────────────────────────\n❯\n──────────────────────────────────────────────────────────────────────────────────\n  ⏵⏵ bypass permissions on (shift+tab t..."
+          },
+          "id": "btw_overlay_working",
+          "matched": false,
+          "priority": 975,
+          "region": "bottom_non_empty_lines(5)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 5,
+            "contains": [
+              "showing detailed transcript"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 342,
+            "region_preview": "❯\n──────────────────────────────────────────────────────────────────────────────────\n  ⏵⏵ bypass permissions on (shift+tab to cycle) · /tasks to see subagents · ← f…\n"
+          },
+          "id": "transcript_viewer",
+          "matched": false,
+          "priority": 1000,
+          "region": "bottom_non_empty_lines(3)",
+          "state": "unknown"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 2,
+            "contains": [
+              "esc to cancel"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 91,
+            "region_preview": "  ⏵⏵ bypass permissions on (shift+tab to cycle) · /tasks to see subagents · ← f…\n"
+          },
+          "id": "live_blocked_form",
+          "matched": false,
+          "priority": 980,
+          "region": "after_last_horizontal_rule",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [
+              "run a dynamic workflow?",
+              "esc to cancel"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 2193,
+            "region_preview": "     what happened into negative-trial.txt: the verbatim error, warning, or\n     report that came back. If the spawn produced no output at all, write one\n     line saying so and naming the command or tool call you used. Do not retry\n     wi..."
+          },
+          "id": "dynamic_workflow_prompt",
+          "matched": false,
+          "priority": 980,
+          "region": "whole_recent",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 1,
+            "any_count": 0,
+            "contains": [
+              "esc to cancel"
+            ],
+            "line_regex": [
+              "(?i)^\\s*MCP server [\"\\x{201C}].+[\"\\x{201D}] requests your input\\s*$"
+            ],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 2193,
+            "region_preview": "     what happened into negative-trial.txt: the verbatim error, warning, or\n     report that came back. If the spawn produced no output at all, write one\n     line saying so and naming the command or tool call you used. Do not retry\n     wi..."
+          },
+          "id": "mcp_elicitation_prompt",
+          "matched": false,
+          "priority": 980,
+          "region": "whole_recent",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^\\s*❯"
+            ],
+            "not_count": 5,
+            "regex": [],
+            "region_bytes": 4,
+            "region_preview": "❯\n"
+          },
+          "id": "live_prompt_box",
+          "matched": true,
+          "priority": 950,
+          "region": "prompt_box_body",
+          "state": "idle"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [
+              "select model",
+              "enter to set as default",
+              "esc to cancel"
+            ],
+            "line_regex": [],
+            "not_count": 2,
+            "regex": [],
+            "region_bytes": 2193,
+            "region_preview": "     what happened into negative-trial.txt: the verbatim error, warning, or\n     report that came back. If the spawn produced no output at all, write one\n     line saying so and naming the command or tool call you used. Do not retry\n     wi..."
+          },
+          "id": "model_picker_menu",
+          "matched": false,
+          "priority": 900,
+          "region": "whole_recent",
+          "state": "unknown"
+        },
+        {
+          "evidence": {
+            "all_count": 1,
+            "any_count": 5,
+            "contains": [
+              "do you want to proceed?"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 2193,
+            "region_preview": "     what happened into negative-trial.txt: the verbatim error, warning, or\n     report that came back. If the spawn produced no output at all, write one\n     line saying so and naming the command or tool call you used. Do not retry\n     wi..."
+          },
+          "id": "bash_permission_prompt",
+          "matched": false,
+          "priority": 850,
+          "region": "whole_recent",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 1,
+            "any_count": 0,
+            "contains": [
+              "do you want to proceed?",
+              "esc to cancel"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 91,
+            "region_preview": "  ⏵⏵ bypass permissions on (shift+tab to cycle) · /tasks to see subagents · ← f…\n"
+          },
+          "id": "generic_permission_prompt",
+          "matched": false,
+          "priority": 840,
+          "region": "after_last_horizontal_rule",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 9,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 1,
+            "regex": [],
+            "region_bytes": 2193,
+            "region_preview": "     what happened into negative-trial.txt: the verbatim error, warning, or\n     report that came back. If the spawn produced no output at all, write one\n     line saying so and naming the command or tool call you used. Do not retry\n     wi..."
+          },
+          "id": "legacy_no_prompt_blocker",
+          "matched": false,
+          "priority": 300,
+          "region": "whole_recent",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "^\\x{2733} "
+            ],
+            "region_bytes": 37,
+            "region_preview": "✳ Poteto-probe worker spawning task"
+          },
+          "id": "osc_title_idle",
+          "matched": true,
+          "priority": 250,
+          "region": "osc_title",
+          "state": "idle"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "^4;0"
+            ],
+            "region_bytes": 0,
+            "region_preview": ""
+          },
+          "id": "osc_progress_idle",
+          "matched": false,
+          "priority": 250,
+          "region": "osc_progress",
+          "state": "idle"
+        }
+      ],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": "remote:/Users/am/.local/state/herdr/agent-detection/remote/claude.toml",
+      "manifest_version": "2026.08.31.1",
+      "matched_rule": {
+        "id": "live_prompt_box",
+        "priority": 950,
+        "region": "prompt_box_body",
+        "state": "idle"
+      },
+      "remote_update_error": null,
+      "remote_update_status": "current",
+      "screen_detection_skipped": false,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": true,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [
+      "trust this folder"
+    ],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "claude",
+            "agent_session": {
+              "agent": "claude",
+              "kind": "id",
+              "source": "herdr:claude",
+              "value": "9a5e4379-048b-4645-9e41-f9fa86e9bbb6"
+            },
+            "agent_status": "idle",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Wis42SUieB",
+            "focused": true,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Wis42SUieB",
+            "interactive_ready": true,
+            "name": "b-worker-defaults-iden-claude-01",
+            "pane_id": "w1H:p2H",
+            "revision": 2,
+            "state_change_seq": 585,
+            "tab_id": "w1H:t3",
+            "terminal_id": "term_65a86dd44924b111",
+            "terminal_title": "✳ Poteto-probe worker spawning task",
+            "terminal_title_stripped": "Poteto-probe worker spawning task",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "herdr",
+      "agent",
+      "start",
+      "b-worker-defaults-iden-claude-01",
+      "--kind",
+      "claude",
+      "--pane",
+      "w1H:p2H",
+      "--timeout",
+      "60000",
+      "--",
+      "--model",
+      "opus",
+      "--dangerously-skip-permissions"
+    ],
+    "version": "2.1.258 (Claude Code)\n"
+  },
+  "model": "opus",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Wis42SUieB",
+  "home": {
+    "seeded": [],
+    "written": {
+      ".claude.json": "{\"hasCompletedOnboarding\":true,\"bypassPermissionsModeAccepted\":true,\"theme\":\"dark\"}"
+    },
+    "home_seed": [
+      ".claude/agents/poteto-probe.md"
+    ]
+  },
+  "drive": {
+    "script": "bench/worker_defaults_identity/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "definition_path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-WYTNNC/.claude/agents/poteto-probe.md",
+      "subagents_dir_source": "~/.claude/agents (harnesses.yaml:146)",
+      "prompt_status": "idle (herdr agent prompt --wait)",
+      "positive-report.txt": "written",
+      "negative-trial.txt": "written"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "CLAUDE_CODE_OAUTH_TOKEN",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-WYTNNC/.claude/projects/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-Wis42SUieB",
+  "calls": [
+    {
+      "name": "Agent",
+      "arguments": {
+        "description": "Poteto probe spawn",
+        "prompt": "Reply with the word hello.",
+        "subagent_type": "poteto-probe"
+      },
+      "ts": "2026-09-02T21:39:14.134Z"
+    },
+    {
+      "name": "Agent",
+      "arguments": {
+        "description": "Poteto absent negative trial",
+        "prompt": "Reply with the word hello.",
+        "subagent_type": "poteto-absent"
+      },
+      "ts": "2026-09-02T21:39:17.547Z"
+    },
+    {
+      "name": "Bash",
+      "arguments": {
+        "command": "cat > positive-report.txt <<'EOF'\nPOTETO-PROBE-OK\nhello\nEOF\ncat > negative-trial.txt <<'EOF'\nAgent type 'poteto-absent' not found. Available agents: claude, claude-code-guide, Explore, general-purpose, Plan, poteto-probe, statusline-setup\nEOF\ncat positive-report.txt; echo '---'; cat negative-trial.txt",
+        "description": "Write both trial output files"
+      },
+      "ts": "2026-09-02T21:39:22.510Z"
+    }
+  ],
+  "calls_workers": {
+    "agent-a6efdd64e252ec111": []
+  }
+}

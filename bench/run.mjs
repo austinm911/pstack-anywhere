@@ -57,7 +57,8 @@ const exec = (argv, cwd = ROOT) => {
 };
 
 // herdr answers a JSON envelope on stdout for every command here except
-// `agent read --format text`, which answers raw terminal text.
+// `agent read --format text`, which answers raw terminal text, and the pane
+// input verbs (`send-text`, `send-keys`), which answer nothing on success.
 const herdrResult = (args, r) => {
   if (r.code !== 0) {
     const detail = r.err.trim() || r.out.trim();
@@ -65,7 +66,7 @@ const herdrResult = (args, r) => {
     const code = tryOr(() => JSON.parse(detail).error.code, null);
     throw Object.assign(new Error(`herdr ${args[0]} ${args[1]} failed (${r.code}): ${detail}`), { code });
   }
-  return JSON.parse(r.out);
+  return r.out.trim() ? JSON.parse(r.out) : null;
 };
 const herdr = (...args) => herdrResult(args, exec(["herdr", ...args]));
 // The waits (`prompt --wait`, `agent wait`) block for minutes, and a driver
@@ -385,7 +386,8 @@ const waitAgent = async (name, timeoutMs) => {
 
 // What bench/<scenario>/drive.mjs gets. Every call lands in drive.log with its
 // UTC time, so the run records when the operator acted, not only what the
-// agent showed. The run's status is the last prompt or wait the driver made.
+// agent showed. The run's status is the last prompt or wait the driver made;
+// whether the run counts is the driver's call, by returning or throwing.
 const makeCtx = ({ runDir, runId, harness, model, scratch, home, env, cli, pane, name, promptText, withExtension }) => {
   const logPath = join(ROOT, runDir, "drive.log");
   writeFileSync(logPath, ""); // a reused run dir holds the previous attempt's log
@@ -445,6 +447,8 @@ const makeCtx = ({ runDir, runId, harness, model, scratch, home, env, cli, pane,
     // The harness's own quit is typed like any input; a signal goes to the
     // pid the pane reports. Either way the pane's shell prompt coming back is
     // the end of the session, waited on for 30 s and reported, not required.
+    // A harness that confirms its quit (Claude, with work still running) is
+    // watched for the `quit_dialog:` wording for 10 s and answered from there.
     quit: async ({ method = "command" } = {}) => {
       const at = new Date().toISOString();
       const record = { method, at };
@@ -454,6 +458,16 @@ const makeCtx = ({ runDir, runId, harness, model, scratch, home, env, cli, pane,
         log(`quit command ${cli.quit_command}`);
         herdr("pane", "send-text", pane, cli.quit_command);
         herdr("pane", "send-keys", pane, "enter");
+        const dialogs = cli.quit_dialog ?? [];
+        for (const until = Date.now() + 10000; dialogs.length && Date.now() < until && !shellIdle(paneProcess(pane)); await Bun.sleep(1000)) {
+          const text = readText(pane, 60, "visible");
+          const hit = dialogs.find((d) => new RegExp(d.match, "i").test(text));
+          if (!hit) continue;
+          log(`quit dialog matched ${JSON.stringify(hit.match)}, keys ${hit.keys.join(" ")}`);
+          herdr("pane", "send-keys", pane, ...hit.keys);
+          record.dialog = { text, keys: hit.keys };
+          break;
+        }
       } else if (method === "sigterm" || method === "sigkill") {
         const pid = harnessPid(paneProcess(pane));
         if (!pid) throw new Error(`no harness process in the foreground of pane ${pane}`);
@@ -767,10 +781,12 @@ if (leaks.length > 0) {
   );
 }
 
-// A failed prompt, or a driver that threw or ended on a failed prompt or wait,
-// leaves the manifest unexecuted so the next attempt reuses this directory
-// instead of bumping the counter for a run that never happened.
-if (/^(prompt|wait|drive) failed/.test(status)) {
+// A failed prompt leaves the manifest unexecuted so the next attempt reuses
+// this directory instead of bumping the counter for a run that never happened.
+// A driver sees every prompt's status itself and throws when the run is not
+// one: a timeout it planned for (a wait bound under test) is a result, so a
+// driver that returned made the run, whatever its last prompt reported.
+if (driven ? status.startsWith("drive failed") : status.startsWith("prompt failed")) {
   die(6, `${status}\nrun dir ${runDir} kept unexecuted; transcript.md and invocation.json${driven ? " and drive.log" : ""} hold what the pane showed`);
 }
 rewriteManifest(join(ROOT, runDir, "run.yaml"), {

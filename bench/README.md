@@ -3,7 +3,15 @@
 Drives a conformance scenario against one harness, inside a herdr session.
 
 ```sh
-bun bench/run.mjs <scenario> <harness> <model> [--extension] [--skill <name>]   # e.g. spawn_worker omp opus:low
+bun bench/run.mjs <scenario> <harness> <model> [--extension] [--skill <name>]   # e.g. spawn_worker omp anthropic/claude-opus-5:low
+```
+
+Name the provider in the model. A bare alias like `opus` is fuzzy-matched
+against every provider the copied auth reaches, and a second signed-in
+provider (omp's cursor provider resolved `opus` to `cursor/claude-4.5-opus-high`
+on 2026-09-02) changes the backend and its tool surface under the same run id.
+
+```sh
 ```
 
 Scenario ids come from `bun scripts/coupling.mjs probe list`. Each needs a
@@ -100,8 +108,11 @@ scratch HOME), `name` (the herdr agent, updated by a restart), `pane`,
 - `await ctx.quit({ method })` ends the session: `command` types the harness's
   own `cli.quit_command` from `harnesses.yaml` (`/exit` for Claude, `/quit` for
   codex, pi and OMP, each cited to its pin there), `sigterm` or `sigkill`
-  signals the pid. It waits up to 30 s for the pane's shell to come back and
-  returns `{ method, at, command | pid, exited }`
+  signals the pid. A harness whose quit asks for confirmation lists the dialog
+  under `cli.quit_dialog` (Claude's "Move to background and exit" when work
+  is still running); the runner watches the pane for it for 10 s and sends
+  its keys. It then waits up to 30 s for the pane's shell to come back and
+  returns `{ method, at, command | pid, dialog?, exited }`
 - `await ctx.restart()` starts a fresh agent of the same harness in the same
   pane, scratch and HOME under a new herdr name (`...r1`, `...r2`), answers
   its startup dialogs and settles it, then returns `{ name, status,
@@ -110,11 +121,14 @@ scratch HOME), `name` (the herdr agent, updated by a restart), `pane`,
 
 Every call lands in `drive.log` in the run dir with its UTC time, so the run
 says when the operator acted and not only what the agent showed. The run's
-status is the last prompt or wait the driver made: a driver that throws, or
-whose last prompt or wait failed, leaves the run unexecuted with the
-transcript and log kept. A driver that quit without restarting made that exit
-the last step, and the run is harvested from the pane. `invocation.json`
-carries every prompt, restart and quit response under `herdr`.
+status is the last prompt or wait the driver made, and the driver decides
+whether the run happened: a driver that throws leaves the run unexecuted with
+the transcript and log kept, while one that returns has made the run even if
+its last prompt timed out, since a timeout it planned for (a wait bound under
+test) is a result to record with `ctx.note`. A driver that quit without
+restarting made that exit the last step, and the run is harvested from the
+pane. `invocation.json` carries every prompt, restart and quit response under
+`herdr`.
 
 `bench/<scenario>/home/<harness>/` seeds files into the scratch HOME after the
 auth copies, laid out as they should land relative to HOME

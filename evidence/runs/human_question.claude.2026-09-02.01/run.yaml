@@ -1,0 +1,28 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: human_question
+harness: claude
+run_id: human_question.claude.2026-09-02.01
+coupling_version: 2
+
+started_at: null
+ended_at: null
+operator: null
+machine: null
+os: null
+harness_version: null
+
+# Required by the evidence contract's required_metadata.
+harness_version_source: null
+clock: null
+environment_deltas: null
+
+# The run id this one corrects, or null. A run is never edited after its
+# digests are recorded; a correction is a new run. It has to name an
+# earlier run of human_question on claude, and it only takes effect
+# once this run itself is complete.
+supersedes: null

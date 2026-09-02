@@ -1,0 +1,1 @@
+Agent type 'poteto-absent' not found. Available agents: claude, claude-code-guide, Explore, general-purpose, Plan, poteto-probe, statusline-setup

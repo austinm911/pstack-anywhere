@@ -1,0 +1,648 @@
+{
+  "herdr": {
+    "start": {
+      "error": "herdr agent start failed (1): {\"error\":{\"code\":\"agent_not_ready\",\"message\":\"agent b-wake-on-event-claude-01 is blocked during startup and is not ready for prompts\"},\"id\":\"cli:agent:start\"}"
+    },
+    "start_recovered": true,
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "claude",
+          "agent_session": {
+            "agent": "claude",
+            "kind": "id",
+            "source": "herdr:claude",
+            "value": "b946c0a8-7d84-4403-a4e2-a6d4a9382bd8"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV",
+          "interactive_ready": true,
+          "name": "b-wake-on-event-claude-01",
+          "pane_id": "w1H:p32",
+          "revision": 2,
+          "state_change_seq": 664,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87221934a3124",
+          "terminal_title": "✳ Wait for event.flag to appear",
+          "terminal_title_stripped": "Wait for event.flag to appear",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "claude",
+          "agent_session": {
+            "agent": "claude",
+            "kind": "id",
+            "source": "herdr:claude",
+            "value": "b946c0a8-7d84-4403-a4e2-a6d4a9382bd8"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV",
+          "interactive_ready": true,
+          "name": "b-wake-on-event-claude-01",
+          "pane_id": "w1H:p32",
+          "revision": 2,
+          "state_change_seq": 664,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87221934a3124",
+          "terminal_title": "✳ Wait for event.flag to appear",
+          "terminal_title_stripped": "Wait for event.flag to appear",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "claude",
+      "cached_remote_version": "2026.08.31.1",
+      "evaluated_rules": [
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "^[\\x{2800}-\\x{28FF}\\x{25D0}-\\x{25D3}] "
+            ],
+            "region_bytes": 33,
+            "region_preview": "✳ Wait for event.flag to appear"
+          },
+          "id": "osc_title_working",
+          "matched": false,
+          "priority": 1100,
+          "region": "osc_title",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 2,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 558,
+            "region_preview": "  ⎿  Running in the background (↓\n\n⏺ Trial 2's kqueue wait is blocking in\n  the kernel now, bounded at 20 minutes.\n  It will wake me the instant\n  event.flag appears — no polling from\n  my side.\n\n✻ Baked for 27s · done 3:00 PM · 1 shell\n  s..."
+          },
+          "id": "live_turn_working",
+          "matched": false,
+          "priority": 970,
+          "region": "bottom_non_empty_lines(12)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^\\s*[\\x{002A}\\x{00B7}\\x{2722}\\x{2736}\\x{273B}\\x{273D}]\\s+Waiting for [1-9]\\d* background agents? to finish\\s*$"
+            ],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 15,
+            "region_preview": "  still running"
+          },
+          "id": "background_agents_working",
+          "matched": false,
+          "priority": 965,
+          "region": "last_non_empty_above_prompt_box",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 6,
+            "regex": [
+              "(?m)^[\\x{002A}\\x{00B7}\\x{2722}\\x{2736}\\x{273B}\\x{273D}][ \\t]+\\S[^\\n]*?(?:\\n[ \\t]+[^\\n]*?){0,3}·(?:[ \\t]+|\\n[ \\t]*)[1-9]\\d*(?:[ \\t]+|\\n[ \\t]*)MCP(?:[ \\t]+|\\n[ \\t]*)tasks?(?:[ \\t]+|\\n[ \\t]*)still(?:[ \\t]+|\\n[ \\t]*)running[ \\t]*$"
+            ],
+            "region_bytes": 558,
+            "region_preview": "  ⎿  Running in the background (↓\n\n⏺ Trial 2's kqueue wait is blocking in\n  the kernel now, bounded at 20 minutes.\n  It will wake me the instant\n  event.flag appears — no polling from\n  my side.\n\n✻ Baked for 27s · done 3:00 PM · 1 shell\n  s..."
+          },
+          "id": "background_mcp_task_working",
+          "matched": false,
+          "priority": 965,
+          "region": "bottom_non_empty_lines(12)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^\\s*/btw(?:\\s|$)",
+              "(?i)esc to close\\s*$"
+            ],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 308,
+            "region_preview": "  still running\n\n────────────────────────────────────────\n❯\n────────────────────────────────────────\n  ⏵⏵ bypass permissions on · 1 shell ·\n"
+          },
+          "id": "btw_overlay_working",
+          "matched": false,
+          "priority": 975,
+          "region": "bottom_non_empty_lines(5)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 5,
+            "contains": [
+              "showing detailed transcript"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 170,
+            "region_preview": "❯\n────────────────────────────────────────\n  ⏵⏵ bypass permissions on · 1 shell ·\n"
+          },
+          "id": "transcript_viewer",
+          "matched": false,
+          "priority": 1000,
+          "region": "bottom_non_empty_lines(3)",
+          "state": "unknown"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 2,
+            "contains": [
+              "esc to cancel"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 45,
+            "region_preview": "  ⏵⏵ bypass permissions on · 1 shell ·\n"
+          },
+          "id": "live_blocked_form",
+          "matched": false,
+          "priority": 980,
+          "region": "after_last_horizontal_rule",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [
+              "run a dynamic workflow?",
+              "esc to cancel"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 1303,
+            "region_preview": "\n  Listed 1 directory (ctrl+o to expand)\n\n⏺ Trial 1 recorded (woke at\n  2026-09-02T22:00:28Z, returned because\n  the file appeared). event.flag is\n  gone again, so starting trial 2.\n\n⏺ Bash(S=/private/tmp/claude-502/-privat\n      e-var-fold..."
+          },
+          "id": "dynamic_workflow_prompt",
+          "matched": false,
+          "priority": 980,
+          "region": "whole_recent",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 1,
+            "any_count": 0,
+            "contains": [
+              "esc to cancel"
+            ],
+            "line_regex": [
+              "(?i)^\\s*MCP server [\"\\x{201C}].+[\"\\x{201D}] requests your input\\s*$"
+            ],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 1303,
+            "region_preview": "\n  Listed 1 directory (ctrl+o to expand)\n\n⏺ Trial 1 recorded (woke at\n  2026-09-02T22:00:28Z, returned because\n  the file appeared). event.flag is\n  gone again, so starting trial 2.\n\n⏺ Bash(S=/private/tmp/claude-502/-privat\n      e-var-fold..."
+          },
+          "id": "mcp_elicitation_prompt",
+          "matched": false,
+          "priority": 980,
+          "region": "whole_recent",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^\\s*❯"
+            ],
+            "not_count": 5,
+            "regex": [],
+            "region_bytes": 4,
+            "region_preview": "❯\n"
+          },
+          "id": "live_prompt_box",
+          "matched": true,
+          "priority": 950,
+          "region": "prompt_box_body",
+          "state": "idle"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [
+              "select model",
+              "enter to set as default",
+              "esc to cancel"
+            ],
+            "line_regex": [],
+            "not_count": 2,
+            "regex": [],
+            "region_bytes": 1303,
+            "region_preview": "\n  Listed 1 directory (ctrl+o to expand)\n\n⏺ Trial 1 recorded (woke at\n  2026-09-02T22:00:28Z, returned because\n  the file appeared). event.flag is\n  gone again, so starting trial 2.\n\n⏺ Bash(S=/private/tmp/claude-502/-privat\n      e-var-fold..."
+          },
+          "id": "model_picker_menu",
+          "matched": false,
+          "priority": 900,
+          "region": "whole_recent",
+          "state": "unknown"
+        },
+        {
+          "evidence": {
+            "all_count": 1,
+            "any_count": 5,
+            "contains": [
+              "do you want to proceed?"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 1303,
+            "region_preview": "\n  Listed 1 directory (ctrl+o to expand)\n\n⏺ Trial 1 recorded (woke at\n  2026-09-02T22:00:28Z, returned because\n  the file appeared). event.flag is\n  gone again, so starting trial 2.\n\n⏺ Bash(S=/private/tmp/claude-502/-privat\n      e-var-fold..."
+          },
+          "id": "bash_permission_prompt",
+          "matched": false,
+          "priority": 850,
+          "region": "whole_recent",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 1,
+            "any_count": 0,
+            "contains": [
+              "do you want to proceed?",
+              "esc to cancel"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 45,
+            "region_preview": "  ⏵⏵ bypass permissions on · 1 shell ·\n"
+          },
+          "id": "generic_permission_prompt",
+          "matched": false,
+          "priority": 840,
+          "region": "after_last_horizontal_rule",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 9,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 1,
+            "regex": [],
+            "region_bytes": 1303,
+            "region_preview": "\n  Listed 1 directory (ctrl+o to expand)\n\n⏺ Trial 1 recorded (woke at\n  2026-09-02T22:00:28Z, returned because\n  the file appeared). event.flag is\n  gone again, so starting trial 2.\n\n⏺ Bash(S=/private/tmp/claude-502/-privat\n      e-var-fold..."
+          },
+          "id": "legacy_no_prompt_blocker",
+          "matched": false,
+          "priority": 300,
+          "region": "whole_recent",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "^\\x{2733} "
+            ],
+            "region_bytes": 33,
+            "region_preview": "✳ Wait for event.flag to appear"
+          },
+          "id": "osc_title_idle",
+          "matched": true,
+          "priority": 250,
+          "region": "osc_title",
+          "state": "idle"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "^4;0"
+            ],
+            "region_bytes": 0,
+            "region_preview": ""
+          },
+          "id": "osc_progress_idle",
+          "matched": false,
+          "priority": 250,
+          "region": "osc_progress",
+          "state": "idle"
+        }
+      ],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": "remote:/Users/am/.local/state/herdr/agent-detection/remote/claude.toml",
+      "manifest_version": "2026.08.31.1",
+      "matched_rule": {
+        "id": "live_prompt_box",
+        "priority": 950,
+        "region": "prompt_box_body",
+        "state": "idle"
+      },
+      "remote_update_error": null,
+      "remote_update_status": "current",
+      "screen_detection_skipped": false,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": true,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [
+      "trust this folder"
+    ],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "claude",
+            "agent_session": {
+              "agent": "claude",
+              "kind": "id",
+              "source": "herdr:claude",
+              "value": "b946c0a8-7d84-4403-a4e2-a6d4a9382bd8"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV",
+            "interactive_ready": true,
+            "name": "b-wake-on-event-claude-01",
+            "pane_id": "w1H:p32",
+            "revision": 2,
+            "state_change_seq": 662,
+            "tab_id": "w1H:t3",
+            "terminal_id": "term_65a87221934a3124",
+            "terminal_title": "✳ Wait for event.flag to appear",
+            "terminal_title_stripped": "Wait for event.flag to appear",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "claude",
+            "agent_session": {
+              "agent": "claude",
+              "kind": "id",
+              "source": "herdr:claude",
+              "value": "b946c0a8-7d84-4403-a4e2-a6d4a9382bd8"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV",
+            "interactive_ready": true,
+            "name": "b-wake-on-event-claude-01",
+            "pane_id": "w1H:p32",
+            "revision": 2,
+            "state_change_seq": 664,
+            "tab_id": "w1H:t3",
+            "terminal_id": "term_65a87221934a3124",
+            "terminal_title": "✳ Wait for event.flag to appear",
+            "terminal_title_stripped": "Wait for event.flag to appear",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "herdr",
+      "agent",
+      "start",
+      "b-wake-on-event-claude-01",
+      "--kind",
+      "claude",
+      "--pane",
+      "w1H:p32",
+      "--timeout",
+      "60000",
+      "--",
+      "--model",
+      "opus",
+      "--dangerously-skip-permissions"
+    ],
+    "version": "2.1.258 (Claude Code)\n"
+  },
+  "model": "opus",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV",
+  "home": {
+    "seeded": [],
+    "written": {
+      ".claude.json": "{\"hasCompletedOnboarding\":true,\"bypassPermissionsModeAccepted\":true,\"theme\":\"dark\"}"
+    }
+  },
+  "drive": {
+    "script": "bench/wake_on_event/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "accounting.before_wait": "2026-09-02T21:58:24.368Z assistant_entries=0 seq=658 status=idle",
+      "trial1.prompt_sent": "2026-09-02T21:58:24.368Z",
+      "accounting.during_wait": "2026-09-02T22:00:24.409Z assistant_entries=19 seq=662 status=done",
+      "trial1.wait_call": "python3 \"/private/tmp/claude-502/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-xUBQEBV8jV/b946c0a8-7d84-4403-a4e2-a6d4a9382bd8/scratchpad/kq_wait.py\" \"/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV/event.flag\" 1200\nshell command\nNOTE_DELETE, NOTE_WRITE, NOTE_EXTEND, NOTE_ATTRIB, NOTE_LINK, NOTE_RENAME, NOTE_REVOKE, NOTE_FUNLOCK (EVFILT_VNODE event kinds per kqueue(2); this call registers DELETE, WRITE, EXTEND, ATTRIB, LINK, RENAME)",
+      "trial1.triggered": "2026-09-02T22:00:24Z",
+      "accounting.after_wake": "2026-09-02T22:00:24.450Z assistant_entries=19 seq=662 status=done",
+      "trial1.returned": "2026-09-02T22:00:24.433Z status=done settled_by=herdr agent prompt --wait",
+      "trial1.woke_at": "woke-at.txt not written",
+      "trial2.prompt_sent": "2026-09-02T22:00:24.496Z budget_ms=240130",
+      "trial2.outcome": "2026-09-02T22:00:52.579Z status=done still_waiting=false",
+      "accounting.after_trial2": "2026-09-02T22:00:52.639Z assistant_entries=27 seq=664 status=done",
+      "artifacts": "wait-accounting.yaml timeline.yaml no-trigger-trial.md written to scratch"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "CLAUDE_CODE_OAUTH_TOKEN",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-r0e5pG/.claude/projects/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-xUBQEBV8jV",
+  "calls": [
+    {
+      "name": "Bash",
+      "arguments": {
+        "command": "pwd && ls -la && git log --stat -3",
+        "description": "Inspect repo contents and recent commit"
+      },
+      "ts": "2026-09-02T21:58:32.095Z"
+    },
+    {
+      "name": "ToolSearch",
+      "arguments": {
+        "query": "select:Monitor",
+        "max_results": 3
+      },
+      "ts": "2026-09-02T21:58:32.116Z"
+    },
+    {
+      "name": "ToolSearch",
+      "arguments": {
+        "query": "wait until condition monitor watch file event",
+        "max_results": 10
+      },
+      "ts": "2026-09-02T21:58:34.650Z"
+    },
+    {
+      "name": "Bash",
+      "arguments": {
+        "command": "cat .bench-scratch; ls ~/.claude 2>/dev/null; cat ~/.claude/settings.json 2>/dev/null",
+        "description": "Check scratch file and claude settings"
+      },
+      "ts": "2026-09-02T21:58:35.265Z"
+    },
+    {
+      "name": "ToolSearch",
+      "arguments": {
+        "query": "+monitor stream events notify",
+        "max_results": 10
+      },
+      "ts": "2026-09-02T21:58:39.369Z"
+    },
+    {
+      "name": "Bash",
+      "arguments": {
+        "command": "H=/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-r0e5pG/.claude; ls -la $H/hooks $H/plugins 2>/dev/null; grep -ril \"wake_on_event\" $H 2>/dev/null | head -20",
+        "description": "Look for wake_on_event and hooks/plugins"
+      },
+      "ts": "2026-09-02T21:58:46.274Z"
+    },
+    {
+      "name": "ToolSearch",
+      "arguments": {
+        "query": "wake_on_event block until file appears wait",
+        "max_results": 10
+      },
+      "ts": "2026-09-02T21:58:46.394Z"
+    },
+    {
+      "name": "Bash",
+      "arguments": {
+        "command": "ls -l /bin/wait4path /usr/bin/wait4path 2>&1; which fswatch inotifywait python3 2>&1; man -P cat wait4path 2>/dev/null | head -30",
+        "description": "Check for wait4path, fswatch, python3"
+      },
+      "ts": "2026-09-02T21:59:02.998Z"
+    },
+    {
+      "name": "Bash",
+      "arguments": {
+        "command": "S=/private/tmp/claude-502/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-xUBQEBV8jV/b946c0a8-7d84-4403-a4e2-a6d4a9382bd8/scratchpad\ncat > \"$S/kq_wait.py\" <<'PY'\nimport os, select, sys, time\n\ntarget = sys.argv[1]\nbound = float(sys.argv[2])\nd = os.path.dirname(target) or \".\"\n\nkq = select.kqueue()\nfd = os.open(d, os.O_RDONLY)\nev = select.kevent(fd, filter=select.KQ_FILTER_VNODE,\n                   flags=select.KQ_EV_ADD | select.KQ_EV_CLEAR,\n                   fflags=(select.KQ_NOTE_WRITE | select.KQ_NOTE_EXTEND |\n                           select.KQ_NOTE_LINK | select.KQ_NOTE_RENAME |\n                           select.KQ_NOTE_DELETE | select.KQ_NOTE_ATTRIB))\nkq.control([ev], 0, 0)\n\ndeadline = time.monotonic() + bound\nif os.path.exists(target):\n    print(\"RETURNED: event.flag exists (present before wait began)\")\n    sys.exit(0)\nwhile True:\n    remaining = deadline - time.monotonic()\n    if remaining <= 0:\n        print(\"RETURNED: timeout after %.0fs, no kqueue event matched; event.flag absent\" % bound)\n        sys.exit(2)\n    evs = kq.control(None, 1, remaining)\n    if os.path.exists(target):\n        print(\"RETURNED: event.flag appeared (kqueue EVFILT_VNODE event on directory %s)\" % d)\n        sys.exit(0)\nPY\ncat > wait-call.txt <<EOF\npython3 \"$S/kq_wait.py\" \"$PWD/event.flag\" 1200\nshell command\nNOTE_DELETE, NOTE_WRITE, NOTE_EXTEND, NOTE_ATTRIB, NOTE_LINK, NOTE_RENAME, NOTE_REVOKE, NOTE_FUNLOCK (EVFILT_VNODE event kinds per kqueue(2); this call registers DELETE, WRITE, EXTEND, ATTRIB, LINK, RENAME)\nEOF\ncat wait-call.txt",
+        "description": "Write kqueue watcher and wait-call.txt"
+      },
+      "ts": "2026-09-02T21:59:30.310Z"
+    },
+    {
+      "name": "Bash",
+      "arguments": {
+        "command": "python3 \"/private/tmp/claude-502/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-xUBQEBV8jV/b946c0a8-7d84-4403-a4e2-a6d4a9382bd8/scratchpad/kq_wait.py\" \"/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV/event.flag\" 1200",
+        "description": "Block on kqueue until event.flag appears",
+        "timeout": 1260000,
+        "run_in_background": true
+      },
+      "ts": "2026-09-02T21:59:34.793Z"
+    },
+    {
+      "name": "Bash",
+      "arguments": {
+        "command": "date -u +%FT%TZ > woke-at.txt; cat /private/tmp/claude-502/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-xUBQEBV8jV/b946c0a8-7d84-4403-a4e2-a6d4a9382bd8/tasks/bhiiom1b9.output",
+        "description": "Timestamp wake and read wait output"
+      },
+      "ts": "2026-09-02T22:00:28.006Z"
+    },
+    {
+      "name": "Bash",
+      "arguments": {
+        "command": "echo 'RETURNED: event.flag appeared (kqueue EVFILT_VNODE event on directory /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV)' >> woke-at.txt; cat woke-at.txt; echo '--- flag state:'; ls -la event.flag 2>&1",
+        "description": "Finish trial 1 woke-at.txt and check flag state"
+      },
+      "ts": "2026-09-02T22:00:36.903Z"
+    },
+    {
+      "name": "Bash",
+      "arguments": {
+        "command": "S=/private/tmp/claude-502/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-xUBQEBV8jV/b946c0a8-7d84-4403-a4e2-a6d4a9382bd8/scratchpad\ncat > wait-call.txt <<EOF\npython3 \"$S/kq_wait.py\" \"$PWD/event.flag\" 1200\nshell command\nNOTE_DELETE, NOTE_WRITE, NOTE_EXTEND, NOTE_ATTRIB, NOTE_LINK, NOTE_RENAME, NOTE_REVOKE, NOTE_FUNLOCK (EVFILT_VNODE event kinds per kqueue(2); this call registers DELETE, WRITE, EXTEND, ATTRIB, LINK, RENAME)\nEOF\ncat wait-call.txt",
+        "description": "Overwrite wait-call.txt for trial 2"
+      },
+      "ts": "2026-09-02T22:00:45.180Z"
+    },
+    {
+      "name": "Bash",
+      "arguments": {
+        "command": "python3 \"/private/tmp/claude-502/-private-var-folders-4n-6mnm6cw94yq-yhfvcxxft3180000gp-T-tmp-xUBQEBV8jV/b946c0a8-7d84-4403-a4e2-a6d4a9382bd8/scratchpad/kq_wait.py\" \"/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.xUBQEBV8jV/event.flag\" 1200",
+        "description": "Trial 2: block on kqueue until event.flag appears",
+        "timeout": 1260000,
+        "run_in_background": true
+      },
+      "ts": "2026-09-02T22:00:48.978Z"
+    }
+  ],
+  "calls_workers": {}
+}

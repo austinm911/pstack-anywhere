@@ -1,0 +1,14 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: identity.definition_path
+    observed: '/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-WYTNNC/.claude/agents/poteto-probe.md, seeded from bench/worker_defaults_identity/home/claude into the scratch HOME''s ~/.claude/agents (harnesses.yaml:146). Contents: YAML frontmatter "name: poteto-probe", "description: ...", "model: inherit", "color: green", then the body "You are the poteto-probe worker. The first line of every report you produce is exactly: POTETO-PROBE-OK ..." The parent''s own agent_listing_delta attachment lists poteto-probe among the loaded agent types'
+    source: definition.txt; run.yaml drive.definition_path and drive.subagents_dir_source; session/9a5e4379-048b-4645-9e41-f9fa86e9bbb6.jsonl attachment agent_listing_delta.addedTypes
+  - id: identity.selection_argument
+    observed: 'Agent tool, argument subagent_type: "poteto-probe" (positive trial) and subagent_type: "poteto-absent" (negative trial), both with prompt "Reply with the word hello."'
+    source: invocation.json calls[0].arguments.subagent_type and calls[1].arguments.subagent_type
+  - id: identity.token_present
+    observed: 'true; the worker''s only assistant message is the text "POTETO-PROBE-OK\nhello", the parent received it in a task-notification with <result>POTETO-PROBE-OK\nhello</result>, and the worker''s meta records agentType "poteto-probe". The token appears in the definition body and not in the brief'
+    source: session/9a5e4379-048b-4645-9e41-f9fa86e9bbb6/subagents/agent-a6efdd64e252ec111.jsonl last line message.content[0].text; agent-a6efdd64e252ec111.meta.json agentType; parent jsonl attachment queued_command <result>; positive-report.txt
+  - id: identity.unknown_name_behavior
+    observed: 'hard error, no fallback: the Agent call with subagent_type "poteto-absent" returned a tool_result with is_error: true whose content is verbatim "Agent type ''poteto-absent'' not found. Available agents: claude, claude-code-guide, Explore, general-purpose, Plan, poteto-probe, statusline-setup". No subagent log was created for it (only one file under session/.../subagents/)'
+    source: negative-trial.txt; session/9a5e4379-048b-4645-9e41-f9fa86e9bbb6.jsonl tool_result toolu_01Hpt8nLCGVLNWjFcxpbtFTp (is_error true); invocation.json calls_workers has one entry
