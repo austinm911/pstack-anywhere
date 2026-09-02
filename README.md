@@ -44,7 +44,7 @@ coupling.yaml    every Cursor primitive this port replaces, and how, per harness
 harnesses.yaml   distribution targets, config files, and hook mechanism per harness
 references/      pinned upstream source per harness, with the pin and a refetch block
 scripts/         coupling.mjs: derives the ledger, renders what it derives, lints
-PORTABILITY.md   generated: per-skill parity, replacement, and verification tables
+PORTABILITY.md   generated: what remains, per-harness resolutions, evidence state
 UPSTREAM.md      pinned SHA, divergence log, open decisions
 ```
 
@@ -63,14 +63,14 @@ travels with its skill and a skill directory works anywhere on its own.
 | measure | value |
 | --- | --- |
 | upstream pin | `b9ddc83`, path `pstack` |
-| ported skills | 2: `poteto-mode`, `setup-pstack-anywhere` |
-| skills not reached | 13, in 74 places the lint counts |
-| occurrences | 67 ported, 25 unported, 0 missing, 2 unverifiable |
+| skills reached | 2 of 45: `poteto-mode` (67 of 68 checked), `setup-pstack-anywhere` (0 of 1 checked) |
+| skills with work left | 13 of 45 |
+| occurrences | 67 resolved, 25 unresolved, 0 missing, 2 not checked |
+| token hits | 53 attributed to a domain, 21 unattributed Cursor mentions |
 | verification | 0 of 120 cells verified, 0 attestations, 9 scenarios defined |
 
-`bun scripts/coupling.mjs check` is the gate. Per-skill parity, replacement, and
-verification tables, including every skill the port has not reached, are in
-[PORTABILITY.md](PORTABILITY.md).
+`bun scripts/coupling.mjs check` is the gate. The work left, the per-harness
+resolutions, and the evidence state are in [PORTABILITY.md](PORTABILITY.md).
 
 <!-- END GENERATED coupling-summary -->
 

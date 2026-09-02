@@ -11,8 +11,10 @@
 ```sh
 REF="e017e93aceafb2fe04bed1c926e448a5fb4f913d"
 BASE="https://raw.githubusercontent.com/openai/codex/$REF"
-mkdir -p references/harnesses/codex/src/codex-rs/{core/src,config/src/loader,config/src,hooks/src/engine,hooks/src/events,protocol/src,skills/src,ext/skills/src/loader,ext/skills/src,utils/home-dir/src,tui/src}
+mkdir -p references/harnesses/codex/src/codex-rs/{core/src,core/src/tools/handlers,config/src/loader,config/src,hooks/src/engine,hooks/src/events,protocol/src,skills/src,ext/skills/src/loader,ext/skills/src,utils/home-dir/src,tui/src}
 curl -sSf "$BASE/codex-rs/core/src/agents_md.rs" -o references/harnesses/codex/src/codex-rs/core/src/agents_md.rs
+curl -sSf "$BASE/codex-rs/core/src/tools/handlers/request_user_input.rs" -o references/harnesses/codex/src/codex-rs/core/src/tools/handlers/request_user_input.rs
+curl -sSf "$BASE/codex-rs/core/src/tools/handlers/request_user_input_spec.rs" -o references/harnesses/codex/src/codex-rs/core/src/tools/handlers/request_user_input_spec.rs
 curl -sSf "$BASE/codex-rs/config/src/hook_config.rs" -o references/harnesses/codex/src/codex-rs/config/src/hook_config.rs
 curl -sSf "$BASE/codex-rs/config/src/lib.rs" -o references/harnesses/codex/src/codex-rs/config/src/lib.rs
 curl -sSf "$BASE/codex-rs/config/src/loader/mod.rs" | sed -n '94,646p' > references/harnesses/codex/src/codex-rs/config/src/loader/mod.rs.L94-L646.rs
@@ -42,6 +44,8 @@ curl -s "https://api.github.com/repos/openai/codex/commits?per_page=1" | jq -r '
 | Local path | Upstream path | Lines saved | What it defines |
 |---|---|---:|---|
 | `src/codex-rs/core/src/agents_md.rs` | `codex-rs/core/src/agents_md.rs` | 1-513 | AGENTS.md project discovery, ancestor walk-up, candidate names, user-instruction assembly |
+| `src/codex-rs/core/src/tools/handlers/request_user_input.rs` | `codex-rs/core/src/tools/handlers/request_user_input.rs` | 1-160 | `request_user_input` tool handler: root-thread check, collaboration-mode gate, blocking flag |
+| `src/codex-rs/core/src/tools/handlers/request_user_input_spec.rs` | `codex-rs/core/src/tools/handlers/request_user_input_spec.rs` | 1-146 | `request_user_input` tool spec, schema, unavailable-mode message, option validation |
 | `src/codex-rs/config/src/hook_config.rs` | `codex-rs/config/src/hook_config.rs` | 1-256 | JSON/TOML hook structures, event map, matcher groups, handler variants |
 | `src/codex-rs/config/src/lib.rs` | `codex-rs/config/src/lib.rs` | 1-200 | `CONFIG_TOML_FILE` constant and config crate exports |
 | `src/codex-rs/config/src/loader/mod.rs.L94-L646.rs` | `codex-rs/config/src/loader/mod.rs` | 94-646 | Config layer order and `config.toml` parsing/loading |
@@ -103,6 +107,10 @@ Project docs are skipped when the active project is untrusted, and loaded projec
 ### Subagents and commands/prompts
 
 The inspected source does not implement a filesystem loader for `~/.codex/agents` or `~/.codex/prompts`. The TUI source declares `/agents` and `/subagents` as built-in commands, `/hooks` as the hooks UI command, and `/init` as the command that creates an `AGENTS.md` file, but it contains no directory scan or prompt-file parser (`src/codex-rs/tui/src/slash_command.rs:7-12`, `src/codex-rs/tui/src/slash_command.rs:28-31`, `src/codex-rs/tui/src/slash_command.rs:39-45`, `src/codex-rs/tui/src/slash_command.rs:77-83`, `src/codex-rs/tui/src/slash_command.rs:86-94`). Prompt and agent hook handler variants exist in the config enum, but the discovery implementation explicitly skips them as unsupported (`src/codex-rs/config/src/hook_config.rs:197-200`, `src/codex-rs/hooks/src/engine/discovery.rs.L634-L653.rs:634-653`, upstream lines).
+
+### Human question
+
+Codex has a native `request_user_input` tool. The handler rejects calls from any non-root agent with "request_user_input can only be used by the root thread" (`src/codex-rs/core/src/tools/handlers/request_user_input.rs:70-74`). It then reads the turn's collaboration mode and rejects the call when that mode is not in the handler's `available_modes`, with the message "request_user_input is unavailable in {mode} mode" (`src/codex-rs/core/src/tools/handlers/request_user_input.rs:76-79`, `src/codex-rs/core/src/tools/handlers/request_user_input_spec.rs:91-103`). The request is blocking only in plan mode, `is_blocking: mode == ModeKind::Plan` (`src/codex-rs/core/src/tools/handlers/request_user_input.rs:84-88`). Every question must carry non-empty options, and the tool forces `is_other` on so free text is always accepted (`src/codex-rs/core/src/tools/handlers/request_user_input_spec.rs:105-121`). Which modes are available is set by the caller that constructs the handler, so the source proves the gate exists and not which modes the shipped CLI enables.
 
 ## harnesses.yaml verification
 

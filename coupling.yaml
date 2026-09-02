@@ -38,6 +38,7 @@
 # parity values:
 #   native       the harness has the primitive under its own name
 #   substitute   a different primitive does the same job
+#   extension   the primitive exists but is not on by default; use names it, fallback names the path without it
 #   degrade      no equivalent, and `use` names the weaker path explicitly
 #   drop         the step does not apply, and the playbook must say so
 #
@@ -111,11 +112,11 @@ axes:
       cursor: { parity: native, use: 'Task with environment: "cloud"' }
       claude: { parity: substitute, use: "Task tool, subagent_type" }
       codex: { parity: substitute, use: "task tool" }
-      pi: { parity: substitute, use: "task tool" }
+      pi: { parity: extension, use: "a task tool an extension registers", fallback: "do the work inline, sequentially, and say no worker ran" }
       omp: { parity: substitute, use: "task tool, agent field selects the specialist" }
     tokens:
       - pattern: 'environment:\s*"cloud"'
-        why: use spawn_worker and worker_durability
+        why: a cloud worker couples spawn_worker and worker_durability
         also: [worker_durability]
     occurrences:
       - path: skills/poteto-mode/SKILL.md
@@ -155,7 +156,7 @@ axes:
       cursor: { parity: native, use: "dashboard shows agent state without a resume" }
       claude: { parity: degrade, use: "job status only, no liveness for every delegate kind" }
       codex: { parity: degrade, use: "job status only" }
-      pi: { parity: degrade, use: "job status only" }
+      pi: { parity: extension, use: "the job status the task extension exposes", fallback: "none, wait for the result" }
       omp: { parity: substitute, use: 'hub op:"jobs"' }
     occurrences:
       - path: skills/poteto-mode/playbooks/orchestrate.md
@@ -176,7 +177,7 @@ axes:
       step changes.
     tokens:
       - pattern: '(^|[\s(`])\/loop\b'
-        why: use the wake_on_event capability
+        why: /loop is Cursor's wake_on_event primitive
     occurrences:
       - path: skills/poteto-mode/SKILL.md
       - path: skills/poteto-mode/playbooks/autonomous-run.md
@@ -212,13 +213,13 @@ axes:
         resolution:
           cursor: { parity: native, use: 'subagent_type: "poteto-agent"' }
           claude: { parity: substitute, use: "a poteto-agent definition in the harness subagent dir" }
-          codex: { parity: substitute, use: "same" }
-          pi: { parity: substitute, use: "same" }
-          omp: { parity: substitute, use: "same" }
+          codex: { parity: substitute, use: "a poteto-agent definition in the harness subagent dir" }
+          pi: { parity: extension, use: "a poteto-agent definition where the extension reads its agents", fallback: "no identity, the parent model does the work" }
+          omp: { parity: substitute, use: "a poteto-agent definition in the harness subagent dir" }
       - id: model
         resolution:
           cursor: { parity: native, use: "explicit slug per role" }
-          claude: { parity: substitute, use: "role slots, see roles below" }
+          claude: { parity: substitute, use: "role slots" }
           codex: { parity: substitute, use: "role slots" }
           pi: { parity: substitute, use: "role slots" }
           omp: { parity: substitute, use: "role slots, or the agent field" }
@@ -229,10 +230,10 @@ axes:
       absent.
     tokens:
       - pattern: '\brun_in_background\b'
-        why: use the worker_defaults background row
+        why: run_in_background is the worker_defaults background parameter
         parameter: background
       - pattern: '\bsubagent_type\b'
-        why: use the worker_defaults identity row
+        why: subagent_type is the worker_defaults identity parameter
         parameter: identity
     occurrences:
       - path: skills/poteto-mode/SKILL.md
@@ -245,16 +246,16 @@ axes:
     resolution:
       cursor: { parity: native, use: "AskQuestion" }
       claude: { parity: substitute, use: "the ask tool" }
-      codex: { parity: degrade, use: "a plain question in the reply" }
-      pi: { parity: degrade, use: "a plain question in the reply" }
+      codex: { parity: substitute, use: "request_user_input tool, root thread only, mode-gated" }
+      pi: { parity: extension, use: "an ask tool an extension registers via registerTool", fallback: "a plain question in the reply" }
       omp: { parity: substitute, use: "the ask tool" }
     consequence: >-
       orchestrate.md parks human gates in gates.md so a completion flood cannot
       wipe pending question state. That file-backed gate is the portable part and
-      matters more where the primitive degrades.
+      matters more where the primitive is off by default or absent.
     tokens:
       - pattern: '\bAskQuestion\b'
-        why: use the human_question capability
+        why: AskQuestion is Cursor's human_question primitive
     occurrences:
       - path: skills/poteto-mode/SKILL.md
       - path: skills/poteto-mode/playbooks/autonomous-run.md
@@ -267,9 +268,8 @@ axes:
       An agentic reviewer that files PR comments. A GitHub-side service, not a
       harness feature, so it is the user's choice on every harness including
       Cursor. references/bugbot-triage.md generalizes to review-automation
-      triage; its content is how to assess untrusted review text, which no
-      harness changes. scripts/watch-pr/policy.ts already generalizes this with
-      an AUTOMATION_TOKENS list.
+      triage: its content is how to assess untrusted review text, which no
+      harness changes.
     invariant:
       parity: substitute
       use: >-
@@ -317,7 +317,7 @@ axes:
         rather than claiming a pass; a verdict of type-check-only is honest.
     tokens:
       - pattern: '\bcontrol-ui\b'
-        why: use the ui_driver and cli_driver roles
+        why: control-ui is the ui_driver role
     occurrences:
       - path: skills/poteto-mode/SKILL.md
       - path: skills/poteto-mode/playbooks/shipping.md
@@ -336,7 +336,7 @@ axes:
       use: Same as ui_driver. Name the missing verification, do not imply one.
     tokens:
       - pattern: '\bcontrol-cli\b'
-        why: use the ui_driver and cli_driver roles
+        why: control-cli is the cli_driver role
     occurrences:
       - path: skills/poteto-mode/SKILL.md
       - path: skills/poteto-mode/playbooks/shipping.md
@@ -354,7 +354,7 @@ axes:
       use: playbooks/authoring-a-skill.md carries the rules on its own.
     tokens:
       - pattern: '\bcreate-skill\b'
-        why: use the skill_authoring role
+        why: create-skill is the skill_authoring role
     occurrences:
       - path: skills/poteto-mode/SKILL.md
       - path: skills/poteto-mode/playbooks/authoring-a-skill.md
@@ -384,12 +384,12 @@ axes:
         unscannable: >-
           Allowlisted whole-file in lint.allowlist, because it names the Cursor
           rule-file location on purpose. The lint therefore never reads it, so
-          this occurrence derives unverifiable rather than ported.
+          this occurrence is not checked rather than resolved.
       - path: skills/poteto-mode/scripts/check-plan.mjs
         unscannable: >-
           Not Markdown, so lint.scan never reaches it, and its directory is
-          allowlisted for the shell -gt comparisons in its siblings. Its
-          implementation derives unverifiable rather than ported.
+          allowlisted for the shell -gt comparisons in its siblings. It is not
+          checked rather than resolved.
 
   - id: graphite
     kind: prerequisite
@@ -428,10 +428,11 @@ axes:
     what: Runtime for scripts/watch-pr and scripts/orch.
     invariant:
       parity: drop
-      use: Those levers cannot run. Both are TypeScript with a bun shebang.
+      use: Those levers cannot run.
     no_occurrences: >-
-      Same as github_cli. The dependency is a shebang in a script, not a
-      coupling site in prose.
+      The dependency is a shebang inside skills/poteto-mode/scripts/, which
+      lint.scan does not reach. Nothing in the Markdown prose runs the binary by
+      name, so there is no occurrence for a refresh diff to catch.
 
   - id: pack_path
     kind: path_assumption
@@ -448,7 +449,7 @@ axes:
         resolves.
     tokens:
       - pattern: '\bpstack\/skills\b'
-        why: use harness-relative skill addressing
+        why: a repo-relative pack path only a Cursor plugin install provides
     occurrences:
       - path: skills/poteto-mode/playbooks/multi-phase-plan.md
       - path: skills/poteto-mode/playbooks/autopilot-full.md
@@ -469,7 +470,7 @@ axes:
         re-read fixes that.
     tokens:
       - pattern: 'git show origin\/main:'
-        why: trunk re-read is replaced by a plain re-read
+        why: a trunk re-read of the pack depends on pack_path
     occurrences:
       - path: skills/poteto-mode/playbooks/multi-phase-plan.md
 
@@ -484,7 +485,7 @@ axes:
         is user and harness specific, and no playbook depends on its shape.
     tokens:
       - pattern: '\bagent-transcripts\b'
-        why: use the transcript_dir resolution
+        why: agent-transcripts is the transcript_dir path assumption
     occurrences:
       - path: skills/poteto-mode/playbooks/session-pickup.md
       - path: skills/poteto-mode/playbooks/eval.md
@@ -502,7 +503,7 @@ axes:
       use: The skill is /setup-pstack-anywhere.
     tokens:
       - pattern: '\/setup-pstack\b(?!-anywhere)'
-        why: the skill is /setup-pstack-anywhere
+        why: /setup-pstack is upstream's name, and this port renamed it
     no_occurrences: >-
       The rename is complete in the ported skills, so there is no site to track.
       The token stays to catch a reintroduction.
@@ -528,7 +529,8 @@ axes:
       of: 45
     no_occurrences: >-
       A frontmatter surface spans every skill, so an occurrence list would be
-      the skill index. The assert block above is the anchor instead.
+      the skill index. The counted assert is the anchor instead, and the report
+      prints its result.
 
   - id: frontmatter_cursor_only
     kind: frontmatter
@@ -541,8 +543,9 @@ axes:
       Cursor.
     keys: [mode, icon, color, reminder]
     no_occurrences: >-
-      Same as frontmatter_portable. These keys are inert everywhere but Cursor,
-      so there is nothing to port and nothing to track per file.
+      A frontmatter surface spans every skill, and these keys are inert
+      everywhere but Cursor, so there is nothing to port and nothing to track
+      per file.
 
 # The cross-cutting lint. Axis tokens above are attributed; this is the one
 # pattern that belongs to no single axis, because a bare mention of Cursor can
@@ -563,7 +566,7 @@ lint:
     - path: skills/poteto-mode/scripts/
       why: 'watch-pr detects review-automation authors by name; worktree-audit.sh uses shell -gt comparisons.'
     - path: skills/poteto-mode/capabilities.md
-      why: 'Generated from this file. Its cursor column names Cursor on purpose.'
+      why: 'Generated from coupling.yaml. Its cursor column names Cursor on purpose.'
     - path: skills/setup-pstack-anywhere/SKILL.md
       why: 'Names the Cursor rule-file location, since Cursor is a supported target.'
 

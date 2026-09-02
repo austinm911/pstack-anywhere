@@ -197,6 +197,11 @@ harnesses:
         hooks.scriptDir does not exist. Command handlers carry inline command
         strings, plugin handlers use environment variables.
         (config/src/hook_config.rs:164-185, hooks/src/engine/discovery.rs:261-269)
+      - >-
+        request_user_input is a native tool. The handler refuses non-root
+        agents, refuses any collaboration mode outside its available_modes, and
+        blocks only in plan mode. (core/src/tools/handlers/request_user_input.rs:70-74,
+        :76-79, :86, core/src/tools/handlers/request_user_input_spec.rs:91-103)
     unverified: >-
       subagentsDir and commandsDir. /agents and /subagents are declared as slash
       commands, but the inspected source has no directory loader for either, and

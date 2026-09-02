@@ -24,7 +24,7 @@
 #     live in evidence/runs/<run-id>/ and are indexed by evidence/attestations.yaml.
 #     The engine rejects an outcome-shaped key by name, so what happened
 #     cannot be stored beside the procedure that produced it.
-#   - It asserts no parity value. parity_criteria maps observations onto the four
+#   - It asserts no parity value. parity_criteria maps observations onto the five
 #     coupling.yaml parity values; a parity value is earned by a recorded run,
 #     never by this file.
 #   - An unexecuted scenario is not a failure. It is unverified, which is the
@@ -58,6 +58,11 @@ parity_rubric:
     scenario's parity.allowed may be involved. A difference not enumerated there
     is not a substitute, it is a finding: record it and leave the cell
     unresolved until the scenario is amended.
+  extension: >-
+    The primitive is supplied by an extension the run names in run.yaml under
+    `extension`, and every observation is satisfied through it. A run that used
+    an extension without recording it is void, and a run with the extension
+    absent scores the fallback path, never extension.
   degrade: >-
     At least one required observation is satisfied only through a weaker path,
     and the run names that path explicitly. A degrade record is incomplete
@@ -170,11 +175,13 @@ evidence_contract:
         version the run was authored against; `started_at` and `ended_at` as
         UTC timestamps with an offset, in that order; `operator`, `machine`,
         `os`; `harness_version` as the harness itself reports it; every field
-        named in required_metadata below; and `supersedes`, naming the earlier
-        run this one corrects or null, under the rules in `supersession`. A
-        version the operator typed from memory is not a version. `probe prepare`
-        writes this file with every field present and null, which is what makes
-        the run read as unexecuted until it is run.
+        named in required_metadata below; `supersedes`, naming the earlier
+        run this one corrects or null, under the rules in `supersession`; and
+        optionally `extension`, the name and version of the extension that
+        supplied the primitive, required when the recorded parity is extension.
+        A version the operator typed from memory is not a version. `probe
+        prepare` writes this file with every field present and null, which is
+        what makes the run read as unexecuted until it is run.
     - path: observations.yaml
       holds: >-
         `observations:`, one entry per observation id the scenario declares, in
@@ -325,6 +332,7 @@ scenarios:
     parity_criteria:
       native: One documented delegation primitive satisfies all five observations.
       substitute: All five satisfied, differences confined to parity.allowed.
+      extension: Substitute-level satisfaction, with the primitive coming from a recorded extension.
       degrade: >-
         spawn.result_returned satisfied only by out-of-band retrieval, or
         spawn.separate_context only partly satisfied. Name the weaker path.
@@ -394,6 +402,7 @@ scenarios:
     parity_criteria:
       native: control_returned_at < worker_finished_at, parent_acted_at between them, result collected through a first-class result channel, intact.
       substitute: Same, with collection through a differently named wait or join.
+      extension: Substitute-level satisfaction, with the primitive coming from a recorded extension.
       degrade: >-
         Non-blocking, but the result is only reachable by reading a file the
         worker wrote, or partly truncated. Name the weaker path.
@@ -466,6 +475,7 @@ scenarios:
     parity_criteria:
       native: attempt_made true, denial_layer is the harness, file_absent true.
       substitute: Same, through a differently shaped constraint.
+      extension: Substitute-level satisfaction, with the primitive coming from a recorded extension.
       degrade: >-
         file_absent true but denial_layer is the model, meaning the constraint
         held by disposition. Name that as the weaker path.
@@ -542,6 +552,7 @@ scenarios:
     parity_criteria:
       native: token_present true and unknown_name_behavior is a hard error.
       substitute: token_present true, unknown name produces at least a visible warning, differences confined to parity.allowed.
+      extension: Substitute-level satisfaction, with the primitive coming from a recorded extension.
       degrade: token_present true but unknown names fall back silently. Name that as the weaker path.
       drop: No subagent definition directory exists, or token_present is false.
     evidence:
@@ -617,6 +628,7 @@ scenarios:
     parity_criteria:
       native: harness_reported matches each selection and selections_differed is true, unknown slug hard-errors.
       substitute: Same, through role names or a differently shaped argument.
+      extension: Substitute-level satisfaction, with the primitive coming from a recorded extension.
       degrade: >-
         Selection works but is only observable through a coarse source, or
         unknown slugs fall back silently. Name the weaker path.
@@ -703,6 +715,7 @@ scenarios:
     parity_criteria:
       native: heartbeats_after_termination is non-zero, completion_marker present, reattach possible by some handle.
       substitute: Same, with reattachment only through an external artifact.
+      extension: Substitute-level satisfaction, with the primitive coming from a recorded extension.
       degrade: >-
         The worker survives but nothing reattaches and the report is
         unrecoverable, leaving only its side effects. Name the weaker path.
@@ -777,6 +790,7 @@ scenarios:
     parity_criteria:
       native: All four probes return a state, running and finished are distinguishable, side_effect is none.
       substitute: Same, through a differently named status primitive.
+      extension: Substitute-level satisfaction, with the primitive coming from a recorded extension.
       degrade: >-
         Liveness is readable for only some delegate kinds, or granularity is
         existence-only. Name the weaker path and which kinds are covered.
@@ -861,6 +875,7 @@ scenarios:
     parity_criteria:
       native: A first-class wait with zero turns during the wait and a distinguishable timeout.
       substitute: Same, through a differently named primitive or a narrower event set.
+      extension: Substitute-level satisfaction, with the primitive coming from a recorded extension.
       degrade: >-
         The wait consumes parent turns. Record the measured interval and the
         turn count, and name the heartbeat as the weaker path.
@@ -945,6 +960,7 @@ scenarios:
     parity_criteria:
       native: Discrete options, an option identifier returned, the gate survives the flood, and no answer means no progress.
       substitute: Same, through a differently named ask primitive.
+      extension: Substitute-level satisfaction, with the primitive coming from a recorded extension.
       degrade: >-
         Prose question with free-text mapping, or the gate does not survive the
         flood and needs the file-backed gate to hold it. Name the weaker path.

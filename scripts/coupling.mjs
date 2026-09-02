@@ -40,7 +40,7 @@ import { createHash } from "node:crypto";
 import { parseArgs } from "node:util";
 
 const ROOT = join(dirname(new URL(import.meta.url).pathname), "..");
-const PARITY = ["native", "substitute", "degrade", "drop"];
+const PARITY = ["native", "substitute", "extension", "degrade", "drop"];
 // The grounding each method carries. A key belonging to another method is a
 // record grounded two ways at once, where only one of them is ever checked.
 const METHOD_KEYS = {
@@ -189,12 +189,23 @@ function validate(ledger, tokens, errors) {
   if (dupes(ledger.axes.map((a) => a.id))) errors.push("axes: duplicate id");
 
   const oneOf = `must be one of ${PARITY.join(", ")}`;
+  // `fallback` belongs to extension cells alone: they name a tool that is
+  // available but off by default, so the path without it must be spelled out.
+  const checkFallback = (cell, at) => {
+    const has = trim(cell?.fallback);
+    if (cell?.parity === "extension" && !has) {
+      errors.push(`${at}.fallback: required on an extension cell, name the path when the extension is absent`);
+    } else if (cell?.parity !== "extension" && cell?.fallback !== undefined) {
+      errors.push(`${at}.fallback: only an extension cell carries a fallback`);
+    }
+  };
   const checkCells = (cells, where) => {
     for (const id of known) if (!Object.hasOwn(cells, id)) errors.push(`${where}: no cell for harness ${id}`);
     for (const [id, cell] of Object.entries(cells)) {
       if (!known.has(id)) errors.push(`${where}.${id}: unknown harness`);
       if (!PARITY.includes(cell?.parity)) errors.push(`${where}.${id}.parity: ${oneOf}`);
       if (!trim(cell?.use)) errors.push(`${where}.${id}.use: empty, name the path explicitly`);
+      checkFallback(cell, `${where}.${id}`);
     }
   };
 
@@ -211,6 +222,7 @@ function validate(ledger, tokens, errors) {
     if (axis.invariant) {
       if (!PARITY.includes(axis.invariant.parity)) errors.push(`${where}.invariant.parity: ${oneOf}`);
       if (!trim(axis.invariant.use)) errors.push(`${where}.invariant.use: empty`);
+      checkFallback(axis.invariant, `${where}.invariant`);
     }
     if (axis.parameters) {
       if (dupes(axis.parameters.map((p) => p.id))) errors.push(`${where}.parameters: duplicate id`);
@@ -1536,8 +1548,13 @@ function build() {
 
 const row = (cells) => `| ${cells.join(" | ")} |`;
 const head = (cells) => [row(cells), row(cells.map(() => "---"))].join("\n");
-// Only the two lossy parities earn a prefix; the replacement carries the rest.
-const MARKS = { degrade: "degraded, ", drop: "absent, " };
+// Only the lossy parities earn a prefix; the replacement carries the rest. An
+// extension cell also names the path when the tool is not installed.
+const parityText = (cell) => {
+  if (cell.parity === "extension") return `not on by default: ${cell.use}, else ${cell.fallback}`;
+  if (cell.parity === "degrade") return `degraded, ${cell.use}`;
+  return cell.use;
+};
 
 const byKind = (model, kind) => model.ledger.axes.filter((a) => a.kind === kind);
 
@@ -1548,7 +1565,7 @@ function renderCapabilities(model) {
     ...byKind(model, "capability").map((axis) =>
       row([
         `\`${axis.id}\``,
-        ...harnesses.map((h) => `${MARKS[axis.resolution[h].parity] ?? ""}${axis.resolution[h].use}`),
+        ...harnesses.map((h) => parityText(axis.resolution[h])),
       ]),
     ),
   ].join("\n");
@@ -1562,7 +1579,7 @@ function renderCapabilities(model) {
         "",
         head(["parameter", ...harnesses]),
         ...axis.parameters.map((parameter) =>
-          row([`\`${parameter.id}\``, ...harnesses.map((h) => parameter.resolution[h]?.use ?? "-")]),
+          row([`\`${parameter.id}\``, ...harnesses.map((h) => (parameter.resolution[h] ? parityText(parameter.resolution[h]) : "-"))]),
         ),
       ].join("\n"),
     )
@@ -1588,7 +1605,7 @@ function renderCapabilities(model) {
     .map((axis) => `- **${axis.id}.** Upstream used \`${axis.was}\`. ${trim(axis.invariant.use)}`)
     .join("\n");
 
-  return `<!-- Generated from coupling.yaml by scripts/render-capabilities.mjs. Do not edit. -->
+  return `<!-- Generated from coupling.yaml by scripts/coupling.mjs render. Do not edit. -->
 
 # Capability map
 
@@ -1597,6 +1614,9 @@ primitive resolves here instead.
 
 Cursor is one column, not the baseline. If you are running in Cursor, its column
 is upstream's original behavior.
+
+Your column is the default, not a ceiling. If your tool list already has a tool
+that does the job, use it and skip the fallback.
 
 ## Capabilities
 
@@ -1801,7 +1821,8 @@ function domainResolutions(model) {
   const cell = (entry, harness) => {
     const resolved = entry.spec.resolution[harness.id];
     if (!resolved) return "unknown";
-    const text = `${resolved.parity}, ${cellText(resolved.use)}`;
+    const use = resolved.parity === "extension" ? `${resolved.use}, else ${resolved.fallback}` : resolved.use;
+    const text = `${resolved.parity}, ${cellText(use)}`;
     return shared
       ? text
       : `${text}, ${model.verification.lookup(entry.axis.id, harness.id, entry.spec.parameter)}`;
@@ -1819,7 +1840,7 @@ function domainResolutions(model) {
     const what = flow(axis.what);
     if (!spec.resolution) {
       // A portable axis has no parity: the engine derives none for it, and a word
-      // in the parity slot would read as one of the four it can derive.
+      // in the parity slot would read as one of the five it can derive.
       const keys = (axis.keys ?? []).map((key) => `\`${key}\``).join(", ");
       return `- **\`${entry.label}\`** (${axis.kind}${keys ? `: ${keys}` : ""}). ${what} Unchanged on every harness, so there is nothing to resolve.${verificationNote(entry)}`;
     }
@@ -1842,7 +1863,8 @@ function domainResolutions(model) {
 
   return [
     `${plural(varying.length, "domain")} of ${rows.length} resolve differently depending on the ` +
-      `harness. Each cell reads \`parity, replacement${shared ? "" : ", verification"}\`.` +
+      `harness. Each cell reads \`parity, replacement${shared ? "" : ", verification"}\`, and an ` +
+      "`extension` cell adds `, else <fallback>` after the replacement for when the tool is not installed." +
       (shared ? ` Every cell in the matrix is \`${shared}\`.` : "") +
       ` ${model.baseline.label} is the upstream column: its resolutions are what upstream already ` +
       "does, not a substitution this port made.",
