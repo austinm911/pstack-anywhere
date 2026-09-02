@@ -1,0 +1,22 @@
+# Assembled by the operator from the parent session log, invocation.json, and
+# the two timestamp files. Session-log timestamps carry milliseconds; the file
+# timestamps are the agents' own `date -u` output at second precision.
+timeline:
+  - event: spawn call issued
+    at: 2026-09-02T06:48:26.200Z
+    source: invocation.json calls[0] (Agent) ts
+  - event: spawn call returned
+    at: 2026-09-02T06:48:26.209Z
+    source: parent session tool_result "Async agent launched successfully", timestamp field
+  - event: parent's next turn (text only, then turn ended)
+    at: 2026-09-02T06:48:27.718Z
+    source: parent session assistant text "Worker spawned asynchronously; it's running in the background." followed by a turn_duration system record at 06:48:27.746Z with pendingBackgroundAgentCount 1
+  - event: worker finished (worker-done.txt written)
+    at: 2026-09-02T06:49:30Z
+    source: worker-done.txt
+  - event: result collected (task-notification injected as a user turn)
+    at: 2026-09-02T06:49:37.085Z
+    source: parent session user message of type task-notification, timestamp field
+  - event: parent acted (parent-alive.txt written)
+    at: 2026-09-02T06:49:48Z
+    source: parent-alive.txt; the Bash call at invocation.json calls[1] ts 2026-09-02T06:49:48.652Z

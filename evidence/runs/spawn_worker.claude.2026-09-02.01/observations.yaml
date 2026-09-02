@@ -1,17 +1,17 @@
 # Hand-written by the operator from the artifacts in this directory.
 observations:
   - id: spawn.primitive
-    observed: 'Agent, arguments {description: "Update probe.txt", prompt: "replace the contents of probe.txt with the current UTC timestamp, then report the exact line written", subagent_type: general-purpose}; the tool is named Agent in Claude Code 2.1.258, not Task as the ledger cell says'
-    source: invocation.json calls[0] name and arguments; same tool_use in session/87a78a79-7a98-4ef8-8c07-6df4ae7010d7.jsonl
+    observed: 'Agent, arguments {description: "Write UTC timestamp to probe.txt", prompt: "replace the contents of probe.txt with the current UTC timestamp, then report the exact line written", subagent_type: general-purpose}'
+    source: invocation.json calls[0] arguments
   - id: spawn.separate_context
-    observed: 'worker transcript starts with one user turn holding only the brief; none of the parent prompt (no "Spawn exactly one worker", no "worker-report") appears in it'
-    source: session/87a78a79-7a98-4ef8-8c07-6df4ae7010d7/subagents/agent-a89731a7a3940903c.jsonl, the user messages
+    observed: 'the worker has its own session file under session/<parent-id>/subagents/agent-afdae887b149395a8.jsonl, marked isSidechain: true with agentId afdae887b149395a8; its first user turn is the brief verbatim, and none of the parent prompt (no "Spawn exactly one worker", no "worker-report") appears in it'
+    source: session/<parent-id>/subagents/agent-afdae887b149395a8.jsonl user messages
   - id: spawn.result_returned
-    observed: 'text, not a structured object; the Agent call returned only "Async agent launched successfully" with an agentId, and the result arrived through a separate TaskOutput call (task_id a89731a7a3940903c, block true) whose tool_result carries <status>completed</status> and the worker text "Wrote to .../probe.txt / Exact line: `2026-09-02T05:54:21Z`"'
-    source: invocation.json calls[0] and calls[2]; the tool_result blocks for toolu_017rhjWtCdjBUuSTVvMtzdBp and toolu_01X61eNx9qi5P3bDZp2Nz3YX in the top-level session log; worker-report.txt
+    observed: 'text; the Agent call returned only "Async agent launched successfully" with the agentId, and the result arrived 8 s later as a user-role <task-notification> message injected into the parent turn, carrying <status>completed</status> and a <result> block with the worker''s full final text. No collection call by the parent'
+    source: 'the parent session (session/e0de2987-....jsonl): the Agent tool_result, then the user message of type task-notification at 06:32:14.901Z'
   - id: spawn.side_effect_matches
-    observed: 'probe.after.txt is exactly 2026-09-02T05:54:21Z, equal to the line the worker reported; probe.before.txt is seed'
-    source: probe.before.txt and probe.after.txt compared to worker-report.txt
+    observed: 'probe.after.txt is exactly 2026-09-02T06:32:10Z, the line quoted inside the <result> block and inside worker-report.txt; probe.before.txt is seed'
+    source: probe.before.txt, probe.after.txt, worker-report.txt, the task-notification result
   - id: spawn.parent_abstained
-    observed: 'parent-side calls were Agent, ToolSearch, TaskOutput, Bash writing worker-report.txt; no parent call names probe.txt'
-    source: invocation.json calls[0..3] arguments; the only write of probe.txt is calls_workers.agent-a89731a7a3940903c[0]
+    observed: 'parent-side calls were Agent and one Bash heredoc writing worker-report.txt; no parent call names probe.txt. The only probe.txt write is the worker''s Bash date -u redirect'
+    source: invocation.json calls[0..1] arguments and calls_workers["agent-afdae887b149395a8"]

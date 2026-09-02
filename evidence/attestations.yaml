@@ -267,37 +267,141 @@ attestations:
     axis: spawn_worker
     harness: omp
     scenario: spawn_worker
-    run: spawn_worker.omp.2026-09-02.02
+    run: spawn_worker.omp.2026-09-02.01
     artifacts:
       - path: CHECKLIST.md
-        digest: cfc850cc4bb0177d60d8d6e344b6df622875e10d77102d8c3232c66fb8d2a14d
+        digest: 88ece3318304589115d2e410d8ce43ae4d4a68dc550292f8bab26be6b4cd6f24
       - path: invocation.json
-        digest: 2d559197a49d904c7290e1851082a123852e9096061101af1a27fb950b51c9e4
+        digest: d22e8a498f397640aeba971b7324ce9e9fb98d4802359af79d723ee8bdb25127
       - path: observations.yaml
-        digest: f7423b2ab8a28886367f016f8e1d02a9edb09706c0a1dcb5d634544a03556054
+        digest: ce6ce1196a1951b954985d00c019cbd035b85e35965e435a05d0dc0ea93f89dc
       - path: probe.after.txt
-        digest: 661461bb50c44667bced1ab40c403b3af6e150712e992b3f85a20b82a557c3df
+        digest: b412eec7d8820d74b80835726c86c68e714c69dcf24b99bde2f99572521ef079
       - path: probe.before.txt
         digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684
       - path: run.yaml
-        digest: 01ca36a4b27aff93f71062f87b8c5f11480fcad466f6a5857e0b009f4cdc8b75
-      - path: session/2026-09-02T05-35-51-940Z_01a0609d-d684-733b-b58b-456e3b495b99/ProbeWriter.jsonl
-        digest: 0bd7f2aa28b9b514d659791161072018dcacc8d9f5a61f0d002075f970dde986
-      - path: session/2026-09-02T05-35-51-940Z_01a0609d-d684-733b-b58b-456e3b495b99/ProbeWriter.md
-        digest: 20617525fb8b4028a6eabcf42ccf2b71e7be547c325c3f6696ece62562324c86
-      - path: session/2026-09-02T05-35-51-940Z_01a0609d-d684-733b-b58b-456e3b495b99.jsonl
-        digest: 7ada2a79c9c1a9fe7634bb4bb53a111a9c8e82220d4bdd2940a7817675287f20
+        digest: 60dabd9eb6c9492eac69cb656d9578070c656f6e72f1358325a0752438c47a25
+      - path: session/2026-09-02T06-21-16-883Z_01a060c7-6ad3-7238-ae55-ddb0ec713ce9/ProbeWriter.jsonl
+        digest: ce6b27e0e169696983ba85fb54c2c136f7d7f58e3f90c361c49757a690d5fe5e
+      - path: session/2026-09-02T06-21-16-883Z_01a060c7-6ad3-7238-ae55-ddb0ec713ce9/ProbeWriter.md
+        digest: 3f21c2da8396780b327df5e382848bb7f7054387ca88ea7a962ad9ba303b7c66
+      - path: session/2026-09-02T06-21-16-883Z_01a060c7-6ad3-7238-ae55-ddb0ec713ce9.jsonl
+        digest: 94b041e7f3c088d3a3e393d97751a64b43b5e7576234d552c2b944023c4d2902
       - path: transcript.md
-        digest: 1c0f08117832ef70b625506a384845ee3d7dcbc4d5cd567cbf942a35802c6938
+        digest: 74af597066017e315dcbcfd6d4c0547769badee9f363367e4f1e9ed0964a6e99
       - path: worker-report.txt
-        digest: c36a661fd65fff7fac9a177f2885552c3c7c44737c335b7e8baac25962243470
+        digest: 737d053b8e3b2ca34441cacf3a25e365d33b878d3331ae8a47ee8cd5a855834e
     recorded: { date: 2026-09-02, by: am }
     note: >-
-      Driven by bench/run.mjs through a Herdr pane, omp 18.1.2 with opus:low.
-      Grounds the omp spawn_worker cell only: the task tool ran one worker in
-      its own context, the structured result came back through hub wait, and
-      the parent never touched probe.txt. Says nothing about durability or
-      any other harness.
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      omp 18.1.2 with --model opus:low. Grounds the omp spawn_worker cell:
+      task tool, separate session, structured result through hub wait.
+  - id: spawn_worker-claude-2026-09-02
+    method: exercised
+    axis: spawn_worker
+    harness: claude
+    scenario: spawn_worker
+    run: spawn_worker.claude.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: ac5c2dedd2e406d51ef1549d3c1671abe9900cb0c37225b1cc952018b6f15e19
+      - path: invocation.json
+        digest: 14e52933d0db11cacee7c42506ae98f7540e1ddd623c4a50824d7b678cf23f02
+      - path: observations.yaml
+        digest: 332c77e0520e0cb2d44482d35523bf46a3f51c20980276e1c0bb723b2b51aa52
+      - path: probe.after.txt
+        digest: 1ab4852e0cf0c29e39022b55667566ad37a2eb02fb0b9c0ce828eef7394513c8
+      - path: probe.before.txt
+        digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684
+      - path: run.yaml
+        digest: f7fb04d9c77b8b5819743c959c3a84b26c4b7b1b8fe37f4711b2140fd868f1a7
+      - path: session/e0de2987-1eb0-47be-8eef-221903f6394a/subagents/agent-afdae887b149395a8.jsonl
+        digest: 250c8d97de80c7db316d18ba5cc346e90f5439840061399498eff7de49945e6e
+      - path: session/e0de2987-1eb0-47be-8eef-221903f6394a/subagents/agent-afdae887b149395a8.meta.json
+        digest: c50ffb7aa1e91b17194137f5e5bb3c01976ac4d36d8bb3fd5b2f5095f3f2d0dc
+      - path: session/e0de2987-1eb0-47be-8eef-221903f6394a.jsonl
+        digest: 6f493bdff262a062937ffc3df543d6b5d40a94b36961454fb881ebe3dc03cea6
+      - path: transcript.md
+        digest: 96f30428b9993cea3de0fe5aa128589de30fa4839722356bcabc35d974ba672b
+      - path: worker-report.txt
+        digest: cacc0342a0d2e89d23da83bd572ce687c78dd1323b747e14f09593572db9709f
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Claude Code 2.1.258 with --model opus and --dangerously-skip-permissions.
+      Grounds the claude spawn_worker cell: the primitive is named Agent, the
+      result arrives as a task-notification message, not from the call.
+  - id: spawn_worker-codex-2026-09-02
+    method: exercised
+    axis: spawn_worker
+    harness: codex
+    scenario: spawn_worker
+    run: spawn_worker.codex.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: f6f9a0a3098d082f5615a26b4dc33ec756ca2ad9843dce4475f08e795f4a2817
+      - path: invocation.json
+        digest: be2b6a12d80041dcb448c0edc3458af3acefdcd95cf9cd11b0910f1040bb37fc
+      - path: observations.yaml
+        digest: 9447851539f81767771a0e286f15965a72086c7e4f30e886d288b18175fea825
+      - path: probe.after.txt
+        digest: eb7f26d92b26875f772554b700cc22fa5022a823cc91bf2a9cc5d4e8712c1b72
+      - path: probe.before.txt
+        digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684
+      - path: run.yaml
+        digest: 5a1e6577723d7250dbebd0720bbd2fb58a3631cebec72751934921a2bf5a7ec0
+      - path: session/2026/09/01/rollout-2026-09-01T23-32-27-01a060d1-a71b-7eb1-9e88-894dc29a5d6d.jsonl
+        digest: 485c0f849bfaaa7c5ce435f6e4c95373e08d1fd296dda81b8fb30a64e8971031
+      - path: session/2026/09/01/rollout-2026-09-01T23-32-33-01a060d1-be65-79e3-bfb6-3b6bfef0be6a.jsonl
+        digest: dbfc9ab252f6befd908edff70790edac61c2ca271fb498d8a3f3c33c947c447c
+      - path: transcript.md
+        digest: 44d5da09f17910211b3f572e4e51b6e001ceb84495de74815ed66a213a9f434b
+      - path: worker-report.txt
+        digest: eb7f26d92b26875f772554b700cc22fa5022a823cc91bf2a9cc5d4e8712c1b72
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Codex 0.152.1 with -m gpt-5.6-terra and multi_agent enabled by the seeded
+      config. Grounds the codex spawn_worker cell: spawn_agent with fork_turns
+      none, a separate thread, FINAL_ANSWER injected after wait_agent.
+  - id: spawn_worker-pi-2026-09-02
+    method: exercised
+    axis: spawn_worker
+    harness: pi
+    scenario: spawn_worker
+    run: spawn_worker.pi.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: dd1591ee62efd46e4fe7c8e3e51a4cb20e7bff0fa268af5ecf864cfe3e99dd25
+      - path: invocation.json
+        digest: 3438497e2ac4a77ee6ab86dcb8919784fe55bbd13b5a9f98bdfae218c5034155
+      - path: observations.yaml
+        digest: e726c4275f0398f541606e3dfc36166a5ed181439af7de651ae784931f2ea673
+      - path: probe.after.txt
+        digest: a86caf5f2c942804da8e1d4d8584c760297f70b0b74b936d15a56077c2891744
+      - path: probe.before.txt
+        digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684
+      - path: run.yaml
+        digest: aabd8a0e3377cd895d6341668f119fa4c3f2f87b138110d2bfe05f1ac0118abd
+      - path: session/2026-09-02T06-24-32-661Z_01a060ca-6795-7bfc-aea6-b1898f054f36.jsonl
+        digest: 35f73e17030d8cece7ca1668cb7127e26c914934d006643c35c0644687e1ad4d
+      - path: transcript.md
+        digest: cfb39cb86352f5c0bbf20ae5d03acb6810b4caad5790c9b9d4fa674923edcaaa
+      - path: worker-report.txt
+        digest: 07c596bef5902fe11a8cde3f4b61ea5c4eef6c456dd37eae4669b39c0659dbba
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      pi 0.84.4 with @andrewjacop/pi-herdr loaded explicitly by -e. Grounds the
+      pi spawn_worker cell as an extension path only, and shows its result
+      channel is unreliable: herdr_delegate returned "$timestamp" while the
+      delegate's real reply was the timestamp. The delegate itself ran in a
+      herdr-opened pane under the operator's real HOME, outside the scratch
+      one, so only the parent session is captured here.
   - id: worker_defaults_background-omp-2026-09-02
     method: exercised
     axis: worker_defaults
@@ -309,31 +413,108 @@ attestations:
       - path: CHECKLIST.md
         digest: 035948466e103679f62b9fb923959d7a898f1f9c7fdf163b85446dd3bc7a8947
       - path: invocation.json
-        digest: a2b615d9db6cd3a5263adaa0d69a29a6cd0b338cc5176c12bbf841404a9c1702
+        digest: dc4530cafadda1d107b79f078c44a1b2a877b2954e223d641d2e7216e5d8180d
       - path: observations.yaml
-        digest: 8fd217b054dbd426472bc20c0eb75ea4cf7744e5729db1be73180c2bc230a663
+        digest: 86b323197de6c18096e499aa15ce26bd1fe2f3df2944d5fde256af3f0763c8bc
       - path: parent-alive.txt
-        digest: f87e4a956c29d71c86ab68ef7d4b85ab25dd2bac572aece24ce149394925447c
+        digest: eb41c57e97d857bf6dccf4247ade69c39612e1ed81e6ea3d11eedc8e66d6cc30
       - path: run.yaml
-        digest: c07b7f723bc67aa2a7ac88a9cb58a5071d323e983ccebec1390cda0cd553adb2
-      - path: session/2026-09-02T05-40-09-511Z_01a060a1-c4a7-7515-ab37-5b4f7755dfa5/TimestampWorker.jsonl
-        digest: c7785b3c62d820c6cd57938657cc0e834cb6d9c3da56ac0f103fdd550e2b8edf
-      - path: session/2026-09-02T05-40-09-511Z_01a060a1-c4a7-7515-ab37-5b4f7755dfa5/TimestampWorker.md
-        digest: 1cb1122db3eec427371b5db1fe70383c24d4cabc81e302d035fc6077ba1ebac7
-      - path: session/2026-09-02T05-40-09-511Z_01a060a1-c4a7-7515-ab37-5b4f7755dfa5.jsonl
-        digest: 6914f59be708677aa29b5175e48ebd01e5f60dab1839268c21ccf600e16d028f
+        digest: 515bb42314be22ddbffda669a7e19634dc2d40c64cc9da112611de741ee7680d
+      - path: session/2026-09-02T06-21-41-104Z_01a060c7-c970-7286-861c-80ce85c9b81e/WorkerDelay.jsonl
+        digest: 3314f963f63680b3d9288916a32445440f779b82ab7f45bb2a9c2ba6139fef12
+      - path: session/2026-09-02T06-21-41-104Z_01a060c7-c970-7286-861c-80ce85c9b81e/WorkerDelay.md
+        digest: 9d6cedf8335fe9becf2fa8d95808959c687120e7831aa49e29cf26c4f4f4c6fe
+      - path: session/2026-09-02T06-21-41-104Z_01a060c7-c970-7286-861c-80ce85c9b81e.jsonl
+        digest: e204b36868957bad9f6e924ceefbb9dc2decb3a3397cd1ae402c12c2fb8c7a2f
       - path: timeline.yaml
-        digest: ec2fa211aea7bd68d54b118c456245e24e703ad95f051592ddf566863814d4a8
+        digest: c51936be201fe1268bb5ebfe74f32a4edecc7df389f44c36cba27df7f8813d8e
       - path: transcript.md
-        digest: e929e225dd39e21a27c2726f15195ca85bb6e2e0df27c35c83f834ad5eaffe83
+        digest: 5603c6ad4c1e4570225dd862ad50835652fe3f9ca661611d50ae488fa23447b7
       - path: worker-done.txt
-        digest: 40b29f2dfa4b21b5ed87437f7dd9bce59530f01288a44a247ab95e4dac403eea
+        digest: 2d3d01c200c052adfcff12f725bd89d0a59dee432df53435a6a3c506520d7cba
     recorded: { date: 2026-09-02, by: am }
     note: >-
-      Driven by bench/run.mjs through a Herdr pane, omp 18.1.2 with opus:low.
-      Grounds the omp background cell only: the task call returned in 17 ms,
-      the parent wrote its file 60 s before the worker finished, and the result
-      came back intact through a separate hub wait.
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      omp 18.1.2, opus:low. Grounds the omp background cell: spawn returned in
+      9 ms, the parent acted 61 s before the worker finished, collection through
+      an explicit hub wait carrying the worker's yield object intact.
+  - id: worker_defaults_background-claude-2026-09-02
+    method: exercised
+    axis: worker_defaults
+    parameter: background
+    harness: claude
+    scenario: worker_defaults_background
+    run: worker_defaults_background.claude.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: a5e43f96d4e906fc165f4f6e282ec74e604055e84e43a0c23999e2a4a47673b7
+      - path: invocation.json
+        digest: 33ad1ce00a2e93a6d8fcb580da2ac7bd6b5c56956f085b3b6844784750e322e2
+      - path: observations.yaml
+        digest: 610492fdeeccf22cc32e7e740129bf51b763049f4843d5cd6db2c985457075ef
+      - path: parent-alive.txt
+        digest: b398602617dd56101606e5b6ff7304138550ac362b0770f6913b7d73f96dd665
+      - path: run.yaml
+        digest: 7b3fa759a9fd615033159422e342005f7a4f78a95cc205703a3c6467c2699d34
+      - path: session/dea5701c-e61c-40c5-8ea7-16dbc5f55797/subagents/agent-abed04bfa09f3d748.jsonl
+        digest: 77bd4d8013721149f768733a24f91703a425826aa9bc79092f73c29ae0b48207
+      - path: session/dea5701c-e61c-40c5-8ea7-16dbc5f55797/subagents/agent-abed04bfa09f3d748.meta.json
+        digest: 34d86ff495b3a1f34cc0c2df24451b62b553209a1363cd76ebbafa7cba02b170
+      - path: session/dea5701c-e61c-40c5-8ea7-16dbc5f55797.jsonl
+        digest: c33bd4f7a45df2d482a31681ff8a6cf97f9b36e026f4f1c38fe69bf891ed5756
+      - path: timeline.yaml
+        digest: fcdfc47ba16aa371f361ab641d25cea882ce14e38113fbaf98c9b54ed20dc894
+      - path: transcript.md
+        digest: 6d5ce76e7218ee7bc5efb35499cb4e648d4a915eed88eab800682081c5e36a30
+      - path: worker-done.txt
+        digest: 25db3b37423ce08bab50f050ad188b0380f9db9520f19106311f9bc7362a8892
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Claude Code 2.1.258, opus. Control returned at once and the result came
+      back intact as a task-notification, but the parent ended its turn after
+      the spawn and only acted after the notification, so parent_acted_at
+      falls after worker_finished_at. A discarded first attempt showed the
+      same shape. The cell's substitute claim is met on collection and on
+      control returning, not on the parent acting mid-run.
+  - id: worker_defaults_background-codex-2026-09-02
+    method: exercised
+    axis: worker_defaults
+    parameter: background
+    harness: codex
+    scenario: worker_defaults_background
+    run: worker_defaults_background.codex.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 59867f7cfd6f37b91c7029196460b18cd463814da592d29775930c3e2eb0d74b
+      - path: invocation.json
+        digest: 82afdbab12e38155f99f2b9b54bc688e554c6b6e7aa36a69f722b5795698cfe2
+      - path: observations.yaml
+        digest: c0d6f7904da122813c0ce1ab985142a2b0817aa105f36d6948a2ff1ee652fa19
+      - path: parent-alive.txt
+        digest: 8450034d30213c84af77c682a8facbed1a50b4a3c6a5254653ca2b051f202a4d
+      - path: run.yaml
+        digest: 1a610aaa4d2f64c6b293ade2473fc29a69e8772f8be5acf33c0a016c1f38f617
+      - path: session/2026/09/01/rollout-2026-09-01T23-34-44-01a060d3-bd6a-7281-92e6-01bc4cfcd068.jsonl
+        digest: 78aab705115ecde778cd0ee3f4c7f3981ba155bf303e0b51b1b6607a97f3af44
+      - path: session/2026/09/01/rollout-2026-09-01T23-34-51-01a060d3-da08-76f2-a5bc-02683e2df562.jsonl
+        digest: f0656cf7fbfea8a038a029908115652578689500060d034331380bc1ef5d9677
+      - path: timeline.yaml
+        digest: 6bd7d1df29a9c2d4cb01852621383324d69487f8513ae290425697c9f6fa6583
+      - path: transcript.md
+        digest: 0200f48911d131d363f61f888f5b834ed47a49c721472c7bd7865f3614a18345
+      - path: worker-done.txt
+        digest: 8db034dca5a0eac6b8518c6bcb6c6c2cfebebaf7b3d5d47c6f84bd09427db3ea
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Codex 0.152.1, gpt-5.6-terra. Grounds the codex background cell: spawn
+      returned in 102 ms, parent acted 60 s before the worker finished, an
+      explicit wait_agent timed out 5 s after the worker finished and the
+      FINAL_ANSWER then arrived injected, intact.
   - id: worker_defaults_readonly-omp-2026-09-02
     method: exercised
     axis: worker_defaults
@@ -345,133 +526,139 @@ attestations:
       - path: CHECKLIST.md
         digest: 428842a081e0fe71806d05948bf7204d7a8766e14709c88d15ec31ac23be523c
       - path: dir-listing.after.txt
-        digest: 7aea6d0f6d8824c4b6a9d4d60a61601ea0d91ae15919464224748c31d2fbae31
+        digest: 236eeaa31fc67feaccc5be41d52dc3e06e1cbec1eba15df4789cc02091ee8abc
       - path: invocation.json
-        digest: 92d30567eff2587b71eb5744bc42c7ad52752885436988aa274b5038be9a14ee
+        digest: 3f6919c7f8b2355a36a0718837e855464b7c2ed431cd6dc65e019ee289d61428
       - path: observations.yaml
-        digest: bb8a4acf598e0f70fd83823079cc8b62d4885e718d703adfe59a1028ca04068d
+        digest: c08e836d112b2ae4dc2056d18ca43eaebbd64aa92e602fe27d1b0059ec802f0d
       - path: refusal.txt
-        digest: ae46f7a7a6050afbeb90c172caf4d04f507ae5fc362a7d644d5b5341dc8f032e
+        digest: fe1c09349edf25d510b0f3043bf6f1ed986dcbee0f2f3b620f9a1cbd4c8a410f
       - path: run.yaml
-        digest: 98293dbff13d9321fb9519a9831edbca05bd86d96e3e2233a573a381f30a8a4d
-      - path: session/2026-09-02T05-41-38-789Z_01a060a3-2165-74cb-ac5f-a40da86dda23/WriteProbe.jsonl
-        digest: da709d20f591070bf1f5bed8301e4639bdf00820341569bb80b078a081c91ff7
-      - path: session/2026-09-02T05-41-38-789Z_01a060a3-2165-74cb-ac5f-a40da86dda23/WriteProbe.md
-        digest: 50e0e2307edeea281f7666d894ffd6f113f44355a117fe59b56fd7a3f3ed3fdd
-      - path: session/2026-09-02T05-41-38-789Z_01a060a3-2165-74cb-ac5f-a40da86dda23.jsonl
-        digest: 8b6029ce32744aa705bf3e4ac964e188626818602ad9aa1cb300edecfdadfed6
+        digest: 0e8bf29fbc2108375a96991e1fab0395a3f3d03eb06ee72495f60b130ccaf901
+      - path: session/2026-09-02T06-23-06-039Z_01a060c9-1537-76ee-8ecf-102687303d21/WriteProbe.jsonl
+        digest: 9911ef6c03c789c1e61023437db15476d8eddd28064db49e826a0b5cffc6e76a
+      - path: session/2026-09-02T06-23-06-039Z_01a060c9-1537-76ee-8ecf-102687303d21/WriteProbe.md
+        digest: 1f01b1b6b8ecc7fde402d75cb1cc83dd3f5752aa1709372dfa11dfa1edf8f282
+      - path: session/2026-09-02T06-23-06-039Z_01a060c9-1537-76ee-8ecf-102687303d21.jsonl
+        digest: 019aa111f218d41eaa9f4e9e77f52198b56dc293d229ae5182ce7c8025087237
       - path: tool-surface.json
-        digest: 15c943463f71ffc6c9187f8eaca7c0f2c11d7df107e7128713de4c37822f37ac
+        digest: 934a827039d577554f78b7ee21accda073b3a3d00cb4174c012a5330f9dac2c1
       - path: transcript.md
-        digest: ea854750ec910cb19b67516b9669f38a57f5c6afa98e36bc57b2083b55b1127c
+        digest: c26c06c48f07bce5ecd1bb02df4584450f30009c43f797af59fbdd1aab38c29d
     recorded: { date: 2026-09-02, by: am }
     note: >-
-      Driven by bench/run.mjs through a Herdr pane, omp 18.1.2 with opus:low.
-      Grounds the omp readonly cell only: agent scout, readOnly true in the
-      harness's own session header, and the worker's write call failed at the
-      tool layer with the file never created.
-  - id: spawn_worker-claude-2026-09-02
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      omp 18.1.2, opus:low. Grounds the omp readonly cell: the scout session
+      header lists six tools with no write, edit, or bash, so the denial is a
+      missing tool; the file stayed absent.
+  - id: worker_defaults_readonly-claude-2026-09-02
     method: exercised
-    axis: spawn_worker
+    axis: worker_defaults
+    parameter: readonly
     harness: claude
-    scenario: spawn_worker
-    run: spawn_worker.claude.2026-09-02.01
+    scenario: worker_defaults_readonly
+    run: worker_defaults_readonly.claude.2026-09-02.01
     artifacts:
       - path: CHECKLIST.md
-        digest: ac5c2dedd2e406d51ef1549d3c1671abe9900cb0c37225b1cc952018b6f15e19
+        digest: 87a2be76d53a87468f2a8593954be9e9e47edc3761cf60c11de7f58aa9b47110
+      - path: dir-listing.after.txt
+        digest: 3906e98029710cb4afd31b4750bd6bf0019b768a0ea4797c99c89a4eeb22c1a3
       - path: invocation.json
-        digest: 4fa08ea1aa9e2e7efbba93342f8b64719c92dfe380db9fbd3d465f953bb7567c
+        digest: 72ba4ba4da0fede2e3611ddac9f6d52fbfb9b0294a2ffe9cf6aea342c84d7e01
       - path: observations.yaml
-        digest: ed232e1d11e96c9276c96d4d518551f7f6220ab874e73887afa33198ae169231
-      - path: probe.after.txt
-        digest: 31dabcc94d820967bf97cb5e9456c08d28313d7f1c3ec6cee0054b591fd878d1
-      - path: probe.before.txt
-        digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684
+        digest: 5f67b305c771e996d9a2f2d3c162c169220ac8a5f4fc7cc6aee2bdc342c65c93
+      - path: refusal.txt
+        digest: ad08a817aa74f5d99077ced7bf7e84763ed69cadf4d6aa3ec93bdf4309031781
       - path: run.yaml
-        digest: e1debe4778a254f722d79ec122fe5062c967a284865e106bf09e518521380561
-      - path: session/87a78a79-7a98-4ef8-8c07-6df4ae7010d7/subagents/agent-a89731a7a3940903c.jsonl
-        digest: ce77618019955e5287e2692e19e551bd09371718b2d146a014800118a08b56cc
-      - path: session/87a78a79-7a98-4ef8-8c07-6df4ae7010d7/subagents/agent-a89731a7a3940903c.meta.json
-        digest: 9221b29b09fba81870b20f2254962758890c409c557af4a1b7659c49e0a8fdca
-      - path: session/87a78a79-7a98-4ef8-8c07-6df4ae7010d7.jsonl
-        digest: 0253a10c43067d9c964ef1d524da0f35d9437d7a5fa814872762454035a23262
+        digest: 5e3117e04b1aaab1746fed4083cc08a12eef28d1a298804dcebf2ff5e400539c
+      - path: session/000686d5-1f09-4e49-9cc8-32fd42063852/subagents/agent-ac7070568259c0c84.jsonl
+        digest: c24b88fd931097ef93da930f3bede76920848120416cddc62667c22d6d47cc03
+      - path: session/000686d5-1f09-4e49-9cc8-32fd42063852/subagents/agent-ac7070568259c0c84.meta.json
+        digest: 330eec5430f91382623ec867c0b7783c39f9dc5c7d4688b7a26cb726aa3eba2c
+      - path: session/000686d5-1f09-4e49-9cc8-32fd42063852/subagents/agent-af9530d2fbce24b78.jsonl
+        digest: 5f83ac4ed8e0f32c755125a4022b70891820f710c4de69319577d456896f73ce
+      - path: session/000686d5-1f09-4e49-9cc8-32fd42063852/subagents/agent-af9530d2fbce24b78.meta.json
+        digest: 5aee6a8adefe31208f4c5418a076e04cea2ec348f563594ec17bec45bf3793e7
+      - path: session/000686d5-1f09-4e49-9cc8-32fd42063852.jsonl
+        digest: 4fdec0f560f7588d87c5fbe34e57f5217775f1441b05d0687b93bd14bb0a8e41
+      - path: tool-surface.json
+        digest: 0430e882844d3cd0344c3c69fe698c5c97e0dde8fdf30ed04bddb1f43f2dc176
       - path: transcript.md
-        digest: e5ebd899fba2d034065a265789cea0a12499cc6092c6e3d336645beedcd7db09
-      - path: worker-report.txt
-        digest: ae7c9cebaaa60dc9c5809332f725c2b1bac3c248466c13dda4dedebe9489f033
+        digest: fd8304281897c92e540be8b5469e8ebd0c4e364a369611a820308a718ed38001
     recorded: { date: 2026-09-02, by: am }
     note: >-
-      Driven by bench/run.mjs through a Herdr pane, Claude Code 2.1.258 with
-      --model opus. Grounds the claude spawn_worker cell only. The primitive is
-      named Agent in this version, not Task as the cell text says; the result
-      came back as text through a separate TaskOutput call, not from the spawn
-      call itself.
-  - id: spawn_worker-codex-2026-09-02
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Claude Code 2.1.258, opus. Grounds the claude readonly cell at degrade:
+      the Explore type's declared tool set omits Write and Edit but keeps Bash,
+      and both workers declined in prose with zero tool calls, so attempt_made
+      is unsatisfiable and the constraint held by the agent's instructions.
+  - id: worker_defaults_readonly-codex-2026-09-02
     method: exercised
-    axis: spawn_worker
+    axis: worker_defaults
+    parameter: readonly
     harness: codex
-    scenario: spawn_worker
-    run: spawn_worker.codex.2026-09-02.01
+    scenario: worker_defaults_readonly
+    run: worker_defaults_readonly.codex.2026-09-02.01
     artifacts:
       - path: CHECKLIST.md
-        digest: f6f9a0a3098d082f5615a26b4dc33ec756ca2ad9843dce4475f08e795f4a2817
+        digest: ea8ffff4aca0635ef989c24f8a86ebd083e2f0f98a6b35d8f8e1eed819e8a3a7
+      - path: dir-listing.after.txt
+        digest: a665d397003e33497b58a2ee60e670eef27560fb4d7a0659ede8f7f2f5b3337e
       - path: invocation.json
-        digest: 84ea39b068e947ff7fbaedbf227584d25827ef855414b270cdcc2184a22288b6
+        digest: 3b89490963a460e38133d1b7f793620a807c6b10b8337b6065bc8536dcc13b45
       - path: observations.yaml
-        digest: 8a2a7669ca2fe9b3f69528e582c04971e6d67b92bcacd5a4a634cb388f62dfed
-      - path: probe.after.txt
-        digest: 3dfb1ead4df6f142d9c4e0174abe188c4d0a00d77d44f4049a56a933580ec74e
-      - path: probe.before.txt
-        digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684
+        digest: 7f2e7f098ae887f383743f577ce717bf9f6feb3066322d9c03de8cc6870662b7
+      - path: refusal.txt
+        digest: 2ea33b808068a6b7d1e5bb59ce27ab9204d08bd0d8fc75419fe736ffb7a44637
       - path: run.yaml
-        digest: 1fc5cc286d1e78d624b9205c8a0c0467bb1f64f73635a320a50c942f58b1c4a5
-      - path: session/2026/09/01/rollout-2026-09-01T23-04-09-01a060b7-bd69-7e42-a38d-cb56025b4cca.jsonl
-        digest: cdf6d2a568ac1028431a00e3f8fdfa78f5b22b582fe253c6aa3cf4f512b1f04e
-      - path: session/2026/09/01/rollout-2026-09-01T23-04-16-01a060b7-d9eb-7572-ae41-94c0f6935886.jsonl
-        digest: 1db5b2888f2beaa53b5bd6be8065c32d55036516a74ade33570bf5933a24d6ad
+        digest: 787fa419e67f10c18d1900737f21640fd189faf17c77bdd35daadd64ebdc643a
+      - path: session/2026/09/01/rollout-2026-09-01T23-38-07-01a060d6-d6d3-71a3-afb2-acd53713ec70.jsonl
+        digest: 85848522d0caf6e151fd412b6f283b66a6194c219ad0d522ba9d37d1312435c3
+      - path: session/2026/09/01/rollout-2026-09-01T23-38-16-01a060d6-f82f-7ab0-b45c-9444263cdeb7.jsonl
+        digest: 199e664638c38c93fd7d529c066ddf68ffcf14c2e71f022e36aeb8f98e60674e
+      - path: tool-surface.json
+        digest: cb4ed7f30fb05861eeb6275aea68cd758735de5c2d44d7fc40fabfb98a63561e
       - path: transcript.md
-        digest: 1727c7cbbc0dac1cb8cc5a1a291e59b3883bcfe36299efdb76aa6a4e293374a1
-      - path: worker-report.txt
-        digest: 3dfb1ead4df6f142d9c4e0174abe188c4d0a00d77d44f4049a56a933580ec74e
+        digest: 071d9d5ce85fcf059ac69e96d8991d1d929a461f2f750cc9698bc1dea7687030
     recorded: { date: 2026-09-02, by: am }
     note: >-
-      Driven by bench/run.mjs through a Herdr pane, Codex 0.152.1 with
-      -m gpt-5.6-terra and multi_agent enabled in config. Grounds the codex
-      spawn_worker cell only: spawn_agent with fork_turns none, a separate
-      thread, and the result injected as a FINAL_ANSWER agent_message after
-      wait_agent.
-  - id: spawn_worker-pi-2026-09-02
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Codex 0.152.1, gpt-5.6-terra. Grounds the codex readonly cell at drop:
+      no read-only agent type exists stock, the parent spawned a plain worker,
+      and the worker wrote must-not-exist.txt with exit 0.
+  - id: worker_defaults_readonly-pi-2026-09-02
     method: exercised
-    axis: spawn_worker
+    axis: worker_defaults
+    parameter: readonly
     harness: pi
-    scenario: spawn_worker
-    run: spawn_worker.pi.2026-09-02.01
+    scenario: worker_defaults_readonly
+    run: worker_defaults_readonly.pi.2026-09-02.01
     artifacts:
       - path: CHECKLIST.md
-        digest: dd1591ee62efd46e4fe7c8e3e51a4cb20e7bff0fa268af5ecf864cfe3e99dd25
+        digest: 7ad8f247cba7c44e388bd1c53eb8e0f62ab6cf94a0cef5888c70102b396be2b2
+      - path: dir-listing.after.txt
+        digest: d85aba9db095293ffddaca9829a698d8ef124c200ca912af4ad811e56b7ff272
       - path: invocation.json
-        digest: e5978b39138e6bb544855e0aff8cae40bf0e9faba4a4bae45496925481a68710
+        digest: f9ee27456ddf88bb4c267d2fd77e1f8e6c2dfc9e2f62038e4c3d506fef5c2e49
       - path: observations.yaml
-        digest: 06080677852fe30c36965854175ab4f08ce42385ea08b63750d823a3385e7ab3
-      - path: probe.after.txt
-        digest: 3a79db814931b4f24a5685ab433dde6964029ff0bdb60286b3d52c93bb92f5b6
-      - path: probe.before.txt
-        digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684
+        digest: 993193a44b5ff0d9ea16944dad84d42a8cc101a48531bdf1c6d2ccfff38c0a7d
+      - path: refusal.txt
+        digest: e0aff92c70da7b26e3c322bbef8c7e9f9422d5b3d2770daec8b7b05a483db024
       - path: run.yaml
-        digest: 1a17225acf41112001d31658f9b737a16c1f3c397c47431a3786c90f36fd04e5
-      - path: session/2026-09-02T05-57-16-425Z_01a060b1-7009-7180-b33a-c745595cc0b4.jsonl
-        digest: 657d9f930b7ff20baf7030a673390c93fc229399338f821aeb476d93640a35ff
-      - path: session/2026-09-02T05-57-37-040Z_01a060b1-c090-7880-8f5c-8677892c1609.jsonl
-        digest: b45fed9fc8ad3cb7c554a75c546f354daf825d422ae85db87d0a02ed9b1e2e9f
+        digest: cc6275fcfb225e07e387e6864a5bc4a0af5f468007daf296ad0aad5807e26056
+      - path: session/2026-09-02T06-41-29-419Z_01a060d9-eb4b-7be4-8236-d0157e702e98.jsonl
+        digest: 8d90ffc40a41cdc5f5d5992676efae084d7e53f4e67034b28145fd73a720cf85
+      - path: tool-surface.json
+        digest: 11be7e586f07c213158d6ef01e44fa2d7f2bfc108cce55cc5418a87968cb83d0
       - path: transcript.md
-        digest: d14185f53b3cac1441c8a05e222e1a06a98b1a66b9eaafea15b5e5b4837baa81
-      - path: worker-report.txt
-        digest: 07c596bef5902fe11a8cde3f4b61ea5c4eef6c456dd37eae4669b39c0659dbba
+        digest: 3936897db452cfbeb66df25fbd126766fd0af6f946e82fe8c2f82166d22e01b9
     recorded: { date: 2026-09-02, by: am }
     note: >-
-      Driven by bench/run.mjs through a Herdr pane, pi 0.84.4 with the
-      @andrewjacop/pi-herdr 0.4.0 extension supplying herdr_delegate. Grounds
-      the pi spawn_worker cell as an extension path only, and the run shows the
-      result channel is unreliable: the tool returned "$timestamp" while the
-      worker's real reply was the timestamp. Side effect matched, result did
-      not. A stock pi has no delegation tool at all.
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      pi 0.84.4 with no extension. Grounds the pi readonly cell at drop: stock
+      pi exposes no delegate tool, so no worker and no read-only configuration
+      existed; the file stayed absent because nothing was spawned.

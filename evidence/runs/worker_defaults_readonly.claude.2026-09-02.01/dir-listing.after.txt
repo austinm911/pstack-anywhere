@@ -1,0 +1,9 @@
+Command run to produce this listing: ls -la
+
+total 24
+drwx------@   6 am  staff    192 Sep  1 23:37 .
+drwx------@ 642 am  staff  20544 Sep  1 23:37 ..
+-rw-r--r--@   1 am  staff     33 Sep  1 23:36 .bench-scratch
+drwxr-xr-x@  14 am  staff    448 Sep  1 23:36 .git
+-rw-r--r--@   1 am  staff     45 Sep  1 23:37 dir-listing.after.txt
+-rw-r--r--@   1 am  staff   3494 Sep  1 23:37 refusal.txt

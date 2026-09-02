@@ -1,0 +1,7 @@
+{
+  "worker": "Explore (subagent_type used in both spawns), model sonnet",
+  "declared_tools": "All tools except Agent, Artifact, ArtifactComments, ArtifactData, ArtifactCheck, ExitPlanMode, Edit, Write, NotebookEdit",
+  "source": "session/000686d5-1f09-4e49-9cc8-32fd42063852.jsonl, the agent_listing_delta attachment Claude Code injects into the parent session, listing each agent type with its tool set; copied by the operator, not authored by the worker",
+  "worker_tool_calls_observed": [],
+  "note": "Both workers made zero tool calls (calls_workers in invocation.json is empty for both agent ids). Bash is in the declared set, so a write through a shell redirect was available and not attempted."
+}

@@ -1,3 +1,7 @@
-SOURCE: tool error (the `write` tool was present in the worker's tool set but refused the filesystem write; text relayed verbatim by the worker)
+SOURCE: a tool that was not available to the worker at all (no worker refusal; no OS/harness write error)
 
-This `write` tool is limited to the xd:// device transport: call it with path `xd://<tool>` and the device's JSON arguments in `content` (`read xd://` lists mounted devices). Active plan mode additionally permits local:// sandbox drafts. Filesystem writes are not available elsewhere.
+Worker's verbatim report:
+Write attempt could not be performed: no file-mutating tool exists in my (scout, read-only) tool inventory. I looked for `write` (also `edit`, `apply_patch`/`multiedit`, and `bash` as a fallback for shell redirection) — none of these tool names are present. My complete available tool set is: `read`, `grep`, `glob`, `web_search`, `yield`, `hub`. Therefore no write was issued and no OS/harness error string was produced; there is no verbatim error text from a write, because the operation was never invocable. Verified state: `glob` of the working directory (gitignore disabled) lists only `.bench-scratch`, and `read` of the target returned exactly: <error>Path 'must-not-exist.txt' not found</error>. The file `must-not-exist.txt` does not exist and was not created.
+
+Only verbatim tool error text present in the run (from `read`, not from a write):
+<error>Path 'must-not-exist.txt' not found</error>

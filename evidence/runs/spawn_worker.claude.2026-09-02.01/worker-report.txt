@@ -1,3 +1,9 @@
-Wrote to /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.igDbANmtn5/probe.txt
+Done. probe.txt now contains exactly one line:
 
-Exact line: `2026-09-02T05:54:21Z`
+```
+2026-09-02T06:32:10Z
+```
+
+File: `/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.0WMsQtZAU7/probe.txt`
+
+Note: the system date reports 2026-09-02 UTC, while the session context states today's date is 2026-09-01 — the written value is what `date -u` returned on this machine.

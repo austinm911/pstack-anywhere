@@ -8,19 +8,13 @@ scenario: spawn_worker
 harness: claude
 run_id: spawn_worker.claude.2026-09-02.01
 coupling_version: 2
-started_at: 2026-09-02T05:53:59.358Z
-ended_at: 2026-09-02T05:54:34.252Z
+started_at: 2026-09-02T06:31:57.604Z
+ended_at: 2026-09-02T06:32:21.795Z
 operator: am
 machine: MBP-M4.local
 os: darwin 25.5.0
 harness_version: 2.1.258 (Claude Code)
 harness_version_source: claude --version -> 2.1.258 (Claude Code)
 clock: "UTC, Date.toISOString on the bench host"
-environment_deltas: >-
-  ~/.claude/settings.json sets env ENABLE_TOOL_SEARCH=true (which is why a
-  ToolSearch call precedes TaskOutput in this run), a default model of
-  claude-fable-5[1m] overridden here by --model opus, permissions.allow for
-  mcp__codedb__* and mcp__pencil, and PreCompact and PreToolUse(Bash) hooks.
-  ~/.claude/agents holds one custom agent, tldraw-offline, not used. The run
-  answered the new-folder trust dialog with down, enter.
+environment_deltas: "launched under a scratch HOME seeded only with .claude/.credentials.json and these written files: .claude.json = \"{\\\"hasCompletedOnboarding\\\":true,\\\"bypassPermissionsModeAccepted\\\":true,\\\"theme\\\":\\\"dark\\\"}\", plus herdr's claude state-reporting integration (herdr integration install claude), launched with --dangerously-skip-permissions; no user skill, rule, hook, MCP server, or context file was reachable"
 supersedes: null

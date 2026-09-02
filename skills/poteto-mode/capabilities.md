@@ -27,8 +27,8 @@ The parameters upstream sets on every Task call. Highest-traffic coupling in the
 
 | parameter | cursor | claude | codex | pi | omp |
 | --- | --- | --- | --- | --- | --- |
-| `background` | run_in_background: true | run in background | async | async | async, or hub op:"wait" to block |
-| `readonly` | agent mode strips MCP | read-only agent type | read-only agent type | read-only agent type | scout agent is read-only |
+| `background` | run_in_background: true | run in background | async | not on by default: herdr_start_agent returns at once; herdr_wait_agent collects, else no delegation, the parent does the work inline | async, or hub op:"wait" to block |
+| `readonly` | agent mode strips MCP | degraded, Explore agent type drops Write and Edit but keeps Bash; the constraint held by the agent's instructions, not the tool surface | no read-only agent type in stock Codex; a plain spawn_agent worker can write | no read-only delegate exists; a pi-herdr delegate is a full agent pane, and stock pi has no delegate at all | scout agent is read-only |
 | `identity` | subagent_type: "poteto-agent" | a poteto-agent definition in the harness subagent dir | a poteto-agent definition in the harness subagent dir | not on by default: a poteto-agent definition where the extension reads its agents, else no identity, the parent model does the work | a poteto-agent definition in the harness subagent dir |
 | `model` | explicit slug per role | role slots | role slots | role slots | role slots, or the agent field |
 

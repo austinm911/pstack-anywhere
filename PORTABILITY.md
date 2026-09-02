@@ -33,7 +33,7 @@ saved evidence for it:
 | --- | --- |
 | ledger | v2, upstream `b9ddc83` |
 | domains | 24, from 21 axes, because `worker_defaults` resolves per parameter |
-| harness cells | 6 verified of 120 (24 domains x 5 harnesses) |
+| harness cells | 11 verified of 120 (24 domains x 5 harnesses) |
 | occurrences | 67 resolved, 25 unresolved, 0 missing, 2 not checked |
 | token hits | 53 attributed to a domain, 21 unattributed Cursor mentions, 74 in total |
 | skills reached | 2 of 45: `poteto-mode` (67 of 68 checked), `setup-pstack-anywhere` (0 of 1 checked) |
@@ -119,8 +119,8 @@ Next:
 | `worker_durability` (capability) | native, cloud agents run off-machine and survive a restart, unverified | drop, subagents die with the session, unverified | drop, subagents die with the session, unverified | drop, subagents die with the session, unverified | drop, subagents die with the session, unverified |
 | `probe_worker` (capability) | native, dashboard shows agent state without a resume, unverified | degrade, job status only, no liveness for every delegate kind, unverified | degrade, job status only, unverified | extension, the job status the task extension exposes, else none, wait for the result, unverified | substitute, hub op:"jobs", unverified |
 | `wake_on_event` (capability) | native, /loop built-in, unverified | degrade, heartbeat sized to when the result is worth re-checking, unverified | degrade, heartbeat sized to when the result is worth re-checking, unverified | degrade, heartbeat sized to when the result is worth re-checking, unverified | substitute, hub op:"wait", unverified |
-| `worker_defaults.background` (parameter_set) | native, run_in_background: true, unverified | substitute, run in background, unverified | substitute, async, unverified | substitute, async, unverified | substitute, async, or hub op:"wait" to block, exercised |
-| `worker_defaults.readonly` (parameter_set) | native, agent mode strips MCP, unverified | substitute, read-only agent type, unverified | substitute, read-only agent type, unverified | substitute, read-only agent type, unverified | substitute, scout agent is read-only, exercised |
+| `worker_defaults.background` (parameter_set) | native, run_in_background: true, unverified | substitute, run in background, exercised | substitute, async, exercised | extension, herdr_start_agent returns at once; herdr_wait_agent collects, else no delegation, the parent does the work inline, unverified | substitute, async, or hub op:"wait" to block, exercised |
+| `worker_defaults.readonly` (parameter_set) | native, agent mode strips MCP, unverified | degrade, Explore agent type drops Write and Edit but keeps Bash; the constraint held by the agent's instructions, not the tool surface, exercised | drop, no read-only agent type in stock Codex; a plain spawn_agent worker can write, exercised | drop, no read-only delegate exists; a pi-herdr delegate is a full agent pane, and stock pi has no delegate at all, exercised | substitute, scout agent is read-only, exercised |
 | `worker_defaults.identity` (parameter_set) | native, subagent_type: "poteto-agent", unverified | substitute, a poteto-agent definition in the harness subagent dir, unverified | substitute, a poteto-agent definition in the harness subagent dir, unverified | extension, a poteto-agent definition where the extension reads its agents, else no identity, the parent model does the work, unverified | substitute, a poteto-agent definition in the harness subagent dir, unverified |
 | `worker_defaults.model` (parameter_set) | native, explicit slug per role, unverified | substitute, role slots, unverified | substitute, role slots, unverified | substitute, role slots, unverified | substitute, role slots, or the agent field, unverified |
 | `human_question` (capability) | native, AskQuestion, unverified | substitute, the ask tool, unverified | substitute, request_user_input tool, root thread only, mode-gated, unverified | extension, an ask tool an extension registers via registerTool, else a plain question in the reply, unverified | substitute, the ask tool, unverified |
@@ -156,8 +156,8 @@ A scenario defines what to run and what to inspect; it does not claim a result.
 | `worker_durability` | 5 | 0 | all harnesses: unverified |
 | `probe_worker` | 5 | 0 | all harnesses: unverified |
 | `wake_on_event` | 5 | 0 | all harnesses: unverified |
-| `worker_defaults.background` | 5 | 1 | Cursor: unverified; Claude Code: unverified; Codex: unverified; pi: unverified; Oh My Pi: exercised |
-| `worker_defaults.readonly` | 5 | 1 | Cursor: unverified; Claude Code: unverified; Codex: unverified; pi: unverified; Oh My Pi: exercised |
+| `worker_defaults.background` | 5 | 3 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: unverified; Oh My Pi: exercised |
+| `worker_defaults.readonly` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
 | `worker_defaults.identity` | 4 | 0 | all harnesses: unverified |
 | `worker_defaults.model` | 5 | 0 | all harnesses: unverified |
 | `human_question` | 5 | 0 | all harnesses: unverified |
@@ -169,10 +169,10 @@ Cursor follows the same evidence rules as every other harness, and cannot reach 
 | measure | value |
 | --- | --- |
 | scenarios | 9 defined, one per high-risk domain |
-| attestations | 6 recorded |
-| evidence classes | 6 exercised |
-| run directories | 6 complete |
-| cells exercised | 6 of 120, a subset of the 6 verified cells in Totals |
+| attestations | 11 recorded |
+| evidence classes | 11 exercised |
+| run directories | 11 complete |
+| cells exercised | 11 of 120, a subset of the 11 verified cells in Totals |
 
 Every recorded grounding still holds against the files on disk.
 

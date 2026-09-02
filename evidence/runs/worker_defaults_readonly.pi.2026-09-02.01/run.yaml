@@ -1,0 +1,20 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: worker_defaults_readonly
+harness: pi
+run_id: worker_defaults_readonly.pi.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T06:41:28.736Z
+ended_at: 2026-09-02T06:42:06.609Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: 0.84.4
+harness_version_source: pi --version -> 0.84.4
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .pi/agent/auth.json, plus herdr's pi state-reporting integration (herdr integration install pi); no user skill, rule, hook, MCP server, or context file was reachable"
+supersedes: null

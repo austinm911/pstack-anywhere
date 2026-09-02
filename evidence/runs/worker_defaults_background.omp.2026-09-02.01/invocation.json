@@ -5,17 +5,26 @@
       "result": {
         "agent": {
           "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UKMsc6/.omp/agent/sessions/-tmp-tmp.1eeSR3Xcb4/2026-09-02T06-21-41-104Z_01a060c7-c970-7286-861c-80ce85c9b81e.jsonl"
+          },
           "agent_status": "idle",
-          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.C0NEuPd9uH",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.1eeSR3Xcb4",
           "focused": false,
-          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.C0NEuPd9uH",
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.1eeSR3Xcb4",
           "interactive_ready": true,
-          "name": "b-worker-defaults-background-omp",
-          "pane_id": "w1H:p7",
-          "revision": 0,
-          "state_change_seq": 210,
+          "name": "b-worker-defaults-backgro-omp-01",
+          "pane_id": "w1H:p13",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 303,
           "tab_id": "w1H:t3",
-          "terminal_id": "term_65a79779230c4a9",
+          "terminal_id": "term_65a7a0c5fb01fc6",
+          "terminal_title": "π > tmp.1eeSR3Xcb4",
+          "terminal_title_stripped": "π > tmp.1eeSR3Xcb4",
           "workspace_id": "w1H"
         },
         "argv": [
@@ -35,22 +44,22 @@
             "agent": "omp",
             "kind": "path",
             "source": "herdr:omp",
-            "value": "/Users/am/.omp/agent/sessions/-tmp-tmp.C0NEuPd9uH/2026-09-02T05-40-09-511Z_01a060a1-c4a7-7515-ab37-5b4f7755dfa5.jsonl"
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UKMsc6/.omp/agent/sessions/-tmp-tmp.1eeSR3Xcb4/2026-09-02T06-21-41-104Z_01a060c7-c970-7286-861c-80ce85c9b81e.jsonl"
           },
           "agent_status": "done",
-          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.C0NEuPd9uH",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.1eeSR3Xcb4",
           "focused": false,
-          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.C0NEuPd9uH",
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.1eeSR3Xcb4",
           "interactive_ready": true,
-          "name": "b-worker-defaults-background-omp",
-          "pane_id": "w1H:p7",
-          "revision": 1015,
+          "name": "b-worker-defaults-backgro-omp-01",
+          "pane_id": "w1H:p13",
+          "revision": 985,
           "screen_detection_skipped": true,
-          "state_change_seq": 213,
+          "state_change_seq": 305,
           "tab_id": "w1H:t3",
-          "terminal_id": "term_65a79779230c4a9",
-          "terminal_title": "π > Coordinate asynchronous timestamp workers",
-          "terminal_title_stripped": "π > Coordinate asynchronous timestamp workers",
+          "terminal_id": "term_65a7a0c5fb01fc6",
+          "terminal_title": "π > Test async worker spawn timing",
+          "terminal_title_stripped": "π > Test async worker spawn timing",
           "workspace_id": "w1H"
         },
         "type": "agent_prompted"
@@ -65,22 +74,22 @@
             "agent": "omp",
             "kind": "path",
             "source": "herdr:omp",
-            "value": "/Users/am/.omp/agent/sessions/-tmp-tmp.C0NEuPd9uH/2026-09-02T05-40-09-511Z_01a060a1-c4a7-7515-ab37-5b4f7755dfa5.jsonl"
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UKMsc6/.omp/agent/sessions/-tmp-tmp.1eeSR3Xcb4/2026-09-02T06-21-41-104Z_01a060c7-c970-7286-861c-80ce85c9b81e.jsonl"
           },
           "agent_status": "done",
-          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.C0NEuPd9uH",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.1eeSR3Xcb4",
           "focused": false,
-          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.C0NEuPd9uH",
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.1eeSR3Xcb4",
           "interactive_ready": true,
-          "name": "b-worker-defaults-background-omp",
-          "pane_id": "w1H:p7",
-          "revision": 1015,
+          "name": "b-worker-defaults-backgro-omp-01",
+          "pane_id": "w1H:p13",
+          "revision": 985,
           "screen_detection_skipped": true,
-          "state_change_seq": 213,
+          "state_change_seq": 305,
           "tab_id": "w1H:t3",
-          "terminal_id": "term_65a79779230c4a9",
-          "terminal_title": "π > Coordinate asynchronous timestamp workers",
-          "terminal_title_stripped": "π > Coordinate asynchronous timestamp workers",
+          "terminal_id": "term_65a7a0c5fb01fc6",
+          "terminal_title": "π > Test async worker spawn timing",
+          "terminal_title_stripped": "π > Test async worker spawn timing",
           "workspace_id": "w1H"
         },
         "type": "agent_info"
@@ -106,7 +115,8 @@
       "visible_idle": false,
       "visible_working": false,
       "warning": null
-    }
+    },
+    "startup_answers": []
   },
   "cli": {
     "command": [
@@ -117,61 +127,80 @@
     "version": "omp/18.1.2\n"
   },
   "model": "opus:low",
-  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.C0NEuPd9uH",
-  "session_dir": "/Users/am/.omp/agent/sessions/-tmp-tmp.C0NEuPd9uH",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.1eeSR3Xcb4",
+  "home": {
+    "seeded": [
+      ".omp/agent/agent.db",
+      ".omp/agent/secret-placeholder.key"
+    ],
+    "written": {
+      ".omp/agent/config.yml": "setupVersion: 2\n"
+    }
+  },
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UKMsc6/.omp/agent/sessions/-tmp-tmp.1eeSR3Xcb4",
   "calls": [
     {
       "name": "task",
       "arguments": {
-        "context": "# Goal\nMeasure background delegation. One worker performs a timed write.\n\n# Constraints\n- Working dir is the current repo root.\n- Do not touch `parent-alive.txt` (parent owns it).\n- Skip formatters, linters, and test suites.\n\n# Contract\nWorker owns `worker-done.txt` only.",
+        "i": "Spawning background worker",
+        "context": "# Goal\nProduce a UTC timestamp file after a 60-second delay in the repo at the session working directory.\n\n# Constraints\n- Do not run formatters, linters, or test suites.\n- Only touch `worker-done.txt`. Never touch `parent-alive.txt`.\n\n# Contract\n`worker-done.txt` contains exactly one line: the UTC timestamp in ISO-8601 form.",
         "tasks": [
           {
-            "name": "TimestampWorker",
+            "name": "WorkerDelay",
             "agent": "sonic",
-            "effort": "lo",
-            "task": "# Target\nCreate the file `worker-done.txt` in the current working directory. Do not create or modify any other file, especially not `parent-alive.txt`.\n\n# Change\n1. Sleep exactly 60 seconds (e.g. `sleep 60`).\n2. After the sleep completes, get the current UTC timestamp (`date -u +%Y-%m-%dT%H:%M:%SZ`).\n3. Write that timestamp as the entire content of `worker-done.txt`.\n\n# Acceptance\n`worker-done.txt` exists containing a single UTC ISO-8601 timestamp taken AFTER the 60 second wait. Report that exact timestamp string in your final output. You are a subagent. Don't run memo."
+            "task": "# Target\nCreate the file `worker-done.txt` in the session working directory. Non-goal: any other file, especially `parent-alive.txt`.\n\n# Change\n1. Sleep for 60 seconds (e.g. `sleep 60`, allow a timeout above 60s).\n2. After the sleep completes, get the current UTC timestamp with `date -u +%Y-%m-%dT%H:%M:%SZ`.\n3. Write that timestamp as the entire content of `worker-done.txt` (single line).\n\n# Acceptance\n`worker-done.txt` exists and contains the UTC timestamp captured AFTER the 60-second wait. Report that timestamp string in your final output."
           }
-        ],
-        "i": "Spawning background timestamp worker"
+        ]
       },
-      "ts": "2026-09-02T05:40:17.903Z"
+      "ts": "2026-09-02T06:21:50.656Z"
     },
     {
       "name": "bash",
       "arguments": {
-        "command": "date -u +%Y-%m-%dT%H:%M:%SZ > parent-alive.txt && cat parent-alive.txt",
-        "i": "Writing parent timestamp"
+        "i": "Writing parent timestamp",
+        "command": "date -u +%Y-%m-%dT%H:%M:%SZ > parent-alive.txt && cat parent-alive.txt"
       },
-      "ts": "2026-09-02T05:40:21.605Z"
+      "ts": "2026-09-02T06:21:53.637Z"
     },
     {
       "name": "hub",
       "arguments": {
+        "i": "Waiting for worker job",
         "op": "wait",
-        "i": "Waiting for worker completion",
-        "timeoutMs": 120000
+        "ids": [
+          "WorkerDelay"
+        ],
+        "timeoutMs": 180000
       },
-      "ts": "2026-09-02T05:40:24.260Z"
+      "ts": "2026-09-02T06:21:56.863Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "i": "Verifying both files",
+        "command": "for f in parent-alive.txt worker-done.txt; do printf '%s: ' \"$f\"; cat \"$f\"; done"
+      },
+      "ts": "2026-09-02T06:23:01.013Z"
     }
   ],
   "calls_workers": {
-    "TimestampWorker": [
+    "WorkerDelay": [
       {
         "name": "bash",
         "arguments": {
-          "i": "Wait then write UTC timestamp",
-          "command": "sleep 60 && date -u +%Y-%m-%dT%H:%M:%SZ > worker-done.txt",
-          "timeout": 75
+          "command": "sleep 60 && date -u +%Y-%m-%dT%H:%M:%SZ > worker-done.txt && cat worker-done.txt",
+          "i": "Sleeping then writing timestamp",
+          "timeout": 120
         },
-        "ts": "2026-09-02T05:40:21.852Z"
+        "ts": "2026-09-02T06:21:54.072Z"
       },
       {
         "name": "read",
         "arguments": {
-          "i": "Verify timestamp file",
-          "path": "worker-done.txt:raw"
+          "path": "worker-done.txt",
+          "i": "Verifying file content"
         },
-        "ts": "2026-09-02T05:41:25.178Z"
+        "ts": "2026-09-02T06:22:56.268Z"
       },
       {
         "name": "yield",
@@ -179,12 +208,13 @@
           "result": {
             "data": {
               "file": "worker-done.txt",
-              "timestamp": "2026-09-02T05:41:21Z",
-              "verified": "Contains exactly one UTC ISO-8601 timestamp written after the 60-second wait."
+              "timestamp": "2026-09-02T06:22:54Z",
+              "waited_seconds": 60,
+              "verified": true
             }
           }
         },
-        "ts": "2026-09-02T05:41:29.420Z"
+        "ts": "2026-09-02T06:22:58.520Z"
       }
     ]
   }

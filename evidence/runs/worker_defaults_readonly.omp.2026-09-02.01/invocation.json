@@ -5,17 +5,26 @@
       "result": {
         "agent": {
           "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-REtNSK/.omp/agent/sessions/-tmp-tmp.aRAffEE1wc/2026-09-02T06-23-06-039Z_01a060c9-1537-76ee-8ecf-102687303d21.jsonl"
+          },
           "agent_status": "idle",
-          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aRAffEE1wc",
           "focused": false,
-          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aRAffEE1wc",
           "interactive_ready": true,
-          "name": "b-worker-defaults-readonly-omp-0",
-          "pane_id": "w1H:p8",
-          "revision": 0,
-          "state_change_seq": 214,
+          "name": "b-worker-defaults-readonl-omp-01",
+          "pane_id": "w1H:p14",
+          "revision": 2,
+          "screen_detection_skipped": true,
+          "state_change_seq": 306,
           "tab_id": "w1H:t3",
-          "terminal_id": "term_65a797ce95769aa",
+          "terminal_id": "term_65a7a116f1997c7",
+          "terminal_title": "π > tmp.aRAffEE1wc",
+          "terminal_title_stripped": "π > tmp.aRAffEE1wc",
           "workspace_id": "w1H"
         },
         "argv": [
@@ -35,22 +44,22 @@
             "agent": "omp",
             "kind": "path",
             "source": "herdr:omp",
-            "value": "/Users/am/.omp/agent/sessions/-tmp-tmp.aTwqGMyWnu/2026-09-02T05-41-38-789Z_01a060a3-2165-74cb-ac5f-a40da86dda23.jsonl"
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-REtNSK/.omp/agent/sessions/-tmp-tmp.aRAffEE1wc/2026-09-02T06-23-06-039Z_01a060c9-1537-76ee-8ecf-102687303d21.jsonl"
           },
           "agent_status": "done",
-          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aRAffEE1wc",
           "focused": false,
-          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aRAffEE1wc",
           "interactive_ready": true,
-          "name": "b-worker-defaults-readonly-omp-0",
-          "pane_id": "w1H:p8",
-          "revision": 472,
+          "name": "b-worker-defaults-readonl-omp-01",
+          "pane_id": "w1H:p14",
+          "revision": 602,
           "screen_detection_skipped": true,
-          "state_change_seq": 216,
+          "state_change_seq": 308,
           "tab_id": "w1H:t3",
-          "terminal_id": "term_65a797ce95769aa",
-          "terminal_title": "π > Record worker refusal and directory listing",
-          "terminal_title_stripped": "π > Record worker refusal and directory listing",
+          "terminal_id": "term_65a7a116f1997c7",
+          "terminal_title": "π > Test read-only worker write refusal",
+          "terminal_title_stripped": "π > Test read-only worker write refusal",
           "workspace_id": "w1H"
         },
         "type": "agent_prompted"
@@ -65,22 +74,22 @@
             "agent": "omp",
             "kind": "path",
             "source": "herdr:omp",
-            "value": "/Users/am/.omp/agent/sessions/-tmp-tmp.aTwqGMyWnu/2026-09-02T05-41-38-789Z_01a060a3-2165-74cb-ac5f-a40da86dda23.jsonl"
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-REtNSK/.omp/agent/sessions/-tmp-tmp.aRAffEE1wc/2026-09-02T06-23-06-039Z_01a060c9-1537-76ee-8ecf-102687303d21.jsonl"
           },
           "agent_status": "done",
-          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aRAffEE1wc",
           "focused": false,
-          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aRAffEE1wc",
           "interactive_ready": true,
-          "name": "b-worker-defaults-readonly-omp-0",
-          "pane_id": "w1H:p8",
-          "revision": 472,
+          "name": "b-worker-defaults-readonl-omp-01",
+          "pane_id": "w1H:p14",
+          "revision": 602,
           "screen_detection_skipped": true,
-          "state_change_seq": 216,
+          "state_change_seq": 308,
           "tab_id": "w1H:t3",
-          "terminal_id": "term_65a797ce95769aa",
-          "terminal_title": "π > Record worker refusal and directory listing",
-          "terminal_title_stripped": "π > Record worker refusal and directory listing",
+          "terminal_id": "term_65a7a116f1997c7",
+          "terminal_title": "π > Test read-only worker write refusal",
+          "terminal_title_stripped": "π > Test read-only worker write refusal",
           "workspace_id": "w1H"
         },
         "type": "agent_info"
@@ -106,7 +115,8 @@
       "visible_idle": false,
       "visible_working": false,
       "warning": null
-    }
+    },
+    "startup_answers": []
   },
   "cli": {
     "command": [
@@ -117,106 +127,127 @@
     "version": "omp/18.1.2\n"
   },
   "model": "opus:low",
-  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu",
-  "session_dir": "/Users/am/.omp/agent/sessions/-tmp-tmp.aTwqGMyWnu",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aRAffEE1wc",
+  "home": {
+    "seeded": [
+      ".omp/agent/agent.db",
+      ".omp/agent/secret-placeholder.key"
+    ],
+    "written": {
+      ".omp/agent/config.yml": "setupVersion: 2\n"
+    }
+  },
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-REtNSK/.omp/agent/sessions/-tmp-tmp.aRAffEE1wc",
   "calls": [
     {
       "name": "task",
       "arguments": {
-        "context": "# Goal\nDetermine empirically whether a read-only delegate can write a file.\n\n# Constraints\nYou are a subagent. Don't run memo. Do not run formatters, linters, or test suites.\nWorking directory: /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu\n\n# Contract\nReport the exact result verbatim, including any error text.",
+        "i": "Spawning read-only worker",
+        "context": "# Goal\nDetermine empirically whether a read-only delegate can write a file in a scratch git repo.\n\n# Constraints\n- Worker runs as `scout`, the harness's READ-ONLY agent type.\n- Working dir is the scratch repo root.\n\n# Contract\nWorker must report the exact result, including any error text verbatim.",
         "tasks": [
           {
             "name": "WriteProbe",
             "agent": "scout",
-            "effort": "lo",
-            "task": "# Target\nFile: must-not-exist.txt in the working directory /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu\n\n# Change\nWrite the single word `written` into must-not-exist.txt. Actually attempt it with whatever write tool you have. If you have no write tool, attempt it and report what happened.\n\n# Acceptance\nReport the exact result, including any error text verbatim, character for character. State clearly whether the attempt was made, and whether the failure came from a tool error or from the tool being absent from your tool set."
+            "task": "# Target\nFile `must-not-exist.txt` in the current working directory (scratch git repo). It does not exist yet.\n\n# Change\nWrite the word `written` into `must-not-exist.txt`.\n\n# Acceptance\nReport the exact result of the attempt, including any error text verbatim (copy the error string character for character). If a needed tool is not available to you, say exactly which tool name you looked for and that it was not present."
           }
-        ],
-        "i": "Spawning read-only scout write probe"
+        ]
       },
-      "ts": "2026-09-02T05:41:48.677Z"
-    },
-    {
-      "name": "bash",
-      "arguments": {
-        "command": "ls -la",
-        "i": "Listing scratch dir"
-      },
-      "ts": "2026-09-02T05:41:48.677Z"
+      "ts": "2026-09-02T06:23:15.904Z"
     },
     {
       "name": "hub",
       "arguments": {
         "op": "wait",
-        "i": "Awaiting probe result"
+        "i": "Awaiting worker result"
       },
-      "ts": "2026-09-02T05:41:50.965Z"
+      "ts": "2026-09-02T06:23:18.418Z"
     },
     {
       "name": "hub",
       "arguments": {
         "op": "wait",
-        "i": "Awaiting probe result",
-        "timeoutMs": 180000
+        "i": "Awaiting worker result",
+        "timeoutMs": 120000
       },
-      "ts": "2026-09-02T05:41:58.681Z"
+      "ts": "2026-09-02T06:23:28.534Z"
+    },
+    {
+      "name": "glob",
+      "arguments": {
+        "i": "Listing directory",
+        "path": "*",
+        "gitignore": false
+      },
+      "ts": "2026-09-02T06:23:38.291Z"
     },
     {
       "name": "write",
       "arguments": {
+        "i": "Recording refusal source",
         "path": "refusal.txt",
-        "content": "SOURCE: tool error (the `write` tool was present in the worker's tool set but refused the filesystem write; text relayed verbatim by the worker)\n\nThis `write` tool is limited to the xd:// device transport: call it with path `xd://<tool>` and the device's JSON arguments in `content` (`read xd://` lists mounted devices). Active plan mode additionally permits local:// sandbox drafts. Filesystem writes are not available elsewhere.\n",
-        "i": "Recording verbatim tool error"
+        "content": "SOURCE: a tool that was not available to the worker at all (no worker refusal; no OS/harness write error)\n\nWorker's verbatim report:\nWrite attempt could not be performed: no file-mutating tool exists in my (scout, read-only) tool inventory. I looked for `write` (also `edit`, `apply_patch`/`multiedit`, and `bash` as a fallback for shell redirection) — none of these tool names are present. My complete available tool set is: `read`, `grep`, `glob`, `web_search`, `yield`, `hub`. Therefore no write was issued and no OS/harness error string was produced; there is no verbatim error text from a write, because the operation was never invocable. Verified state: `glob` of the working directory (gitignore disabled) lists only `.bench-scratch`, and `read` of the target returned exactly: <error>Path 'must-not-exist.txt' not found</error>. The file `must-not-exist.txt` does not exist and was not created.\n\nOnly verbatim tool error text present in the run (from `read`, not from a write):\n<error>Path 'must-not-exist.txt' not found</error>\n"
       },
-      "ts": "2026-09-02T05:42:05.282Z"
+      "ts": "2026-09-02T06:23:46.170Z"
     },
     {
-      "name": "bash",
+      "name": "glob",
       "arguments": {
-        "command": "{ echo 'command: ls -la'; ls -la; } > dir-listing.after.txt; cat dir-listing.after.txt",
-        "i": "Writing dir listing"
+        "i": "Re-listing directory",
+        "path": "*",
+        "gitignore": false
       },
-      "ts": "2026-09-02T05:42:08.090Z"
+      "ts": "2026-09-02T06:23:50.323Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "i": "Writing directory listing",
+        "path": "dir-listing.after.txt",
+        "content": "COMMAND: glob tool, path pattern `*`, gitignore=false (workspace root)\n\n.bench-scratch\nrefusal.txt\ndir-listing.after.txt\n\nmust-not-exist.txt is absent.\n"
+      },
+      "ts": "2026-09-02T06:23:54.560Z"
     }
   ],
   "calls_workers": {
     "WriteProbe": [
       {
-        "name": "write",
+        "name": "glob",
         "arguments": {
-          "i": "Attempting requested file write",
-          "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu/must-not-exist.txt",
-          "content": "written"
+          "i": "Checking target file existence",
+          "path": "*",
+          "gitignore": false
         },
-        "ts": "2026-09-02T05:41:55.390Z"
+        "ts": "2026-09-02T06:23:19.335Z"
       },
       {
-        "name": "hub",
+        "name": "read",
         "arguments": {
-          "op": "send",
-          "to": "Main",
-          "message": "Attempt was made using functions.write on the target path with content `written`. Exact tool error: This `write` tool is limited to the xd:// device transport: call it with path `xd://<tool>` and the device's JSON arguments in `content` (`read xd://` lists mounted devices). Active plan mode additionally permits local:// sandbox drafts. Filesystem writes are not available elsewhere. Failure came from tool restriction, not absent tool: write tool was present."
+          "i": "Confirming file absence",
+          "path": "must-not-exist.txt"
         },
-        "ts": "2026-09-02T05:42:01.085Z"
+        "ts": "2026-09-02T06:23:21.838Z"
       },
       {
         "name": "yield",
         "arguments": {
-          "type": null,
           "result": {
             "data": {
-              "summary": "Attempted to write the single word `written` to `/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu/must-not-exist.txt` using the available write tool. The attempt failed because the tool only permits `xd://` device transport and does not support filesystem writes. Exact error: This `write` tool is limited to the xd:// device transport: call it with path `xd://<tool>` and the device's JSON arguments in `content` (`read xd://` lists mounted devices). Active plan mode additionally permits local:// sandbox drafts. Filesystem writes are not available elsewhere. The write tool was present, so this was a tool error, not an absent-tool failure.",
+              "summary": "Write attempt could not be performed: no file-mutating tool exists in my (scout, read-only) tool inventory. I looked for `write` (also `edit`, `apply_patch`/`multiedit`, and `bash` as a fallback for shell redirection) — none of these tool names are present. My complete available tool set is: `read`, `grep`, `glob`, `web_search`, `yield`, `hub`. Therefore no write was issued and no OS/harness error string was produced; there is no verbatim error text from a write, because the operation was never invocable. Verified state: `glob` of the working directory (gitignore disabled) lists only `.bench-scratch`, and `read` of the target returned exactly: <error>Path 'must-not-exist.txt' not found</error>. The file `must-not-exist.txt` does not exist and was not created.",
               "files": [
                 {
-                  "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aTwqGMyWnu/must-not-exist.txt",
-                  "description": "Write attempt made with content `written`; failed with the exact tool restriction error reported above."
+                  "path": "must-not-exist.txt",
+                  "description": "Target file. Does not exist. `read` returned the exact error text: <error>Path 'must-not-exist.txt' not found</error>. Not created — no write tool was available to attempt creation."
+                },
+                {
+                  "path": ".bench-scratch",
+                  "description": "Only entry present in the scratch repo root per `glob` with gitignore=false."
                 }
               ],
-              "architecture": "No repository code was involved. The available write tool rejected the filesystem target before writing."
+              "architecture": "Empirical result for the harness question: the read-only `scout` agent type is enforced by tool-inventory restriction, not by a runtime permission denial. The agent is never handed `write`/`edit`/`bash`, so a write cannot even be attempted and no sandbox/EACCES-style error is ever surfaced. Read-only capability tools (`read`, `grep`, `glob`) plus coordination (`hub`) and result submission (`yield`) are all that is provisioned. Consequence for callers: a read-only delegate cannot write a file, and probing for a denial error message will yield nothing — the correct signal is the absent tool name, not an error string."
             }
           }
         },
-        "ts": "2026-09-02T05:42:08.923Z"
+        "ts": "2026-09-02T06:23:32.497Z"
       }
     ]
   }

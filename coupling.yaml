@@ -200,14 +200,14 @@ axes:
           cursor: { parity: native, use: "run_in_background: true" }
           claude: { parity: substitute, use: "run in background" }
           codex: { parity: substitute, use: "async" }
-          pi: { parity: substitute, use: "async" }
+          pi: { parity: extension, use: "herdr_start_agent returns at once; herdr_wait_agent collects", fallback: "no delegation, the parent does the work inline" }
           omp: { parity: substitute, use: 'async, or hub op:"wait" to block' }
       - id: readonly
         resolution:
           cursor: { parity: native, use: "agent mode strips MCP" }
-          claude: { parity: substitute, use: "read-only agent type" }
-          codex: { parity: substitute, use: "read-only agent type" }
-          pi: { parity: substitute, use: "read-only agent type" }
+          claude: { parity: degrade, use: "Explore agent type drops Write and Edit but keeps Bash; the constraint held by the agent's instructions, not the tool surface" }
+          codex: { parity: drop, use: "no read-only agent type in stock Codex; a plain spawn_agent worker can write" }
+          pi: { parity: drop, use: "no read-only delegate exists; a pi-herdr delegate is a full agent pane, and stock pi has no delegate at all" }
           omp: { parity: substitute, use: "scout agent is read-only" }
       - id: identity
         resolution:

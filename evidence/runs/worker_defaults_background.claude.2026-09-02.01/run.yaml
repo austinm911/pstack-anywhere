@@ -1,0 +1,20 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: worker_defaults_background
+harness: claude
+run_id: worker_defaults_background.claude.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T06:48:06.855Z
+ended_at: 2026-09-02T06:49:51.867Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: 2.1.258 (Claude Code)
+harness_version_source: claude --version -> 2.1.258 (Claude Code)
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .claude/.credentials.json and these written files: .claude.json = \"{\\\"hasCompletedOnboarding\\\":true,\\\"bypassPermissionsModeAccepted\\\":true,\\\"theme\\\":\\\"dark\\\"}\", plus herdr's claude state-reporting integration (herdr integration install claude), launched with --dangerously-skip-permissions; no user skill, rule, hook, MCP server, or context file was reachable"
+supersedes: null

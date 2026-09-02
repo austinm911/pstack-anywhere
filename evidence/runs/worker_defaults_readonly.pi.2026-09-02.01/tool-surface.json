@@ -1,0 +1,10 @@
+{
+  "worker": null,
+  "note": "No worker existed: stock pi (pi --model openai-codex/gpt-5.6-luna, no extension) exposes no delegate or spawn tool, so there was no read-only configuration to apply and no worker tool list to read. pi's session log records no tool inventory either.",
+  "parent_calls_observed": [
+    "bash",
+    "write",
+    "read"
+  ],
+  "source": "invocation.json calls; references/harnesses/pi/MANIFEST.md line 81 (no native subagent loader in the pinned source)"
+}

@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: background.control_returned_at
+    observed: '2026-09-02T06:48:26.209Z, the Agent call''s own tool_result ("Async agent launched successfully" plus an agentId), 9 ms after the call; the parent''s next turn was a one-line text reply at 06:48:27.718Z and then the turn ended (turn_duration record with pendingBackgroundAgentCount 1) with no further call'
+    source: parent session (session/<id>.jsonl) tool_result, assistant text, and system turn_duration records; invocation.json calls[0] ts
+  - id: background.worker_finished_at
+    observed: '2026-09-02T06:49:30Z'
+    source: worker-done.txt
+  - id: background.parent_acted_at
+    observed: '2026-09-02T06:49:48Z, which is 18 s after the worker finished, not between spawn and finish. The parent had control (its turn ended 1.5 s after the spawn, 63 s before the worker finished) but did nothing with it until the completion notification woke it. The same shape occurred in a first attempt of this scenario on this harness, discarded before any digest was recorded, where the parent also ended its turn with text and wrote parent-alive.txt only after the notification'
+    source: parent-alive.txt; timeline.yaml
+  - id: background.collection_mechanism
+    observed: 'a notification into the parent''s next turn: a user-role <task-notification> message at 06:49:37.085Z carrying <status>completed</status> and the worker''s final text in <result>; no wait, join, poll, or file read by the parent preceded it. The parent later ran one Bash call that printed both files'
+    source: parent session task-notification message; invocation.json calls[1]
+  - id: background.result_intact
+    observed: 'true; the <result> block holds the worker''s full final message, matching the worker session''s last assistant text, and names the same 2026-09-02T06:49:30Z as worker-done.txt'
+    source: parent session task-notification, the worker session (session/<id>/subagents/agent-*.jsonl) last assistant text, worker-done.txt

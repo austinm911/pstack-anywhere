@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: background.control_returned_at
+    observed: '2026-09-02T06:34:51.872Z, the spawn_agent function_call_output {task_name: /root/timestamp_worker}, 102 ms after the call; the parent''s next turn was text at 06:34:56.944Z followed by the exec_command that wrote parent-alive.txt at 06:34:58.344Z'
+    source: parent rollout (session/2026/09/01/rollout-...01bc4cfcd068.jsonl) function_call and function_call_output timestamps
+  - id: background.worker_finished_at
+    observed: '2026-09-02T06:35:58Z'
+    source: worker-done.txt
+  - id: background.parent_acted_at
+    observed: '2026-09-02T06:34:58Z, 60 s before the worker finished and 7 s after the spawn returned'
+    source: parent-alive.txt
+  - id: background.collection_mechanism
+    observed: 'an explicit wait_agent {timeout_ms: 60000} issued at 06:35:03.554Z, which timed out at 06:36:03.576Z ({message: "Wait timed out.", timed_out: true}) 5 s after the worker had already finished; the result then arrived at 06:36:05.953Z as a FINAL_ANSWER agent_message injected into the parent thread while the parent was announcing a second wait. The wait call itself carried no payload; the spawn call returned only the task name'
+    source: parent rollout function_call wait_agent, its function_call_output, and the agent_message that follows; timeline.yaml
+  - id: background.result_intact
+    observed: 'true; the FINAL_ANSWER payload is 2026-09-02T06:35:58Z, equal to the worker''s last assistant text and to worker-done.txt. The worker was spawned with fork_turns: all, so its context began with the parent''s turns'
+    source: parent rollout agent_message; worker rollout (rollout-...02683e2df562.jsonl) last assistant message and spawn arguments; worker-done.txt

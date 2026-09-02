@@ -8,18 +8,13 @@ scenario: worker_defaults_background
 harness: omp
 run_id: worker_defaults_background.omp.2026-09-02.01
 coupling_version: 2
-started_at: 2026-09-02T05:40:03.581Z
-ended_at: 2026-09-02T05:41:32.997Z
+started_at: 2026-09-02T06:21:40.090Z
+ended_at: 2026-09-02T06:23:04.677Z
 operator: am
 machine: MBP-M4.local
 os: darwin 25.5.0
 harness_version: omp/18.1.2
 harness_version_source: omp --version -> omp/18.1.2
 clock: "UTC, Date.toISOString on the bench host"
-environment_deltas: >-
-  ~/.omp/agent/agents holds six custom agent definitions (browse-task,
-  planner, research-task, task-fable, task-opus, task-sol); none was used
-  by this run, whose delegates are omp built-ins. ~/.omp/agent/config.yml
-  sets tools.xdevDocs: catalog and advisor.enabled: false, neither of which
-  touches delegation. MCP servers executor, codedb, deepwiki were connected.
+environment_deltas: "launched under a scratch HOME seeded only with .omp/agent/agent.db, .omp/agent/secret-placeholder.key and these written files: .omp/agent/config.yml = \"setupVersion: 2\\n\", plus herdr's omp state-reporting integration (herdr integration install omp); no user skill, rule, hook, MCP server, or context file was reachable"
 supersedes: null

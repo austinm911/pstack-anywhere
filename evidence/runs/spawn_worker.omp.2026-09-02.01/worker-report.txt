@@ -1,0 +1,6 @@
+{
+  "file": "probe.txt",
+  "line_written": "2026-09-02T06:21:28Z",
+  "method": "date -u +\"%Y-%m-%dT%H:%M:%SZ\" > probe.txt (truncating redirect, contents replaced)",
+  "verified": "read-back of probe.txt shows exactly one line: 2026-09-02T06:21:28Z"
+}

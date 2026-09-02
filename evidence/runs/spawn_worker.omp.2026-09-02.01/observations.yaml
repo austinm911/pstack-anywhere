@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: spawn.primitive
+    observed: 'task, arguments {context: "# Goal\nSingle delegated worker owns probe.txt for this run. ...", tasks: [{name: ProbeWriter, task: "replace the contents of probe.txt with the current UTC timestamp, then report the exact line written"}]}'
+    source: invocation.json calls[0] arguments
+  - id: spawn.separate_context
+    observed: 'the worker has its own session file whose session_init reads agent: task; its only user turn is the brief, and none of the parent prompt (no "Spawn exactly one worker", no "worker-report") appears in it'
+    source: session/<id>/ProbeWriter.jsonl session_init and user messages
+  - id: spawn.result_returned
+    observed: 'structured; the task call returned only "Spawned agent ProbeWriter (job ProbeWriter)", and the result arrived through a later hub {op: wait} call as a task-result block carrying the worker''s yield object {file: probe.txt, line_written: 2026-09-02T06:21:28Z, method, verified}'
+    source: invocation.json calls[0..1]; the parent session''s toolResult entries for task and hub; the worker''s yield call arguments
+  - id: spawn.side_effect_matches
+    observed: 'probe.after.txt is exactly 2026-09-02T06:21:28Z, equal to line_written in the yield object and in worker-report.txt; probe.before.txt is seed'
+    source: probe.before.txt, probe.after.txt, worker-report.txt, the worker yield arguments
+  - id: spawn.parent_abstained
+    observed: 'parent-side calls were task, hub wait, and write worker-report.txt; no parent call names probe.txt; the only probe.txt write is the worker''s bash call'
+    source: invocation.json calls[0..2] arguments and calls_workers.ProbeWriter

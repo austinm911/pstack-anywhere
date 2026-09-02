@@ -1,17 +1,17 @@
 # Hand-written by the operator from the artifacts in this directory.
 observations:
   - id: background.control_returned_at
-    observed: '2026-09-02T05:40:21.605Z, the bash call that wrote parent-alive.txt; the task call itself returned at 05:40:17.920Z with "Spawned agent TimestampWorker" and no result'
-    source: invocation.json calls[1] ts, and timeline.yaml
+    observed: '2026-09-02T06:21:50.665Z, the task call''s own toolResult ("Spawned agent WorkerDelay (job WorkerDelay). Its result auto-delivers on yield ..."), 9 ms after the call was issued; the parent''s next call, bash writing parent-alive.txt, is at 06:21:53.637Z'
+    source: invocation.json calls[0..1] ts; parent session toolResult for task
   - id: background.worker_finished_at
-    observed: '2026-09-02T05:41:21Z'
+    observed: '2026-09-02T06:22:54Z'
     source: worker-done.txt
   - id: background.parent_acted_at
-    observed: '2026-09-02T05:40:21Z, sixty seconds before the worker finished'
+    observed: '2026-09-02T06:21:53Z, 61 s before the worker finished'
     source: parent-alive.txt
   - id: background.collection_mechanism
-    observed: 'a separate hub op:wait call issued at 05:40:24.260Z and returning at 05:41:29.448Z with the settled job result; not the spawn return, not a poll, not a file read'
-    source: invocation.json calls[2], the session log toolResult for hub, and the DONE line in transcript.md
+    observed: 'a separate explicit wait: hub {op: wait, ids: [WorkerDelay], timeoutMs: 180000} issued at 06:21:56.863Z and returning at 06:22:58.548Z with a task-result block; the spawn call returned only the spawn acknowledgement, and no status poll or read of worker-done.txt precedes the collection'
+    source: invocation.json calls[2] arguments and ts; parent session toolResult for hub
   - id: background.result_intact
-    observed: 'true; the object the parent received under hub wait is {file: worker-done.txt, timestamp: 2026-09-02T05:41:21Z, verified: ...} and equals the data the worker passed to its yield call'
-    source: session/<id>.jsonl toolResult for hub, compared with session/<id>/TimestampWorker.jsonl yield arguments
+    observed: 'true; the hub wait result carries {file: worker-done.txt, timestamp: 2026-09-02T06:22:54Z, waited_seconds: 60, verified: true}, equal to the worker''s yield arguments and to the file'
+    source: parent session toolResult for hub, compared with the worker''s yield call in session/<id>/WorkerDelay.jsonl and worker-done.txt

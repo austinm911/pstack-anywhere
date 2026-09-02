@@ -1,0 +1,25 @@
+# Assembled by the operator from the parent rollout log and the two timestamp
+# files. Rollout timestamps carry milliseconds; the file timestamps are the
+# agents' own `date -u` output at second precision.
+timeline:
+  - event: spawn call issued
+    at: 2026-09-02T06:34:51.770Z
+    source: parent rollout function_call spawn_agent, timestamp field
+  - event: spawn call returned
+    at: 2026-09-02T06:34:51.872Z
+    source: parent rollout function_call_output {task_name: /root/timestamp_worker}
+  - event: parent acted (parent-alive.txt written)
+    at: 2026-09-02T06:34:58Z
+    source: parent-alive.txt; the exec_command custom_tool_call at 06:34:58.344Z
+  - event: parent entered wait_agent (timeout_ms 60000)
+    at: 2026-09-02T06:35:03.554Z
+    source: parent rollout function_call wait_agent
+  - event: worker finished (worker-done.txt written)
+    at: 2026-09-02T06:35:58Z
+    source: worker-done.txt
+  - event: wait_agent returned timed out
+    at: 2026-09-02T06:36:03.576Z
+    source: parent rollout function_call_output {message: "Wait timed out.", timed_out: true}
+  - event: result collected (FINAL_ANSWER agent_message injected)
+    at: 2026-09-02T06:36:05.953Z
+    source: parent rollout agent_message "Message Type: FINAL_ANSWER ... Payload: 2026-09-02T06:35:58Z"

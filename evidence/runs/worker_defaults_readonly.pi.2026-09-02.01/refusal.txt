@@ -1,0 +1,2 @@
+tool that was not available to the worker at all
+No worker/delegate spawn tool was exposed in this session.

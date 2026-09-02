@@ -8,19 +8,14 @@ scenario: spawn_worker
 harness: pi
 run_id: spawn_worker.pi.2026-09-02.01
 coupling_version: 2
-started_at: 2026-09-02T05:57:15.190Z
-ended_at: 2026-09-02T05:58:03.382Z
+started_at: 2026-09-02T06:24:32.038Z
+ended_at: 2026-09-02T06:25:14.508Z
 operator: am
 machine: MBP-M4.local
 os: darwin 25.5.0
 harness_version: 0.84.4
 harness_version_source: pi --version -> 0.84.4
 clock: "UTC, Date.toISOString on the bench host"
-environment_deltas: >-
-  ~/.pi/agent/settings.json loads many extensions, among them
-  npm:@andrewjacop/pi-herdr 0.4.0, which registered the herdr_delegate tool
-  this run used; a stock pi install has no delegation tool at all. Model
-  given as openai-codex/gpt-5.6-luna because the bare slug matches three
-  authenticated providers and pi exits with an error on the ambiguity.
-extension: '@andrewjacop/pi-herdr 0.4.0, tool herdr_delegate'
+environment_deltas: "launched under a scratch HOME seeded only with .pi/agent/auth.json, plus herdr's pi state-reporting integration (herdr integration install pi); no user skill, rule, hook, MCP server, or context file was reachable"
 supersedes: null
+extension: "@andrewjacop/pi-herdr, loaded explicitly with -e ~/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr"

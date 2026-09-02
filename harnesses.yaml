@@ -91,7 +91,19 @@ harnesses:
       kind: claude
       model_flag: '--model {model}'
       version_command: claude --version
-      extra_args: []
+      # Stock Claude asks before every Bash and Write call, which blocks an
+      # unattended run the way codex's sandbox_mode line unblocks one. The
+      # acceptance flag seeded below is the dialog that flag would otherwise show.
+      extra_args: ['--dangerously-skip-permissions']
+      # bench/run.mjs launches every harness under a scratch HOME that holds
+      # only what is listed here, so no user skill, rule, hook, MCP server, or
+      # context file reaches the run. `copy` paths are relative to the real
+      # HOME; `write` seeds a file with the given text. The scratch HOME is
+      # deleted after harvest.
+      home:
+        copy: [.claude/.credentials.json]
+        write:
+          .claude.json: '{"hasCompletedOnboarding":true,"bypassPermissionsModeAccepted":true,"theme":"dark"}'
       # observed on this machine, not pinned
       # slug: every non-alphanumeric byte of the resolved cwd becomes "-"
       session_dir: ~/.claude/projects/{cwd_slug}
@@ -163,6 +175,17 @@ harnesses:
       model_flag: '-m {model}'
       version_command: codex --version
       extra_args: []
+      home:
+        copy: [.codex/auth.json]
+        # Without multi_agent the spawn tools do not exist; the approval and
+        # sandbox lines are what the operator's own config sets and the TUI
+        # shows as "YOLO mode".
+        write:
+          .codex/config.toml: |
+            approval_policy = "never"
+            sandbox_mode = "danger-full-access"
+            [features]
+            multi_agent = true
       # Codex asks "Do you trust the contents of this directory?" in a new
       # folder, with "Yes, continue" already selected; Enter accepts it.
       startup:
@@ -249,6 +272,14 @@ harnesses:
       model_flag: '--model {model}'
       version_command: pi --version
       extra_args: []
+      home:
+        copy: [.pi/agent/auth.json]
+      # A stock pi has no delegation tool. `bun bench/run.mjs ... --extension`
+      # loads this one explicitly, and run.yaml records it under `extension`.
+      # Path is the operator's install, expanded against the real HOME.
+      extension:
+        name: '@andrewjacop/pi-herdr'
+        args: ['-e', '~/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr']
       # observed on this machine, not pinned
       # slug: "--" + resolved cwd without its leading slash, "/" and ":" -> "-", + "--"
       session_dir: ~/.pi/agent/sessions/{cwd_slug}
@@ -323,6 +354,12 @@ harnesses:
       model_flag: '--model {model}'
       version_command: omp --version
       extra_args: []
+      home:
+        copy: [.omp/agent/agent.db, .omp/agent/secret-placeholder.key]
+        # A fresh HOME starts the 5-step setup wizard, whose first step is a
+        # provider sign-in; this is the flag that marks it done.
+        write:
+          .omp/agent/config.yml: "setupVersion: 2\n"
       # observed on this machine, not pinned
       # slug: cwd relative to $HOME as "-a-b", or to $TMPDIR as "-tmp-a-b",
       # otherwise pi's "--a-b--" form; always on the realpath

@@ -3,20 +3,20 @@
 # agents' own `date -u` output at second precision.
 timeline:
   - event: spawn call issued
-    at: 2026-09-02T05:40:17.903Z
+    at: 2026-09-02T06:21:50.656Z
     source: invocation.json calls[0] (task) ts
   - event: spawn call returned
-    at: 2026-09-02T05:40:17.920Z
-    source: session log toolResult for task, timestamp field
-  - event: control returned, parent's next turn
-    at: 2026-09-02T05:40:21.605Z
-    source: invocation.json calls[1] (bash writing parent-alive.txt) ts
-  - event: parent acted
-    at: 2026-09-02T05:40:21Z
-    source: parent-alive.txt
-  - event: worker finished
-    at: 2026-09-02T05:41:21Z
+    at: 2026-09-02T06:21:50.665Z
+    source: parent session toolResult for task, timestamp field
+  - event: parent acted (parent-alive.txt written)
+    at: 2026-09-02T06:21:53Z
+    source: parent-alive.txt; the bash call at invocation.json calls[1] ts 2026-09-02T06:21:53.637Z
+  - event: parent entered wait
+    at: 2026-09-02T06:21:56.863Z
+    source: invocation.json calls[2] (hub op wait) ts
+  - event: worker finished (worker-done.txt written)
+    at: 2026-09-02T06:22:54Z
     source: worker-done.txt
   - event: result collected
-    at: 2026-09-02T05:41:29.448Z
-    source: session log toolResult for hub op:wait, timestamp field
+    at: 2026-09-02T06:22:58.548Z
+    source: parent session toolResult for hub op wait, timestamp field

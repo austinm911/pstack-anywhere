@@ -1,17 +1,17 @@
 # Hand-written by the operator from the artifacts in this directory.
 observations:
   - id: spawn.primitive
-    observed: 'herdr_delegate, arguments {cwd: /private/var/folders/.../tmp.TEPaVcg1rx, prompt: "replace the contents of probe.txt with the current UTC timestamp, then report the exact line written", timeoutMs: 120000, closeOnSuccess: true}; the tool comes from the @andrewjacop/pi-herdr 0.4.0 extension, not from pi itself'
-    source: invocation.json calls[0]; the same toolCall in session/2026-09-02T05-57-16-425Z_01a060b1-7009-7180-b33a-c745595cc0b4.jsonl; run.yaml extension
+    observed: 'herdr_delegate, arguments {name: timestamp-worker, prompt: "replace the contents of probe.txt with the current UTC timestamp, then\nreport the exact line written", cwd: <the scratch dir>, timeoutMs: 120000, closeOnSuccess: true}; supplied by the @andrewjacop/pi-herdr extension loaded with -e, not by pi'
+    source: invocation.json calls[0] arguments and cli.command; run.yaml extension
   - id: spawn.separate_context
-    observed: 'the worker was a second pi process in herdr pane w1H:pM with its own session file; its only user turn is the brief, and none of the parent prompt appears in it'
-    source: session/2026-09-02T05-57-37-040Z_01a060b1-c090-7880-8f5c-8677892c1609.jsonl, the user message, and the toolResult details.paneId in the parent session
+    observed: 'the delegate ran as a second pi in its own herdr pane, opened by herdr itself and therefore under the operator''s real HOME rather than the run''s scratch HOME; its session (read by the operator at ~/.pi/agent/sessions/<scratch slug>/, not copied here because that home is not the run''s) holds only the delegate prompt, none of the parent prompt (no "Spawn exactly one worker", no "worker-report"). The runner captures only the parent''s session'
+    source: invocation.json calls[0] arguments; the delegate session in the operator''s ~/.pi/agent/sessions, inspected but not copied
   - id: spawn.result_returned
-    observed: 'text "$timestamp", which is not what the worker said; the worker''s final assistant turn was "probe.txt now contains exactly: 2026-09-02T05:57:48Z", and the tool returned the literal shell variable name from the worker''s bash command instead, so the parent wrote "$timestamp" into worker-report.txt believing it verbatim'
-    source: parent session toolResult for herdr_delegate (content text and details.response both "$timestamp"); worker session final assistant message; worker-report.txt
+    observed: 'text, and wrong: herdr_delegate returned the literal string "$timestamp" while the delegate''s own final message was "`2026-09-02T06:24:58Z`". The parent wrote that literal into worker-report.txt as the verbatim result. Same defect as in the prior (now replaced) run of this cell'
+    source: the parent session''s toolResult for herdr_delegate; worker-report.txt; the delegate''s last assistant message in its own session
   - id: spawn.side_effect_matches
-    observed: 'probe.after.txt is 2026-09-02T05:57:48Z and matches the line the worker itself printed and reported in its own session, but does not match the "$timestamp" the parent received'
-    source: probe.before.txt, probe.after.txt, the worker session bash toolResult, worker-report.txt
+    observed: 'probe.after.txt is exactly 2026-09-02T06:24:58Z and probe.before.txt is seed; the side effect matches the delegate''s real reply, and does not match the "$timestamp" the parent received'
+    source: probe.before.txt, probe.after.txt, worker-report.txt
   - id: spawn.parent_abstained
-    observed: 'parent-side calls were herdr_delegate and write worker-report.txt; no parent call names probe.txt'
+    observed: 'parent-side calls were herdr_delegate and write worker-report.txt; no parent call names probe.txt. The only probe.txt write is the delegate''s bash call in its own session'
     source: invocation.json calls[0..1] arguments

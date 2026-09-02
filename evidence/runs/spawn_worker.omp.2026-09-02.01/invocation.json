@@ -1,0 +1,212 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-HGORR1/.omp/agent/sessions/-tmp-tmp.8vJioVLrLj/2026-09-02T06-21-16-883Z_01a060c7-6ad3-7238-ae55-ddb0ec713ce9.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.8vJioVLrLj",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.8vJioVLrLj",
+          "interactive_ready": true,
+          "name": "b-spawn-worker-omp-01",
+          "pane_id": "w1H:p12",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 300,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a7a0aee1152c5",
+          "terminal_title": "π > tmp.8vJioVLrLj",
+          "terminal_title_stripped": "π > tmp.8vJioVLrLj",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "omp",
+          "--model",
+          "opus:low"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-HGORR1/.omp/agent/sessions/-tmp-tmp.8vJioVLrLj/2026-09-02T06-21-16-883Z_01a060c7-6ad3-7238-ae55-ddb0ec713ce9.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.8vJioVLrLj",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.8vJioVLrLj",
+          "interactive_ready": true,
+          "name": "b-spawn-worker-omp-01",
+          "pane_id": "w1H:p12",
+          "revision": 235,
+          "screen_detection_skipped": true,
+          "state_change_seq": 302,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a7a0aee1152c5",
+          "terminal_title": "π > Delegate probe.txt timestamp to worker",
+          "terminal_title_stripped": "π > Delegate probe.txt timestamp to worker",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-HGORR1/.omp/agent/sessions/-tmp-tmp.8vJioVLrLj/2026-09-02T06-21-16-883Z_01a060c7-6ad3-7238-ae55-ddb0ec713ce9.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.8vJioVLrLj",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.8vJioVLrLj",
+          "interactive_ready": true,
+          "name": "b-spawn-worker-omp-01",
+          "pane_id": "w1H:p12",
+          "revision": 235,
+          "screen_detection_skipped": true,
+          "state_change_seq": 302,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a7a0aee1152c5",
+          "terminal_title": "π > Delegate probe.txt timestamp to worker",
+          "terminal_title_stripped": "π > Delegate probe.txt timestamp to worker",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "omp",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": []
+  },
+  "cli": {
+    "command": [
+      "omp",
+      "--model",
+      "opus:low"
+    ],
+    "version": "omp/18.1.2\n"
+  },
+  "model": "opus:low",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.8vJioVLrLj",
+  "home": {
+    "seeded": [
+      ".omp/agent/agent.db",
+      ".omp/agent/secret-placeholder.key"
+    ],
+    "written": {
+      ".omp/agent/config.yml": "setupVersion: 2\n"
+    }
+  },
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-HGORR1/.omp/agent/sessions/-tmp-tmp.8vJioVLrLj",
+  "calls": [
+    {
+      "name": "task",
+      "arguments": {
+        "context": "# Goal\nSingle delegated worker owns probe.txt for this run.\n# Constraints\nWorker performs the file write itself.\n# Contract\nReport the exact line written.",
+        "tasks": [
+          {
+            "name": "ProbeWriter",
+            "task": "replace the contents of probe.txt with the current UTC timestamp, then report the exact line written"
+          }
+        ],
+        "i": "Spawning single worker"
+      },
+      "ts": "2026-09-02T06:21:24.863Z"
+    },
+    {
+      "name": "hub",
+      "arguments": {
+        "op": "wait",
+        "i": "Awaiting worker",
+        "ids": [
+          "ProbeWriter"
+        ],
+        "timeoutMs": 300000
+      },
+      "ts": "2026-09-02T06:21:27.783Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "worker-report.txt",
+        "content": "{\n  \"file\": \"probe.txt\",\n  \"line_written\": \"2026-09-02T06:21:28Z\",\n  \"method\": \"date -u +\\\"%Y-%m-%dT%H:%M:%SZ\\\" > probe.txt (truncating redirect, contents replaced)\",\n  \"verified\": \"read-back of probe.txt shows exactly one line: 2026-09-02T06:21:28Z\"\n}\n",
+        "i": "Writing worker report"
+      },
+      "ts": "2026-09-02T06:21:37.406Z"
+    }
+  ],
+  "calls_workers": {
+    "ProbeWriter": [
+      {
+        "name": "bash",
+        "arguments": {
+          "command": "date -u +\"%Y-%m-%dT%H:%M:%SZ\" > probe.txt && cat probe.txt",
+          "i": "Writing UTC timestamp to probe"
+        },
+        "ts": "2026-09-02T06:21:28.138Z"
+      },
+      {
+        "name": "read",
+        "arguments": {
+          "path": "probe.txt",
+          "i": "Verifying probe file contents"
+        },
+        "ts": "2026-09-02T06:21:30.970Z"
+      },
+      {
+        "name": "yield",
+        "arguments": {
+          "result": {
+            "data": {
+              "file": "probe.txt",
+              "line_written": "2026-09-02T06:21:28Z",
+              "method": "date -u +\"%Y-%m-%dT%H:%M:%SZ\" > probe.txt (truncating redirect, contents replaced)",
+              "verified": "read-back of probe.txt shows exactly one line: 2026-09-02T06:21:28Z"
+            }
+          }
+        },
+        "ts": "2026-09-02T06:21:34.210Z"
+      }
+    ]
+  }
+}

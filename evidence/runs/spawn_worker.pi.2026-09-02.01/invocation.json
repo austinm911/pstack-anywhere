@@ -1,25 +1,42 @@
 {
   "herdr": {
     "start": {
-      "id": "cli:agent:get",
+      "id": "cli:agent:start",
       "result": {
         "agent": {
           "agent": "pi",
-          "agent_status": "unknown",
-          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-W63S04/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.LxluwYcuO8--/2026-09-02T06-24-32-661Z_01a060ca-6795-7bfc-aea6-b1898f054f36.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.LxluwYcuO8",
           "focused": false,
-          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
-          "pane_id": "w1H:pK",
-          "revision": 0,
-          "state_change_seq": 0,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.LxluwYcuO8",
+          "interactive_ready": true,
+          "name": "b-spawn-worker-pi-01",
+          "pane_id": "w1H:p17",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 320,
           "tab_id": "w1H:t3",
-          "terminal_id": "term_65a79b50e5f03b5",
+          "terminal_id": "term_65a7a169e04e4cc",
+          "terminal_title": "π - tmp.LxluwYcuO8",
+          "terminal_title_stripped": "π - tmp.LxluwYcuO8",
           "workspace_id": "w1H"
         },
-        "type": "agent_info"
+        "argv": [
+          "pi",
+          "--model",
+          "openai-codex/gpt-5.6-luna",
+          "-e",
+          "/Users/am/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr"
+        ],
+        "type": "agent_started"
       }
     },
-    "start_recovered": true,
     "prompt": {
       "id": "cli:agent:prompt",
       "result": {
@@ -29,21 +46,22 @@
             "agent": "pi",
             "kind": "path",
             "source": "herdr:pi",
-            "value": "/Users/am/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.TEPaVcg1rx--/2026-09-02T05-57-16-425Z_01a060b1-7009-7180-b33a-c745595cc0b4.jsonl"
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-W63S04/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.LxluwYcuO8--/2026-09-02T06-24-32-661Z_01a060ca-6795-7bfc-aea6-b1898f054f36.jsonl"
           },
           "agent_status": "done",
-          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.LxluwYcuO8",
           "focused": false,
-          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.LxluwYcuO8",
+          "interactive_ready": true,
           "name": "b-spawn-worker-pi-01",
-          "pane_id": "w1H:pK",
+          "pane_id": "w1H:p17",
           "revision": 1,
           "screen_detection_skipped": true,
-          "state_change_seq": 256,
+          "state_change_seq": 328,
           "tab_id": "w1H:t3",
-          "terminal_id": "term_65a79b50e5f03b5",
-          "terminal_title": "π - tmp.TEPaVcg1rx",
-          "terminal_title_stripped": "π - tmp.TEPaVcg1rx",
+          "terminal_id": "term_65a7a169e04e4cc",
+          "terminal_title": "π - tmp.LxluwYcuO8",
+          "terminal_title_stripped": "π - tmp.LxluwYcuO8",
           "workspace_id": "w1H"
         },
         "type": "agent_prompted"
@@ -58,21 +76,22 @@
             "agent": "pi",
             "kind": "path",
             "source": "herdr:pi",
-            "value": "/Users/am/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.TEPaVcg1rx--/2026-09-02T05-57-16-425Z_01a060b1-7009-7180-b33a-c745595cc0b4.jsonl"
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-W63S04/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.LxluwYcuO8--/2026-09-02T06-24-32-661Z_01a060ca-6795-7bfc-aea6-b1898f054f36.jsonl"
           },
           "agent_status": "done",
-          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.LxluwYcuO8",
           "focused": false,
-          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.LxluwYcuO8",
+          "interactive_ready": true,
           "name": "b-spawn-worker-pi-01",
-          "pane_id": "w1H:pK",
+          "pane_id": "w1H:p17",
           "revision": 1,
           "screen_detection_skipped": true,
-          "state_change_seq": 256,
+          "state_change_seq": 328,
           "tab_id": "w1H:t3",
-          "terminal_id": "term_65a79b50e5f03b5",
-          "terminal_title": "π - tmp.TEPaVcg1rx",
-          "terminal_title_stripped": "π - tmp.TEPaVcg1rx",
+          "terminal_id": "term_65a7a169e04e4cc",
+          "terminal_title": "π - tmp.LxluwYcuO8",
+          "terminal_title_stripped": "π - tmp.LxluwYcuO8",
           "workspace_id": "w1H"
         },
         "type": "agent_info"
@@ -103,50 +122,50 @@
   },
   "cli": {
     "command": [
-      "herdr",
-      "agent",
-      "start",
-      "b-spawn-worker-pi-01",
-      "--kind",
       "pi",
-      "--pane",
-      "w1H:pK",
-      "--timeout",
-      "60000",
-      "--",
       "--model",
-      "openai-codex/gpt-5.6-luna"
+      "openai-codex/gpt-5.6-luna",
+      "-e",
+      "/Users/am/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr"
     ],
     "version": "0.84.4\n"
   },
   "model": "openai-codex/gpt-5.6-luna",
-  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
-  "session_dir": "/Users/am/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.TEPaVcg1rx--",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.LxluwYcuO8",
+  "home": {
+    "seeded": [
+      ".pi/agent/auth.json"
+    ],
+    "written": {},
+    "extension": {
+      "name": "@andrewjacop/pi-herdr",
+      "args": [
+        "-e",
+        "~/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr"
+      ]
+    }
+  },
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-W63S04/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.LxluwYcuO8--",
   "calls": [
     {
       "name": "herdr_delegate",
       "arguments": {
-        "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx",
-        "prompt": "replace the contents of probe.txt with the current UTC timestamp, then report the exact line written",
+        "name": "timestamp-worker",
+        "prompt": "replace the contents of probe.txt with the current UTC timestamp, then\nreport the exact line written",
+        "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.LxluwYcuO8",
         "timeoutMs": 120000,
-        "closeOnSuccess": true
+        "closeOnSuccess": true,
+        "onBlocked": "wait"
       },
-      "ts": "2026-09-02T05:57:30.948Z"
+      "ts": "2026-09-02T06:24:42.154Z"
     },
     {
       "name": "write",
       "arguments": {
-        "path": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TEPaVcg1rx/worker-report.txt",
+        "path": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.LxluwYcuO8/worker-report.txt",
         "content": "$timestamp"
       },
-      "ts": "2026-09-02T05:57:59.118Z"
-    },
-    {
-      "name": "bash",
-      "arguments": {
-        "command": "timestamp=$(date -u '+%Y-%m-%dT%H:%M:%SZ'); printf '%s\\n' \"$timestamp\" > probe.txt; printf '%s\\n' \"$timestamp\""
-      },
-      "ts": "2026-09-02T05:57:48.361Z"
+      "ts": "2026-09-02T06:25:10.059Z"
     }
   ],
   "calls_workers": {}

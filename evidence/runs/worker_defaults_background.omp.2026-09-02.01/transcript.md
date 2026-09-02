@@ -21,10 +21,9 @@
 │                         │                                               │
 │                         │                                               │
 ╰─────────────────────────┴───────────────────────────────────────────────╯
- Tip: You can /btw to ask a side question
+ Tip: Press ← ← to drill into a running or finished agent and inspect its
+      tool calls and transcript
 
-
- xdev: xd://: unmounted plannotator_submit_plan
 
 
  Task
@@ -55,7 +54,7 @@
     the
     worker wrote.
 
- Both timestamp files must be plain files in this dire ctory with the
+ Both timestamp files must be plain files in this directory with the
  timestamp as
  their content. Write neither of them on the worker's behalf:
  worker-done.txt
@@ -69,52 +68,60 @@
 
 
 
- Connected to MCP servers: executor, codedb, deepwiki.
-
- I'll spawn the worker now in background form.
+ I'll spawn the worker now using background delegation.
 
 ╭─── • Task 1 agent ────────────────────────────────────────────────────────╮
 │ Goal                                                                      │
 │                                                                           │
-│ Measure background delegation. One worker performs a timed write.         │
+│ Produce a UTC timestamp file after a 60-second delay in the repo at the   │
+│ session working directory.                                                │
 │                                                                           │
 │ Constraints                                                               │
 │                                                                           │
-│ - Working dir is the current repo root.                                   │
-│ - Do not touch parent-alive.txt (parent owns it).                         │
-│ - Skip formatters, linters, and test suites.                              │
+│ - Do not run formatters, linters, or test suites.                         │
+│ - Only touch worker-done.txt. Never touch parent-alive.txt.               │
 │                                                                           │
 │ Contract                                                                  │
 │                                                                           │
-│ Worker owns worker-done.txt only.                                         │
+│ worker-done.txt contains exactly one line: the UTC timestamp in ISO-8601  │
+│ form.                                                                     │
 ├───────────────────────────────────────────────────────────────────────────┤
-│ • TimestampWorker ⟨sonic⟩ · 3  · 3 req · 10.1%/272K · $0.01              │
+│ • WorkerDelay ⟦sonic⟧ · 3 🛠 · 3 req · 2.5%/1M · $0.19                     │
 ╰───────────────────────────────────────────────────────────────────────────╯
 
- → Spawn returned immediately, worker running in background. Writing my own
- timestamp now.
+ Spawn returned immediately. Writing my own timestamp now.
 
 ╭───────────────────────────────────────────────────────────────────────────╮
 │ $ date -u +%Y-%m-%dT%H:%M:%SZ > parent-alive.txt && cat parent-alive.txt  │
 ├─── Output ────────────────────────────────────────────────────────────────┤
-│ 2026-09-02T05:40:21Z                                                      │
-│ ⟨Wall: 0.02s | Timeout: 300s⟩                                             │
+│ 2026-09-02T06:21:53Z                                                      │
+│ ⟦Wall: 0.02s | Timeout: 300s⟧                                             │
 ╰───────────────────────────────────────────────────────────────────────────╯
 
- → parent-alive.txt written at 05:40:21Z, seconds after the spawn returned.
- Now waiting for the worker.
+ Now I need to wait for the worker to respond.
 
- 1 job settled 1 done
-└─ • ⟨task⟩ TimestampWorker 1m11s
-     { "file": "worker-done.txt", "timestamp": "2026-09-02T05:41:21Z", "veri…
+ parent-alive.txt written at 2026-09-02T06:21:53Z, seconds after the spawn
+ returned. Now waiting for the worker.
 
- DONE Spawned the worker asynchronously (spawn returned instantly), wrote
- parent-alive.txt at 05:40:21Z in the very next turn, and the worker's
- 2026-09-02T05:41:21Z result reached me from a separate explicit wait/join
- step (hub wait), not from the spawn call's return, a status poll, or
- reading its file.
+✔ 1 job settled 1 done
+└─ • ⟦task⟧ WorkerDelay 1m7s
+     { "file": "worker-done.txt", "timestamp": "2026-09-02T06:22:54Z", "wait…
 
-─────────────────────────────────────────────────────────────────────────────
+╭───────────────────────────────────────────────────────────────────────────╮
+│ $ for f in parent-alive.txt worker-done.txt; do printf '%s: ' "$f"; cat   │
+│ "$f"; done                                                                │
+├─── Output ────────────────────────────────────────────────────────────────┤
+│ parent-alive.txt: 2026-09-02T06:21:53Z                                    │
+│ worker-done.txt: 2026-09-02T06:22:54Z                                     │
+│ ⟦Wall: 0.00s | Timeout: 300s⟧                                             │
+╰───────────────────────────────────────────────────────────────────────────╯
 
-─────────────────────────────────────────────────────────────────────────────
- 󰵗  ·  Opus 5 · 󰪟 low ·  tmp.C0NEuPd9uH ·  main ?2 ·  4.8%/1M 󰁨 · $0.28
+ DONE Background delegation exists; the spawn call returned immediately
+ (parent-alive.txt = 2026-09-02T06:21:53Z, worker-done.txt =
+ 2026-09-02T06:22:54Z, 61s later), and the worker's result reached me from a
+ separate explicit wait/join step (hub wait), not from the spawn call's
+ return, a status poll, or reading the worker's file.
+
+                                               Test async worker spawn timing
+ π  > ◔ Opus 5 > 🗑 tmp.1eeSR3Xcb4 > ⑂ main ?2 > $0.16 ▶─3%─────────────┃──1M─
+╰─

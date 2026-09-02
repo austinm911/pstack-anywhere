@@ -1,0 +1,2 @@
+worker's own words
+Write attempt result: exit code 0; output: ``

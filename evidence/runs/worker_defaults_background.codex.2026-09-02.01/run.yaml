@@ -1,0 +1,20 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: worker_defaults_background
+harness: codex
+run_id: worker_defaults_background.codex.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T06:34:39.309Z
+ended_at: 2026-09-02T06:36:11.205Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: codex-cli 0.152.1
+harness_version_source: codex --version -> codex-cli 0.152.1
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .codex/auth.json and these written files: .codex/config.toml = \"approval_policy = \\\"never\\\"\\nsandbox_mode = \\\"danger-full-access\\\"\\n[features]\\nmulti_agent = true\\n\", plus herdr's codex state-reporting integration (herdr integration install codex); no user skill, rule, hook, MCP server, or context file was reachable"
+supersedes: null

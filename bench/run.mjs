@@ -1,12 +1,15 @@
 #!/usr/bin/env bun
 // Drives one conformance scenario against one harness inside a herdr session.
 //
-//   bun bench/run.mjs <scenario> <harness> <model>
+//   bun bench/run.mjs <scenario> <harness> <model> [--extension]
 //
 // It prepares the evidence run directory with `probe prepare`, runs the
-// scenario's setup.sh, launches the harness in a new pane, sends
+// scenario's setup.sh, builds a scratch HOME holding only the auth files
+// harnesses.yaml lists (so no user skill, rule, hook, or context file reaches
+// the run), launches the harness in a new pane under that HOME, sends
 // bench/<scenario>/prompt.md, and harvests the transcript, the herdr responses,
-// and whatever files the scenario declares as artifacts.
+// and whatever files the scenario declares as artifacts. `--extension` adds the
+// harness's declared extension to the launch and records it in run.yaml.
 //
 // It never writes observations.yaml. Reading the run is the operator's job, and
 // tooling that filled that file in would be scoring its own run.
@@ -15,12 +18,12 @@
 // Anything else is passed through from the command that failed.
 
 import { YAML } from "bun";
-import { existsSync, readFileSync, writeFileSync, copyFileSync, statSync, readdirSync, mkdirSync, realpathSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, copyFileSync, statSync, readdirSync, mkdirSync, mkdtempSync, rmSync, realpathSync } from "node:fs";
 import { join, dirname, basename, relative, isAbsolute } from "node:path";
 import { hostname, platform, release, homedir, tmpdir } from "node:os";
 
 const ROOT = join(dirname(new URL(import.meta.url).pathname), "..");
-const USAGE = "usage: bun bench/run.mjs <scenario> <harness> <model>";
+const USAGE = "usage: bun bench/run.mjs <scenario> <harness> <model> [--extension]";
 const TRANSCRIPT_HEADER =
   "<!-- captured by bench/run.mjs via herdr agent read, recent-unwrapped; may be a viewport if the agent uses the alternate screen -->";
 // Written by the tooling itself, so never copied out of the scratch dir.
@@ -102,6 +105,41 @@ const setupScratch = (scenario) => {
   return dir;
 };
 
+// Where herdr expects each harness's home to be before it will install its
+// state-reporting hook or extension there. This is herdr's layout, not ours.
+const HERDR_HOME_DIRS = { claude: ".claude", codex: ".codex", pi: ".pi/agent/extensions", omp: ".omp/agent/extensions" };
+
+// The scratch HOME: only the listed auth files, copied from the real HOME, the
+// seeded config text, and herdr's own integration, without which herdr cannot
+// see the agent's state and every prompt reads as stalled. A sqlite file
+// travels with its -wal and -shm siblings, or the copy is missing whatever was
+// not yet checkpointed.
+const prepareHome = (cli) => {
+  const home = mkdtempSync(join(tmpdir(), "bench-home-"));
+  const seeded = [];
+  for (const rel of cli.home?.copy ?? []) {
+    for (const suffix of ["", "-wal", "-shm"]) {
+      const from = join(homedir(), rel + suffix);
+      if (!existsSync(from)) {
+        if (suffix === "") die(4, `harnesses.yaml home.copy: ${from} does not exist`);
+        continue;
+      }
+      mkdirSync(dirname(join(home, rel)), { recursive: true });
+      copyFileSync(from, join(home, rel + suffix));
+    }
+    seeded.push(rel);
+  }
+  const written = Object.entries(cli.home?.write ?? {});
+  for (const [rel, text] of written) {
+    mkdirSync(dirname(join(home, rel)), { recursive: true });
+    writeFileSync(join(home, rel), text);
+  }
+  mkdirSync(join(home, HERDR_HOME_DIRS[cli.kind] ?? "."), { recursive: true });
+  const r = Bun.spawnSync(["herdr", "integration", "install", cli.kind], { env: { ...process.env, HOME: home }, stdout: "pipe", stderr: "pipe" });
+  if (r.exitCode !== 0) die(6, `herdr integration install ${cli.kind} into ${home} failed:\n${decoder.decode(r.stderr)}${decoder.decode(r.stdout)}`);
+  return { home, seeded, written: Object.fromEntries(written) };
+};
+
 const harnessVersion = (cli) => {
   const argv = cli.version_command.split(/\s+/).filter(Boolean);
   const r = exec(argv);
@@ -126,9 +164,10 @@ const waitForShell = (pane) => {
   die(6, `pane ${pane} never became an idle shell within 15s; last process-info:\n${JSON.stringify(info)}`);
 };
 
-const startAgent = (name, cli, pane, model) => {
+const startAgent = (name, cli, pane, model, withExtension) => {
   waitForShell(pane);
-  const args = [...cli.model_flag.replace("{model}", model).split(/\s+/).filter(Boolean), ...(cli.extra_args ?? [])];
+  const extension = withExtension ? (cli.extension?.args ?? []).map((a) => a.replace(/^~(?=$|\/)/, homedir())) : [];
+  const args = [...cli.model_flag.replace("{model}", model).split(/\s+/).filter(Boolean), ...(cli.extra_args ?? []), ...extension];
   const argv = ["agent", "start", name, "--kind", cli.kind, "--pane", pane, "--timeout", "60000", "--", ...args];
   // herdr's own shell-availability check lags process-info by a second or two
   // after a split, so a busy answer gets a few more tries before it counts.
@@ -191,15 +230,15 @@ const harvestArtifacts = (scratch, runDir, artifacts) => {
 // Each harness keys its session store by working directory with its own slug
 // rule, all read off disk and written down in harnesses.yaml, so try every
 // observed form, on the scratch path and on its realpath.
-const resolveSessionDir = (template, scratch) => {
-  const base = template.replace(/^~(?=$|\/)/, homedir());
+const resolveSessionDir = (template, scratch, home) => {
+  const base = template.replace(/^~(?=$|\/)/, home);
   if (!base.includes("{cwd_slug}")) return existsSync(base) ? base : null;
   const dash = (p) => p.replace(/[/\\:]/g, "-");
   const under = (rel) => rel === "" || (!rel.startsWith("..") && !isAbsolute(rel));
   const slugs = [scratch, tryOr(() => realpathSync(scratch), scratch)].flatMap((dir) => {
-    const [home, tmp] = [relative(homedir(), dir), relative(tmpdir(), dir)];
+    const [rel, tmp] = [relative(home, dir), relative(tmpdir(), dir)];
     const abs = [dir.replace(/[^a-zA-Z0-9]/g, "-"), `--${dash(dir.replace(/^\//, ""))}--`];
-    return [...abs, under(home) ? `-${dash(home)}` : null, under(tmp) ? (tmp ? `-tmp-${dash(tmp)}` : "-tmp") : null];
+    return [...abs, under(rel) ? `-${dash(rel)}` : null, under(tmp) ? (tmp ? `-tmp-${dash(tmp)}` : "-tmp") : null];
   });
   const slug = [...new Set(slugs.filter(Boolean))].find((s) => existsSync(base.replace("{cwd_slug}", s)));
   return slug ? base.replace("{cwd_slug}", slug) : null;
@@ -225,14 +264,16 @@ const extractCalls = (text) => {
 };
 
 // The transcript only shows the TUI's collapsed tool boxes, so the arguments an agent really sent come from the harness's own session log.
-const captureSession = (runDir, template, scratch, startedAt) => {
+const captureSession = (runDir, template, scratch, home, startedAt) => {
   const dest = join(ROOT, runDir, "session");
   const since = Date.parse(startedAt) - 5000; // slack for a header written just before our clock
-  const dir = template ? resolveSessionDir(template, scratch) : null;
+  const dir = template ? resolveSessionDir(template, scratch, home) : null;
   const where = dir ?? `${template ?? "no session_dir in harnesses.yaml"} (nothing matched ${scratch})`;
   const all = (dir ? readdirSync(dir, { recursive: true }) : []).map((rel) => ({ rel, s: statSync(join(dir, rel), { throwIfNoEntry: false }) }));
   const rels = all.filter(({ s }) => s?.isFile() && s.mtimeMs >= since).map(({ rel }) => rel).sort();
   let [calls, known, workers] = [[], false, {}];
+  // A reused run dir still holds the previous attempt's capture.
+  rmSync(dest, { recursive: true, force: true });
   mkdirSync(dest, { recursive: true });
   for (const rel of rels) {
     mkdirSync(dirname(join(dest, rel)), { recursive: true });
@@ -262,29 +303,52 @@ const rewriteManifest = (path, fields) => {
   writeFileSync(path, [...header, header.length ? "" : null, YAML.stringify(manifest, null, 2)].filter((l) => l !== null).join("\n"));
 };
 
-const [scenario, harness, model] = process.argv.slice(2);
-if (!scenario || !harness || !model) die(2, USAGE);
+const flags = process.argv.slice(2).filter((a) => a.startsWith("--"));
+const [scenario, harness, model] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+if (!scenario || !harness || !model || flags.some((f) => f !== "--extension")) die(2, USAGE);
+const withExtension = flags.includes("--extension");
 if (process.env.HERDR_ENV !== "1") die(3, "bench/run.mjs drives herdr panes; run it inside a herdr session (HERDR_ENV=1)");
 
 const cli = harnessCli(harness);
+if (withExtension && !cli.extension) die(4, `harnesses.yaml has no cli.extension for ${harness}`);
 const runDir = prepareRun(scenario, harness);
 const runId = basename(runDir);
 const scratch = setupScratch(scenario);
 const promptText = readFileSync(join(ROOT, "bench", scenario, "prompt.md"), "utf8");
+// The scratch HOME holds auth copies, so it goes on every exit path, after the
+// pane: a harness still flushing its session log on shutdown would recreate
+// the directory under a removal that ran first.
+const { home, seeded, written: seededText } = prepareHome(cli);
+let pane = null;
+process.on("exit", () => {
+  if (pane && process.env.BENCH_KEEP_PANE === "1") return console.error(`kept pane ${pane} and its HOME ${home}; remove it yourself`);
+  if (pane) {
+    tryOr(() => herdr("pane", "close", pane), null);
+    for (const until = Date.now() + 10000; Date.now() < until && tryOr(() => (herdr("pane", "get", pane), true), false); Bun.sleepSync(250));
+    Bun.sleepSync(1000);
+  }
+  rmSync(home, { recursive: true, force: true });
+});
 
 const startedAt = new Date().toISOString();
 const version = harnessVersion(cli);
-const pane = herdr("pane", "split", "--current", "--direction", "right", "--cwd", scratch, "--no-focus").result.pane
-  .pane_id;
+// A pane left behind by any exit, a failed one most of all, squeezes every
+// later split until dialogs render one character per line and the startup
+// matcher goes blind, so the exit handler above closes it. BENCH_KEEP_PANE=1
+// leaves it for a look (and leaves the scratch HOME with it).
+pane = herdr("pane", "split", "--current", "--direction", "right", "--cwd", scratch, "--env", `HOME=${home}`, "--no-focus").result.pane.pane_id;
 const name = agentName(runId);
-const { start, argv, recovered } = startAgent(name, cli, pane, model);
+const { start, argv, recovered } = startAgent(name, cli, pane, model, withExtension);
 const startupAnswers = answerStartup(name, cli.startup ?? []);
 // Prompting a blocked agent types the prompt into whatever dialog is still up, so a pane that will not settle stops the run here.
 const settled = tryOr(() => herdr("agent", "wait", name, "--timeout", "30000").result?.agent?.agent_status ?? "unknown", (error) => `wait failed: ${error.code ?? error.message}`);
-if (!["idle", "working", "unknown"].includes(settled)) die(6, `agent ${name} is not ready to prompt (${settled}):\n${readText(name, 60, "visible")}`);
+if (!["idle", "done", "working", "unknown"].includes(settled)) die(6, `agent ${name} is not ready to prompt (${settled}):\n${readText(name, 60, "visible")}`);
 
 // A prompt that times out still leaves a transcript worth harvesting, so the
-// failure is recorded and the run continues.
+// failure is recorded and the run continues. herdr calls a prompt stalled when
+// nothing changes within 5 s, and a harness cold-starting under a fresh HOME
+// can take longer than that to show its first token, so a stall is checked
+// against the state counter for a while before it counts.
 let prompted = null;
 let status = "unknown";
 try {
@@ -292,6 +356,15 @@ try {
   status = prompted.result?.agent?.agent_status ?? "unknown";
 } catch (error) {
   status = `prompt failed: ${error.message}`;
+  const stalledAt = error.code === "agent_prompt_stalled" ? Number(error.message.match(/state_change_seq remained (\d+)/)?.[1]) : NaN;
+  for (const until = Date.now() + 30000; !Number.isNaN(stalledAt) && Date.now() < until; Bun.sleepSync(1000)) {
+    const seq = tryOr(() => herdr("agent", "get", name).result.agent.state_change_seq, stalledAt);
+    if (seq === stalledAt) continue;
+    prompted = tryOr(() => herdr("agent", "wait", name, "--timeout", "600000"), null);
+    status = prompted?.result?.agent?.agent_status ?? `wait after stall failed`;
+    prompted = { ...prompted, stalled_then_recovered: true };
+    break;
+  }
 }
 
 // An agent that exited (a crash, a self-update, a bad model flag) has no name
@@ -304,7 +377,7 @@ const explain = herdr("agent", "explain", name, "--json");
 
 // Session capture is best effort: a run with no session log is still a run.
 const failed = (error) => ({ dir: null, files: 0, calls: null, workers: {}, note: `session capture failed: ${error.message}` });
-const session = tryOr(() => captureSession(runDir, cli.session_dir ?? null, scratch, startedAt), failed);
+const session = tryOr(() => captureSession(runDir, cli.session_dir ?? null, scratch, home, startedAt), failed);
 
 writeFileSync(
   join(ROOT, runDir, "invocation.json"),
@@ -315,6 +388,7 @@ writeFileSync(
       cli: { command: start.result?.argv ?? ["herdr", ...argv], version: version.raw },
       model,
       scratch_dir: scratch,
+      home: { seeded, written: seededText, ...(withExtension ? { extension: cli.extension } : {}) },
       session_dir: session.dir,
       calls: session.calls,
       calls_workers: session.workers,
@@ -347,7 +421,13 @@ rewriteManifest(join(ROOT, runDir, "run.yaml"), {
   harness_version: version.raw.split("\n").find((line) => line.trim()) ?? null,
   harness_version_source: `${version.command} -> ${version.raw.trim()}`,
   clock: "UTC, Date.toISOString on the bench host",
-  environment_deltas: "none recorded by bench/run.mjs; fill by hand if the harness config is non-default",
+  environment_deltas:
+    `launched under a scratch HOME seeded only with ${seeded.join(", ")}` +
+    (Object.keys(seededText).length ? ` and these written files: ${Object.entries(seededText).map(([p, t]) => `${p} = ${JSON.stringify(t)}`).join("; ")}` : "") +
+    `, plus herdr's ${cli.kind} state-reporting integration (herdr integration install ${cli.kind})` +
+    (cli.extra_args?.length ? `, launched with ${cli.extra_args.join(" ")}` : "") +
+    "; no user skill, rule, hook, MCP server, or context file was reachable",
+  ...(withExtension ? { extension: `${cli.extension.name}, loaded explicitly with ${cli.extension.args.join(" ")}` } : {}),
 });
 
 console.log(`run dir    ${runDir}`);
@@ -356,6 +436,3 @@ console.log(`artifacts  ${["run.yaml", "transcript.md", "invocation.json", ...wr
 const calls = (session.calls?.length ?? 0) + Object.values(session.workers).reduce((n, c) => n + c.length, 0);
 console.log(`session    ${session.files} file(s) copied, ${calls} call(s) extracted${session.note ? ` (${session.note})` : ""}`);
 console.log(`next: write observations.yaml by hand, then bun scripts/coupling.mjs probe inspect ${runId}`);
-// Harvest is done, and a column of finished panes squeezes every later split
-// into unreadable widths. BENCH_KEEP_PANE=1 leaves it for a look.
-if (process.env.BENCH_KEEP_PANE !== "1") tryOr(() => herdr("pane", "close", pane), null);

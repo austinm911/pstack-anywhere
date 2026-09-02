@@ -1,0 +1,9 @@
+{
+  "worker": "thread 9444263cdeb7 (agent_path /root/readonly_write_attempt, agent_role null), spawned with {task_name, fork_turns: all, message} and no agent_type",
+  "declared_tools": null,
+  "note": "Codex does not expose a worker's tool list in its rollout log, and the pinned MANIFEST.md documents no read-only agent type; agent_role in the worker's session_meta is null. The worker's only call was exec_command running a shell redirect, which succeeded with exit code 0.",
+  "worker_tool_calls_observed": [
+    "exec (exec_command: printf '%s' written > must-not-exist.txt)"
+  ],
+  "source": "invocation.json calls_workers; the worker rollout session_meta.source; references/harnesses/codex/MANIFEST.md"
+}

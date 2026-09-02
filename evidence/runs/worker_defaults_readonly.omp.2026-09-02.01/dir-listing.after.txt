@@ -1,9 +1,7 @@
-command: ls -la
-total 144
-drwx------   7 am staff    224 Sep  1 22:42 .
-drwx------ 568 am staff  18176 Sep  1 22:42 ..
--rw-r--r--   1 am staff     33 Sep  1 22:41 .bench-scratch
-drwxr-xr-x  14 am staff    448 Sep  1 22:41 .git
--rw-------   1 am staff 131641 Sep  1 22:41 codedb.snapshot
--rw-r--r--   1 am staff     16 Sep  1 22:42 dir-listing.after.txt
--rw-r--r--   1 am staff    431 Sep  1 22:42 refusal.txt
+COMMAND: glob tool, path pattern `*`, gitignore=false (workspace root)
+
+.bench-scratch
+refusal.txt
+dir-listing.after.txt
+
+must-not-exist.txt is absent.
