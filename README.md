@@ -100,10 +100,10 @@ travels with its skill and a skill directory works anywhere on its own.
 | measure | value |
 | --- | --- |
 | upstream pin | `b9ddc83`, path `pstack` |
-| skills reached | 2 of 45: `poteto-mode` (67 of 68 checked), `setup-pstack-anywhere` (0 of 1 checked) |
-| skills with work left | 13 of 45 |
-| occurrences | 67 resolved, 25 unresolved, 0 missing, 2 not checked |
-| token hits | 53 attributed to a domain, 21 unattributed Cursor mentions |
+| skills reached | 13 of 45: `architect` (1 of 1 checked), `arena` (2 of 2 checked), `automate-me` (3 of 3 checked), `how` (2 of 2 checked), `interrogate` (2 of 2 checked), `no-comments` (1 of 1 checked), `poteto-mode` (67 of 68 checked), `recall` (1 of 1 checked), `reflect` (6 of 6 checked), `setup-pstack-anywhere` (0 of 1 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (2 of 2 checked) |
+| skills with work left | 0 of 45 |
+| occurrences | 91 resolved, 0 unresolved, 0 missing, 2 not checked |
+| token hits | 0 attributed to a domain, 0 unattributed Cursor mentions |
 | verification | 15 of 120 cells verified, 19 attestations, 10 scenarios defined |
 
 `bun scripts/coupling.mjs check` is the gate. The work left, the per-harness

@@ -146,6 +146,7 @@ axes:
       - path: skills/poteto-mode/playbooks/orchestrate.md
       - path: skills/poteto-mode/playbooks/pause-safely.md
       - path: skills/poteto-mode/playbooks/session-pickup.md
+      - path: skills/swarm/SKILL.md
 
   - id: probe_worker
     kind: capability
@@ -239,6 +240,13 @@ axes:
       - path: skills/poteto-mode/SKILL.md
       - path: skills/poteto-mode/playbooks/orchestrate.md
       - path: skills/poteto-mode/playbooks/multi-phase-plan.md
+      - path: skills/arena/SKILL.md
+      - path: skills/how/SKILL.md
+      - path: skills/interrogate/SKILL.md
+      - path: skills/no-comments/SKILL.md
+      - path: skills/reflect/SKILL.md
+      - path: skills/swarm/SKILL.md
+      - path: skills/why/SKILL.md
 
   - id: human_question
     kind: capability
@@ -260,6 +268,7 @@ axes:
       - path: skills/poteto-mode/SKILL.md
       - path: skills/poteto-mode/playbooks/autonomous-run.md
       - path: skills/poteto-mode/playbooks/orchestrate.md
+      - path: skills/automate-me/SKILL.md
 
   - id: review_automation
     kind: role
@@ -286,6 +295,7 @@ axes:
       - path: skills/poteto-mode/playbooks/multi-phase-plan.md
       - path: skills/poteto-mode/playbooks/autopilot-full.md
       - path: skills/poteto-mode/playbooks/autopilot-stack.md
+      - path: skills/reflect/references/synthesizer.md
 
   - id: slop_strip
     kind: role
@@ -358,6 +368,9 @@ axes:
     occurrences:
       - path: skills/poteto-mode/SKILL.md
       - path: skills/poteto-mode/playbooks/authoring-a-skill.md
+      - path: skills/automate-me/SKILL.md
+      - path: skills/reflect/SKILL.md
+      - path: skills/reflect/references/synthesizer.md
 
   - id: model_roles
     kind: role
@@ -390,6 +403,13 @@ axes:
           Not Markdown, so lint.scan never reaches it, and its directory is
           allowlisted for the shell -gt comparisons in its siblings. It is not
           checked rather than resolved.
+      - path: skills/architect/SKILL.md
+      - path: skills/arena/SKILL.md
+      - path: skills/how/SKILL.md
+      - path: skills/interrogate/SKILL.md
+      - path: skills/reflect/SKILL.md
+      - path: skills/swarm/SKILL.md
+      - path: skills/why/SKILL.md
 
   - id: graphite
     kind: prerequisite
@@ -497,6 +517,10 @@ axes:
       - path: skills/poteto-mode/playbooks/session-pickup.md
       - path: skills/poteto-mode/playbooks/eval.md
       - path: skills/poteto-mode/playbooks/orchestrate.md
+      - path: skills/automate-me/SKILL.md
+      - path: skills/recall/SKILL.md
+      - path: skills/reflect/SKILL.md
+      - path: skills/show-me-your-work/SKILL.md
 
   - id: setup_entrypoint
     kind: naming

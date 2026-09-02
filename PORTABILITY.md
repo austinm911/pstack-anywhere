@@ -34,64 +34,16 @@ saved evidence for it:
 | ledger | v2, upstream `b9ddc83` |
 | domains | 24, from 21 axes, because `worker_defaults` resolves per parameter |
 | harness cells | 15 verified of 120 (24 domains x 5 harnesses) |
-| occurrences | 67 resolved, 25 unresolved, 0 missing, 2 not checked |
-| token hits | 53 attributed to a domain, 21 unattributed Cursor mentions, 74 in total |
-| skills reached | 2 of 45: `poteto-mode` (67 of 68 checked), `setup-pstack-anywhere` (0 of 1 checked) |
-| skills with work left | 13 of 45; the other 30 carry neither a declared occurrence nor a token hit |
+| occurrences | 91 resolved, 0 unresolved, 0 missing, 2 not checked |
+| token hits | 0 attributed to a domain, 0 unattributed Cursor mentions, 0 in total |
+| skills reached | 13 of 45: `architect` (1 of 1 checked), `arena` (2 of 2 checked), `automate-me` (3 of 3 checked), `how` (2 of 2 checked), `interrogate` (2 of 2 checked), `no-comments` (1 of 1 checked), `poteto-mode` (67 of 68 checked), `recall` (1 of 1 checked), `reflect` (6 of 6 checked), `setup-pstack-anywhere` (0 of 1 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (2 of 2 checked) |
+| skills with work left | 0 of 45; the other 32 carry neither a declared occurrence nor a token hit |
 | regressions | 0 |
 | `frontmatter_portable` assert | 39 of 45 skills carry `disable-model-invocation`, counted from the tree on every run |
 
 ## Work remaining
 
-53 token hits carry a domain and collapse into 25 unresolved occurrences, one per file and domain. 21 hits name Cursor in prose with no domain to resolve into, across 13 files. That is 74 diagnostics in total, and not one of them lands in a skill the port already reached, so not one is a regression. 2 further declarations sit inside skills the port reached, as every declaration does, but no check reads their files, so they yield no diagnostic either way and the count above neither covers nor clears them.
-
-Attributed work, one row per file and domain:
-
-| file | domain | reason | lines |
-| --- | --- | --- | --- |
-| `skills/architect/SKILL.md` | `model_roles` | model slugs are role slots | 33 |
-| `skills/arena/SKILL.md` | `model_roles` | model slugs are role slots | 28, 41 |
-| `skills/arena/SKILL.md` | `worker_defaults.background` | run_in_background is the worker_defaults background parameter | 33 |
-| `skills/automate-me/SKILL.md` | `human_question` | AskQuestion is Cursor's human_question primitive | 17, 44 |
-| `skills/automate-me/SKILL.md` | `skill_authoring` | create-skill is the skill_authoring role | 3, 11, 67, 72, 77, 96, 102, 109 |
-| `skills/automate-me/SKILL.md` | `transcript_dir` | agent-transcripts is the transcript_dir path assumption | 29 |
-| `skills/how/SKILL.md` | `model_roles` | model slugs are role slots | 48, 67, 79, 112 |
-| `skills/how/SKILL.md` | `worker_defaults.identity` | subagent_type is the worker_defaults identity parameter | 47, 66, 78, 115 |
-| `skills/interrogate/SKILL.md` | `model_roles` | model slugs are role slots | 40, 41, 42, 43 |
-| `skills/interrogate/SKILL.md` | `worker_defaults.identity` | subagent_type is the worker_defaults identity parameter | 46 |
-| `skills/no-comments/SKILL.md` | `worker_defaults.identity` | subagent_type is the worker_defaults identity parameter | 19 |
-| `skills/recall/SKILL.md` | `transcript_dir` | agent-transcripts is the transcript_dir path assumption | 15 |
-| `skills/reflect/references/synthesizer.md` | `review_automation` | review_automation is a role, not a vendor | 27 |
-| `skills/reflect/references/synthesizer.md` | `skill_authoring` | create-skill is the skill_authoring role | 17, 44 |
-| `skills/reflect/SKILL.md` | `model_roles` | model slugs are role slots | 41, 42, 43, 49 |
-| `skills/reflect/SKILL.md` | `skill_authoring` | create-skill is the skill_authoring role | 64, 65, 66 |
-| `skills/reflect/SKILL.md` | `transcript_dir` | agent-transcripts is the transcript_dir path assumption | 25, 28 |
-| `skills/reflect/SKILL.md` | `worker_defaults.identity` | subagent_type is the worker_defaults identity parameter | 37, 49 |
-| `skills/show-me-your-work/SKILL.md` | `transcript_dir` | agent-transcripts is the transcript_dir path assumption | 56 |
-| `skills/swarm/SKILL.md` | `model_roles` | model slugs are role slots | 25 |
-| `skills/swarm/SKILL.md` | `spawn_worker` | a cloud worker couples spawn_worker and worker_durability | 30 |
-| `skills/swarm/SKILL.md` | `worker_defaults.background`, `worker_defaults.identity` | run_in_background is the worker_defaults background parameter; subagent_type is the worker_defaults identity parameter | 30 |
-| `skills/swarm/SKILL.md` | `worker_durability` | a cloud worker couples spawn_worker and worker_durability | 30 |
-| `skills/why/SKILL.md` | `model_roles` | model slugs are role slots | 120, 166 |
-| `skills/why/SKILL.md` | `worker_defaults.identity` | subagent_type is the worker_defaults identity parameter | 119, 165 |
-
-Unattributed Cursor mentions. Each is either a legitimate reference to the Cursor column or a coupling that needs an axis to own it:
-
-| file | lines |
-| --- | --- |
-| `skills/arena/SKILL.md` | 28, 41 |
-| `skills/automate-me/SKILL.md` | 11, 17, 29, 67, 69, 109 |
-| `skills/create-verification-skill/SKILL.md` | 9, 25 |
-| `skills/interrogate/SKILL.md` | 36 |
-| `skills/maintain-verification-skill/SKILL.md` | 25 |
-| `skills/recall/SKILL.md` | 15 |
-| `skills/reflect/references/divergent-reviewer.md` | 23 |
-| `skills/reflect/references/judgment-reviewer.md` | 22 |
-| `skills/reflect/references/tooling-reviewer.md` | 37 |
-| `skills/reflect/SKILL.md` | 25, 64 |
-| `skills/show-me-your-work/SKILL.md` | 56 |
-| `skills/swarm/SKILL.md` | 25 |
-| `skills/why/SKILL.md` | 100 |
+0 token hits carry a domain and collapse into 0 unresolved occurrences, one per file and domain. 0 hits name Cursor in prose with no domain to resolve into, across 0 files. That is 0 diagnostics in total, and not one of them lands in a skill the port already reached, so not one is a regression. 2 further declarations sit inside skills the port reached, as every declaration does, but no check reads their files, so they yield no diagnostic either way and the count above neither covers nor clears them.
 
 Declared occurrences no check reads. These are the only claims in the ledger the lint cannot confirm or contradict:
 
@@ -102,10 +54,6 @@ Declared occurrences no check reads. These are the only claims in the ledger the
 
 Next:
 
-- 4 of the 25 rows name a domain that resolves the same way on every harness. Replace the token with that resolution from [Domain resolutions](#domain-resolutions).
-- 10 rows name a domain whose resolution differs per harness, and a SKILL.md is harness-neutral, so there is no single string to substitute. Carry the domain's whole row from [Domain resolutions](#domain-resolutions) as harness-conditional prose rather than picking one column.
-- 11 rows name a role. Name the role in the prose and leave its value to the override file `/setup-pstack-anywhere` writes; the row's no-value fallback is what the prose says when the role has none.
-- Decide each of the 21 Cursor mentions: keep it, or give the coupling an axis in `coupling.yaml` so the lint can attribute it.
 - Bring the 2 unchecked occurrences inside `lint.scan`, or retire them from the ledger.
 - Run `bun scripts/coupling.mjs check` as the gate. Cells earn a verification through `probe list`, `probe prepare <scenario> <harness>`, and `probe inspect <run-id>`; none of those drive a harness or write an attestation.
 
@@ -193,6 +141,78 @@ lint's reach, so no hit can arise there either way:
 | `skills/poteto-mode/scripts/` | allowlisted directory prefix, and nothing under it is Markdown, so `lint.scan` never reaches it either | watch-pr detects review-automation authors by name; worktree-audit.sh uses shell -gt comparisons. |
 | `skills/setup-pstack-anywhere/SKILL.md` | allowlisted whole-file | Names the Cursor rule-file location, since Cursor is a supported target. |
 
+### `architect`
+
+Sketch types, signatures, and module structure before code, then stay in the loop while implementation fills in.
+
+Reached: 1 declared occurrence across 1 file, 1 resolved.
+
+Domains: `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
+
+| file | status | domains |
+| --- | --- | --- |
+| `skills/architect/SKILL.md` | resolved | `model_roles` |
+
+### `arena`
+
+Spawn N parallel candidates at the same task, pick a base, graft the strongest parts of the losers into it.
+
+Reached: 2 declared occurrences across 1 file, 2 resolved.
+
+Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
+
+| file | status | domains |
+| --- | --- | --- |
+| `skills/arena/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles` |
+
+### `automate-me`
+
+Use for "automate me", "create/update/refresh my -mode skill", "turn/capture my preferences or working style into a skill"...
+
+Reached: 3 declared occurrences across 1 file, 3 resolved.
+
+Domains: `human_question`, `skill_authoring`, `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions).
+
+| file | status | domains |
+| --- | --- | --- |
+| `skills/automate-me/SKILL.md` | resolved | `human_question`, `skill_authoring`, `transcript_dir` |
+
+### `how`
+
+Use for "how does X work", code walkthroughs before changing something...
+
+Reached: 2 declared occurrences across 1 file, 2 resolved.
+
+Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
+
+| file | status | domains |
+| --- | --- | --- |
+| `skills/how/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles` |
+
+### `interrogate`
+
+Use for "interrogate", "adversarial review", "multi-model review", "challenge this", "stress test this code", "find blind spots"...
+
+Reached: 2 declared occurrences across 1 file, 2 resolved.
+
+Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
+
+| file | status | domains |
+| --- | --- | --- |
+| `skills/interrogate/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles` |
+
+### `no-comments`
+
+Spawn Comment Sicko, fix accepted findings, and offer encodings for claimed constraints.
+
+Reached: 1 declared occurrence across 1 file, 1 resolved.
+
+Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`. Resolutions are in [Domain resolutions](#domain-resolutions).
+
+| file | status | domains |
+| --- | --- | --- |
+| `skills/no-comments/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model` |
+
 ### `poteto-mode`
 
 poteto's agent style for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work.
@@ -223,6 +243,31 @@ Domains: `spawn_worker`, `worker_durability`, `probe_worker`, `wake_on_event`, `
 
 1 row above reads `not checked`; the reason is in [Work remaining](#work-remaining).
 
+### `recall`
+
+Reconstruct your recent working context from your own chat history, live state, and the shared record (user reports, prior fixes, incidents)...
+
+Reached: 1 declared occurrence across 1 file, 1 resolved.
+
+Domains: `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions).
+
+| file | status | domains |
+| --- | --- | --- |
+| `skills/recall/SKILL.md` | resolved | `transcript_dir` |
+
+### `reflect`
+
+Spawn three parallel review subagents over the active transcript, surface learnings, and route each to a concrete edit on an existing skill.
+
+Reached: 6 declared occurrences across 2 files, 6 resolved.
+
+Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `review_automation`, `skill_authoring`, `model_roles`, `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions).
+
+| file | status | domains |
+| --- | --- | --- |
+| `skills/reflect/references/synthesizer.md` | resolved | `review_automation`, `skill_authoring` |
+| `skills/reflect/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `skill_authoring`, `model_roles`, `transcript_dir` |
+
 ### `setup-pstack-anywhere`
 
 Configure which tools and models pstack uses per role.
@@ -237,115 +282,49 @@ Domains: `model_roles`. Resolutions are in [Domain resolutions](#domain-resoluti
 
 1 row above reads `not checked`; the reason is in [Work remaining](#work-remaining).
 
-## Skills the port has not reached
-
-These are the skills the lint found coupling in. Their hits are porting work,
-not regressions. The 30 skills with neither a declared occurrence nor a token
-hit are not listed.
-
-### `architect`
-
-Sketch types, signatures, and module structure before code, then stay in the loop while implementation fills in.
-
-Not reached: 1 token hit attributed to a domain, across 1 file.
-
-Domains: `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions). The rows are in [Work remaining](#work-remaining).
-
-### `arena`
-
-Spawn N parallel candidates at the same task, pick a base, graft the strongest parts of the losers into it.
-
-Not reached: 3 token hits attributed to a domain and 2 unattributed Cursor mentions, across 1 file.
-
-Domains: `worker_defaults.background`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions). The rows are in [Work remaining](#work-remaining).
-
-### `automate-me`
-
-Use for "automate me", "create/update/refresh my -mode skill", "turn/capture my preferences or working style into a skill"...
-
-Not reached: 11 token hits attributed to a domain and 6 unattributed Cursor mentions, across 1 file.
-
-Domains: `human_question`, `skill_authoring`, `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions). The rows are in [Work remaining](#work-remaining).
-
-### `create-verification-skill`
-
-Generate a project-local verification skill that drives your app the way a user does: any language, framework, or platform.
-
-Not reached: 2 unattributed Cursor mentions, across 1 file.
-
-No domain owns anything here, so there is nothing to resolve into yet. The lines are listed in [Work remaining](#work-remaining).
-
-### `how`
-
-Use for "how does X work", code walkthroughs before changing something...
-
-Not reached: 8 token hits attributed to a domain, across 1 file.
-
-Domains: `worker_defaults.identity`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions). The rows are in [Work remaining](#work-remaining).
-
-### `interrogate`
-
-Use for "interrogate", "adversarial review", "multi-model review", "challenge this", "stress test this code", "find blind spots"...
-
-Not reached: 5 token hits attributed to a domain and 1 unattributed Cursor mention, across 1 file.
-
-Domains: `worker_defaults.identity`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions). The rows are in [Work remaining](#work-remaining).
-
-### `maintain-verification-skill`
-
-Periodic pass that keeps a project's verification skill and feature map honest: parallel source readers per feature...
-
-Not reached: 1 unattributed Cursor mention, across 1 file.
-
-No domain owns anything here, so there is nothing to resolve into yet. The lines are listed in [Work remaining](#work-remaining).
-
-### `no-comments`
-
-Spawn Comment Sicko, fix accepted findings, and offer encodings for claimed constraints.
-
-Not reached: 1 token hit attributed to a domain, across 1 file.
-
-Domains: `worker_defaults.identity`. Resolutions are in [Domain resolutions](#domain-resolutions). The rows are in [Work remaining](#work-remaining).
-
-### `recall`
-
-Reconstruct your recent working context from your own chat history, live state, and the shared record (user reports, prior fixes, incidents)...
-
-Not reached: 1 token hit attributed to a domain and 1 unattributed Cursor mention, across 1 file.
-
-Domains: `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions). The rows are in [Work remaining](#work-remaining).
-
-### `reflect`
-
-Spawn three parallel review subagents over the active transcript, surface learnings, and route each to a concrete edit on an existing skill.
-
-Not reached: 14 token hits attributed to a domain and 5 unattributed Cursor mentions, across 5 files.
-
-Domains: `worker_defaults.identity`, `review_automation`, `skill_authoring`, `model_roles`, `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions). The rows are in [Work remaining](#work-remaining).
-
 ### `show-me-your-work`
 
 Keep a reviewable decision trail for long-running or unattended work: a TSV log with one row per decision (what, why, evidence, result).
 
-Not reached: 1 token hit attributed to a domain and 1 unattributed Cursor mention, across 1 file.
+Reached: 1 declared occurrence across 1 file, 1 resolved.
 
-Domains: `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions). The rows are in [Work remaining](#work-remaining).
+Domains: `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions).
+
+| file | status | domains |
+| --- | --- | --- |
+| `skills/show-me-your-work/SKILL.md` | resolved | `transcript_dir` |
 
 ### `swarm`
 
 Fan out N parallel workers, drain them, and return one report.
 
-Not reached: 4 token hits attributed to a domain and 1 unattributed Cursor mention, across 1 file.
+Reached: 3 declared occurrences across 1 file, 3 resolved.
 
-Domains: `spawn_worker`, `worker_durability`, `worker_defaults.background`, `worker_defaults.identity`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions). The rows are in [Work remaining](#work-remaining).
+Domains: `worker_durability`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
+
+| file | status | domains |
+| --- | --- | --- |
+| `skills/swarm/SKILL.md` | resolved | `worker_durability`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles` |
 
 ### `why`
 
 Use for 'why does X work this way', 'why we picked Y', design rationale, regressions, postmortems, or data-backed thresholds.
 
-Not reached: 4 token hits attributed to a domain and 1 unattributed Cursor mention, across 1 file.
+Reached: 2 declared occurrences across 1 file, 2 resolved.
 
-Domains: `worker_defaults.identity`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions). The rows are in [Work remaining](#work-remaining).
+Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
+
+| file | status | domains |
+| --- | --- | --- |
+| `skills/why/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles` |
+
+## Skills the port has not reached
+
+These are the skills the lint found coupling in. Their hits are porting work,
+not regressions. The 32 skills with neither a declared occurrence nor a token
+hit are not listed.
+
+
 
 ## Domains with no occurrence
 
