@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: identify.skill_loaded
+    observed: 'true; the skill was listed to the model under its frontmatter name "Poteto Mode", and capabilities.md was read through skill://'
+    source: invocation.json calls[0..1]; the session log read tool results
+  - id: identify.column
+    observed: 'harness: omp; matches this run''s harness id'
+    source: identify.txt line 1
+  - id: identify.cell_text
+    observed: 'spawn_worker: task tool, agent field selects the specialist; byte-identical to the omp spawn_worker cell in capabilities.md'
+    source: identify.txt line 2; skills/poteto-mode/capabilities.md at the digest in run.yaml
+  - id: identify.evidence
+    observed: 'the agent cited its system context naming Oh My Pi, the hub op:"jobs"/op:"wait" tools, and a task tool with an agent field'
+    source: identify.txt line 3
+  - id: identify.reference_resolved
+    observed: 'through skill://, on the second try: read skill://poteto-mode/capabilities.md failed with "Unknown skill: poteto-mode / Available: Poteto Mode", then read skill://Poteto Mode/capabilities.md succeeded. omp keys skill:// by the frontmatter name, not the directory name, so the address the pack writes (skill://poteto-mode/...) does not resolve on omp as written'
+    source: invocation.json calls[0..1]; the session log toolResult for each read (isError true, then false)

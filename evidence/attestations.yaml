@@ -662,3 +662,125 @@ attestations:
       pi 0.84.4 with no extension. Grounds the pi readonly cell at drop: stock
       pi exposes no delegate tool, so no worker and no read-only configuration
       existed; the file stayed absent because nothing was spawned.
+  - id: skill_identify-omp-2026-09-02
+    method: exercised
+    axis: pack_path
+    harness: omp
+    scenario: skill_identify
+    run: skill_identify.omp.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: f3188d5773e0795076a6eacf6f276d53331159466386ecc1f444145ef1a946d5
+      - path: identify.txt
+        digest: 968aaf4bd26fc538ce3ee555706616c3eae5c2942da19108a0bc820538cdc7e2
+      - path: invocation.json
+        digest: e604ce9628d529250af3227599677be2987c10624d7f40741a4b7151fc5b21d8
+      - path: observations.yaml
+        digest: 6b6136f0ffaa8aa87132af3ad38b1433aed1d6fa99ae7854476c1a6edb7ff0fe
+      - path: run.yaml
+        digest: 79ae9b8b35e1e6cf7d1110ecebb81ebdc32913e0161d69a308a3af671c27eb67
+      - path: session/2026-09-02T07-16-55-998Z_01a060fa-5e3e-7764-9684-f1404713bb9d.jsonl
+        digest: 086589f0f23518257f9e76cba1fa3f3d89f79ea509ec2231ffb51bd37981b419
+      - path: transcript.md
+        digest: f0b1485549e83123689a534ebed0d1457431a3a94808e5c9b1843051cbbffc34
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth and the poteto-mode skill symlinked at the harness skill root, the
+      process environment cleared to the runner's allowlist.
+      omp 18.1.2, opus:low. Column and cell verbatim, reached through skill://,
+      but only after skill://poteto-mode/ failed with Unknown skill: omp keys
+      the scheme by the frontmatter name Poteto Mode. Grounds the omp cell and
+      the finding that the pack's written address does not resolve.
+  - id: skill_identify-claude-2026-09-02
+    method: exercised
+    axis: pack_path
+    harness: claude
+    scenario: skill_identify
+    run: skill_identify.claude.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 2e2159550e77d703d4a6bf028aa7804fa5dd4fe5d305a4546dfbf35f7f76af8b
+      - path: identify.txt
+        digest: 3c8f79e543ccab5b0245ab0aa7b39f22c74a1a7352544013f2b46ecd472a1787
+      - path: invocation.json
+        digest: 288b4aab5e8eb0be8ca0399ba071c6c496ec67e628e739b1a434d81077315c3d
+      - path: observations.yaml
+        digest: ab1f7a40aa4f7f7f28af8d16f449b22347ef304df3263c61415dd1208c3b844a
+      - path: run.yaml
+        digest: 059210646702f0e63954aac3b2a26658f18d3c58209ece97cfa436a71df04d41
+      - path: session/2ed21d03-5767-4303-9d30-8d0648b6c03a.jsonl
+        digest: 8c02d2fd654c1f64509b3ebe121955afd3d053a958e7fc6b604fcc06d08ec147
+      - path: transcript.md
+        digest: 913d3148adc5950d0e42890e052421696dea42dfa45ef900d0ae4760fec51a3d
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth and the poteto-mode skill symlinked at the harness skill root, the
+      process environment cleared to the runner's allowlist.
+      Claude Code 2.1.258, opus. Column and cell verbatim by a path under
+      ~/.claude/skills; the skill was not listed to the model because of its
+      disable-model-invocation line. Third attempt: the first two ran find /
+      and the first left a background shell that kept herdr from settling.
+  - id: skill_identify-codex-2026-09-02
+    method: exercised
+    axis: pack_path
+    harness: codex
+    scenario: skill_identify
+    run: skill_identify.codex.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 86dc9811c8ac92f44679035db3d3a5e31a157e76f9a718634ca3d1ef76aaa1c4
+      - path: identify.txt
+        digest: 8a237955b21bf995e177bbf337f695ea533726de74ff15dba40c94ee12ffe1d4
+      - path: invocation.json
+        digest: 3f6635db3b7b09a6efa2a17ccc8de585620835db11dd04e6d17dcf4b80a53a4a
+      - path: observations.yaml
+        digest: b2317611f13dd3d9e3eec9221b8dd1338cc89dc1ec9bb7532fe3606b4dfb78f0
+      - path: run.yaml
+        digest: c032973e4244a7c4c8b27f87171ecf2f22137a84dfd238088c6866c3779ad5af
+      - path: session/2026/09/02/rollout-2026-09-02T00-42-49-01a06112-1243-78d2-ab58-cb168dee6e36.jsonl
+        digest: df840f20bafbebe912c2657ae7cec9c2bc5485f9cff3c7485c65319dfa691c74
+      - path: transcript.md
+        digest: 3a9fd0b57437a01e32fbda99c49c3cb9f0557d0833d5ab570aff58f543c9fa04
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth and the poteto-mode skill symlinked at the harness skill root, the
+      process environment cleared to the runner's allowlist.
+      Codex 0.152.1, gpt-5.6-terra. Column and cell verbatim by a path under
+      ~/.agents/skills on the first call; the skill was listed to the model as
+      Poteto Mode.
+  - id: skill_identify-pi-2026-09-02
+    method: exercised
+    axis: pack_path
+    harness: pi
+    scenario: skill_identify
+    run: skill_identify.pi.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 6ee770f28b9cb9d80a4c2b3062afd9abf27c7ce6694d29f420ab93b91e945fc8
+      - path: identify.txt
+        digest: 219769c0e386404d34198130d5b7e907f4bba7b6daba9dde2ff2ecdfd4cb1259
+      - path: invocation.json
+        digest: b2b0a9613dfe452858a6bbf9af359d4a572b4306a897b8d485b2c13a08c6895e
+      - path: observations.yaml
+        digest: 9fe72f1119844a495077175fd539ede945f7083739fe064514af7cd66492835f
+      - path: run.yaml
+        digest: 3c9ed82f6abbacc197db0d9fe8760397e897c7e6da49ff7abcff7d46a3034f27
+      - path: session/2026-09-02T08-28-19-669Z_01a0613b-bb55-7f92-bcea-48823e9ce4a9.jsonl
+        digest: d28b429e9a20ff24a8b4022d07b7eed15940cc7bad87dcb78c34157ec998f3cc
+      - path: transcript.md
+        digest: 9606f0db5f95f4e205cbff82831bdd503da5961d18e170b82ad62978a23b364e
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth and the poteto-mode skill symlinked at the harness skill root, the
+      process environment cleared to the runner's allowlist.
+      pi 0.84.4, gpt-5.6-luna, no extension. Drop-shaped outcome: skill://
+      ENOENT, the skill hidden from the model, and the agent declined to read
+      through the symlink at the skill root, searched the filesystem, and wrote
+      harness: unknown. A discarded earlier run (deleted for carrying operator
+      environment variables in its log) read the file by the same path and
+      answered correctly, so the pi cell is degrade: the path works when
+      followed, and nothing in the harness leads the agent to it.

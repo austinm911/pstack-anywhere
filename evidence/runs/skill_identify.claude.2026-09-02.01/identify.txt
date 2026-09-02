@@ -1,0 +1,3 @@
+harness: claude
+spawn_worker: Agent tool (named Task in older docs), subagent_type
+evidence: This session identifies itself as Claude Code and exposes the Agent tool with a subagent_type parameter, exactly the claude column's spawn_worker primitive.

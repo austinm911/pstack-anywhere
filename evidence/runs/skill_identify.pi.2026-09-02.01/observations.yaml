@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: identify.skill_loaded
+    observed: 'false. pi did not list the skill to the model: its SKILL.md carries disable-model-invocation: true and pi hides such a skill (verified separately: a copied setup-pstack-anywhere is listed under the same scratch layout, a copied or symlinked poteto-mode is not). The agent''s read of skill://poteto-mode/capabilities.md failed with ENOENT (pi has no skill:// scheme), it listed $HOME/.pi/agent/skills and saw poteto-mode as a symlink into the repo, then declined to read through the symlink and searched the filesystem instead'
+    source: invocation.json calls; the session log toolResult for the first read (isError true)
+  - id: identify.column
+    observed: 'harness: unknown, although the evidence line names pi; the agent never read capabilities.md'
+    source: identify.txt lines 1 and 3
+  - id: identify.cell_text
+    observed: 'spawn_worker: unknown; nothing to compare'
+    source: identify.txt line 2
+  - id: identify.evidence
+    observed: 'the agent cited PI_CODING_AGENT=true from its environment'
+    source: identify.txt line 3
+  - id: identify.reference_resolved
+    observed: 'not resolved: skill:// ENOENT, then find over /private/var/folders and find / for a poteto-mode directory, which the prompt prohibited; no read of capabilities.md at all. An earlier discarded run of this scenario on pi (deleted because its session log carried operator environment variables) did read the file by the same path and answered pi with the verbatim cell, so the outcome on pi depends on whether the model reads through the symlink'
+    source: invocation.json calls

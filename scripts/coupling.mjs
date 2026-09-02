@@ -540,6 +540,9 @@ const OUTCOME_WHY =
 // ledger so a new capability axis arrives uncovered and the coverage check
 // names it. These are domains, not cells: an axis plus, for a parameter set,
 // one parameter, with no harness in it, so each spans every harness.
+// Scenario eligibility is wider: a path assumption is exactly the kind of
+// thing a run can prove resolves, but it is not gated as high-risk coverage.
+const SCENARIO_AXIS_KINDS = ["capability", "parameter_set", "path_assumption"];
 const highRiskDomains = (ledger) =>
   ledger.axes.flatMap((axis) =>
     axis.kind === "capability"
@@ -677,7 +680,7 @@ function validateEvidencePaths(ledger, errors) {
 function validateScenarios(ledger, evidence, errors) {
   validateEvidencePaths(ledger, errors);
   const at = ledger.evidence?.scenarios;
-  const empty = { byId: new Map(), contract: null, coverage: [], voidConditions: [] };
+  const empty = { byId: new Map(), contract: null, coverage: [], highRisk: [], voidConditions: [] };
   if (!at) {
     errors.push("coupling.yaml.evidence.scenarios: no conformance file declared");
     return empty;
@@ -745,9 +748,9 @@ function validateScenarios(ledger, evidence, errors) {
       errors.push(`${where}.axis: no axis ${scenario.axis}`);
       continue;
     }
-    if (!["capability", "parameter_set"].includes(axis.kind)) {
+    if (!SCENARIO_AXIS_KINDS.includes(axis.kind)) {
       errors.push(
-        `${where}.axis: ${axis.id} is a ${axis.kind}; a scenario covers a capability or a parameter of a parameter set`,
+        `${where}.axis: ${axis.id} is a ${axis.kind}; a scenario covers a capability, a path assumption, or a parameter of a parameter set`,
       );
     }
     const parameter = scenario.parameter ?? null;
@@ -799,7 +802,10 @@ function validateScenarios(ledger, evidence, errors) {
   }
 
   const scenarios = [...byId.values()];
-  const coverage = highRiskDomains(ledger).map((domain) => {
+  // highRiskDomains is the coverage gate: every one of them needs a scenario.
+  // coverage is the display union: high-risk plus any elective domain a scenario
+  // actually covers (a path_assumption with a procedure, for example).
+  const highRisk = highRiskDomains(ledger).map((domain) => {
     const covering = scenarios.filter((s) => s.axis === domain.axis && s.parameter === domain.parameter);
     if (covering.length === 0) {
       errors.push(
@@ -813,8 +819,27 @@ function validateScenarios(ledger, evidence, errors) {
     }
     return { ...domain, scenario: covering[0] ?? null };
   });
+  const highRiskKeys = new Set(highRisk.map((domain) => cellLabel(domain)));
+  const extrasByKey = new Map();
+  for (const scenario of scenarios) {
+    const key = cellLabel(scenario);
+    if (highRiskKeys.has(key)) continue;
+    if (extrasByKey.has(key)) {
+      errors.push(
+        `${at}.scenarios: ${extrasByKey.get(key).id} and ${scenario.id} both cover ${key}, a domain has one procedure`,
+      );
+      continue;
+    }
+    extrasByKey.set(key, scenario);
+  }
+  const extras = [...extrasByKey.values()].map((scenario) => ({
+    axis: scenario.axis,
+    parameter: scenario.parameter,
+    kind: axisById.get(scenario.axis)?.kind ?? null,
+    scenario,
+  }));
 
-  return { byId, contract, coverage, voidConditions };
+  return { byId, contract, coverage: [...highRisk, ...extras], highRisk, voidConditions };
 }
 
 // ---------------------------------------------------------------------------
@@ -842,6 +867,25 @@ function runFiles(dir) {
   };
   walk("");
   return { files: found, irregular };
+}
+
+// An environment secret in a run's own files. `runFiles` already walked the
+// whole directory, session capture included, so this reads what the run
+// carries rather than what it declares. Only the matched name is reported: a
+// message that quoted the value would copy the leak into every report that
+// printed it.
+const SECRET_FORMS = [/\b([A-Z][A-Z0-9_]*(?:KEY|TOKEN|SECRET|PASSWORD))=\S{8,}/, /\b(sk-)[A-Za-z0-9_-]{16,}/];
+function secretHits(dir, files) {
+  const hits = [];
+  for (const rel of files) {
+    for (const [i, line] of read(join(dir, rel)).split("\n").entries()) {
+      for (const form of SECRET_FORMS) {
+        const hit = form.exec(line);
+        if (hit) hits.push(`${rel}:${i + 1} ${hit[1]}`);
+      }
+    }
+  }
+  return hits;
 }
 
 // The two legal shapes of one observations.yaml entry, as sorted key lists. An
@@ -916,6 +960,17 @@ function inspectRun(ledger, conformance, runId) {
   if (!scenario) return voidRun(null, `no scenario ${scenarioId} in ${ledger.evidence.scenarios}`);
   if (!scenario.appliesTo.includes(harnessId)) {
     return voidRun(null, `${scenarioId} applies to ${scenario.appliesTo.join(", ")}, not ${harnessId}`);
+  }
+
+  // A directory holding a secret is not a run to read: the fix is deleting it
+  // and running again under a cleared environment, which is what bench/run.mjs
+  // now launches. Void, so it can never be attested.
+  const leaks = secretHits(dir, out.files);
+  if (leaks.length > 0) {
+    return voidRun(
+      "secret_leak",
+      `an environment secret is in this run's own files (${leaks.slice(0, 3).join("; ")}${leaks.length > 3 ? `; and ${leaks.length - 3} more` : ""}); delete the run and re-run under a clean environment`,
+    );
   }
 
   // Presence and content are read together so every exit describes the same
@@ -1603,8 +1658,14 @@ function renderCapabilities(model) {
     .map((axis) => `- **\`${axis.binary}\`.** ${trim(axis.what)} Absent: ${trim(axis.invariant.use)}`)
     .join("\n");
 
+  // A path assumption is one sentence while it holds everywhere; once a run
+  // shows it varies, each harness gets its own line under the lead.
   const paths = byKind(model, "path_assumption")
-    .map((axis) => `- **${axis.id}.** Upstream used \`${axis.was}\`. ${trim(axis.invariant.use)}`)
+    .map((axis) => {
+      const lead = `- **${axis.id}.** Upstream used \`${axis.was}\`.`;
+      if (axis.invariant) return `${lead} ${trim(axis.invariant.use)}`;
+      return [lead, ...harnesses.map((h) => `  - ${h}: ${trim(parityText(axis.resolution[h]))}`)].join("\n");
+    })
     .join("\n");
 
   return `<!-- Generated from coupling.yaml by scripts/coupling.mjs render. Do not edit. -->
@@ -2413,7 +2474,7 @@ function renderReport(model) {
 
   // `counts.scenarios` is every scenario in the file; the claim below is about
   // the ones that cover a high-risk domain, which is a narrower count.
-  const covered = model.conformance.coverage.filter((entry) => entry.scenario).length;
+  const covered = model.conformance.highRisk.filter((entry) => entry.scenario).length;
   const conformanceLead = [
     `Conformance scenarios cover the ${counts.highRiskDomains} of ${counts.domains} domains judged high-risk.`,
     counts.scenarioCells === counts.highRiskCells
@@ -2626,10 +2687,10 @@ function tally(model) {
     exercised: cells.filter((c) => c.exercised).length,
     attestations: model.verification.tiers.length,
     scenarios: model.conformance.byId.size,
-    // A domain is axis plus parameter with no harness in it. `scenarioCells` is
-    // narrower: the cells a scenario actually applies to.
-    highRiskDomains: model.conformance.coverage.length,
-    highRiskCells: model.conformance.coverage.length * model.ledger.harnesses.length,
+    // A domain is axis plus parameter with no harness in it. highRisk* counts
+    // are the coverage gate; scenarioCells walks the display union in coverage.
+    highRiskDomains: model.conformance.highRisk.length,
+    highRiskCells: model.conformance.highRisk.length * model.ledger.harnesses.length,
     scenarioCells: model.conformance.coverage.reduce(
       (n, entry) => n + (entry.scenario?.appliesTo.length ?? 0),
       0,
@@ -2914,7 +2975,7 @@ function probeList(model, json) {
 
   const scenarioCells = rows.reduce((n, entry) => n + entry.applies_to.length, 0);
   const domainCells = rows.length * model.ledger.harnesses.length;
-  console.log(`${rows.length} high-risk domains, ${scenarioCells} of ${domainCells} harness cells, ${model.conformance.byId.size} scenarios`);
+  console.log(`${rows.length} domains, ${scenarioCells} of ${domainCells} harness cells, ${model.conformance.byId.size} scenarios`);
   for (const entry of rows) {
     console.log("");
     console.log(`${entry.scenario ?? "UNCOVERED"}  ${entry.domain}`);

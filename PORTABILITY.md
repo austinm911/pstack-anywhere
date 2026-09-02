@@ -33,7 +33,7 @@ saved evidence for it:
 | --- | --- |
 | ledger | v2, upstream `b9ddc83` |
 | domains | 24, from 21 axes, because `worker_defaults` resolves per parameter |
-| harness cells | 11 verified of 120 (24 domains x 5 harnesses) |
+| harness cells | 15 verified of 120 (24 domains x 5 harnesses) |
 | occurrences | 67 resolved, 25 unresolved, 0 missing, 2 not checked |
 | token hits | 53 attributed to a domain, 21 unattributed Cursor mentions, 74 in total |
 | skills reached | 2 of 45: `poteto-mode` (67 of 68 checked), `setup-pstack-anywhere` (0 of 1 checked) |
@@ -111,7 +111,7 @@ Next:
 
 ## Domain resolutions
 
-9 domains of 24 resolve differently depending on the harness. Each cell reads `parity, replacement, verification`, and an `extension` cell adds `, else <fallback>` after the replacement for when the tool is not installed. Cursor is the upstream column: its resolutions are what upstream already does, not a substitution this port made.
+10 domains of 24 resolve differently depending on the harness. Each cell reads `parity, replacement, verification`, and an `extension` cell adds `, else <fallback>` after the replacement for when the tool is not installed. Cursor is the upstream column: its resolutions are what upstream already does, not a substitution this port made.
 
 | domain | Cursor (upstream) | Claude Code | Codex | pi | Oh My Pi |
 | --- | --- | --- | --- | --- | --- |
@@ -124,8 +124,9 @@ Next:
 | `worker_defaults.identity` (parameter_set) | native, subagent_type: "poteto-agent", unverified | substitute, a poteto-agent definition in the harness subagent dir, unverified | substitute, a poteto-agent definition in the harness subagent dir, unverified | extension, a poteto-agent definition where the extension reads its agents, else no identity, the parent model does the work, unverified | substitute, a poteto-agent definition in the harness subagent dir, unverified |
 | `worker_defaults.model` (parameter_set) | native, explicit slug per role, unverified | substitute, role slots, unverified | substitute, role slots, unverified | substitute, role slots, unverified | substitute, role slots, or the agent field, unverified |
 | `human_question` (capability) | native, AskQuestion, unverified | substitute, the ask tool, unverified | substitute, request_user_input tool, root thread only, mode-gated, unverified | extension, an ask tool an extension registers via registerTool, else a plain question in the reply, unverified | substitute, the ask tool, unverified |
+| `pack_path` (path_assumption) | native, pstack/skills/... in the vendored pack, unverified | substitute, the file's path under ~/.claude/skills/poteto-mode; no skill:// scheme, and the skill is hidden from the model's listing, exercised | substitute, the file's path under ~/.agents/skills/poteto-mode; listed to the model as Poteto Mode, exercised | degrade, the file's path under ~/.pi/agent/skills/poteto-mode; no scheme, the skill is hidden from the model, and nothing tells the agent where the skill root is, exercised | substitute, skill://Poteto Mode/<file>, keyed by the frontmatter name; skill://poteto-mode/ fails with Unknown skill, exercised |
 
-The other 15 domains resolve the same way on every harness:
+The other 14 domains resolve the same way on every harness:
 
 - **`review_automation`** (role, substitute). An agentic reviewer that files PR comments. A GitHub-side service, not a harness feature, so it is the user's choice on every harness including Cursor. references/bugbot-triage.md generalizes to review-automation triage: its content is how to assess untrusted review text, which no harness changes. With no value for the role: Apply the same skeptical triage to human review comments. The posture is the portable part. Verification: Cursor unverified, Claude Code unverified, Codex unverified, pi unverified, Oh My Pi unverified.
 - **`slop_strip`** (role, substitute). A pre-commit pass that strips generated slop from a diff. With no value for the role: Apply the unslop skill to the diff directly. Verification: Cursor unverified, Claude Code unverified, Codex unverified, pi unverified, Oh My Pi unverified.
@@ -136,7 +137,6 @@ The other 15 domains resolve the same way on every harness:
 - **`graphite`** (prerequisite, drop). Stacked PR tooling. Upstream's stack playbooks assume it throughout. Without the binary: Stack playbooks do not apply. Shipping, autopilot-stack, and the stack safety section have no plain-git equivalent worth faking. Verification: Cursor unverified, Claude Code unverified, Codex unverified, pi unverified, Oh My Pi unverified.
 - **`github_cli`** (prerequisite, drop). scripts/watch-pr reads PR state through it. Without the binary: The Babysit playbook's watcher cannot run. Verification: Cursor unverified, Claude Code unverified, Codex unverified, pi unverified, Oh My Pi unverified.
 - **`bun`** (prerequisite, drop). Runtime for scripts/watch-pr and scripts/orch. Without the binary: Those levers cannot run. Verification: Cursor unverified, Claude Code unverified, Codex unverified, pi unverified, Oh My Pi unverified.
-- **`pack_path`** (path_assumption, substitute). Upstream reads its own playbooks and scripts through a repo-relative path, which only exists when the pack is vendored into the working repo. Fails silently for anyone who installed the pack into a harness skills dir. Same on every harness: Harness-relative skill addressing. skill://poteto-mode/playbooks/x.md where the harness provides it, otherwise the skill directory the harness already resolves. Verification: Cursor unverified, Claude Code unverified, Codex unverified, pi unverified, Oh My Pi unverified.
 - **`trunk_reread`** (path_assumption, substitute). A multi-day program re-grounds on trunk's copy of a playbook rather than its own possibly-stale context. Depends on pack_path being inside the repo. Same on every harness: Drop the git indirection. Re-read the playbook through the harness's own skill addressing, which is already current. The staleness the trunk read guarded against was context staleness, not disk staleness, and a plain re-read fixes that. Verification: Cursor unverified, Claude Code unverified, Codex unverified, pi unverified, Oh My Pi unverified.
 - **`transcript_dir`** (path_assumption, substitute). Local transcripts a worker may need to read. Same on every harness: Per-harness session directory. Left as a role-style slot because the path is user and harness specific, and no playbook depends on its shape. Verification: Cursor unverified, Claude Code unverified, Codex unverified, pi unverified, Oh My Pi unverified.
 - **`setup_entrypoint`** (naming, substitute). Upstream's installer command. This port renames it, so the old name in a ported file is a regression rather than a coupling left to resolve. v1 enforced the token with no axis owning it; this is that owner. Same on every harness: The skill is /setup-pstack-anywhere. Verification: Cursor unverified, Claude Code unverified, Codex unverified, pi unverified, Oh My Pi unverified.
@@ -146,21 +146,22 @@ The other 15 domains resolve the same way on every harness:
 ## Conformance
 
 Conformance scenarios cover the 9 of 24 domains judged high-risk.
-Every scenario applies to all 5 harnesses, so the 9 of them cover every one of the 45 high-risk cells, which is 45 of the 120 in the matrix.
+The 9 of them cover 50 of the 45 high-risk cells, which is 50 of the 120 in the matrix.
 The other 15 domains are resolved in prose on purpose.
 A scenario defines what to run and what to inspect; it does not claim a result.
 
-| domain | observations | runs | verification |
-| --- | --- | --- | --- |
-| `spawn_worker` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_durability` | 5 | 0 | all harnesses: unverified |
-| `probe_worker` | 5 | 0 | all harnesses: unverified |
-| `wake_on_event` | 5 | 0 | all harnesses: unverified |
-| `worker_defaults.background` | 5 | 3 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: unverified; Oh My Pi: exercised |
-| `worker_defaults.readonly` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_defaults.identity` | 4 | 0 | all harnesses: unverified |
-| `worker_defaults.model` | 5 | 0 | all harnesses: unverified |
-| `human_question` | 5 | 0 | all harnesses: unverified |
+| domain | scenario | observations | runs | verification |
+| --- | --- | --- | --- | --- |
+| `spawn_worker` | `spawn_worker` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `worker_durability` | `worker_durability` | 5 | 0 | all harnesses: unverified |
+| `probe_worker` | `probe_worker` | 5 | 0 | all harnesses: unverified |
+| `wake_on_event` | `wake_on_event` | 5 | 0 | all harnesses: unverified |
+| `worker_defaults.background` | `worker_defaults_background` | 5 | 3 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: unverified; Oh My Pi: exercised |
+| `worker_defaults.readonly` | `worker_defaults_readonly` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `worker_defaults.identity` | `worker_defaults_identity` | 4 | 0 | all harnesses: unverified |
+| `worker_defaults.model` | `worker_defaults_model` | 5 | 0 | all harnesses: unverified |
+| `human_question` | `human_question` | 5 | 0 | all harnesses: unverified |
+| `pack_path` | `skill_identify` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
 
 Cursor follows the same evidence rules as every other harness, and cannot reach `static` only because this repo has no saved Cursor source to cite.
 
@@ -168,11 +169,11 @@ Cursor follows the same evidence rules as every other harness, and cannot reach 
 
 | measure | value |
 | --- | --- |
-| scenarios | 9 defined, one per high-risk domain |
-| attestations | 11 recorded |
-| evidence classes | 11 exercised |
-| run directories | 11 complete |
-| cells exercised | 11 of 120, a subset of the 11 verified cells in Totals |
+| scenarios | 10 defined |
+| attestations | 15 recorded |
+| evidence classes | 15 exercised |
+| run directories | 15 complete |
+| cells exercised | 15 of 120, a subset of the 15 verified cells in Totals |
 
 Every recorded grounding still holds against the files on disk.
 

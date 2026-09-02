@@ -1,0 +1,3 @@
+harness: omp
+spawn_worker: task tool, agent field selects the specialist
+evidence: My system context identifies this harness as Oh My Pi (omp) with hub op:"jobs"/op:"wait" and a task tool whose agent field selects a specialist, matching the omp column exactly.

@@ -441,12 +441,18 @@ axes:
       Upstream reads its own playbooks and scripts through a repo-relative path,
       which only exists when the pack is vendored into the working repo. Fails
       silently for anyone who installed the pack into a harness skills dir.
-    invariant:
-      parity: substitute
-      use: >-
-        Harness-relative skill addressing. skill://poteto-mode/playbooks/x.md where
-        the harness provides it, otherwise the skill directory the harness already
-        resolves.
+    # One invariant held until skill_identify ran: the address the port writes,
+    # skill://poteto-mode/<file>, resolves on no harness as written. omp keys
+    # skill:// by the frontmatter name (Poteto Mode); the other three have no
+    # scheme and address a skill by its directory under the harness skill root.
+    # A skill with disable-model-invocation is never listed to the model on
+    # claude and pi, so a cross-skill reference has to name the path outright.
+    resolution:
+      cursor: { parity: native, use: "pstack/skills/... in the vendored pack" }
+      claude: { parity: substitute, use: "the file's path under ~/.claude/skills/poteto-mode; no skill:// scheme, and the skill is hidden from the model's listing" }
+      codex: { parity: substitute, use: "the file's path under ~/.agents/skills/poteto-mode; listed to the model as Poteto Mode" }
+      pi: { parity: degrade, use: "the file's path under ~/.pi/agent/skills/poteto-mode; no scheme, the skill is hidden from the model, and nothing tells the agent where the skill root is" }
+      omp: { parity: substitute, use: "skill://Poteto Mode/<file>, keyed by the frontmatter name; skill://poteto-mode/ fails with Unknown skill" }
     tokens:
       - pattern: '\bpstack\/skills\b'
         why: a repo-relative pack path only a Cursor plugin install provides

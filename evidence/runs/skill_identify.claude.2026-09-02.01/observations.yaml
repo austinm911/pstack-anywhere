@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: identify.skill_loaded
+    observed: 'reached by path only. The session''s skill_listing attachment names only design and dataviz; poteto-mode was not offered to the model. Its SKILL.md carries disable-model-invocation: true, and Claude Code hides such a skill from the model''s listing (verified separately: a copy of the skill with that line removed is listed as poteto-mode). The agent found the directory with ls ~/.claude/skills and read capabilities.md with cat'
+    source: the parent session skill_listing attachment; invocation.json calls[0..1]
+  - id: identify.column
+    observed: 'harness: claude; matches this run''s harness id'
+    source: identify.txt line 1
+  - id: identify.cell_text
+    observed: 'spawn_worker: Agent tool (named Task in older docs), subagent_type; byte-identical to the claude cell'
+    source: identify.txt line 2; skills/poteto-mode/capabilities.md at the digest in run.yaml
+  - id: identify.evidence
+    observed: 'the agent cited its session identifying itself as Claude Code and the Agent tool with a subagent_type parameter'
+    source: identify.txt line 3
+  - id: identify.reference_resolved
+    observed: 'by a path under the harness skill root (~/.claude/skills/poteto-mode/capabilities.md), inside the scratch HOME; no filesystem search outside the skill root in this run. Claude Code has no skill:// scheme. Two discarded earlier attempts under the same prompt ran find / -name poteto-mode before settling on the same path; the first of those left a background shell that kept herdr''s status from settling'
+    source: invocation.json calls[0..1]

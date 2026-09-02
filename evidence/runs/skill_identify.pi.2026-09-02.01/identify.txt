@@ -1,0 +1,3 @@
+harness: unknown
+spawn_worker: unknown
+evidence: The PI_CODING_AGENT=true environment variable identified this session as the pi coding agent harness.

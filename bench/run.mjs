@@ -1,12 +1,13 @@
 #!/usr/bin/env bun
 // Drives one conformance scenario against one harness inside a herdr session.
 //
-//   bun bench/run.mjs <scenario> <harness> <model> [--extension]
+//   bun bench/run.mjs <scenario> <harness> <model> [--extension] [--skill <name>]
 //
 // It prepares the evidence run directory with `probe prepare`, runs the
 // scenario's setup.sh, builds a scratch HOME holding only the auth files
 // harnesses.yaml lists (so no user skill, rule, hook, or context file reaches
-// the run), launches the harness in a new pane under that HOME, sends
+// the run), optionally symlinks named skills into that HOME's skillsRoot,
+// launches the harness in a new pane under that HOME, sends
 // bench/<scenario>/prompt.md, and harvests the transcript, the herdr responses,
 // and whatever files the scenario declares as artifacts. `--extension` adds the
 // harness's declared extension to the launch and records it in run.yaml.
@@ -14,16 +15,19 @@
 // It never writes observations.yaml. Reading the run is the operator's job, and
 // tooling that filled that file in would be scoring its own run.
 //
-// Exit codes: 2 usage, 3 not inside herdr, 4 missing input, 6 agent start failed.
-// Anything else is passed through from the command that failed.
+// Exit codes: 2 usage, 3 not inside herdr, 4 missing input, 6 agent start
+// failed, 7 a secret reached the run dir (the leak guard at the end deleted the
+// capture that held it). Anything else is passed through from the command that
+// failed.
 
 import { YAML } from "bun";
-import { existsSync, readFileSync, writeFileSync, copyFileSync, statSync, readdirSync, mkdirSync, mkdtempSync, rmSync, realpathSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, copyFileSync, statSync, readdirSync, mkdirSync, mkdtempSync, rmSync, realpathSync, symlinkSync } from "node:fs";
 import { join, dirname, basename, relative, isAbsolute } from "node:path";
 import { hostname, platform, release, homedir, tmpdir } from "node:os";
+import { createHash } from "node:crypto";
 
 const ROOT = join(dirname(new URL(import.meta.url).pathname), "..");
-const USAGE = "usage: bun bench/run.mjs <scenario> <harness> <model> [--extension]";
+const USAGE = "usage: bun bench/run.mjs <scenario> <harness> <model> [--extension] [--skill <name>]";
 const TRANSCRIPT_HEADER =
   "<!-- captured by bench/run.mjs via herdr agent read, recent-unwrapped; may be a viewport if the agent uses the alternate screen -->";
 // Written by the tooling itself, so never copied out of the scratch dir.
@@ -74,7 +78,7 @@ const harnessCli = (harness) => {
   const entry = (ledger.harnesses ?? []).find((h) => h.id === harness);
   if (!entry) die(4, `no harness ${harness} in harnesses.yaml`);
   if (!entry.cli) die(4, `harness ${harness} carries no cli block in harnesses.yaml`);
-  return entry.cli;
+  return { ...entry.cli, skillsRoot: entry.skillsRoot ?? null };
 };
 
 // `probe prepare` refuses to overwrite, and an unexecuted directory from today
@@ -103,6 +107,67 @@ const setupScratch = (scenario) => {
   const dir = r.out.trim().split("\n").pop().trim();
   if (!dir || !existsSync(dir)) die(4, `${script} printed no usable scratch dir: ${JSON.stringify(dir)}`);
   return dir;
+};
+
+// Everything the harness is allowed to see, by name. The pane's shell is the
+// operator's own, with every API key their environment loader put there, and a
+// harness that prints its environment would write those into the evidence. So
+// the launch goes through a wrapper that execs the real binary under `env -i`
+// with these names and nothing else.
+const ENV_KEEP = ["HOME", "PATH", "TERM", "COLORTERM", "LANG", "LC_ALL", "LC_CTYPE", "TMPDIR", "SHELL", "USER", "LOGNAME"];
+// herdr sets the pane id on the pane process, after the wrapper file exists, so
+// these are read at exec time rather than written in. The names herdr uses now
+// plus whatever else it already put in this process.
+const HERDR_KEEP = [
+  ...new Set([
+    "HERDR_ENV",
+    "HERDR_SOCKET_PATH",
+    "HERDR_PANE_ID",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID",
+    "HERDR_SESSION_ID",
+    ...Object.keys(process.env).filter((name) => name.startsWith("HERDR_")),
+  ]),
+].sort();
+
+const shq = (s) => `'${String(s).replaceAll("'", `'\\''`)}'`;
+
+// `herdr agent start` runs `<kind> <args>` and has no --env of its own (its
+// --help lists none), so the wrapper has to be what the name resolves to: it
+// goes first on the PATH the pane split carries, named after the harness. The
+// PATH inside `env -i` is the operator's own without the wrapper dir, so the
+// exec lands on the real binary rather than back here. Empty IFS with globbing
+// off keeps each HERDR_ reference exactly one word, whatever it holds, and an
+// unset one expands to no word at all.
+const writeCliWrapper = (home, cli) => {
+  const real = Bun.which(cli.kind);
+  if (!real) die(4, `no ${cli.kind} on PATH, so there is no binary for the clean-environment wrapper to exec`);
+  const bin = join(home, "bin");
+  mkdirSync(bin, { recursive: true });
+  // A harness that authenticates from the environment names the variable in
+  // its home.env; it is the only operator value beyond the allowlist that
+  // reaches the run, and it must be set or the harness cannot log in.
+  const auth = cli.home?.env ?? [];
+  for (const name of auth) if ((process.env[name] ?? "") === "") die(4, `harnesses.yaml home.env: ${name} is not set in this environment`);
+  const values = { ...process.env, HOME: home };
+  const kept = [...ENV_KEEP.filter((name) => (values[name] ?? "") !== ""), ...auth];
+  writeFileSync(
+    join(bin, cli.kind),
+    [
+      "#!/bin/sh",
+      "# Written by bench/run.mjs. The harness runs with this environment and no",
+      "# other, so nothing else the operator's shell holds can reach the run dir.",
+      "set -f",
+      "IFS=",
+      "exec /usr/bin/env -i \\",
+      ...kept.map((name) => `  ${name}=${shq(values[name])} \\`),
+      ...HERDR_KEEP.map((name) => `  \${${name}:+${name}=$${name}} \\`),
+      `  ${shq(real)} "$@"`,
+      "",
+    ].join("\n"),
+    { mode: 0o755 },
+  );
+  return { bin, real, allowlist: [...kept, ...HERDR_KEEP] };
 };
 
 // Where herdr expects each harness's home to be before it will install its
@@ -137,7 +202,29 @@ const prepareHome = (cli) => {
   mkdirSync(join(home, HERDR_HOME_DIRS[cli.kind] ?? "."), { recursive: true });
   const r = Bun.spawnSync(["herdr", "integration", "install", cli.kind], { env: { ...process.env, HOME: home }, stdout: "pipe", stderr: "pipe" });
   if (r.exitCode !== 0) die(6, `herdr integration install ${cli.kind} into ${home} failed:\n${decoder.decode(r.stderr)}${decoder.decode(r.stdout)}`);
-  return { home, seeded, written: Object.fromEntries(written) };
+  return { home, seeded, written: Object.fromEntries(written), ...writeCliWrapper(home, cli) };
+};
+
+// Symlink each named skill into the harness's skillsRoot under the scratch
+// HOME. The operator's real skill tree stays unreachable; only these links
+// exist. skillsRoot comes from harnesses.yaml, with ~ expanded to the scratch
+// home, so Claude and pi land under their own dirs and Codex/OMP under
+// ~/.agents/skills.
+const installSkills = (home, skillsRootTemplate, names) => {
+  if (names.length === 0) return [];
+  if (!skillsRootTemplate) die(4, `harnesses.yaml has no skillsRoot for this harness`);
+  const skillsRoot = skillsRootTemplate.replace(/^~(?=$|\/)/, home);
+  mkdirSync(skillsRoot, { recursive: true });
+  const installed = [];
+  for (const name of names) {
+    const canonical = join(ROOT, "skills", name);
+    if (!existsSync(join(canonical, "SKILL.md"))) die(2, `no skill ${name} at skills/${name}`);
+    const target = realpathSync(canonical);
+    symlinkSync(target, join(skillsRoot, name));
+    const digest = createHash("sha256").update(readFileSync(join(canonical, "SKILL.md"))).digest("hex");
+    installed.push({ name, root: skillsRoot, digest });
+  }
+  return installed;
 };
 
 const harnessVersion = (cli) => {
@@ -303,10 +390,30 @@ const rewriteManifest = (path, fields) => {
   writeFileSync(path, [...header, header.length ? "" : null, YAML.stringify(manifest, null, 2)].filter((l) => l !== null).join("\n"));
 };
 
-const flags = process.argv.slice(2).filter((a) => a.startsWith("--"));
-const [scenario, harness, model] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
-if (!scenario || !harness || !model || flags.some((f) => f !== "--extension")) die(2, USAGE);
-const withExtension = flags.includes("--extension");
+const args = process.argv.slice(2);
+const positional = [];
+const skillNames = [];
+let withExtension = false;
+for (let i = 0; i < args.length; i++) {
+  const a = args[i];
+  if (a === "--extension") {
+    withExtension = true;
+  } else if (a === "--skill") {
+    const name = args[++i];
+    if (!name || name.startsWith("--")) die(2, USAGE);
+    skillNames.push(name);
+  } else if (a.startsWith("--skill=")) {
+    const name = a.slice("--skill=".length);
+    if (!name) die(2, USAGE);
+    skillNames.push(name);
+  } else if (a.startsWith("--")) {
+    die(2, USAGE);
+  } else {
+    positional.push(a);
+  }
+}
+const [scenario, harness, model] = positional;
+if (!scenario || !harness || !model || positional.length !== 3) die(2, USAGE);
 if (process.env.HERDR_ENV !== "1") die(3, "bench/run.mjs drives herdr panes; run it inside a herdr session (HERDR_ENV=1)");
 
 const cli = harnessCli(harness);
@@ -318,7 +425,8 @@ const promptText = readFileSync(join(ROOT, "bench", scenario, "prompt.md"), "utf
 // The scratch HOME holds auth copies, so it goes on every exit path, after the
 // pane: a harness still flushing its session log on shutdown would recreate
 // the directory under a removal that ran first.
-const { home, seeded, written: seededText } = prepareHome(cli);
+const { home, seeded, written: seededText, bin, allowlist } = prepareHome(cli);
+const skills = installSkills(home, cli.skillsRoot, skillNames);
 let pane = null;
 process.on("exit", () => {
   if (pane && process.env.BENCH_KEEP_PANE === "1") return console.error(`kept pane ${pane} and its HOME ${home}; remove it yourself`);
@@ -336,7 +444,23 @@ const version = harnessVersion(cli);
 // later split until dialogs render one character per line and the startup
 // matcher goes blind, so the exit handler above closes it. BENCH_KEEP_PANE=1
 // leaves it for a look (and leaves the scratch HOME with it).
-pane = herdr("pane", "split", "--current", "--direction", "right", "--cwd", scratch, "--env", `HOME=${home}`, "--no-focus").result.pane.pane_id;
+// `agent start` takes no env of its own, so the wrapper dir rides in on the
+// split: it is first on the pane's PATH, which is what `<kind>` resolves
+// through, and the harness is exec'd from there with a cleared environment.
+pane = herdr(
+  "pane",
+  "split",
+  "--current",
+  "--direction",
+  "right",
+  "--cwd",
+  scratch,
+  "--env",
+  `HOME=${home}`,
+  "--env",
+  `PATH=${bin}:${process.env.PATH ?? ""}`,
+  "--no-focus",
+).result.pane.pane_id;
 const name = agentName(runId);
 const { start, argv, recovered } = startAgent(name, cli, pane, model, withExtension);
 const startupAnswers = answerStartup(name, cli.startup ?? []);
@@ -365,6 +489,14 @@ try {
     prompted = { ...prompted, stalled_then_recovered: true };
     break;
   }
+  // herdr's status never settles while a harness keeps a background shell
+  // alive after its reply (Claude leaves one behind a killed `find`). Every
+  // bench prompt ends in a reply line starting with DONE, so that line on the
+  // pane is the turn's end when herdr's own wait timed out.
+  if (error.code === "timeout" && /^\s*(⏺\s*)?DONE\b/m.test(readText(name, 60, "visible"))) {
+    prompted = { result: tryOr(() => herdr("agent", "get", name).result, null), settled_by: "DONE reply line on the pane" };
+    status = "done";
+  }
 }
 
 // An agent that exited (a crash, a self-update, a bad model flag) has no name
@@ -388,7 +520,8 @@ writeFileSync(
       cli: { command: start.result?.argv ?? ["herdr", ...argv], version: version.raw },
       model,
       scratch_dir: scratch,
-      home: { seeded, written: seededText, ...(withExtension ? { extension: cli.extension } : {}) },
+      home: { seeded, written: seededText, ...(withExtension ? { extension: cli.extension } : {}), ...(skills.length ? { skills } : {}) },
+      env_allowlist: allowlist,
       session_dir: session.dir,
       calls: session.calls,
       calls_workers: session.workers,
@@ -402,6 +535,33 @@ writeFileSync(
 const artifacts = scenarioArtifacts(scenario);
 const written = harvestArtifacts(scratch, runDir, artifacts);
 const endedAt = new Date().toISOString();
+
+// The wrapper is what keeps the operator's environment out of the harness;
+// this is the check that it held, over everything the harvest just wrote. A
+// hit cannot be edited away, because the capture is the thing carrying the
+// secret: it goes, and the directory stays unexecuted for a clean re-run. Only
+// the matched name is printed, never what followed the `=`.
+const SECRET_FORMS = [/\b([A-Z][A-Z0-9_]*(?:KEY|TOKEN|SECRET|PASSWORD))=\S{8,}/, /\b(sk-)[A-Za-z0-9_-]{16,}/];
+const leaks = [];
+for (const rel of readdirSync(join(ROOT, runDir), { recursive: true })) {
+  const path = join(ROOT, runDir, rel);
+  if (!statSync(path, { throwIfNoEntry: false })?.isFile()) continue;
+  for (const [i, line] of tryOr(() => readFileSync(path, "utf8"), "").split("\n").entries()) {
+    for (const form of SECRET_FORMS) {
+      const hit = form.exec(line);
+      if (hit) leaks.push(`leak ${rel}:${i + 1} ${hit[1]}`);
+    }
+  }
+}
+if (leaks.length > 0) {
+  rmSync(join(ROOT, runDir, "session"), { recursive: true, force: true });
+  rmSync(join(ROOT, runDir, "transcript.md"), { force: true });
+  for (const line of leaks) console.error(line);
+  die(
+    7,
+    `${leaks.length} secret(s) reached ${runDir}: session/ and transcript.md deleted, run.yaml left unexecuted; re-run under a clean environment`,
+  );
+}
 
 // A failed prompt leaves the manifest unexecuted so the next attempt reuses
 // this directory instead of bumping the counter for a run that never happened.
@@ -426,8 +586,12 @@ rewriteManifest(join(ROOT, runDir, "run.yaml"), {
     (Object.keys(seededText).length ? ` and these written files: ${Object.entries(seededText).map(([p, t]) => `${p} = ${JSON.stringify(t)}`).join("; ")}` : "") +
     `, plus herdr's ${cli.kind} state-reporting integration (herdr integration install ${cli.kind})` +
     (cli.extra_args?.length ? `, launched with ${cli.extra_args.join(" ")}` : "") +
-    "; no user skill, rule, hook, MCP server, or context file was reachable",
+    (skills.length ? `; ${skills.map((s) => `skill ${s.name} symlinked at ${s.root}`).join("; ")}` : "") +
+    "; no other user skill, rule, hook, MCP server, or context file was reachable" +
+    `; process environment cleared to ${allowlist.filter((name) => !name.startsWith("HERDR_")).join(", ")} plus HERDR_*` +
+    `, the harness exec'd through ${bin}/${cli.kind}`,
   ...(withExtension ? { extension: `${cli.extension.name}, loaded explicitly with ${cli.extension.args.join(" ")}` } : {}),
+  ...(skills.length ? { skills } : {}),
 });
 
 console.log(`run dir    ${runDir}`);

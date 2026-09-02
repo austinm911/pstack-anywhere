@@ -101,7 +101,11 @@ harnesses:
       # HOME; `write` seeds a file with the given text. The scratch HOME is
       # deleted after harvest.
       home:
-        copy: [.claude/.credentials.json]
+        # Claude Code on this machine authenticates from CLAUDE_CODE_OAUTH_TOKEN;
+        # a copied .claude/.credentials.json is not read under a fresh HOME
+        # (verified: "Not logged in" with only the file, logged in with only
+        # the variable). `env` names variables the clean environment passes.
+        env: [CLAUDE_CODE_OAUTH_TOKEN]
         write:
           .claude.json: '{"hasCompletedOnboarding":true,"bypassPermissionsModeAccepted":true,"theme":"dark"}'
       # observed on this machine, not pinned
@@ -113,7 +117,6 @@ harnesses:
         - match: 'trust this folder'
           keys: [down, enter]
     upstream:
-      repo: https://github.com/anthropics/claude-code
       ref: f275fa282e76c5e5456912268f2c367a7f4f4797
       refDate: 2026-08-31
       cliVersionChecked: 2.1.234

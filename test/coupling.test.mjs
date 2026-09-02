@@ -182,7 +182,7 @@ describe("probe", () => {
   });
 
   test("a run.yaml that is not a map is void", () => {
-    const runId = `spawn_worker.omp.${today()}.01`;
+    const runId = `spawn_worker.omp.${today()}.99`;
     const dir = fixtureRepo((ledger, root) => {
       mkdirSync(join(root, "evidence/runs", runId), { recursive: true });
       writeFileSync(join(root, "evidence/runs", runId, "run.yaml"), "just a string\n");
@@ -191,5 +191,73 @@ describe("probe", () => {
     expect(out).toContain("void");
     expect(out).toContain("run.yaml is not a map");
     expect(code).toBe(2);
+  });
+
+  // The two negatives are in the same fixture as the positive: a pattern that
+  // fires on the pack's own placeholder shape or on a harnesses.yaml flag would
+  // void every run in the tree, which is a worse failure than missing a leak.
+  test("a run whose files carry a secret is void, and lookalikes are not", () => {
+    const leaky = `spawn_worker.omp.${today()}.98`;
+    const clean = `spawn_worker.omp.${today()}.97`;
+    const dir = fixtureRepo((ledger, root) => {
+      for (const id of [leaky, clean]) mkdirSync(join(root, "evidence/runs", id), { recursive: true });
+      writeFileSync(join(root, "evidence/runs", leaky, "run.yaml"), "scenario: spawn_worker\n");
+      writeFileSync(join(root, "evidence/runs", leaky, "transcript.md"), "$ env | sort\nFOO_API_KEY=abcdefghijklmnop\n");
+      writeFileSync(join(root, "evidence/runs", clean, "run.yaml"), "scenario: spawn_worker\n");
+      writeFileSync(join(root, "evidence/runs", clean, "transcript.md"), "placeholder $$ABC123:M$$\nmodel_flag: --model\n");
+    });
+
+    const hit = run(dir, "probe", "inspect", leaky);
+    expect(hit.out).toContain("void");
+    expect(hit.out).toContain("secret_leak");
+    expect(hit.out).toContain("transcript.md:2 FOO_API_KEY");
+    expect(hit.out).not.toContain("abcdefghijklmnop");
+    expect(hit.code).toBe(2);
+
+    const miss = run(dir, "probe", "inspect", clean);
+    expect(miss.out).not.toContain("secret_leak");
+    expect(miss.code).not.toBe(2);
+  });
+
+  test("a scenario on a path_assumption axis validates", () => {
+    const dir = fixtureRepo((_, root) => {
+      const path = join(root, "conformance/scenarios.yaml");
+      const doc = YAML.parse(readFileSync(path, "utf8"));
+      // skill_identify already covers pack_path in the real tree; add a second
+      // path_assumption domain so the eligibility check is what this asserts.
+      doc.scenarios.push({
+        id: "trunk_reread_smoke",
+        axis: "trunk_reread",
+        applies_to: ["omp"],
+        risk: "A stale playbook read is silent.",
+        question: "Can the agent re-read through harness skill addressing?",
+        setup: { preconditions: ["A scratch dir."], steps: ["Re-read the playbook."] },
+        observations: [{ id: "trunk.opened", observe: "Whether the playbook opened.", grounds: "The re-read happened." }],
+        parity: { allowed: ["skill:// addressing"], prohibited: ["git show of the pack"] },
+        parity_criteria: {
+          native: "Opened through harness skill loading.",
+          substitute: "Opened by path under the skill root.",
+          extension: "Substitute via a recorded extension.",
+          degrade: "Opened, but content was paraphrased.",
+          drop: "Could not open the playbook.",
+        },
+        evidence: { extends: "evidence_contract", artifacts: [{ path: "opened.txt", holds: "What was opened." }] },
+      });
+      writeFileSync(path, YAML.stringify(doc));
+    });
+    const listed = run(dir, "probe", "list");
+    expect(listed.code).toBe(0);
+    expect(listed.out).toContain("trunk_reread_smoke  trunk_reread");
+    expect(listed.err).not.toContain("is a path_assumption");
+    const checked = run(dir, "check");
+    expect(checked.err).not.toContain("is a path_assumption");
+    expect(checked.code).not.toBe(4);
+  });
+
+  test("skill_identify covers pack_path", () => {
+    const { code, out } = run(base, "probe", "list");
+    expect(code).toBe(0);
+    expect(out).toContain("skill_identify  pack_path");
+    expect(out).toMatch(/skill_identify[\s\S]*applies to\s+cursor, claude, codex, pi, omp/);
   });
 });

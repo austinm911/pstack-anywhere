@@ -1,0 +1,3 @@
+harness: codex
+spawn_worker: task tool
+evidence: The session's developer instructions identify this harness as Codex.

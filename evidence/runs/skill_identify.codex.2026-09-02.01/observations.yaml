@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: identify.skill_loaded
+    observed: 'true; Codex listed the skill to the model under its frontmatter name "Poteto Mode" (a separate codex exec under the same scratch layout lists it among the bundled skills), and the agent read SKILL.md and capabilities.md with sed on the first call'
+    source: invocation.json; the rollout''s first custom_tool_call and its output
+  - id: identify.column
+    observed: 'harness: codex; matches this run''s harness id'
+    source: identify.txt line 1
+  - id: identify.cell_text
+    observed: 'spawn_worker: task tool; byte-identical to the codex cell'
+    source: identify.txt line 2; skills/poteto-mode/capabilities.md at the digest in run.yaml
+  - id: identify.evidence
+    observed: 'the agent cited the session''s developer instructions identifying the harness as Codex'
+    source: identify.txt line 3
+  - id: identify.reference_resolved
+    observed: 'by a path under the harness skill root (~/.agents/skills/poteto-mode/capabilities.md) inside the scratch HOME, read with sed through exec_command; Codex has no skill:// scheme and no search outside the root was made'
+    source: invocation.json calls[0]

@@ -18,6 +18,8 @@
 # `bun scripts/coupling.mjs check` fails when a domain has no scenario
 # or when two scenarios cover one domain. A capability axis added upstream
 # therefore arrives uncovered and is named, rather than silently missed.
+# A path_assumption may also carry a scenario (skill addressing is something a
+# run can prove), but it is not gated as high-risk coverage.
 #
 # What this file is not:
 #   - It records no outcome. A scenario is a procedure and a rubric. Results
@@ -99,6 +101,14 @@ void_conditions:
   - id: digest_mismatch
     when: An artifact's recorded digest does not match the file in evidence/runs/.
     why: The record and the artifact have diverged; neither can be trusted.
+  - id: secret_leak
+    when: >-
+      Any file in the run directory, transcript, session capture, or artifact,
+      holds an environment secret: a NAME=value whose name ends in KEY, TOKEN,
+      SECRET, or PASSWORD, or an `sk-` API key.
+    why: >-
+      The run's files carry an environment secret and must not be attested;
+      delete and re-run under a clean environment.
   - id: superseded
     when: >-
       A later complete run of the same scenario on the same harness names this
@@ -974,3 +984,82 @@ scenarios:
           holds: The exact value that reached the agent, plus any mapping turn.
         - path: flood-trial.md
           holds: The three completions and the pending question's state around them, in UTC order.
+
+  - id: skill_identify
+    axis: pack_path
+    applies_to: [cursor, claude, codex, pi, omp]
+    risk: >-
+      Every skill in the pack says "read your own column". A harness whose
+      agent picks the wrong column silently runs another harness's
+      substitutions, and the playbook looks correct while doing the wrong
+      thing.
+    question: >-
+      With the poteto-mode skill installed at the harness skill root and
+      nothing else, can the agent resolve the skill's own capabilities.md,
+      name its harness column, and quote the spawn_worker cell for that
+      column verbatim?
+    setup:
+      preconditions:
+        - A scratch git repo, clean tree, no other agents running.
+        - The poteto-mode skill is installed at the harness skill root and nothing else is.
+        - The parent session has performed no prior work in this repo.
+      steps:
+        - >-
+          Instruct the agent that poteto-mode is installed, to read that
+          skill's capabilities.md through the harness's own skill addressing,
+          and to write identify.txt with exactly three lines: harness, the
+          spawn_worker cell verbatim, and one-sentence evidence of how it
+          knew the column. It must not consult anything outside the skill
+          and its own session, and must write harness: unknown rather than
+          guess.
+        - Instruct the agent to reply with exactly DONE <the harness line>.
+    observations:
+      - id: identify.skill_loaded
+        observe: >-
+          Whether the agent reached poteto-mode's capabilities.md at all,
+          from the transcript or the tool calls that opened it.
+        grounds: Without a loaded skill the column choice is guesswork.
+      - id: identify.column
+        observe: The harness line in identify.txt, compared to this run's harness id.
+        grounds: Whether the agent picked its own column rather than another harness's.
+      - id: identify.cell_text
+        observe: >-
+          The spawn_worker line in identify.txt, compared to the spawn_worker
+          cell for that harness in capabilities.md, byte for byte.
+        grounds: A right column with paraphrased cell text is not a clean substitute.
+      - id: identify.evidence
+        observe: >-
+          The evidence line in identify.txt: what the agent cites as telling it the harness.
+        grounds: Separates a session-grounded identification from a guess.
+      - id: identify.reference_resolved
+        observe: >-
+          Whether capabilities.md was opened through the skill's own
+          addressing (skill:// or the harness skill path) or by searching the
+          filesystem outside the skill root.
+        grounds: >-
+          pack_path's substitute is harness-relative skill addressing; a
+          filesystem search that finds the repo copy is not that substitute.
+    parity:
+      allowed:
+        - The skill is addressed as skill://poteto-mode/... or as a path under the harness skill root.
+        - The harness names itself from session metadata rather than from the table alone, provided the column still matches.
+      prohibited:
+        - Picking another harness's column.
+        - Reading capabilities.md from a path outside the installed skill.
+        - Guessing the column when the skill did not load.
+    parity_criteria:
+      native: >-
+        Column and cell match the ledger for this harness, and capabilities.md
+        was reached through the harness's own skill loading.
+      substitute: Same, but capabilities.md was reached by a path under the skill root rather than skill://.
+      extension: Substitute-level satisfaction, with the skill-loading primitive coming from a recorded extension.
+      degrade: >-
+        Right column, but the cell text is not verbatim, or the evidence line
+        names a guess. Name the weaker path.
+      drop: >-
+        Wrong column, or harness: unknown.
+    evidence:
+      extends: evidence_contract
+      artifacts:
+        - path: identify.txt
+          holds: The three lines naming harness, spawn_worker cell, and evidence.
