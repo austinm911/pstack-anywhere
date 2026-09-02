@@ -13,28 +13,62 @@ Cursor-specific parts named and replaced.
 
 ## Where it goes
 
-`~/.agents/skills` is read natively by Codex, pi, and OMP. Claude Code reads only
-`~/.claude/skills`. So two locations cover all four harnesses, and the second can
-be a symlink.
+Use whatever already manages your skills. The pack is `skills/<name>/SKILL.md`,
+the layout every manager consumes, so nothing here competes with one. Four
+paths, pick one.
+
+**1. A vendoring skill manager** (loadout or similar). Point it at this repo
+and take the whole `skills/` directory. It flattens the pack into one root and
+links that root into `~/.agents/skills`, `~/.claude/skills`, and
+`~/.pi/agent/skills`.
+
+**2. `npx skills add`.**
 
 ```sh
-# one canonical copy
-ln -s "$PWD/skills"/* ~/.agents/skills/
-
-# Claude Code, the only harness that does not read ~/.agents/skills
-ln -s "$PWD/skills"/* ~/.claude/skills/
+npx skills add <owner>/pstack-anywhere
 ```
+
+It walks `skills/<name>/SKILL.md` and links or copies each skill into every
+agent root it knows.
+
+**3. A plugin.** Claude Code: `/plugin marketplace add <owner>/pstack-anywhere`,
+then install `pstack-anywhere`. Codex: the repo carries
+`.agents/plugins/marketplace.json`, and at the pinned Codex source plugins sit
+behind `[features] plugins = true` in `config.toml`. Both harnesses read
+`.claude-plugin/plugin.json` and take skills from the plugin's `skills/`
+directory.
+
+**4. The plain fallback.**
+
+```sh
+bun scripts/install.mjs            # ~/.agents/skills and ~/.claude/skills
+bun scripts/install.mjs --dry-run  # list the links first
+bun scripts/install.mjs --root <dir>
+```
+
+It symlinks each `skills/<name>` into the root, refuses to overwrite anything
+that is not already a link to the same skill, and runs the doctor when done.
 
 Symlinks rather than copies. Codex handles a symlinked skill directory in its
 loader and OMP deduplicates by realpath, so one canonical copy behind two links
-is seen once. Four copies in four roots collide by skill name instead.
+is seen once. Four copies in four roots collide by skill name instead. Evidence
+for each claim is pinned upstream source under `references/harnesses/<id>/`,
+cited line by line in each `MANIFEST.md`.
 
-Evidence for each claim is pinned upstream source, saved under
-`references/harnesses/<id>/`, and cited line by line in each `MANIFEST.md`.
-`harnesses.yaml` carries the conclusions under `distribution`.
+Install the pack whole. Skills address each other as `../<name>/`, so a partial
+install (`npx skills add --skill <one>`, or linking a single directory) leaves
+dangling references.
 
-Three names collide with common skills, `tdd`, `teach`, and `unslop`. Check your
-target root before linking.
+Every path finishes the same way:
+
+```sh
+bun <skills root>/setup-pstack-anywhere/scripts/doctor.mjs
+```
+
+The doctor checks that every sibling the pack references is present in that
+root, that no skill in that root or any other known root resolves to a different
+copy, and names the three common skill names, `tdd`, `teach`, `unslop`, when
+another definition of one is found.
 
 ## Layout
 
@@ -44,8 +78,11 @@ coupling.yaml    every Cursor primitive this port replaces, and how, per harness
 harnesses.yaml   distribution targets, config files, and hook mechanism per harness
 references/      pinned upstream source per harness, with the pin and a refetch block
 scripts/         coupling.mjs: derives the ledger, renders what it derives, lints
+scripts/install.mjs  fallback: symlinks skills/ into a root, then runs the doctor
+.claude-plugin/  plugin manifest, read by Claude Code and Codex, plus the Claude marketplace
+.agents/plugins/ Codex marketplace
 PORTABILITY.md   generated: what remains, per-harness resolutions, evidence state
-UPSTREAM.md      pinned SHA, divergence log, open decisions
+UPSTREAM.md      pinned SHA, divergence log, decisions
 ```
 
 Claude, Codex, and OMP discover skills as `<root>/<skill-name>/SKILL.md`, one

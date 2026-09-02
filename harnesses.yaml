@@ -31,6 +31,15 @@ references:
 # ~/.agents/skills is read natively by Codex, pi, and OMP, so one location covers
 # three of four harnesses. Claude Code is the only holdout and needs its own
 # root. Two locations, not four, and the second can be a symlink.
+#
+# The pack ships no installer of its own. skills/<name>/SKILL.md is the layout a
+# vendoring skill manager, `npx skills add`, and the Claude and Codex plugin
+# manifests (.claude-plugin/plugin.json, .agents/plugins/marketplace.json) all
+# consume, taken whole. scripts/install.mjs is the plain fallback: per-skill
+# symlinks into ~/.agents/skills and ~/.claude/skills. Every path ends with
+# skills/setup-pstack-anywhere/scripts/doctor.mjs, run from the installed root,
+# which checks sibling skills, duplicates across the roots below, and the
+# common names tdd, teach, unslop. No hooks ship; no skill depends on one.
 distribution:
   canonical: ~/.agents/skills
   alsoRead: ~/.agent/skills

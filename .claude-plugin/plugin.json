@@ -1,0 +1,8 @@
+{
+  "name": "pstack-anywhere",
+  "version": "0.1.0",
+  "description": "A port of pstack for Claude Code, Codex, pi, and OMP.",
+  "author": {
+    "name": "Austin"
+  }
+}

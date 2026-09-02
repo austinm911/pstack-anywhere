@@ -183,3 +183,14 @@ changes work? I can generate one with /create-verification-skill." On yes, invok
 
 This offer matters more when `ui_driver` and `cli_driver` are `none`, because a
 project-local verification skill is the only remaining path to runtime proof.
+
+## Verify the install
+
+Run `bun <skills root>/setup-pstack-anywhere/scripts/doctor.mjs` against the
+root the harness loads, `~/.claude/skills` on Claude Code and `~/.agents/skills`
+on the rest. With no argument it checks every known root that holds this copy.
+It checks that every sibling this pack addresses as `../<name>/` is
+present in that root, and reports copies of the same skill sitting in other
+roots, where the other definition may win. A `missing` line means a skill was
+installed alone. The pack reads its siblings by relative path, so install it
+whole.

@@ -42,24 +42,36 @@ Named Cursor built-ins also referenced: `create-skill`, the built-in `babysit`
 `cursor-team-kit` plugin, the `mcps/` directory for MCP discovery, and model
 slugs read from the Cursor model picker into `.cursor/rules/pstack-models.mdc`.
 
-## Open decisions
+## Decisions
 
-**Name collisions.** `tdd`, `teach`, and `unslop` are common skill names. If a
-harness already loads a skill by one of those names, two definitions load at
-once with no way to tell which fired. Decide ownership per name before the first
-install, and record it here.
+**Name collisions.** The pack keeps upstream's `tdd`, `teach`, and `unslop`.
+Rule 1 forbids renaming. The doctor
+(`skills/setup-pstack-anywhere/scripts/doctor.mjs`) reports another definition
+of the same name in any known root, and which one wins or whether both load is
+the harness's rule. Renaming is the user's skill manager's job: loadout-style
+overrides do it. No skill in the pack addresses those three as `../<name>/`, so
+a rename of any of them breaks nothing here.
 
-**Install model.** One canonical store, per-skill symlinks into each harness
-root. Not copies. `~/.agents/skills` is a native user-scope root for Codex, pi,
-and OMP, verified in source at the pins recorded in `references/harnesses/`, so
-it plus `~/.claude/skills` covers all four. OMP also scans the Claude and Codex
-roots, so a copy per root makes it see the same skill several times and warn on
-the name; symlinks collapse by realpath and stay silent. Target roots and hook
-mechanisms are in `harnesses.yaml`.
+**Install model.** No pack installer that competes with a skill manager. The
+layout `skills/<name>/SKILL.md` is what every manager consumes, so a vendoring
+manager, `npx skills add`, or a plugin install each take `skills/` whole.
+Claude and Codex plugins share `.claude-plugin/plugin.json`, which Codex
+discovers at its pin (`references/harnesses/codex/MANIFEST.md`), with a Claude
+marketplace at `.claude-plugin/marketplace.json` and a Codex one at
+`.agents/plugins/marketplace.json`. `scripts/install.mjs` is the plain fallback:
+per-skill symlinks from the one canonical `skills/` copy into
+`~/.agents/skills` and `~/.claude/skills`, refusing to overwrite. The doctor is
+the post-install check on every path.
+
+Symlinks, not copies. `~/.agents/skills` is a native user-scope root for Codex,
+pi, and OMP, verified in source at the pins recorded in `references/harnesses/`,
+so it plus `~/.claude/skills` covers all four. OMP also scans the Claude and
+Codex roots, so a copy per root makes it see the same skill several times and
+warn on the name; symlinks collapse by realpath and stay silent. Target roots
+are in `harnesses.yaml`. No hooks ship: no skill depends on one.
 
 OMP does not scan any `.pi` root, so pi and OMP do not share through
 `~/.pi/agent/skills`. They share through `~/.agents/skills`.
 
-No adapter-per-harness: harness difference is the root path and the hook format,
-not the skill content. The installer needs a manifest of the names this repo
-owns and a pre-flight collision check against every target root.
+No adapter-per-harness: harness difference is the root path, not the skill
+content.

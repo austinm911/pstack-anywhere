@@ -1,0 +1,12 @@
+{
+  "name": "pstack-anywhere",
+  "plugins": [
+    {
+      "name": "pstack-anywhere",
+      "source": {
+        "source": "local",
+        "path": "./"
+      }
+    }
+  ]
+}

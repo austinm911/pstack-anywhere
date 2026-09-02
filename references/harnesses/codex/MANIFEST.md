@@ -35,6 +35,16 @@ curl -sSf "$BASE/codex-rs/skills/src/parser.rs" -o references/harnesses/codex/sr
 BLOB=$(curl -sSf "https://api.github.com/repos/openai/codex/git/trees/$REF?recursive=1" | jq -r '.tree[] | select(.path=="codex-rs/ext/skills/src/host_roots.rs") | .sha')
 curl -sSf "https://api.github.com/repos/openai/codex/git/blobs/$BLOB" | jq -r '.content' | tr -d '\n' | base64 --decode > references/harnesses/codex/src/codex-rs/ext/skills/src/host_roots.rs
 echo "$BLOB"  # expected ac2bf3e9cdf8ccf0c396f011f3dbb8f515db39c7
+mkdir -p references/harnesses/codex/src/codex-rs/{exec-server-protocol/src,core-plugins/src,core/tests/suite}
+curl -sSf "$BASE/codex-rs/exec-server-protocol/src/protocol.rs" -o references/harnesses/codex/src/codex-rs/exec-server-protocol/src/protocol.rs
+curl -sSf "$BASE/codex-rs/core-plugins/src/marketplace.rs" -o references/harnesses/codex/src/codex-rs/core-plugins/src/marketplace.rs
+curl -sSf "$BASE/codex-rs/core-plugins/src/manifest.rs" -o references/harnesses/codex/src/codex-rs/core-plugins/src/manifest.rs
+curl -sSf "$BASE/codex-rs/core-plugins/src/loader.rs" -o references/harnesses/codex/src/codex-rs/core-plugins/src/loader.rs
+curl -sSf "$BASE/codex-rs/core-plugins/src/provider.rs" -o references/harnesses/codex/src/codex-rs/core-plugins/src/provider.rs
+curl -sSf "$BASE/codex-rs/core-plugins/src/startup_sync.rs" -o references/harnesses/codex/src/codex-rs/core-plugins/src/startup_sync.rs
+curl -sSf "$BASE/codex-rs/core/tests/suite/skills_extension.rs" -o references/harnesses/codex/src/codex-rs/core/tests/suite/skills_extension.rs
+curl -sSf "$BASE/codex-rs/core/tests/suite/plugins.rs" -o references/harnesses/codex/src/codex-rs/core/tests/suite/plugins.rs
+curl -sSf "$BASE/codex-rs/hooks/src/declarations.rs" -o references/harnesses/codex/src/codex-rs/hooks/src/declarations.rs
 # Current head SHA:
 curl -s "https://api.github.com/repos/openai/codex/commits?per_page=1" | jq -r '.[0].sha'
 ```
@@ -63,6 +73,15 @@ curl -s "https://api.github.com/repos/openai/codex/commits?per_page=1" | jq -r '
 | `src/codex-rs/skills/src/parser.rs` | `codex-rs/skills/src/parser.rs` | 1-225 | `SKILL.md` YAML frontmatter keys and validation |
 | `src/codex-rs/tui/src/slash_command.rs` | `codex-rs/tui/src/slash_command.rs` | 1-331 | Built-in `/agents`, `/subagents`, `/init`, and `/hooks` command names |
 | `src/codex-rs/utils/home-dir/src/lib.rs` | `codex-rs/utils/home-dir/src/lib.rs` | 1-134 | `CODEX_HOME` override and default `~/.codex` resolution |
+| `src/codex-rs/exec-server-protocol/src/protocol.rs` | `codex-rs/exec-server-protocol/src/protocol.rs` | 1-1311 | `DISCOVERABLE_PLUGIN_MANIFEST_PATHS`: ordered plugin manifest paths under a plugin root |
+| `src/codex-rs/core-plugins/src/provider.rs` | `codex-rs/core-plugins/src/provider.rs` | 1-253 | Plugin root manifest probe over `DISCOVERABLE_PLUGIN_MANIFEST_PATHS`, first file wins |
+| `src/codex-rs/core-plugins/src/manifest.rs` | `codex-rs/core-plugins/src/manifest.rs` | 1-1020 | `plugin.json` fields (`name`, `version`, `description`, `keywords`, `skills`, `mcpServers`, `apps`, `hooks`, `interface`), all optional |
+| `src/codex-rs/core-plugins/src/loader.rs` | `codex-rs/core-plugins/src/loader.rs` | 1-1911 | Plugin default component paths: `skills/`, `hooks/hooks.json`, `.mcp.json`, `.app.json` |
+| `src/codex-rs/core-plugins/src/marketplace.rs` | `codex-rs/core-plugins/src/marketplace.rs` | 1-1139 | Marketplace manifest paths, `marketplace.json` JSON shape, local `source` path rules, policy defaults |
+| `src/codex-rs/core-plugins/src/startup_sync.rs` | `codex-rs/core-plugins/src/startup_sync.rs` | 1-1138 | Curated plugins snapshot check and required `.agents/plugins/marketplace.json` |
+| `src/codex-rs/core/tests/suite/skills_extension.rs` | `codex-rs/core/tests/suite/skills_extension.rs` | 1-3554 | Integration test: plugin `skills/<name>/SKILL.md` loaded behind `[features] plugins = true` |
+| `src/codex-rs/core/tests/suite/plugins.rs` | `codex-rs/core/tests/suite/plugins.rs` | 1-1686 | Integration test: local `.agents/plugins/marketplace.json` fixture and `[marketplaces.<name>]` config |
+| `src/codex-rs/hooks/src/declarations.rs` | `codex-rs/hooks/src/declarations.rs` | 1-102 | Plugin hook declarations keyed from `hooks/hooks.json` matcher groups |
 
 ## Findings
 
@@ -75,6 +94,18 @@ The normal host loader follows directory symlinks and includes hidden directorie
 Skill frontmatter is YAML delimited by lines whose trimmed value is `---`. The accepted keys are top-level `name`, top-level `description`, and `metadata.short-description`; `description` is required, `name` defaults to the directory name when absent, and `name` is limited to 64 characters (`src/codex-rs/skills/src/parser.rs:6-20`, `src/codex-rs/skills/src/parser.rs:43-85`).
 
 The merge keeps the first skill encountered for a duplicate `SKILL.md` path, then removes later duplicate paths and sorts retained skills by scope rank `Repo = 0`, `User = 1`, `System = 2`, `Admin = 3`, followed by name and path (`src/codex-rs/ext/skills/src/loader/host_merge.rs:201-249`, `src/codex-rs/ext/skills/src/loader/host_merge.rs:262-268`). There is no name-based winner in this implementation. Environment results are sorted by qualified `name`, then path (`src/codex-rs/ext/skills/src/loader/environment.rs:192-200`). No skill enable/disable toggle appears in these discovery files.
+
+### Plugins
+
+A plugin root is recognized by the first existing file among `.codex-plugin/plugin.json`, `.claude-plugin/plugin.json`, and `.cursor-plugin/plugin.json`, in that order (`src/codex-rs/exec-server-protocol/src/protocol.rs:45-50`, `src/codex-rs/core-plugins/src/provider.rs:179-211`). Every `plugin.json` field is `serde(default)`: `name`, `version`, `description`, `keywords`, `skills`, `mcpServers`, `apps`, `hooks`, `interface` (`src/codex-rs/core-plugins/src/manifest.rs:45-68`). A Claude-format manifest with only `name`, `version`, `description`, and `author` therefore parses; `author` is an unknown field and is ignored.
+
+When `skills` is absent the plugin's skill root is `<plugin root>/skills` if that directory exists (`src/codex-rs/core-plugins/src/loader.rs:67`, `src/codex-rs/core-plugins/src/loader.rs:1071-1099`). The integration test writes `.codex-plugin/plugin.json` with only `name` and `description`, then `skills/sample-search/SKILL.md`, and expects it loaded (`src/codex-rs/core/tests/suite/skills_extension.rs:546-559`). Plugins are gated by `[features] plugins = true` and each plugin is enabled with `[plugins."<name>@<marketplace>"] enabled = true` in `config.toml` (`src/codex-rs/core/tests/suite/skills_extension.rs:564-567`, `src/codex-rs/core/tests/suite/plugins.rs:118-120`).
+
+When `hooks` is absent the loader reads `<plugin root>/hooks/hooks.json` only if it is a file (`src/codex-rs/core-plugins/src/loader.rs:68`, `src/codex-rs/core-plugins/src/loader.rs:1220-1232`); plugin hook declarations are keyed from that file's matcher groups (`src/codex-rs/hooks/src/declarations.rs:20-30`, `src/codex-rs/hooks/src/declarations.rs:53-60`). This pack ships no hooks file, so no plugin hook is declared.
+
+A marketplace root is recognized by `.agents/plugins/marketplace.json`, `.agents/plugins/api_marketplace.json`, `.claude-plugin/marketplace.json`, or `.cursor-plugin/marketplace.json` (`src/codex-rs/core-plugins/src/marketplace.rs:20-25`). The curated-plugins sync requires `.agents/plugins/marketplace.json` at the repo root (`src/codex-rs/core-plugins/src/startup_sync.rs:366-371`, `src/codex-rs/core-plugins/src/startup_sync.rs:513-521`). The JSON is camelCase: top-level `name` (required), optional `interface.displayName`, and `plugins[]` (`src/codex-rs/core-plugins/src/marketplace.rs:968-982`). Each plugin entry has `name` (required), `source` (required), optional `policy` with `installation` defaulting to `AVAILABLE` and `authentication` defaulting to `ON_INSTALL`, optional `category`, and any extra fields are kept as a manifest fallback (`src/codex-rs/core-plugins/src/marketplace.rs:984-1006`, `src/codex-rs/core-plugins/src/marketplace.rs:165-183`). `source` is either a string path or an object tagged by `source`: `local` with `path`, `url`, `git-subdir`, or `npm` (`src/codex-rs/core-plugins/src/marketplace.rs:1008-1043`). A string path and `{"source":"local","path":...}` resolve identically; `.` or `./` means the marketplace root, any other local path must start with `./` and stay inside the root (`src/codex-rs/core-plugins/src/marketplace.rs:593-603`, `src/codex-rs/core-plugins/src/marketplace.rs:650-693`). The test fixture is `{"name":"test","plugins":[{"name":"sample","source":{"source":"local","path":"./sample"}}]}` registered through `[marketplaces.<name>] source_type = "local" source = "<dir>"` (`src/codex-rs/core/tests/suite/plugins.rs:1281-1292`).
+
+The repo's `.agents/plugins/marketplace.json` and `.claude-plugin/marketplace.json` both name one plugin `pstack-anywhere` with source `./`, so Codex resolves the plugin root to the repo root and reads `.claude-plugin/plugin.json` there; the Claude marketplace's extra `owner` and per-plugin `description`/`version` fields are ignored or kept as fallback by the same parser.
 
 ### Hooks
 

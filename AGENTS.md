@@ -39,9 +39,11 @@ A port of pstack (Cursor plugin) to Claude Code, Codex, pi, and OMP. Read
   `conformance/scenarios.yaml` as a procedure and a rubric; outcomes live in
   `evidence/runs/`.
 - Skills stay self-contained: a skill's scripts live under that skill.
-- Install is symlinks from the one canonical `skills/` copy. Roots and hook
-  formats are in `harnesses.yaml`. The `tdd`, `teach`, `unslop` collisions are
-  an open decision in `UPSTREAM.md`; resolve them there before an install.
+- No pack installer competes with the user's skill manager. The layout
+  `skills/<name>/SKILL.md` is what managers consume; `scripts/install.mjs` is
+  the plain symlink fallback, and `setup-pstack-anywhere/scripts/doctor.mjs`
+  is the post-install check. Roots and hook formats are in `harnesses.yaml`.
+  `tdd`, `teach`, `unslop` keep upstream names; decisions are in `UPSTREAM.md`.
 
 ## Maintenance
 

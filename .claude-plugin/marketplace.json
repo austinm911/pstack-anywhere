@@ -1,0 +1,14 @@
+{
+  "name": "pstack-anywhere",
+  "owner": {
+    "name": "Austin"
+  },
+  "plugins": [
+    {
+      "name": "pstack-anywhere",
+      "source": "./",
+      "description": "A port of pstack for Claude Code, Codex, pi, and OMP.",
+      "version": "0.1.0"
+    }
+  ]
+}
