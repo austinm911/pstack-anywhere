@@ -23,7 +23,11 @@ Into `evidence/runs/<run-id>/`, created by `probe prepare`:
 - `transcript.md`, `herdr agent read --source recent-unwrapped`. It may be a
   viewport rather than the whole session if the harness uses the alternate screen
 - `invocation.json`, the herdr start, prompt, get, and explain responses plus the
-  harness argv, its version output, the model, and the scratch dir
+  harness argv, its version output, the model, the scratch dir, and `calls`, every
+  assistant tool call parsed out of the session log with its arguments
+  (`calls_workers` holds one entry per subagent log)
+- `session/`, the harness's own session files written during the run, copied from
+  the `session_dir` in `harnesses.yaml`. `NONE.txt` there means none were found
 - every file the scenario declares as an artifact that setup.sh or the agent left
   in the scratch dir, plus `probe.after.txt` copied from `probe.txt`
 

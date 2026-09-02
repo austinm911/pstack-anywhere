@@ -15,9 +15,9 @@
 // Anything else is passed through from the command that failed.
 
 import { YAML } from "bun";
-import { existsSync, readFileSync, writeFileSync, copyFileSync, statSync, readdirSync } from "node:fs";
-import { join, dirname, basename } from "node:path";
-import { hostname, platform, release } from "node:os";
+import { existsSync, readFileSync, writeFileSync, copyFileSync, statSync, readdirSync, mkdirSync, realpathSync } from "node:fs";
+import { join, dirname, basename, relative, isAbsolute } from "node:path";
+import { hostname, platform, release, homedir, tmpdir } from "node:os";
 
 const ROOT = join(dirname(new URL(import.meta.url).pathname), "..");
 const USAGE = "usage: bun bench/run.mjs <scenario> <harness> <model>";
@@ -28,6 +28,15 @@ const TOOLING_ARTIFACTS = new Set(["run.yaml", "observations.yaml", "invocation.
 
 const decoder = new TextDecoder();
 const die = (code, message) => (console.error(message), process.exit(code));
+// Reading another program's files: a bad line or a vanished path never loses a
+// run. A function fallback sees the error, a value fallback replaces it.
+const tryOr = (fn, fallback) => {
+  try {
+    return fn();
+  } catch (error) {
+    return typeof fallback === "function" ? fallback(error) : fallback;
+  }
+};
 
 // Every subprocess goes through here: one decode, one cwd, and no shell, so
 // prompt text and scratch paths are argv elements rather than words.
@@ -94,7 +103,12 @@ const harnessVersion = (cli) => {
   return { command: cli.version_command, raw: r.out + r.err };
 };
 
-const agentName = (scenario) => `bench-${scenario.replaceAll("_", "-")}`.slice(0, 32).toLowerCase();
+// Herdr names are unique among live agents, and the last run's pane may still
+// be open, so the name carries harness and counter, not only the scenario.
+const agentName = (runId) => {
+  const [scenario, harness, , counter] = runId.split(".");
+  return `b-${scenario.replaceAll("_", "-")}-${harness}-${counter}`.slice(0, 32).toLowerCase();
+};
 
 const startAgent = (name, cli, pane, model) => {
   const args = [
@@ -133,6 +147,67 @@ const harvestArtifacts = (scratch, runDir, artifacts) => {
   return written;
 };
 
+// Each harness keys its session store by working directory with its own slug
+// rule, all read off disk and written down in harnesses.yaml, so try every
+// observed form, on the scratch path and on its realpath.
+const resolveSessionDir = (template, scratch) => {
+  const base = template.replace(/^~(?=$|\/)/, homedir());
+  if (!base.includes("{cwd_slug}")) return existsSync(base) ? base : null;
+  const dash = (p) => p.replace(/[/\\:]/g, "-");
+  const under = (rel) => rel === "" || (!rel.startsWith("..") && !isAbsolute(rel));
+  const slugs = [scratch, tryOr(() => realpathSync(scratch), scratch)].flatMap((dir) => {
+    const [home, tmp] = [relative(homedir(), dir), relative(tmpdir(), dir)];
+    const abs = [dir.replace(/[^a-zA-Z0-9]/g, "-"), `--${dash(dir.replace(/^\//, ""))}--`];
+    return [...abs, under(home) ? `-${dash(home)}` : null, under(tmp) ? (tmp ? `-tmp-${dash(tmp)}` : "-tmp") : null];
+  });
+  const slug = [...new Set(slugs.filter(Boolean))].find((s) => existsSync(base.replace("{cwd_slug}", s)));
+  return slug ? base.replace("{cwd_slug}", slug) : null;
+};
+
+// Assistant tool calls as each harness records them, every shape read off disk:
+//   omp, pi  {message: {role: assistant, content: [{type: toolCall, name, arguments}]}}
+//   claude   {type: assistant, message: {content: [{type: tool_use, name, input}]}}
+//   codex    {type: response_item, payload: {type: function_call | custom_tool_call, name, arguments | input}}, a JSON string
+const TOOL_CALL_TYPES = new Set(["toolCall", "tool_use", "function_call", "custom_tool_call"]);
+const extractCalls = (text) => {
+  let [calls, known] = [[], false];
+  for (const line of text.split("\n")) {
+    const entry = line.trim() ? tryOr(() => JSON.parse(line), null) : null;
+    const parts = Array.isArray(entry?.message?.content) ? entry.message.content : [];
+    const payload = entry?.type === "response_item" ? entry.payload : null;
+    if (parts.length > 0 || payload) known = true;
+    const ts = typeof entry?.timestamp === "string" ? entry.timestamp : null;
+    for (const part of payload ? [...parts, payload] : parts)
+      if (TOOL_CALL_TYPES.has(part?.type)) calls.push({ name: part.name, arguments: part.arguments ?? part.input ?? null, ts });
+  }
+  return { calls, known };
+};
+
+// The transcript only shows the TUI's collapsed tool boxes, so the arguments an agent really sent come from the harness's own session log.
+const captureSession = (runDir, template, scratch, startedAt) => {
+  const dest = join(ROOT, runDir, "session");
+  const since = Date.parse(startedAt) - 5000; // slack for a header written just before our clock
+  const dir = template ? resolveSessionDir(template, scratch) : null;
+  const where = dir ?? `${template ?? "no session_dir in harnesses.yaml"} (nothing matched ${scratch})`;
+  const all = (dir ? readdirSync(dir, { recursive: true }) : []).map((rel) => ({ rel, s: statSync(join(dir, rel), { throwIfNoEntry: false }) }));
+  const rels = all.filter(({ s }) => s?.isFile() && s.mtimeMs >= since).map(({ rel }) => rel).sort();
+  let [calls, known, workers] = [[], false, {}];
+  mkdirSync(dest, { recursive: true });
+  for (const rel of rels) {
+    mkdirSync(dirname(join(dest, rel)), { recursive: true });
+    copyFileSync(join(dir, rel), join(dest, rel));
+    if (!rel.endsWith(".jsonl")) continue;
+    const parsed = extractCalls(readFileSync(join(dir, rel), "utf8"));
+    known ||= parsed.known;
+    // A file in a subdirectory is a subagent's log, named after the worker.
+    if (rel.includes("/")) workers[basename(rel, ".jsonl")] = parsed.calls;
+    else calls = calls.concat(parsed.calls);
+  }
+  if (rels.length === 0) writeFileSync(join(dest, "NONE.txt"), `searched ${where}; nothing newer than ${startedAt}\n`);
+  const note = rels.length === 0 ? `no session files under ${where}` : known ? null : `copied from ${dir} but not parsed: unrecognised line shape`;
+  return { dir, files: rels.length, calls: known ? calls : null, workers, note };
+};
+
 // The prepared manifest's header explains why the nulls are there. Keep it, and
 // fill the nulls rather than rewriting the file from scratch.
 const rewriteManifest = (path, fields) => {
@@ -143,7 +218,7 @@ const rewriteManifest = (path, fields) => {
     header.push(line);
   }
   const manifest = { ...YAML.parse(text), ...fields };
-  writeFileSync(path, [...header, header.length ? "" : null, YAML.stringify(manifest)].filter((l) => l !== null).join("\n"));
+  writeFileSync(path, [...header, header.length ? "" : null, YAML.stringify(manifest, null, 2)].filter((l) => l !== null).join("\n"));
 };
 
 const [scenario, harness, model] = process.argv.slice(2);
@@ -160,7 +235,7 @@ const startedAt = new Date().toISOString();
 const version = harnessVersion(cli);
 const pane = herdr("pane", "split", "--current", "--direction", "right", "--cwd", scratch, "--no-focus").result.pane
   .pane_id;
-const name = agentName(scenario);
+const name = agentName(runId);
 const { start, argv } = startAgent(name, cli, pane, model);
 
 // A prompt that times out still leaves a transcript worth harvesting, so the
@@ -177,6 +252,11 @@ try {
 writeFileSync(join(ROOT, runDir, "transcript.md"), `${TRANSCRIPT_HEADER}\n\n${readText(name, 2000)}`);
 const get = herdr("agent", "get", name);
 const explain = herdr("agent", "explain", name, "--json");
+
+// Session capture is best effort: a run with no session log is still a run.
+const failed = (error) => ({ dir: null, files: 0, calls: null, workers: {}, note: `session capture failed: ${error.message}` });
+const session = tryOr(() => captureSession(runDir, cli.session_dir ?? null, scratch, startedAt), failed);
+
 writeFileSync(
   join(ROOT, runDir, "invocation.json"),
   `${JSON.stringify(
@@ -186,6 +266,10 @@ writeFileSync(
       cli: { command: start.result?.argv ?? ["herdr", ...argv], version: version.raw },
       model,
       scratch_dir: scratch,
+      session_dir: session.dir,
+      calls: session.calls,
+      calls_workers: session.workers,
+      ...(session.note ? { calls_note: session.note } : {}),
     },
     null,
     2,
@@ -215,4 +299,6 @@ rewriteManifest(join(ROOT, runDir, "run.yaml"), {
 console.log(`run dir    ${runDir}`);
 console.log(`agent      ${name} on pane ${pane}, status ${status}`);
 console.log(`artifacts  ${["run.yaml", "transcript.md", "invocation.json", ...written].join(", ")}`);
+const calls = (session.calls?.length ?? 0) + Object.values(session.workers).reduce((n, c) => n + c.length, 0);
+console.log(`session    ${session.files} file(s) copied, ${calls} call(s) extracted${session.note ? ` (${session.note})` : ""}`);
 console.log(`next: write observations.yaml by hand, then bun scripts/coupling.mjs probe inspect ${runId}`);

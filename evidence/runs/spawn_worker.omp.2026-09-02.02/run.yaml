@@ -1,0 +1,20 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: spawn_worker
+harness: omp
+run_id: spawn_worker.omp.2026-09-02.02
+coupling_version: 2
+started_at: 2026-09-02T05:35:46.278Z
+ended_at: 2026-09-02T05:36:20.529Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: omp/18.1.2
+harness_version_source: omp --version -> omp/18.1.2
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: none recorded by bench/run.mjs; fill by hand if the harness config is non-default
+supersedes: null

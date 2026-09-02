@@ -261,6 +261,40 @@ artifact_entry:
 
 # ---------------------------------------------------------------------------
 
-# No attestation has been recorded. Every coupling.yaml cell derives to
-# unverified, no harness is exercised, and no conformance scenario has been run.
-attestations: []
+attestations:
+  - id: spawn_worker-omp-2026-09-02
+    method: exercised
+    axis: spawn_worker
+    harness: omp
+    scenario: spawn_worker
+    run: spawn_worker.omp.2026-09-02.02
+    artifacts:
+      - path: CHECKLIST.md
+        digest: cfc850cc4bb0177d60d8d6e344b6df622875e10d77102d8c3232c66fb8d2a14d
+      - path: invocation.json
+        digest: 2d559197a49d904c7290e1851082a123852e9096061101af1a27fb950b51c9e4
+      - path: observations.yaml
+        digest: f7423b2ab8a28886367f016f8e1d02a9edb09706c0a1dcb5d634544a03556054
+      - path: probe.after.txt
+        digest: 661461bb50c44667bced1ab40c403b3af6e150712e992b3f85a20b82a557c3df
+      - path: probe.before.txt
+        digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684
+      - path: run.yaml
+        digest: 01ca36a4b27aff93f71062f87b8c5f11480fcad466f6a5857e0b009f4cdc8b75
+      - path: session/2026-09-02T05-35-51-940Z_01a0609d-d684-733b-b58b-456e3b495b99/ProbeWriter.jsonl
+        digest: 0bd7f2aa28b9b514d659791161072018dcacc8d9f5a61f0d002075f970dde986
+      - path: session/2026-09-02T05-35-51-940Z_01a0609d-d684-733b-b58b-456e3b495b99/ProbeWriter.md
+        digest: 20617525fb8b4028a6eabcf42ccf2b71e7be547c325c3f6696ece62562324c86
+      - path: session/2026-09-02T05-35-51-940Z_01a0609d-d684-733b-b58b-456e3b495b99.jsonl
+        digest: 7ada2a79c9c1a9fe7634bb4bb53a111a9c8e82220d4bdd2940a7817675287f20
+      - path: transcript.md
+        digest: 1c0f08117832ef70b625506a384845ee3d7dcbc4d5cd567cbf942a35802c6938
+      - path: worker-report.txt
+        digest: c36a661fd65fff7fac9a177f2885552c3c7c44737c335b7e8baac25962243470
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane, omp 18.1.2 with opus:low.
+      Grounds the omp spawn_worker cell only: the task tool ran one worker in
+      its own context, the structured result came back through hub wait, and
+      the parent never touched probe.txt. Says nothing about durability or
+      any other harness.
