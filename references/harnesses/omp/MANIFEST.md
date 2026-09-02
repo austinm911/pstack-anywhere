@@ -36,6 +36,8 @@ curl -sSf "$BASE/packages/coding-agent/src/task/discovery.ts" -o references/harn
 curl -sSf "$BASE/packages/coding-agent/src/task/agents.ts" -o references/harnesses/omp/src/packages/coding-agent/src/task/agents.ts
 curl -sSf "$BASE/packages/coding-agent/src/autolearn/managed-skills.ts" -o references/harnesses/omp/src/packages/coding-agent/src/autolearn/managed-skills.ts
 curl -sSf "$BASE/packages/utils/src/dirs.ts" -o references/harnesses/omp/src/packages/utils/src/dirs.ts
+mkdir -p references/harnesses/omp/src/packages/coding-agent/src/slash-commands
+curl -sSf "$BASE/packages/coding-agent/src/slash-commands/builtin-control.ts" -o references/harnesses/omp/src/packages/coding-agent/src/slash-commands/builtin-control.ts
 ```
 
 Current head SHA:
@@ -72,6 +74,7 @@ curl -s "https://api.github.com/repos/can1357/oh-my-pi/commits?per_page=1" | jq 
 | `src/packages/coding-agent/src/task/agents.ts` | `packages/coding-agent/src/task/agents.ts` | 171 | Task-agent frontmatter parser and fields |
 | `src/packages/coding-agent/src/autolearn/managed-skills.ts` | `packages/coding-agent/src/autolearn/managed-skills.ts` | 255 | `omp-managed` provider and managed root |
 | `src/packages/utils/src/dirs.ts` | `packages/utils/src/dirs.ts` | 1114 | `.omp`, config filename, `PI_CONFIG_DIR`, agent-dir overrides |
+| `src/packages/coding-agent/src/slash-commands/builtin-control.ts` | `packages/coding-agent/src/slash-commands/builtin-control.ts` | 82 | Built-in control slash commands; `quit` (alias `q`) is the TUI shutdown, cited by `harnesses.yaml` `cli.quit_command` |
 
 ## Findings
 

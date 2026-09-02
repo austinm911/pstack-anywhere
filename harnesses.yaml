@@ -125,6 +125,10 @@ harnesses:
       startup:
         - match: 'trust this folder'
           keys: [down, enter]
+      # bench drivers end a session with this slash command (ctx.quit method
+      # "command"). The CLI source is unpublished; the pin's only mention is
+      # references/harnesses/claude/src/CHANGELOG.md.L1298-L1306.md (upstream line 1302)
+      quit_command: /exit
     upstream:
       ref: f275fa282e76c5e5456912268f2c367a7f4f4797
       refDate: 2026-08-31
@@ -210,6 +214,9 @@ harnesses:
       # observed on this machine, not pinned
       # not keyed by cwd; every session lands under YYYY/MM/DD/rollout-*.jsonl
       session_dir: ~/.codex/sessions
+      # bench drivers end a session with this slash command (ctx.quit method
+      # "command"). /exit is an alias. Pinned: references/harnesses/codex/src/codex-rs/tui/src/slash_command.rs:67-68,103
+      quit_command: /quit
     upstream:
       repo: https://github.com/openai/codex
       ref: e017e93aceafb2fe04bed1c926e448a5fb4f913d
@@ -295,6 +302,9 @@ harnesses:
       # observed on this machine, not pinned
       # slug: "--" + resolved cwd without its leading slash, "/" and ":" -> "-", + "--"
       session_dir: ~/.pi/agent/sessions/{cwd_slug}
+      # bench drivers end a session with this slash command (ctx.quit method
+      # "command"). Pinned: references/harnesses/pi/src/packages/coding-agent/src/core/slash-commands.ts:42
+      quit_command: /quit
     upstream:
       repo: https://github.com/earendil-works/pi
       ref: 853a80d26c90a14c1886f0ebb8ffaae133ca2185
@@ -376,6 +386,9 @@ harnesses:
       # slug: cwd relative to $HOME as "-a-b", or to $TMPDIR as "-tmp-a-b",
       # otherwise pi's "--a-b--" form; always on the realpath
       session_dir: ~/.omp/agent/sessions/{cwd_slug}
+      # bench drivers end a session with this slash command (ctx.quit method
+      # "command"). Pinned: references/harnesses/omp/src/packages/coding-agent/src/slash-commands/builtin-control.ts:76-80
+      quit_command: /quit
     upstream:
       repo: https://github.com/can1357/oh-my-pi
       ref: eea5628f13043286e17c4a2ea4fc28b15fda33ca

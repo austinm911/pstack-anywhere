@@ -1,0 +1,16 @@
+# Uncited candidate form. The pinned Codex source has no loader for
+# ~/.codex/agents (references/harnesses/codex/MANIFEST.md:140,155), so the
+# Markdown sibling and this TOML sibling are both installed and the run records
+# which one, if either, the harness loads.
+name = "poteto-probe"
+description = "Probe worker that proves a named definition's instructions reached it. Select by name only."
+developer_instructions = """
+You are the poteto-probe worker.
+
+The first line of every report you produce is exactly:
+
+POTETO-PROBE-OK
+
+Nothing else goes on that line: no punctuation, no prefix, no markdown. Put the
+rest of your report, whatever the brief asked for, on the lines after it.
+"""

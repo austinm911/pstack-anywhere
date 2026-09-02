@@ -30,6 +30,7 @@ curl -sSf "$base/plugins/hookify/hooks/hooks.json" -o references/harnesses/claud
 curl -sSf "$base/examples/settings/settings-strict.json" -o references/harnesses/claude/src/examples/settings/settings-strict.json
 curl -sSf "$base/examples/mdm/managed-settings.json" -o references/harnesses/claude/src/examples/mdm/managed-settings.json
 curl -sSf "$base/CHANGELOG.md" | sed -n '482,535p' > references/harnesses/claude/src/CHANGELOG.md.L482-L535.md
+curl -sSf "$base/CHANGELOG.md" | sed -n '1298,1306p' > references/harnesses/claude/src/CHANGELOG.md.L1298-L1306.md
 ```
 
 Current head SHA, independently:
@@ -59,6 +60,7 @@ curl -s "https://api.github.com/repos/anthropics/claude-code/commits?per_page=1"
 | `src/plugins/plugin-dev/README.md` | `plugins/plugin-dev/README.md` | 1-402 | Scope of the plugin-dev material as guidance for the seven authoring capabilities. |
 | `src/plugins/README.md` | `plugins/README.md` | 1-77 | Plugin component overview and installation/configuration pointers. |
 | `src/CHANGELOG.md.L482-L535.md` | `CHANGELOG.md` | 482-535 | Pinned CLI 2.1.234 release entry and changes affecting settings, skills, hooks, and agents. |
+| `src/CHANGELOG.md.L1298-L1306.md` | `CHANGELOG.md` | 1298-1306 | 2.1.203 entries naming `/exit` as the session-ending command (line 1302); the CLI source is not published, so this is the pin's only mention, cited by `harnesses.yaml` `cli.quit_command` |
 
 ## Findings
 

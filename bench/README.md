@@ -8,8 +8,10 @@ bun bench/run.mjs <scenario> <harness> <model> [--extension] [--skill <name>]   
 
 Scenario ids come from `bun scripts/coupling.mjs probe list`. Each needs a
 `bench/<scenario>/` holding `prompt.md`, the exact text sent to the agent, and
-`setup.sh`, which prepares a scratch dir and prints its path. Launch flags come
-from the `cli:` block in `harnesses.yaml`.
+`setup.sh`, which prepares a scratch dir and prints its path; a scenario with
+more than one step adds `drive.mjs`, and one that needs a file in the harness's
+config tree adds `home/<harness>/` (both below). Launch flags come from the
+`cli:` block in `harnesses.yaml`.
 
 ## The launch is stock
 
@@ -69,6 +71,56 @@ The pane closes after harvest, on failure too; a column of finished panes
 squeezes every later split until dialogs render unreadably. `BENCH_KEEP_PANE=1`
 keeps the pane and its scratch home for a look.
 
+## A scenario that needs more than one prompt
+
+`bench/<scenario>/drive.mjs`, when present, replaces the single prompt. It
+default-exports `async function drive(ctx)`, which the runner calls once the
+startup dialogs are answered and the agent has settled; when the file is absent
+nothing changes. `ctx` carries `harness`, `model`, `scratch`, `home` (the
+scratch HOME), `name` (the herdr agent, updated by a restart), `pane`,
+`promptText` (prompt.md) and `runDir`, plus:
+
+- `await ctx.prompt(text, { timeoutMs = 600000 })` sends the text with `--wait`
+  and applies the stall recovery and DONE-line rule above. It resolves
+  `{ status, settled_by }` and never throws on a timeout: `status` is the agent
+  state herdr reported, `done` when the DONE line settled it, or a string
+  starting `prompt failed:`. herdr's wait also settles on `blocked`, so a
+  question from the agent comes back as `status: "blocked"` before any answer
+- `await ctx.wait({ timeoutMs })` waits on the turn already under way, for a
+  driver that just answered a question; same result shape, failure prefix
+  `wait failed:`
+- `await ctx.type(text)` types the text and Enter without waiting;
+  `await ctx.keys([...])` sends key names as the `startup:` blocks use them
+- `await ctx.sleep(ms)`; `ctx.status()` is the agent object from `herdr agent
+  get`, `null` once the harness is gone; `ctx.pid()` is the harness pid from the
+  pane's foreground process group, `ctx.process()` the whole `process-info`
+- `ctx.visible(lines = 60)` and `ctx.read(lines = 2000)` read the pane
+- `ctx.shell(cmd)` runs `bash -c cmd` in the scratch dir under the same
+  cleared environment the harness got, and returns `{ code, out, err }`
+- `await ctx.quit({ method })` ends the session: `command` types the harness's
+  own `cli.quit_command` from `harnesses.yaml` (`/exit` for Claude, `/quit` for
+  codex, pi and OMP, each cited to its pin there), `sigterm` or `sigkill`
+  signals the pid. It waits up to 30 s for the pane's shell to come back and
+  returns `{ method, at, command | pid, exited }`
+- `await ctx.restart()` starts a fresh agent of the same harness in the same
+  pane, scratch and HOME under a new herdr name (`...r1`, `...r2`), answers
+  its startup dialogs and settles it, then returns `{ name, status,
+  startup_answers }`
+- `ctx.note(key, value)` records a finding under `drive:` in `run.yaml`
+
+Every call lands in `drive.log` in the run dir with its UTC time, so the run
+says when the operator acted and not only what the agent showed. The run's
+status is the last prompt or wait the driver made: a driver that throws, or
+whose last prompt or wait failed, leaves the run unexecuted with the
+transcript and log kept. A driver that quit without restarting made that exit
+the last step, and the run is harvested from the pane. `invocation.json`
+carries every prompt, restart and quit response under `herdr`.
+
+`bench/<scenario>/home/<harness>/` seeds files into the scratch HOME after the
+auth copies, laid out as they should land relative to HOME
+(`home/claude/.claude/agents/poteto-probe.md`). Each file is named under
+`environment_deltas` in `run.yaml` and `home_seed` in `invocation.json`.
+
 ## What gets written
 
 Into `evidence/runs/<run-id>/`, created by `probe prepare`:
@@ -86,6 +138,7 @@ Into `evidence/runs/<run-id>/`, created by `probe prepare`:
   `NONE.txt` there means none were found
 - every file the scenario declares as an artifact that setup.sh or the agent left
   in the scratch dir, plus `probe.after.txt` copied from `probe.txt`
+- `drive.log`, when a driver ran: one timestamped line per operator action
 
 `observations.yaml` is yours to write, and nothing here scores a run. Then run
 `bun scripts/coupling.mjs probe inspect <run-id>`.

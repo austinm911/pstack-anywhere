@@ -1,0 +1,9 @@
+- Fixed background sessions showing "Needs input" in the agent list after the question was already answered
+- Fixed background agent startup failures showing only "exit_with_message" instead of the actual error
+- Fixed background sessions ignoring `effortLevel` changes in settings.json when forked through the daemon
+- Fixed attached background sessions ignoring `CLAUDE_CODE_DISABLE_MOUSE` and `CLAUDE_CODE_DISABLE_MOUSE_CLICKS` opt-outs
+- Fixed `/exit` incorrectly warning about running background agents after all named agents had completed
+- Fixed background sessions started from a non-git directory unable to edit files when a `WorktreeCreate` hook was configured
+- Fixed the `@` directory picker in `claude agents` not showing registered git worktrees
+- Fixed background task output on Windows being permanently replaced by an empty file after `/clear`
+- Fixed content jumping when scrolling up through long transcript history

@@ -22,6 +22,7 @@ curl -sSf "$BASE/packages/coding-agent/src/core/extensions/types.ts" | sed -n '1
 curl -sSf "$BASE/packages/coding-agent/src/core/prompt-templates.ts" -o references/harnesses/pi/src/packages/coding-agent/src/core/prompt-templates.ts
 curl -sSf "$BASE/packages/coding-agent/src/core/package-manager.ts" | sed -n '1,490p' > references/harnesses/pi/src/packages/coding-agent/src/core/package-manager.L1-L490.ts
 curl -sSf "$BASE/packages/coding-agent/docs/skills.md" -o references/harnesses/pi/src/packages/coding-agent/docs/skills.md
+curl -sSf "$BASE/packages/coding-agent/src/core/slash-commands.ts" -o references/harnesses/pi/src/packages/coding-agent/src/core/slash-commands.ts
 curl -sSf "https://api.github.com/repos/earendil-works/pi/commits?per_page=1" | jq -r '.[0].sha'
 ```
 
@@ -39,6 +40,7 @@ curl -sSf "https://api.github.com/repos/earendil-works/pi/commits?per_page=1" | 
 | `src/packages/coding-agent/src/core/prompt-templates.ts` | `packages/coding-agent/src/core/prompt-templates.ts` | 1-285 | Prompt-template format, non-recursive directory scan, argument expansion, and global/project roots. |
 | `src/packages/coding-agent/src/core/package-manager.L1-L490.ts` | `packages/coding-agent/src/core/package-manager.ts` | 1-490 | Package resource types, precedence ranks, recursive package skill collection, and `.agents/skills` ancestor computation. |
 | `src/packages/coding-agent/docs/skills.md` | `packages/coding-agent/docs/skills.md` | 1-232 | Upstream-documented skill roots, discovery rules, frontmatter fields, and toggles. |
+| `src/packages/coding-agent/src/core/slash-commands.ts` | `packages/coding-agent/src/core/slash-commands.ts` | 1-43 | Built-in slash command list; `quit` is the interactive-mode shutdown, cited by `harnesses.yaml` `cli.quit_command` |
 
 ## Findings
 
