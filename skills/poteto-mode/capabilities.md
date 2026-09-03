@@ -15,7 +15,7 @@ that does the job, use it and skip the fallback.
 
 | capability | cursor | claude | codex | pi | omp |
 | --- | --- | --- | --- | --- | --- |
-| `spawn_worker` | Task with environment: "cloud" | Agent tool (named Task in older docs), subagent_type | task tool | a task tool an extension registers | task tool, agent field selects the specialist |
+| `spawn_worker` | Task with environment: "cloud" | Agent tool (named Task in older docs), subagent_type | task tool | not on by default: subagent({agent:"<name>"}) via pi-subagents; fresh child context from .pi/agent/extensions/subagent/config.json, else without pi-subagents, no delegation primitive | task tool, agent field selects the specialist |
 | `worker_durability` | cloud agents run off-machine and survive a restart | subagents die with the session | subagents die with the session | degraded, mission records under ~/.pi/agent/missions/ persist the run; no subagent({action:"children.list"}) reattachment or live report recovery after /quit; externalize side effects | subagents die with the session |
 | `probe_worker` | dashboard shows agent state without a resume | degraded, job status only, no liveness for every delegate kind | list_agents, running or completed with the final message; no idle state | not on by default: the job status the task extension exposes, else none, wait for the result | hub op:"jobs" while live, hub op:"list" once settled |
 | `wake_on_event` | /loop built-in | one background Bash wait, wake on its completion; heartbeat only when no such wait fits | degraded, heartbeat sized to when the result is worth re-checking | degraded, 30-second blocking bash poll; heartbeat only when no such wait fits | hub op:"wait" |
@@ -29,7 +29,7 @@ The parameters upstream sets on every Task call. Highest-traffic coupling in the
 | --- | --- | --- | --- | --- | --- |
 | `background` | run_in_background: true | run in background | async | degraded, subagent({async:true}) returns at once; collect the result from a file the worker wrote | async, or hub op:"wait" to block |
 | `readonly` | agent mode strips MCP | degraded, Explore agent type drops Write and Edit but keeps Bash; the constraint held by the agent's instructions, not the tool surface | no read-only agent type in stock Codex; a plain spawn_agent worker can write | subagent({agent:"scout"}), tools: read, grep, find, ls, bash, write | scout agent is read-only |
-| `identity` | subagent_type: "poteto-agent" | a poteto-agent definition in the harness subagent dir | a poteto-agent definition in the harness subagent dir | no subagent definition directory exists for pi; no identity, the parent model does the work | a poteto-agent definition in the harness subagent dir |
+| `identity` | subagent_type: "poteto-agent" | a poteto-agent definition in the harness subagent dir | a poteto-agent definition in the harness subagent dir | not on by default: subagent({agent:"<name>"}) via pi-subagents reading ~/.pi/agent/agents (harnesses.yaml:330), else without pi-subagents or a definition file, no named identity; use the parent model | a poteto-agent definition in the harness subagent dir |
 | `model` | explicit slug per role | role slots | role slots | not on by default: role slots supplied through the pi-subagents extension, else no model selection, use the parent model | role slots, or the agent field |
 
 ### What the gaps cost

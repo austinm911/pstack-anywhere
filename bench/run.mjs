@@ -412,6 +412,7 @@ const makeCtx = ({ runDir, runId, harness, model, scratch, home, env, cli, pane,
     pane,
     promptText,
     runDir,
+    extension: withExtension ? cli.extension : null,
     get name() {
       return state.name;
     },

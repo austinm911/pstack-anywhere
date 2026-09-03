@@ -311,6 +311,14 @@ harnesses:
       extra_args: []
       home:
         copy: [.pi/agent/auth.json]
+        # pi-subagents' packaged worker/oracle/advisor default to context: fork,
+        # which hands the child the parent's transcript; a forked worker then
+        # reads the parent's "spawn a worker" brief as its own and refuses
+        # (evidence/runs/spawn_worker.pi.2026-09-03.01). The scenarios measure
+        # delegation, not transcript inheritance, so the scratch HOME asks for
+        # fresh context. Pinned: references/harnesses/pi/pi-subagents/docs/configuration.md#defaultSubagentContext
+        write:
+          .pi/agent/extensions/subagent/config.json: '{"defaultSubagentContext":"fresh"}'
       # A stock pi has no delegation tool. `bun bench/run.mjs ... --extension`
       # loads this one explicitly, and run.yaml records it under `extension`.
       # Pin: references/harnesses/pi/MANIFEST.md (pi-subagents v0.64.0, SHA 57fda3f9c66e961ae0bba26496ce6459226f886e).
@@ -318,10 +326,12 @@ harnesses:
         name: pi-subagents
         version: '0.64.0'
         args: ['-e', '~/.pi/agent/npm/node_modules/pi-subagents/index.ts']
-      # pi-subagents loads slowly enough that pi's input box shows this line
-      # for several seconds after the prompt is drawn; text pasted while it is
-      # up is dropped. The runner waits until the line is gone before prompting.
-      startup_busy: Startup is still in progress
+        # User-level agent definitions. Pinned: references/harnesses/pi/pi-subagents/docs/agents.md:23
+        subagentsDir: ~/.pi/agent/agents
+        # pi-subagents loads slowly enough that pi's input box shows this line
+        # for several seconds after the prompt is drawn; text pasted while it is
+        # up is dropped. The runner waits until the line is gone before prompting.
+        startup_busy: Startup is still in progress
       # observed on this machine, not pinned
       # slug: "--" + resolved cwd without its leading slash, "/" and ":" -> "-", + "--"
       session_dir: ~/.pi/agent/sessions/{cwd_slug}

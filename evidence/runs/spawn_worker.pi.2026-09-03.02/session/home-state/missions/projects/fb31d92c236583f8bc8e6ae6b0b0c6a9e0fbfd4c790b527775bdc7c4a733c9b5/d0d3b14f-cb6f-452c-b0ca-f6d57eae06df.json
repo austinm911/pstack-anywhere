@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "id": "d0d3b14f-cb6f-452c-b0ca-f6d57eae06df",
+  "title": "[prompt redacted]",
+  "objective": "[prompt redacted]",
+  "status": "completed",
+  "createdAt": "2026-09-03T05:36:54.641Z",
+  "updatedAt": "2026-09-03T05:37:10.037Z",
+  "runs": [
+    {
+      "runId": "f0972d5c-0ad4-4dba-a742-65fae1db67b8",
+      "mode": "single",
+      "agent": "delegate",
+      "status": "completed",
+      "startedAt": "2026-09-03T05:37:10.037Z",
+      "completedAt": "2026-09-03T05:37:10.037Z",
+      "usage": {
+        "tokens": 4404
+      }
+    }
+  ],
+  "workflowChildren": [],
+  "decisions": [],
+  "artifacts": [
+    {
+      "kind": "output",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w7aFpI/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.m8o757sRgq--/subagent-artifacts/f0972d5c-0ad4-4dba-a742-65fae1db67b8_delegate_0_output.md"
+    },
+    {
+      "kind": "other",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w7aFpI/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.m8o757sRgq--/subagent-artifacts/f0972d5c-0ad4-4dba-a742-65fae1db67b8_delegate_0_transcript.jsonl",
+      "description": "Child transcript"
+    }
+  ],
+  "receipts": [],
+  "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.m8o757sRgq",
+  "ownerSessionId": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w7aFpI/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.m8o757sRgq--/2026-09-03T05-36-43-333Z_01a065c4-fb45-72af-bf38-cff7d726fd8d.jsonl",
+  "summary": "Run fan-out: 1/64 used, 63 remaining\nWrote exact line: `2026-09-03T05:37:00Z`",
+  "acceptance": {
+    "status": "attested",
+    "evidenceStatus": "attested",
+    "explicit": false,
+    "effectiveAcceptance": {
+      "level": "attested",
+      "explicit": false,
+      "inferredReason": [
+        "default lightweight attestation"
+      ],
+      "criteria": [
+        {
+          "id": "criterion-1",
+          "must": "Return a concise result and residual risks when applicable",
+          "evidence": [
+            "manual-notes",
+            "residual-risks"
+          ],
+          "severity": "required"
+        }
+      ],
+      "evidence": [
+        "manual-notes",
+        "residual-risks"
+      ],
+      "verify": [],
+      "stopRules": []
+    },
+    "inferredReason": [
+      "default lightweight attestation"
+    ],
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "must": "Return a concise result and residual risks when applicable",
+        "evidence": [
+          "manual-notes",
+          "residual-risks"
+        ],
+        "severity": "required"
+      }
+    ],
+    "runtimeChecks": [],
+    "verifyRuns": [],
+    "childReport": {
+      "criteriaSatisfied": [
+        {
+          "id": "criterion-1",
+          "status": "satisfied",
+          "evidence": "probe.txt contains the requested UTC timestamp."
+        }
+      ],
+      "changedFiles": [
+        "probe.txt"
+      ],
+      "testsAddedOrUpdated": [],
+      "commandsRun": [
+        {
+          "command": "date -u and write probe.txt",
+          "result": "passed",
+          "summary": "Verified file contents and diff."
+        }
+      ],
+      "validationOutput": [
+        "probe.txt contains exactly one timestamp line."
+      ],
+      "residualRisks": [],
+      "noStagedFiles": true,
+      "diffSummary": "Replaced seed with the current UTC timestamp.",
+      "reviewFindings": [
+        "no blockers"
+      ],
+      "manualNotes": "Exact line written: 2026-09-03T05:37:00Z"
+    }
+  }
+}

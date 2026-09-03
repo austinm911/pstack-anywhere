@@ -117,7 +117,9 @@ methods:
         A run no later complete run supersedes. A correction is a later run of
         the same scenario on the same harness that names this one in
         `supersedes`; when there is one, this run is void and a record citing
-        it is rejected naming the run that corrected it.
+        it is rejected naming the run that corrected it, unless a later record
+        supersedes the citing record too, in which case it stays readable and
+        counts for nothing.
     cannot_support: >-
       A cell for a harness the run did not touch. One run grounds one harness.
 
@@ -1965,6 +1967,40 @@ attestations:
     recorded: { date: 2026-09-02, by: am }
     note: >-
       pi 0.84.4 with pi-subagents loaded explicitly by -e. Observation ids: spawn.primitive, spawn.separate_context, spawn.result_returned, spawn.side_effect_matches, spawn.parent_abstained. Grounds the spawn_worker pi cell at drop: "No primitive produces spawn.primitive and spawn.side_effect_matches together." The worker failed before editing probe.txt, so the required side effect was not achieved.
+  - id: spawn_worker-pi-2026-09-03-02
+    supersedes: spawn_worker-pi-2026-09-03
+    method: exercised
+    axis: spawn_worker
+    harness: pi
+    scenario: spawn_worker
+    run: spawn_worker.pi.2026-09-03.02
+    artifacts:
+      - { path: CHECKLIST.md, digest: a81ae894ba21c9f2dc909592f6050a1725d803320eec7d1d75d5b7bc64db7238 }
+      - { path: invocation.json, digest: 05e6a12ebb9f14ab227b450583c319bf71e05d5609a42e41be9f6ce24385c3a7 }
+      - { path: observations.yaml, digest: 7346fcabe6ac89f719f33d596ae44f78ab5ebdcd4cfc5bc7f23228cc59b7f573 }
+      - { path: probe.after.txt, digest: a058f608ff6712bcc0f200b3c779567c00cd8a42ef0cb4c673feca8a2970161b }
+      - { path: probe.before.txt, digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684 }
+      - { path: run.yaml, digest: c23c8caaa333d46cf69a0d7bd12a0b2980469f23f5434ca2c95aad88b189195e }
+      - { path: session/2026-09-03T05-36-43-333Z_01a065c4-fb45-72af-bf38-cff7d726fd8d.jsonl, digest: ef61989f81f0bbda271314882086beecae55f3adcc6c9fbaa88f5b71b8ca0ea2 }
+      - { path: session/2026-09-03T05-36-43-333Z_01a065c4-fb45-72af-bf38-cff7d726fd8d/f0972d5c-0ad4-4dba-a742-65fae1db67b8/run-0/session.jsonl, digest: 3301ea81a10976d3f28ccf433f27970f2a5c1ad67f4d22e6877107b369681f93 }
+      - { path: session/home-state/missions/index/4d613db29657936b22bd8c03384a0f345f5c677f4da132ac278872d951377d51.json, digest: c7e0be0adde5517f7587d00a483557f0e111803f989d6d989221529f5517efb5 }
+      - { path: session/home-state/missions/projects/fb31d92c236583f8bc8e6ae6b0b0c6a9e0fbfd4c790b527775bdc7c4a733c9b5/d0d3b14f-cb6f-452c-b0ca-f6d57eae06df.json, digest: 1234b0a003550fc02a9940b05a10bb3aabea901e794ddcdb73f19392d05702ff }
+      - { path: session/home-state/run-history.jsonl, digest: 420ad5c4668dc057e3b9026de9ddcfdbf0682226ba1fabd0ac2daaac24662a84 }
+      - { path: session/subagent-artifacts/f0972d5c-0ad4-4dba-a742-65fae1db67b8_delegate_0_input.md, digest: 63640a10b8fff5acbd4e6b8f111fe29adb6adbac965083c924ffd64ead3e55b7 }
+      - { path: session/subagent-artifacts/f0972d5c-0ad4-4dba-a742-65fae1db67b8_delegate_0_meta.json, digest: bf0bf25d4eef9bc5db02dca72d35242429c0fb96de7c17386157f7136f90bd39 }
+      - { path: session/subagent-artifacts/f0972d5c-0ad4-4dba-a742-65fae1db67b8_delegate_0_output.md, digest: a177d60e49e5727b79efb71bc1b2faff1b04c729ce0936bb12de9811522128e7 }
+      - { path: session/subagent-artifacts/f0972d5c-0ad4-4dba-a742-65fae1db67b8_delegate_0_transcript.jsonl, digest: 11f0e6e4250679ec107863bc9e061bd33099fd8cc963828d4a68dcc7af0c3f1f }
+      - { path: transcript.md, digest: 49d8296890b43009ff697a765ff2b684308581f9fbbdf5eaa90d14c57550e9d9 }
+      - { path: worker-report.txt, digest: 50408ac3992c145184441d69a75ec8d84ecd6c5357951caa6c3a3c7de0d19469 }
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Rerun correcting .01: the scratch HOME additionally wrote
+      .pi/agent/extensions/subagent/config.json with
+      {"defaultSubagentContext":"fresh"}, so pi-subagents launched a fresh
+      child context. The child exited 0 after one tool call at
+      2026-09-03T05:37:00Z, changed probe.txt to that timestamp, and the parent
+      received and recorded the same text. The five observations are indexed in
+      observations.yaml.
 
   - id: worker_defaults_background-pi-2026-09-03
     method: exercised
@@ -2045,6 +2081,41 @@ attestations:
     note: >-
       pi 0.84.4 with pi-subagents loaded explicitly by -e. Observation ids: identity.definition_path, identity.selection_argument, identity.token_present, identity.unknown_name_behavior. Grounds the worker_defaults/identity pi cell at drop: "No subagent definition directory exists, or token_present is false." Pi has no subagent definition directory, so the positive token trial was skipped.
 
+  - id: worker_defaults_identity-pi-2026-09-03-02
+    supersedes: worker_defaults_identity-pi-2026-09-03
+    method: exercised
+    axis: worker_defaults
+    parameter: identity
+    harness: pi
+    scenario: worker_defaults_identity
+    run: worker_defaults_identity.pi.2026-09-03.02
+    artifacts:
+      - { path: CHECKLIST.md, digest: 41d1cb002bbe473ecc5e8fe34d28173ee05972451a034a560bc46c2081d88e47 }
+      - { path: definition.txt, digest: e3567fef0445af0142cc19bf458d00ffec77f01445ad93bb1c93f3f9f178b19c }
+      - { path: drive.log, digest: b138d076ace14ab2887d8626dbf6700899d173b826615b038a7dcb94238bf7b7 }
+      - { path: invocation.json, digest: 624fd4e59dfbc65cd60ffe8bc9dbf4185a5bf63ad3033782ac2133309e378ad6 }
+      - { path: negative-trial.txt, digest: 3fb0211aa747c8082aa58aa5631f63084ab705bf00be71214eb614471246a2de }
+      - { path: observations.yaml, digest: 7247561e8bcb05a1a8210035c94ee38ed1eeeccabcc645320fc30db09b88fb4c }
+      - { path: positive-report.txt, digest: b65e6f219ce3358c0e553e3c2ab1d1327329719a854c38bbd8b7b59fa2f29910 }
+      - { path: run.yaml, digest: 373395fc073c82f40476c4b97c095b6be70d1e6d8b541540bee4faa9e6287d9b }
+      - { path: session/2026-09-03T05-39-06-703Z_01a065c7-2b4f-7817-a12c-c1b5ed381fbe.jsonl, digest: 54edf5b9a5c44291c7a34a844456cdc53604b712565768fce83b3a1e5e16f30c }
+      - { path: session/2026-09-03T05-39-06-703Z_01a065c7-2b4f-7817-a12c-c1b5ed381fbe/f991fa81-3eb5-48f2-9a77-e8d3ce0000db/run-0/session.jsonl, digest: cb274e7a231b459de9078262ed882612d1aac41df90d16d629e11a56d5514a01 }
+      - { path: session/home-state/missions/index/33fb2cf5756bfec0cf952c904d8d59ea00131355bcf3d98759821234abaa3697.json, digest: ba531bc4230242b60fb3e9ebb851a0d1ba7932be23778cca5b1031d6a51e3789 }
+      - { path: session/home-state/missions/projects/1a122b08489e0c16c0dc300aaa560a53182b9189e235b66c059e39f7f02eb5b0/c977c029-be3c-4388-973b-1b4f912bff6a.json, digest: a5df79e4b6c594f7ac2c1c88a8a4235b4ddcc3520ea8cf8cd329db17c1469d0c }
+      - { path: session/home-state/run-history.jsonl, digest: e09e418b0c40b1ab00c1f95bb6428848a331e120d69edd1532051b943d986dd4 }
+      - { path: session/subagent-artifacts/f991fa81-3eb5-48f2-9a77-e8d3ce0000db_poteto-probe_0_input.md, digest: f18d34dfd5d58714152aaf3e7e9f74051957eb41f1206d3bf5897f4d19385326 }
+      - { path: session/subagent-artifacts/f991fa81-3eb5-48f2-9a77-e8d3ce0000db_poteto-probe_0_meta.json, digest: a6c9743b1021e075a1e1595acce3c6c5c1602237b79c446dd5954b18eca09f16 }
+      - { path: session/subagent-artifacts/f991fa81-3eb5-48f2-9a77-e8d3ce0000db_poteto-probe_0_output.md, digest: 6461019e902525b80456dbed375282c4c05bb38aa9bb318067aeff3e6eaa7f49 }
+      - { path: session/subagent-artifacts/f991fa81-3eb5-48f2-9a77-e8d3ce0000db_poteto-probe_0_transcript.jsonl, digest: 428a583451cba0f27f3b5c29f190d73c731b40c28eece75420554840f1606204 }
+      - { path: transcript.md, digest: 697f4fb10d0a1b5607e090320ffd919ed2da50671d6f4636762ea083958ff1ed }
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Rerun correcting .01: the scratch HOME seeded the poteto-probe definition
+      under .pi/agent/agents, and the driver recorded the pi-subagents
+      subagentsDir resolution from harnesses.yaml:330. The positive named spawn
+      produced POTETO-PROBE-OK followed by hello; the negative named spawn
+      returned the hard error Unknown agent: poteto-absent with consulted
+      directories. The four observations are indexed in observations.yaml.
   - id: worker_defaults_model-pi-2026-09-03
     method: exercised
     axis: worker_defaults

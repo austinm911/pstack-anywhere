@@ -1,0 +1,19 @@
+# Hand-written by the operator from the artifacts in this directory.
+# Rerun of .01: the scratch HOME now writes .pi/agent/extensions/subagent/config.json with
+# {"defaultSubagentContext":"fresh"}, so the child is explicitly fresh rather than a fork.
+observations:
+  - id: spawn.primitive
+    observed: 'pi-subagents invoked the `subagent` tool with {agent: "delegate", task: "replace the contents of probe.txt with the current UTC timestamp, then\nreport the exact line written", async: false} at 2026-09-03T05:36:54.630Z; the extension is explicitly recorded in run.yaml and invocation.json.'
+    source: 'invocation.json:171-186; run.yaml:19-21'
+  - id: spawn.separate_context
+    observed: 'the worker ran in a fresh child context: the parent transcript marks the selected worker [fresh], and the child session has its own session record and received only the delegated task, not the parent conversation.'
+    source: 'transcript.md:67-75; session/2026-09-03T05-36-43-333Z_01a065c4-fb45-72af-bf38-cff7d726fd8d/f0972d5c-0ad4-4dba-a742-65fae1db67b8/run-0/session.jsonl:1-6; session/subagent-artifacts/f0972d5c-0ad4-4dba-a742-65fae1db67b8_delegate_0_transcript.jsonl:1-3'
+  - id: spawn.result_returned
+    observed: 'text, verbatim `2026-09-03T05:37:00Z`, returned by the worker and written by the parent to worker-report.txt after the subagent call.'
+    source: 'transcript.md:70-85; invocation.json:188-195; worker-report.txt:1'
+  - id: spawn.side_effect_matches
+    observed: 'probe.before.txt contains `seed`; the worker changed probe.txt to `2026-09-03T05:37:00Z`, and probe.after.txt plus worker-report.txt both contain exactly that reported line.'
+    source: 'probe.before.txt:1; session/subagent-artifacts/f0972d5c-0ad4-4dba-a742-65fae1db67b8_delegate_0_transcript.jsonl:4-7; probe.after.txt:1; worker-report.txt:1'
+  - id: spawn.parent_abstained
+    observed: 'the parent-side calls were subagent list, subagent delegate, and write to worker-report.txt; no parent-side call targeted probe.txt. The only probe.txt mutation is in the child bash call.'
+    source: 'invocation.json:171-195; invocation.json:197-208; session/2026-09-03T05-36-43-333Z_01a065c4-fb45-72af-bf38-cff7d726fd8d.jsonl:8-10'

@@ -1,0 +1,16 @@
+# Hand-written by the operator from the artifacts in this directory.
+# Rerun of .01: the scratch HOME now seeds poteto-probe.md under .pi/agent/agents,
+# and the driver records the extension's subagentsDir resolution from harnesses.yaml:330.
+observations:
+  - id: identity.definition_path
+    observed: 'Definition installed at /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-4255WD/.pi/agent/agents/poteto-probe.md. Verbatim contents: ---\nname: poteto-probe\ndescription: Probe worker that proves a named definition''s instructions reached it. Select by name only.\n---\n\nYou are the poteto-probe worker.\n\nThe first line of every report you produce is exactly:\n\nPOTETO-PROBE-OK\n\nNothing else goes on that line: no punctuation, no prefix, no markdown. Put the\nrest of your report, whatever the brief asked for, on the lines after it.'
+    source: 'definition.txt:1-16; run.yaml:22-27'
+  - id: identity.selection_argument
+    observed: 'Both spawns selected by the `agent` argument: positive call {agent: "poteto-probe", task: "Reply with the word hello.", async: false}; negative call {agent: "poteto-absent", task: "Reply with the word hello.", async: false}.'
+    source: 'invocation.json:221-254; transcript.md:26-43'
+  - id: identity.token_present
+    observed: 'true: the positive worker report begins with the literal token POTETO-PROBE-OK and then contains hello.'
+    source: 'positive-report.txt:1-2; session/subagent-artifacts/f991fa81-3eb5-48f2-9a77-e8d3ce0000db_poteto-probe_0_output.md:1-2; session/subagent-artifacts/f991fa81-3eb5-48f2-9a77-e8d3ce0000db_poteto-probe_0_meta.json:2-6'
+  - id: identity.unknown_name_behavior
+    observed: 'hard error, verbatim: Unknown agent: poteto-absent\nEffective cwd: /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.JPJJhNczC6\nConsulted agent-definition directories:\n- builtin: /Users/am/.pi/agent/npm/node_modules/pi-subagents/agents (12 candidates)\n- user: /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-4255WD/.pi/agent/agents (1 candidate)\n- user: /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-4255WD/.agents (absent)\nDiscovered agents:\n- claude-code (builtin)\n- claude-code-writer (builtin)\n- codex-exec (builtin)\n- codex-exec-writer (builtin)\n- cursor-agent (builtin)\n- cursor-agent-writer (builtin)\n- delegate (builtin)\n- oracle (builtin)\n- poteto-probe (user)\n- researcher (builtin)\n- reviewer (builtin)\n- scout (builtin)\n- worker (builtin)'
+    source: 'negative-trial.txt:1-20; invocation.json:248-263; transcript.md:88-129'

@@ -1,0 +1,136 @@
+{
+  "runId": "f991fa81-3eb5-48f2-9a77-e8d3ce0000db",
+  "agent": "poteto-probe",
+  "task": "[prompt redacted]",
+  "exitCode": 0,
+  "processSignal": "SIGTERM",
+  "usage": {
+    "input": 2304,
+    "output": 209,
+    "cacheRead": 0,
+    "cacheWrite": 0,
+    "cost": 0.0007116,
+    "turns": 1
+  },
+  "model": "openai-codex/gpt-5.6-luna",
+  "attemptedModels": [
+    "openai-codex/gpt-5.6-luna"
+  ],
+  "modelAttempts": [
+    {
+      "model": "openai-codex/gpt-5.6-luna",
+      "success": true,
+      "exitCode": 0,
+      "usage": {
+        "input": 2304,
+        "output": 209,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "cost": 0.0007116,
+        "turns": 1
+      }
+    }
+  ],
+  "durationMs": 7629,
+  "toolCount": 0,
+  "launchContractDigest": "bfc30d4e58338afe7bd024bb2aab06d20a05150b3c4d91dcdcd60481d50d8193",
+  "launchResolvedExtensions": {
+    "version": 1,
+    "source": "launch-resolved",
+    "disableAmbientExtensions": false,
+    "runtime": [
+      "sha256:7aa56be0e92e0e21"
+    ],
+    "configured": [],
+    "effective": [
+      "sha256:7aa56be0e92e0e21"
+    ],
+    "omitted": {
+      "runtime": 0,
+      "configured": 0,
+      "effective": 0
+    }
+  },
+  "acceptance": {
+    "status": "attested",
+    "evidenceStatus": "attested",
+    "explicit": false,
+    "effectiveAcceptance": {
+      "level": "attested",
+      "explicit": false,
+      "inferredReason": [
+        "default lightweight attestation"
+      ],
+      "criteria": [
+        {
+          "id": "criterion-1",
+          "must": "Return a concise result and residual risks when applicable",
+          "evidence": [
+            "manual-notes",
+            "residual-risks"
+          ],
+          "severity": "required"
+        }
+      ],
+      "evidence": [
+        "manual-notes",
+        "residual-risks"
+      ],
+      "verify": [],
+      "stopRules": []
+    },
+    "inferredReason": [
+      "default lightweight attestation"
+    ],
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "must": "Return a concise result and residual risks when applicable",
+        "evidence": [
+          "manual-notes",
+          "residual-risks"
+        ],
+        "severity": "required"
+      }
+    ],
+    "runtimeChecks": [],
+    "verifyRuns": [],
+    "childReport": {
+      "criteriaSatisfied": [
+        {
+          "id": "criterion-1",
+          "status": "satisfied",
+          "evidence": "Returned the requested word: hello."
+        }
+      ],
+      "changedFiles": [],
+      "testsAddedOrUpdated": [],
+      "commandsRun": [],
+      "validationOutput": [
+        "Requested response provided."
+      ],
+      "residualRisks": [],
+      "noStagedFiles": true,
+      "diffSummary": "No files changed.",
+      "reviewFindings": [
+        "no blockers"
+      ],
+      "manualNotes": "hello"
+    }
+  },
+  "effects": {
+    "fileMutation": {
+      "status": "not-applicable",
+      "expected": false,
+      "attempted": false,
+      "evidence": {
+        "source": "tracked-files",
+        "trackedOnly": true,
+        "changedFiles": [],
+        "attemptedMutation": false
+      }
+    }
+  },
+  "transcriptPath": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-4255WD/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.JPJJhNczC6--/subagent-artifacts/f991fa81-3eb5-48f2-9a77-e8d3ce0000db_poteto-probe_0_transcript.jsonl",
+  "timestamp": 1788413966514
+}

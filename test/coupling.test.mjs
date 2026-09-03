@@ -67,10 +67,10 @@ afterAll(() => {
 });
 
 describe("check on an unmodified copy", () => {
-  test("reports unported findings and exits 1", () => {
+  test("is clean and exits 0", () => {
     const { code, out } = run(base, "check");
-    expect(out).toContain("unported findings");
-    expect(code).toBe(1);
+    expect(out).toContain("clean");
+    expect(code).toBe(0);
   });
 });
 
@@ -89,11 +89,11 @@ describe("ledger validation", () => {
 
   test("an extension cell without a fallback is a ledger error", () => {
     const dir = fixtureRepo((ledger) => {
-      delete cellsOf(ledger, "human_question").pi.fallback;
+      delete cellsOf(ledger, "probe_worker").pi.fallback;
     });
     const { code, err } = run(dir, "check");
     expect(err).toContain(
-      "axes.human_question.resolution.pi.fallback: required on an extension cell",
+      "axes.probe_worker.resolution.pi.fallback: required on an extension cell",
     );
     expect(code).toBe(4);
   });

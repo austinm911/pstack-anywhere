@@ -1363,6 +1363,11 @@ function validateExercised(ctx, record, at, errors) {
     return;
   }
   if (run.state !== "complete") {
+    // A correction voids the run it corrects, and the record citing that run
+    // is expected to be superseded in the same change. That record then
+    // counts for nothing already; rejecting it too would force deleting it,
+    // which is exactly what superseding exists to avoid.
+    if (run.voided === "superseded" && ctx.supersededIds.has(trim(record.id))) return;
     errors.push(`${at}.run: ${runId} is ${run.state}${run.problems.length > 0 ? `, ${run.problems[0]}` : ""}`);
     return;
   }
@@ -1472,6 +1477,7 @@ function deriveVerification(ledger, evidence, conformance, runs, errors) {
     runs,
     axisById: new Map(ledger.axes.map((a) => [a.id, a])),
     harnessById: new Map(ledger.harnesses.map((h) => [h.id, h])),
+    supersededIds: new Set(evidence.attestations.map((r) => trim(r?.supersedes)).filter(Boolean)),
   };
 
   const doc = evidence.attestationDoc;

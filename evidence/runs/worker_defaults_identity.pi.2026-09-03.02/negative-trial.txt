@@ -1,0 +1,20 @@
+Unknown agent: poteto-absent
+Effective cwd: /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.JPJJhNczC6
+Consulted agent-definition directories:
+- builtin: /Users/am/.pi/agent/npm/node_modules/pi-subagents/agents (12 candidates)
+- user: /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-4255WD/.pi/agent/agents (1 candidate)
+- user: /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-4255WD/.agents (absent)
+Discovered agents:
+- claude-code (builtin)
+- claude-code-writer (builtin)
+- codex-exec (builtin)
+- codex-exec-writer (builtin)
+- cursor-agent (builtin)
+- cursor-agent-writer (builtin)
+- delegate (builtin)
+- oracle (builtin)
+- poteto-probe (user)
+- researcher (builtin)
+- reviewer (builtin)
+- scout (builtin)
+- worker (builtin)

@@ -12,20 +12,23 @@ import { join, dirname } from "node:path";
 
 const ROOT = join(dirname(new URL(import.meta.url).pathname), "..", "..");
 
-// The subagentsDir entry and its line number inside this harness's block, so
-// the null case can be cited the way the scenario's precondition asks.
-const subagentsDir = (harness) => {
+// The harness's own definition directory, or the loaded extension's when the
+// run carries one (pi-subagents adds ~/.pi/agent/agents to a stock pi that
+// has none). The cite is the harnesses.yaml line that declared it, so the
+// null case can be cited the way the scenario's precondition asks.
+const subagentsDir = (harness, extension) => {
   const text = readFileSync(join(ROOT, "harnesses.yaml"), "utf8");
   const entry = YAML.parse(text).harnesses.find((h) => h.id === harness);
   if (!entry) throw new Error(`no harness ${harness} in harnesses.yaml`);
   const lines = text.split("\n");
   const start = lines.findIndex((l) => l.trim() === `- id: ${harness}`);
-  const at = lines.findIndex((l, i) => i > start && /^\s+subagentsDir:/.test(l));
-  return { dir: entry.subagentsDir ?? null, line: at + 1 };
+  const lineOf = (indent) => lines.findIndex((l, i) => i > start && l.startsWith(`${indent}subagentsDir:`)) + 1;
+  if (extension?.subagentsDir) return { dir: extension.subagentsDir, line: lineOf("        "), via: `extension ${extension.name} ${extension.version}` };
+  return { dir: entry.subagentsDir ?? null, line: lineOf("    "), via: null };
 };
 
 export default async function drive(ctx) {
-  const { dir, line } = subagentsDir(ctx.harness);
+  const { dir, line, via } = subagentsDir(ctx.harness, ctx.extension);
   const cite = `harnesses.yaml:${line}`;
   let promptText = ctx.promptText;
 
@@ -47,7 +50,7 @@ export default async function drive(ctx) {
     if (files.length === 0) throw new Error(`no poteto-probe definition seeded under ${installDir}; expected bench/worker_defaults_identity/home/${ctx.harness}/`);
     const paths = files.map((n) => join(installDir, n));
     ctx.note("definition_path", paths.join(", "));
-    ctx.note("subagents_dir_source", `${dir} (${cite})`);
+    ctx.note("subagents_dir_source", `${dir} (${cite}${via ? `, ${via}` : ""})`);
     writeFileSync(
       join(ctx.scratch, "definition.txt"),
       [`subagentsDir ${dir} (${cite})`, ...paths.flatMap((p) => ["", `=== ${p} ===`, readFileSync(p, "utf8").replace(/\n$/, "")]), ""].join("\n"),

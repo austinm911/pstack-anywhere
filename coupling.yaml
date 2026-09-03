@@ -112,7 +112,7 @@ axes:
       cursor: { parity: native, use: 'Task with environment: "cloud"' }
       claude: { parity: substitute, use: "Agent tool (named Task in older docs), subagent_type" }
       codex: { parity: substitute, use: "task tool" }
-      pi: { parity: drop, use: "a task tool an extension registers" }
+      pi: { parity: extension, use: 'subagent({agent:"<name>"}) via pi-subagents; fresh child context from .pi/agent/extensions/subagent/config.json', fallback: "without pi-subagents, no delegation primitive" }
       omp: { parity: substitute, use: "task tool, agent field selects the specialist" }
     tokens:
       - pattern: 'environment:\s*"cloud"'
@@ -215,7 +215,7 @@ axes:
           cursor: { parity: native, use: 'subagent_type: "poteto-agent"' }
           claude: { parity: substitute, use: "a poteto-agent definition in the harness subagent dir" }
           codex: { parity: substitute, use: "a poteto-agent definition in the harness subagent dir" }
-          pi: { parity: drop, use: "no subagent definition directory exists for pi; no identity, the parent model does the work" }
+          pi: { parity: extension, use: 'subagent({agent:"<name>"}) via pi-subagents reading ~/.pi/agent/agents (harnesses.yaml:330)', fallback: "without pi-subagents or a definition file, no named identity; use the parent model" }
           omp: { parity: substitute, use: "a poteto-agent definition in the harness subagent dir" }
       - id: model
         resolution:
