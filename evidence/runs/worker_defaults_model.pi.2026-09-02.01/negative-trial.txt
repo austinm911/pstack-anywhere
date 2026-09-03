@@ -1,0 +1,1 @@
+no output at all; spawn call: functions.herdr_delegate({"name":"worker-c","agent":"omp","agentArgs":["--model","poteto-nonexistent-model"],"prompt":"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`."})

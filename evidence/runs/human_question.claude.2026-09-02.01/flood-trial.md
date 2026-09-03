@@ -1,18 +1,21 @@
 # human_question flood trial, claude opus, UTC order
 
-- 2026-09-02T21:43:18.719Z turn 2 prompt sent
-- 2026-09-02T21:44:19.007Z question not detected within 60 s
-- 2026-09-02T21:44:19.037Z question NOT on screen, turn settled ("prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"agent_blocked\",\"message\":\"agent b-human-question-claude-01 is blocked and requires interactive input\"},\"id\":\"cli:agent:prompt\"}")
-- 2026-09-02T21:44:21.071Z question NOT on screen, turn settled ("prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"agent_blocked\",\"message\":\"agent b-human-question-claude-01 is blocked and requires interactive input\"},\"id\":\"cli:agent:prompt\"}")
-- 2026-09-02T21:44:23.101Z question NOT on screen, turn settled ("prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"agent_blocked\",\"message\":\"agent b-human-question-claude-01 is blocked and requires interactive input\"},\"id\":\"cli:agent:prompt\"}")
-- 2026-09-02T21:44:25.124Z question NOT on screen, turn settled ("prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"agent_blocked\",\"message\":\"agent b-human-question-claude-01 is blocked and requires interactive input\"},\"id\":\"cli:agent:prompt\"}")
-- 2026-09-02T21:44:27.146Z question NOT on screen, turn settled ("prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"agent_blocked\",\"message\":\"agent b-human-question-claude-01 is blocked and requires interactive input\"},\"id\":\"cli:agent:prompt\"}")
-- 2026-09-02T21:44:29.164Z question NOT on screen, turn settled ("prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"agent_blocked\",\"message\":\"agent b-human-question-claude-01 is blocked and requires interactive input\"},\"id\":\"cli:agent:prompt\"}")
-- 2026-09-02T21:44:31.190Z question NOT on screen, turn settled ("prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"agent_blocked\",\"message\":\"agent b-human-question-claude-01 is blocked and requires interactive input\"},\"id\":\"cli:agent:prompt\"}")
-- 2026-09-02T21:44:33.212Z question NOT on screen, turn settled ("prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"agent_blocked\",\"message\":\"agent b-human-question-claude-01 is blocked and requires interactive input\"},\"id\":\"cli:agent:prompt\"}")
-- 2026-09-02T21:44:35.241Z question NOT on screen, turn settled ("prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"agent_blocked\",\"message\":\"agent b-human-question-claude-01 is blocked and requires interactive input\"},\"id\":\"cli:agent:prompt\"}")
-- 2026-09-02T21:44:37.294Z question NOT on screen, turn settled ("prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"agent_blocked\",\"message\":\"agent b-human-question-claude-01 is blocked and requires interactive input\"},\"id\":\"cli:agent:prompt\"}")
-- 2026-09-02T21:44:39.298Z before answering: 0/3 worker files present, question gone from the pane
-- 2026-09-02T21:44:39.319Z answered: typed epsilon.txt
-- 2026-09-02T21:44:39.355Z turn ended: {"status":"done","settled_by":"herdr agent wait"}; answer did NOT reach the agent (no trial: 2 block)
-- 2026-09-02T21:44:39.370Z files after answer: answer-received.txt, beta.txt, flood-trial.md, question-render.txt
+- 2026-09-02T22:33:03.494Z turn 2 prompt sent
+- 2026-09-02T22:33:17.598Z question rendered (selectable list)
+- 2026-09-02T22:33:17.615Z worker completion landed: worker-one.txt
+- 2026-09-02T22:33:17.615Z worker completion landed: worker-three.txt
+- 2026-09-02T22:33:17.615Z worker completion landed: worker-two.txt
+- 2026-09-02T22:33:17.623Z question still on screen, turn settled ("blocked")
+- 2026-09-02T22:33:19.643Z question still on screen, turn settled ("blocked")
+- 2026-09-02T22:33:21.728Z question still on screen, turn settled ("blocked")
+- 2026-09-02T22:33:23.751Z question still on screen, turn settled ("blocked")
+- 2026-09-02T22:33:25.779Z question still on screen, turn settled ("blocked")
+- 2026-09-02T22:33:27.807Z question still on screen, turn settled ("blocked")
+- 2026-09-02T22:33:29.825Z question still on screen, turn settled ("blocked")
+- 2026-09-02T22:33:31.853Z question still on screen, turn settled ("blocked")
+- 2026-09-02T22:33:33.872Z question still on screen, turn settled ("blocked")
+- 2026-09-02T22:33:35.917Z question still on screen, turn settled ("blocked")
+- 2026-09-02T22:33:37.922Z before answering: 3/3 worker files present, question survived
+- 2026-09-02T22:33:37.941Z answered: keys down,enter (selected epsilon.txt)
+- 2026-09-02T22:33:45.949Z turn ended: {"status":"done","settled_by":"herdr agent wait"}; answer reached the agent (trial: 2 block in answer-received.txt)
+- 2026-09-02T22:33:45.968Z files after answer: answer-received.txt, beta.txt, epsilon.txt, flood-trial.md, question-render.txt, worker-one.txt, worker-three.txt, worker-two.txt

@@ -1,0 +1,518 @@
+{
+  "herdr": {
+    "start": {
+      "error": "herdr agent start failed (1): {\"error\":{\"code\":\"agent_not_ready\",\"message\":\"agent b-probe-worker-codex-01 is blocked during startup and is not ready for prompts\"},\"id\":\"cli:agent:start\"}"
+    },
+    "start_recovered": true,
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "codex",
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+          "interactive_ready": true,
+          "name": "b-probe-worker-codex-01",
+          "pane_id": "w1H:p4H",
+          "revision": 1,
+          "state_change_seq": 893,
+          "tab_id": "w1H:t4",
+          "terminal_id": "term_65a882e257bee156",
+          "terminal_title": "tmp.TDEj8N4Cv5",
+          "terminal_title_stripped": "tmp.TDEj8N4Cv5",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "codex",
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+          "interactive_ready": true,
+          "name": "b-probe-worker-codex-01",
+          "pane_id": "w1H:p4H",
+          "revision": 1,
+          "state_change_seq": 893,
+          "tab_id": "w1H:t4",
+          "terminal_id": "term_65a882e257bee156",
+          "terminal_title": "tmp.TDEj8N4Cv5",
+          "terminal_title_stripped": "tmp.TDEj8N4Cv5",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "codex",
+      "cached_remote_version": "2026.08.28.1",
+      "evaluated_rules": [
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [
+              "Action Required"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 14,
+            "region_preview": "tmp.TDEj8N4Cv5"
+          },
+          "id": "osc_title_blocked",
+          "matched": false,
+          "priority": 1100,
+          "region": "osc_title",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "(?:^| )[⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏](?: |$)"
+            ],
+            "region_bytes": 14,
+            "region_preview": "tmp.TDEj8N4Cv5"
+          },
+          "id": "osc_title_working",
+          "matched": false,
+          "priority": 1050,
+          "region": "osc_title",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 2,
+            "contains": [
+              "↑/↓ to scroll",
+              "pgup/pgdn to",
+              "home/end to jump",
+              "q to quit"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 87,
+            "region_preview": "\n  gpt-5.6-terra default · /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/…\n"
+          },
+          "id": "transcript_viewer",
+          "matched": false,
+          "priority": 1000,
+          "region": "after_last_prompt_marker",
+          "state": "unknown"
+        },
+        {
+          "evidence": {
+            "all_count": 2,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 1330,
+            "region_preview": "  When finished, reply with exactly one line: DONE <one-sentence summary>.\n\n\n• I’ll again inspect only the worker’s harness status, without interacting with it\n  or its output file.\n\n• DONE Liveness verbatim: running; primitive: list_agents..."
+          },
+          "id": "trust_directory",
+          "matched": false,
+          "priority": 950,
+          "region": "top_non_empty_lines(20)",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 4,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 87,
+            "region_preview": "\n  gpt-5.6-terra default · /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/…\n"
+          },
+          "id": "live_strong_blocker",
+          "matched": false,
+          "priority": 900,
+          "region": "after_last_prompt_marker",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 4,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 0,
+            "region_preview": ""
+          },
+          "id": "weak_blocker",
+          "matched": false,
+          "priority": 600,
+          "region": "whole_recent_without_current_prompt_marker",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^[•◦]\\s+Working \\([^)]*esc to interrupt\\)(?: · .*)?$"
+            ],
+            "not_count": 1,
+            "regex": [],
+            "region_bytes": 178,
+            "region_preview": "  02T23:16:30Z\"}; primitive: list_agents with arguments {}.\n\n\n› Ask Codex to do anything\n\n  gpt-5.6-terra default · /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/…\n"
+          },
+          "id": "screen_working_fallback",
+          "matched": false,
+          "priority": 500,
+          "region": "bottom_non_empty_lines(3)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 2,
+            "regex": [
+              "\\S"
+            ],
+            "region_bytes": 14,
+            "region_preview": "tmp.TDEj8N4Cv5"
+          },
+          "id": "osc_title_idle",
+          "matched": true,
+          "priority": 100,
+          "region": "osc_title",
+          "state": "idle"
+        }
+      ],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": "remote:/Users/am/.local/state/herdr/agent-detection/remote/codex.toml",
+      "manifest_version": "2026.08.28.1",
+      "matched_rule": {
+        "id": "osc_title_idle",
+        "priority": 100,
+        "region": "osc_title",
+        "state": "idle"
+      },
+      "remote_update_error": null,
+      "remote_update_status": "current",
+      "screen_detection_skipped": false,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": true,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [
+      "trust the contents of this directory",
+      "hooks need review"
+    ],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+            "interactive_ready": true,
+            "name": "b-probe-worker-codex-01",
+            "pane_id": "w1H:p4H",
+            "revision": 1,
+            "state_change_seq": 885,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a882e257bee156",
+            "terminal_title": "tmp.TDEj8N4Cv5",
+            "terminal_title_stripped": "tmp.TDEj8N4Cv5",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+            "interactive_ready": true,
+            "name": "b-probe-worker-codex-01",
+            "pane_id": "w1H:p4H",
+            "revision": 1,
+            "state_change_seq": 887,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a882e257bee156",
+            "terminal_title": "tmp.TDEj8N4Cv5",
+            "terminal_title_stripped": "tmp.TDEj8N4Cv5",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+            "interactive_ready": true,
+            "name": "b-probe-worker-codex-01",
+            "pane_id": "w1H:p4H",
+            "revision": 1,
+            "state_change_seq": 889,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a882e257bee156",
+            "terminal_title": "tmp.TDEj8N4Cv5",
+            "terminal_title_stripped": "tmp.TDEj8N4Cv5",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+            "interactive_ready": true,
+            "name": "b-probe-worker-codex-01",
+            "pane_id": "w1H:p4H",
+            "revision": 1,
+            "state_change_seq": 891,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a882e257bee156",
+            "terminal_title": "tmp.TDEj8N4Cv5",
+            "terminal_title_stripped": "tmp.TDEj8N4Cv5",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+            "interactive_ready": true,
+            "name": "b-probe-worker-codex-01",
+            "pane_id": "w1H:p4H",
+            "revision": 1,
+            "state_change_seq": 893,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a882e257bee156",
+            "terminal_title": "tmp.TDEj8N4Cv5",
+            "terminal_title_stripped": "tmp.TDEj8N4Cv5",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "herdr",
+      "agent",
+      "start",
+      "b-probe-worker-codex-01",
+      "--kind",
+      "codex",
+      "--pane",
+      "w1H:p4H",
+      "--timeout",
+      "60000",
+      "--",
+      "-m",
+      "gpt-5.6-terra"
+    ],
+    "version": "codex-cli 0.152.1\n"
+  },
+  "model": "gpt-5.6-terra",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5",
+  "home": {
+    "seeded": [
+      ".codex/auth.json"
+    ],
+    "written": {
+      ".codex/config.toml": "approval_policy = \"never\"\nsandbox_mode = \"danger-full-access\"\n[features]\nmulti_agent = true\n"
+    }
+  },
+  "drive": {
+    "script": "bench/probe_worker/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "spawn": {
+        "at": "2026-09-02T23:13:33.040Z",
+        "status": "done",
+        "settled_by": "herdr agent prompt --wait"
+      },
+      "unprobed_window": {
+        "at": "2026-09-02T23:14:03.129Z",
+        "lines": 3,
+        "last": "2026-09-02T23:13:59Z"
+      },
+      "probe_1": {
+        "at": "2026-09-02T23:14:03.129Z",
+        "ended": "2026-09-02T23:14:08.198Z",
+        "done": null,
+        "status": "done",
+        "lines_before": 3,
+        "lines_after": 3
+      },
+      "probe_2": {
+        "at": "2026-09-02T23:14:28.214Z",
+        "ended": "2026-09-02T23:14:32.200Z",
+        "done": null,
+        "status": "done",
+        "lines_before": 5,
+        "lines_after": 6
+      },
+      "probe_3": {
+        "at": "2026-09-02T23:14:52.212Z",
+        "ended": "2026-09-02T23:14:58.952Z",
+        "done": null,
+        "status": "done",
+        "lines_before": 8,
+        "lines_after": 8
+      },
+      "before_final_probe": {
+        "at": "2026-09-02T23:17:03.056Z",
+        "lines": 18,
+        "last": "2026-09-02T23:16:30Z"
+      },
+      "probe_4": {
+        "at": "2026-09-02T23:17:03.056Z",
+        "ended": "2026-09-02T23:17:07.153Z",
+        "done": null,
+        "status": "done",
+        "lines_before": 18,
+        "lines_after": 18
+      },
+      "log_final": {
+        "lines": 18,
+        "unparsed": 0
+      }
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-KqQPCb/.codex/sessions",
+  "calls": [],
+  "calls_workers": {
+    "rollout-2026-09-02T16-13-21-01a06466-0116-7d73-90fd-5bde03991be0": [
+      {
+        "name": "spawn_agent",
+        "arguments": "{\"task_name\":\"probe_worker\",\"fork_turns\":\"all\",\"message\":\"gAAAAABqmK2a1C0xCWHadBMCOTxbtVrMsFNSE8rprybuXgDqOU1iTqvZPP3JZ848pxrYSpwvlLE08JYqEPuTQedM6j_iDnX1Bz5Ac4G1_W5hD3SkhZnWlfdUgYAs1_DR8pwMIloIaSgA5vP57eYzsmJKWV3PJ-Sp_HelDGp3uTzFO2tpQdRgZ1jlzx_Acue3cOscHlFnU8rBq4sYbnitAXKZZZbYTIQl46OUfB0nKfjVD7eESqjZq04AmAgwBDhVNEzlWVytdePtKaVkGqi39DC_MNnKr52hUsCJMoe9vVObMOTNqz7FWFcAnroMbmRl7Z71j2r0zExEAWh4LSs6_DbSjacTvVWL7c13TKPzKiEjqUsx7QG1d0LiGNngqYWcLZyLKw5kCVpKsy8aa3UWD-_vPERKzkVe7uq-N1kU5W7zE2_wogwKz3JDsDGnx7W5l6PaRjF5XKnQbW2o4bM8bC-h4CcnDut4CT8Sa9cXUewqtzdD2Yyvdtq_fbCNcuZ4qn7Jo35tfPu06RmmD6dpE-8MHV9Mf68jVK0jd37G2nD0zi6-T46LQD4=\"}",
+        "ts": "2026-09-02T23:13:30.710Z"
+      },
+      {
+        "name": "list_agents",
+        "arguments": "{}",
+        "ts": "2026-09-02T23:14:06.440Z"
+      },
+      {
+        "name": "list_agents",
+        "arguments": "{}",
+        "ts": "2026-09-02T23:14:30.376Z"
+      },
+      {
+        "name": "list_agents",
+        "arguments": "{}",
+        "ts": "2026-09-02T23:14:54.423Z"
+      },
+      {
+        "name": "list_agents",
+        "arguments": "{}",
+        "ts": "2026-09-02T23:17:05.072Z"
+      }
+    ],
+    "rollout-2026-09-02T16-13-30-01a06466-2460-7803-ac65-99f3f3b23a0e": [
+      {
+        "name": "exec",
+        "arguments": "const r = await tools.exec_command({\"cmd\":\"for i in {1..18}; do date -u +%Y-%m-%dT%H:%M:%SZ >> probe-activity.log; if [ \\\"$i\\\" -lt 18 ]; then sleep 10; fi; done; wc -l < probe-activity.log; tail -n 1 probe-activity.log\",\"workdir\":\"/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.TDEj8N4Cv5\",\"yield_time_ms\":30000,\"max_output_tokens\":2000});\ntext(JSON.stringify(r));",
+        "ts": "2026-09-02T23:13:39.137Z"
+      },
+      {
+        "name": "exec",
+        "arguments": "const r = await tools.write_stdin({\"session_id\":1065,\"chars\":\"\",\"yield_time_ms\":60000,\"max_output_tokens\":2000});\ntext(JSON.stringify(r));",
+        "ts": "2026-09-02T23:14:13.090Z"
+      },
+      {
+        "name": "wait",
+        "arguments": "{\"cell_id\":\"2\",\"yield_time_ms\":60000,\"max_tokens\":2000}",
+        "ts": "2026-09-02T23:14:46.393Z"
+      },
+      {
+        "name": "exec",
+        "arguments": "const r = await tools.write_stdin({\"session_id\":1065,\"chars\":\"\",\"yield_time_ms\":60000,\"max_output_tokens\":2000});\ntext(JSON.stringify(r));",
+        "ts": "2026-09-02T23:15:15.560Z"
+      },
+      {
+        "name": "wait",
+        "arguments": "{\"cell_id\":\"3\",\"yield_time_ms\":60000,\"max_tokens\":2000}",
+        "ts": "2026-09-02T23:15:48.040Z"
+      },
+      {
+        "name": "exec",
+        "arguments": "const r = await tools.write_stdin({\"session_id\":1065,\"chars\":\"\",\"yield_time_ms\":40000,\"max_output_tokens\":2000});\ntext(JSON.stringify(r));",
+        "ts": "2026-09-02T23:16:17.534Z"
+      }
+    ]
+  }
+}

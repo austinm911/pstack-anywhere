@@ -1,0 +1,64 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: probe_worker
+harness: codex
+run_id: probe_worker.codex.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T23:13:16.236Z
+ended_at: 2026-09-02T23:17:07.759Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: codex-cli 0.152.1
+harness_version_source: codex --version -> codex-cli 0.152.1
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .codex/auth.json and these written files: .codex/config.toml = \"approval_policy = \\\"never\\\"\\nsandbox_mode = \\\"danger-full-access\\\"\\n[features]\\nmulti_agent = true\\n\", plus herdr's codex state-reporting integration (herdr integration install codex); no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-KqQPCb/bin/codex; driven by bench/probe_worker/drive.mjs, every operator action timed in drive.log"
+supersedes: null
+drive: 
+  spawn: 
+    at: 2026-09-02T23:13:33.040Z
+    status: done
+    settled_by: herdr agent prompt --wait
+  unprobed_window: 
+    at: 2026-09-02T23:14:03.129Z
+    lines: 3
+    last: 2026-09-02T23:13:59Z
+  probe_1: 
+    at: 2026-09-02T23:14:03.129Z
+    ended: 2026-09-02T23:14:08.198Z
+    done: null
+    status: done
+    lines_before: 3
+    lines_after: 3
+  probe_2: 
+    at: 2026-09-02T23:14:28.214Z
+    ended: 2026-09-02T23:14:32.200Z
+    done: null
+    status: done
+    lines_before: 5
+    lines_after: 6
+  probe_3: 
+    at: 2026-09-02T23:14:52.212Z
+    ended: 2026-09-02T23:14:58.952Z
+    done: null
+    status: done
+    lines_before: 8
+    lines_after: 8
+  before_final_probe: 
+    at: 2026-09-02T23:17:03.056Z
+    lines: 18
+    last: 2026-09-02T23:16:30Z
+  probe_4: 
+    at: 2026-09-02T23:17:03.056Z
+    ended: 2026-09-02T23:17:07.153Z
+    done: null
+    status: done
+    lines_before: 18
+    lines_after: 18
+  log_final: 
+    lines: 18
+    unparsed: 0

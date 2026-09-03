@@ -1,0 +1,17 @@
+# UTC. wait_entered and wait_returned are the driver's clock around ctx.prompt;
+# trigger is the scratch shell's `date -u` written just before touch event.flag;
+# woke is the agent's own `date -u` as its first post-wake action (woke-at.txt, verbatim).
+clock: UTC, Date.toISOString on the bench host and date -u in the scratch shell
+wait_entered: 2026-09-02T23:18:21.582Z
+held_without_action_ms: 120000
+trigger: 2026-09-02T23:20:21Z
+trigger_action: touch event.flag
+wait_returned: 2026-09-02T23:21:01.161Z
+wait_returned_status: "done"
+wait_returned_settled_by: "herdr agent prompt --wait"
+observed_wait_ms: 159579
+first_post_wake_action: date -u +%FT%TZ > woke-at.txt, as instructed in prompt.md
+woke_at_txt: |
+  2026-09-02T23:20:43Z
+  {"chunk_id":"3b74da","wall_time_seconds":25.262590083,"exit_code":0,"original_token_count":0,"output":""}
+latency_trigger_to_woke_s: 22

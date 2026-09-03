@@ -1,0 +1,16 @@
+subagentsDir ~/.omp/agent/agents (harnesses.yaml:421)
+
+=== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-hp5wSA/.omp/agent/agents/poteto-probe.md ===
+---
+name: poteto-probe
+description: Probe worker that proves a named definition's instructions reached it. Select by name only.
+---
+
+You are the poteto-probe worker.
+
+The first line of every report you produce is exactly:
+
+POTETO-PROBE-OK
+
+Nothing else goes on that line: no punctuation, no prefix, no markdown. Put the
+rest of your report, whatever the brief asked for, on the lines after it.

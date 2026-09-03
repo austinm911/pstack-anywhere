@@ -16,10 +16,10 @@ that does the job, use it and skip the fallback.
 | capability | cursor | claude | codex | pi | omp |
 | --- | --- | --- | --- | --- | --- |
 | `spawn_worker` | Task with environment: "cloud" | Agent tool (named Task in older docs), subagent_type | task tool | not on by default: a task tool an extension registers, else do the work inline, sequentially, and say no worker ran | task tool, agent field selects the specialist |
-| `worker_durability` | cloud agents run off-machine and survive a restart | subagents die with the session | subagents die with the session | subagents die with the session | subagents die with the session |
-| `probe_worker` | dashboard shows agent state without a resume | degraded, job status only, no liveness for every delegate kind | degraded, job status only | not on by default: the job status the task extension exposes, else none, wait for the result | hub op:"jobs" |
-| `wake_on_event` | /loop built-in | degraded, heartbeat sized to when the result is worth re-checking | degraded, heartbeat sized to when the result is worth re-checking | degraded, heartbeat sized to when the result is worth re-checking | hub op:"wait" |
-| `human_question` | AskQuestion | the ask tool | request_user_input tool, root thread only, mode-gated | not on by default: an ask tool an extension registers via registerTool, else a plain question in the reply | the ask tool |
+| `worker_durability` | cloud agents run off-machine and survive a restart | subagents die with the session | subagents die with the session | not on by default: a pi-herdr delegate runs in its own herdr pane and outlives the parent; the report lives only while that pane does, else subagents die with the session | subagents die with the session |
+| `probe_worker` | dashboard shows agent state without a resume | degraded, job status only, no liveness for every delegate kind | list_agents, running or completed with the final message; no idle state | not on by default: the job status the task extension exposes, else none, wait for the result | hub op:"jobs" while live, hub op:"list" once settled |
+| `wake_on_event` | /loop built-in | one background Bash wait, wake on its completion; heartbeat only when no such wait fits | degraded, heartbeat sized to when the result is worth re-checking | one blocking bash wait; heartbeat only when no such wait fits | hub op:"wait" |
+| `human_question` | AskQuestion | the ask tool | degraded, a plain question in the reply; request_user_input exists but is mode-gated and was not offered under stock config | degraded, a plain question in the reply; no recorded extension registers an ask tool | the ask tool |
 
 ### `worker_defaults`
 

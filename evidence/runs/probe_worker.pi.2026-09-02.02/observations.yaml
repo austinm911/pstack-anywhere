@@ -1,0 +1,22 @@
+# Hand-written by the operator from the artifacts in this directory.
+#
+# Rerun of probe_worker.pi.2026-09-02.01, which was incomplete for the same
+# reason. This run is incomplete too: probe-activity.log, a required artifact,
+# was never produced because the worker never took its prompt. Recorded so the
+# cause is readable; no further rerun was made.
+observations:
+  - id: probe.mechanism
+    observed: 'herdr_get_agent, arguments {"target": "probe-worker"}, once per probe turn (four calls), supplied by the @andrewjacop/pi-herdr extension loaded with -e (run.yaml extension; invocation.json cli.command). The worker was started with herdr_start_agent {name: "probe-worker", agent: "pi", cwd: <scratch>, prompt: <the loop brief>}, which this time returned "Started pi agent "probe-worker" in pane w1H:p4B." on the first attempt (no "expected pi, detected omp" rejection as in the .01 run)'
+    source: 'invocation.json calls[0..4] name and arguments; session/2026-09-02T22-50-13-289Z_01a06450-d1a9-7a2e-9fd1-98204c1f632e.jsonl toolResult 22:50:26.130Z; run.yaml extension'
+  - id: probe.states_reported
+    observed: 'all four probes returned the identical string, verbatim "Agent "probe-worker" (pi): pane w1H:p4B, status idle." at 22:51:01.834Z, 22:51:27.733Z, 22:51:51.502Z and 22:53:59.925Z. The parent relayed each as "DONE Liveness: "status idle"; used herdr_get_agent with {target:"probe-worker"}."'
+    source: 'session jsonl toolResult entries for herdr_get_agent at those four timestamps; probes.yaml probes[0..3]; run.yaml drive.probe_1 through probe_4'
+  - id: probe.granularity
+    observed: 'observed in this run: only "idle". Not exercised: "working", "done", "blocked", the other herdr pane agent states seen in this workspace during worker_defaults_model.pi.2026-09-02.01 (herdr_list_agents listed [working], [done], [idle]). The value is herdr''s pane agent state rather than the worker harness''s own, and it did not distinguish running from finished here because the worker never ran'
+    source: 'session jsonl herdr_get_agent toolResults (four times "status idle"); evidence/runs/worker_defaults_model.pi.2026-09-02.01 session jsonl toolResult 22:36:17.490Z herdr_list_agents'
+  - id: probe.side_effect
+    observed: 'none measurable, there was no activity to disturb: probe-activity.log was never created (run.yaml drive.log_final.lines: 0; cadence.md "(log absent or empty)" in every window; the scratch dir at harvest held only cadence.md and probes.yaml). The pi worker pane w1H:p4B opened from the operator''s real HOME (bench/README.md), so it loaded the operator''s full extension and skill set rather than a stock pi, showed its startup banner with an empty input box and "ctx 0% 0/272k", and the prompt passed to herdr_start_agent never appeared in it; the operator read that pane after the run and found no turn, and the operator''s ~/.pi/agent/sessions/--private-var-folders-...-tmp.5SpjMVIbsm--/ was an empty directory. herdr_get_agent did not wake it: status stayed idle across all four probes and the log stayed absent. Same failure as the .01 run with an omp worker, so the prompt loss lies in herdr_start_agent''s start-then-prompt path, not in the worker harness. In worker_durability.pi.2026-09-02.01 the same parent model called herdr_start_agent without a prompt and then herdr_send_prompt separately, and that worker ran to completion, which narrows the defect to the prompt field of herdr_start_agent'
+    source: 'cadence.md; run.yaml drive.unprobed_window, drive.before_final_probe, drive.log_final; probes.yaml log_lines_before/after (all 0); operator pane read of w1H:p4B after harvest and the empty session directory in the operator''s HOME, neither copied here; evidence/runs/probe_worker.pi.2026-09-02.01 observations probe.side_effect'
+  - id: probe.post_completion
+    observed: 'the fourth probe at 22:53:59.925Z returned the same "status idle" as the first three. The worker had not completed, it never started its loop, so idle here means never-ran and is indistinguishable from the idle a finished worker would show'
+    source: 'session jsonl toolResult 22:53:59.925Z herdr_get_agent; probes.yaml probes[3]; run.yaml drive.probe_4'

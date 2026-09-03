@@ -1,0 +1,1 @@
+Task Probe2 failed preflight: Unknown agent "poteto-absent". Available: poteto-probe, scout, designer, reviewer, security-reviewer, librarian, task, sonic

@@ -1,0 +1,101 @@
+# Sources. herdr: `herdr agent get` (agent_status, revision, state_change_seq);
+# it exposes no turn or token counter. session_log: every *.jsonl under the
+# scratch HOME at the snapshot, assistant entries counted and the last usage
+# object seen. Zero growth in assistant_entries across during_wait minus
+# before_wait, beyond the single turn that entered the wait, is the claim.
+sources:
+  herdr: herdr agent get, fields agent_status, revision, state_change_seq
+  session_log: [".codex/session_index.jsonl",".codex/history.jsonl",".codex/sessions/2026/09/02/rollout-2026-09-02T16-18-20-01a0646a-8f65-7a93-813c-dfda1271f701.jsonl"]
+wait_call: |
+  "zsh -c 'deadline=$((SECONDS + 1200)); while [[ ! -e event.flag && $SECONDS -lt $deadline ]]; do sleep 30; done; if [[ -e event.flag ]]; then exit 0; else exit 124; fi'"
+  shell command
+  none
+snapshots:
+  before_wait: {
+    "label": "before_wait",
+    "at": "2026-09-02T23:18:21.582Z",
+    "files": [],
+    "lines": 0,
+    "assistant_entries": 0,
+    "usage": null,
+    "herdr": {
+      "agent_status": "done",
+      "revision": 1,
+      "state_change_seq": 897
+    }
+  }
+  during_wait: {
+    "label": "during_wait",
+    "at": "2026-09-02T23:20:21.615Z",
+    "files": [
+      ".codex/session_index.jsonl",
+      ".codex/history.jsonl",
+      ".codex/sessions/2026/09/02/rollout-2026-09-02T16-18-20-01a0646a-8f65-7a93-813c-dfda1271f701.jsonl"
+    ],
+    "lines": 41,
+    "assistant_entries": 2,
+    "usage": {
+      "input_tokens": 59464,
+      "cached_input_tokens": 48128,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 863,
+      "reasoning_output_tokens": 426,
+      "total_tokens": 60327
+    },
+    "herdr": {
+      "agent_status": "working",
+      "revision": 1,
+      "state_change_seq": 898
+    }
+  }
+  after_wake: {
+    "label": "after_wake",
+    "at": "2026-09-02T23:21:01.209Z",
+    "files": [
+      ".codex/session_index.jsonl",
+      ".codex/history.jsonl",
+      ".codex/sessions/2026/09/02/rollout-2026-09-02T16-18-20-01a0646a-8f65-7a93-813c-dfda1271f701.jsonl"
+    ],
+    "lines": 71,
+    "assistant_entries": 3,
+    "usage": {
+      "input_tokens": 155183,
+      "cached_input_tokens": 139776,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1740,
+      "reasoning_output_tokens": 819,
+      "total_tokens": 156923
+    },
+    "herdr": {
+      "agent_status": "done",
+      "revision": 1,
+      "state_change_seq": 901
+    }
+  }
+  after_trial2: {
+    "label": "after_trial2",
+    "at": "2026-09-02T23:26:31.369Z",
+    "files": [
+      ".codex/session_index.jsonl",
+      ".codex/history.jsonl",
+      ".codex/sessions/2026/09/02/rollout-2026-09-02T16-18-20-01a0646a-8f65-7a93-813c-dfda1271f701.jsonl"
+    ],
+    "lines": 154,
+    "assistant_entries": 7,
+    "usage": {
+      "input_tokens": 408967,
+      "cached_input_tokens": 378880,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 3284,
+      "reasoning_output_tokens": 1147,
+      "total_tokens": 412251
+    },
+    "herdr": {
+      "agent_status": "done",
+      "revision": 1,
+      "state_change_seq": 909
+    }
+  }
+assistant_entries_during_wait: 2
+assistant_entries_wait_to_wake: 1
+state_change_seq_during_wait: 1

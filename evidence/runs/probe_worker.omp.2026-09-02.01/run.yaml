@@ -1,0 +1,64 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: probe_worker
+harness: omp
+run_id: probe_worker.omp.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T22:44:40.702Z
+ended_at: 2026-09-02T22:48:31.940Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: omp/18.1.4
+harness_version_source: omp --version -> omp/18.1.4
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .omp/agent/agent.db, .omp/agent/secret-placeholder.key and these written files: .omp/agent/config.yml = \"setupVersion: 2\\n\", plus herdr's omp state-reporting integration (herdr integration install omp); no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, ANTHROPIC_OAUTH_TOKEN, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-5TmsPa/bin/omp; driven by bench/probe_worker/drive.mjs, every operator action timed in drive.log"
+supersedes: null
+drive: 
+  spawn: 
+    at: 2026-09-02T22:44:55.084Z
+    status: done
+    settled_by: herdr agent prompt --wait
+  unprobed_window: 
+    at: 2026-09-02T22:45:25.099Z
+    lines: 3
+    last: 2026-09-02T22:45:15Z
+  probe_1: 
+    at: 2026-09-02T22:45:25.099Z
+    ended: 2026-09-02T22:45:31.237Z
+    done: DONE hub jobs reports ProbeWorker
+    status: done
+    lines_before: 3
+    lines_after: 4
+  probe_2: 
+    at: 2026-09-02T22:45:51.248Z
+    ended: 2026-09-02T22:45:56.922Z
+    done: "DONE hub jobs again reports ProbeWorker still running under \"Still Running (1)\"."
+    status: done
+    lines_before: 6
+    lines_after: 7
+  probe_3: 
+    at: 2026-09-02T22:46:16.931Z
+    ended: 2026-09-02T22:46:22.847Z
+    done: "DONE hub jobs reports ProbeWorker still running under \"Still Running (1)\"."
+    status: done
+    lines_before: 9
+    lines_after: 9
+  before_final_probe: 
+    at: 2026-09-02T22:48:25.101Z
+    lines: 18
+    last: 2026-09-02T22:47:45Z
+  probe_4: 
+    at: 2026-09-02T22:48:25.101Z
+    ended: 2026-09-02T22:48:31.539Z
+    done: "DONE hub list reports ProbeWorker [sonic · sub · idle] — parent Main, active"
+    status: done
+    lines_before: 18
+    lines_after: 18
+  log_final: 
+    lines: 18
+    unparsed: 0

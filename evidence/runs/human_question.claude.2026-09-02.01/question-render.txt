@@ -1,6 +1,6 @@
 # human_question: pane text as the operator saw it, claude opus
 
-## trial 1 question (2026-09-02T21:43:18.659Z)
+## trial 1 question (2026-09-02T22:32:57.080Z)
 
      operator can answer.
   2. Wait for the answer. Create no file and assume no answer before it arrives.
@@ -27,11 +27,11 @@
   run.yaml and observations.yaml are the operator's, and observations.yaml is
   hand-written, never generated. -->
 
-⏺ I'll ask the operator to choose using the question tool.
+⏺ I'll put the choice to you using the question tool.
 ──────────────────────────────────────────────────────────────────────────────────
  ☐ File name
 
-Which file name should I create?
+Which file should I create?
 
 ❯ 1. alpha.txt
      Create alpha.txt containing the single line `chosen`.
@@ -45,213 +45,225 @@ Which file name should I create?
 
 Enter to select · ↑/↓ to navigate · Esc to cancel
 
-## trial 2 question, as rendered (not detected within 60 s; pane at timeout) (2026-09-02T21:44:19.008Z)
+## trial 2 question, as rendered (2026-09-02T22:33:17.598Z)
 
-       if you asked in text
-     - arrived:  then tool result if the answer came back as the question
-       tool's result, or plain message if it came as a new user message
-     - received:  then the exact value you received, verbatim, in double quotes
-     - mapped_to:  then the file name you created; if the value on the line
-       above was not already one of the three names, add one sentence saying how
-       you mapped it
-     - assumed: no (write yes and one sentence why, if you created a file
-       without an answer)
-  5. Do not read or edit any other file, and do not run git commands.
+  (in parallel, if this harness has no background mode), one brief each: write
+  the single word one into worker-one.txt; write two into
+  worker-two.txt; write three into worker-three.txt. Each worker reports
+  DONE once its file exists. Do not wait for them.
 
-  When finished, reply with exactly one line: DONE <one-sentence summary>.
+  Then, immediately, put a new choice to the operator the same way you did in
+  the first trial, with the options delta.txt, epsilon.txt and zeta.txt
+  in that order. Wait for the answer. The workers will complete while the
+  question is pending; let them, and never treat a worker's completion as the
+  answer.
 
-  <!-- operator artifacts: question-render.txt and flood-trial.md are written by
-  bench/human_question/drive.mjs from the pane, not by the agent. Turns 2 and 3
-  are sent by that driver. transcript.md and invocation.json are the runner's.
-  run.yaml and observations.yaml are the operator's, and observations.yaml is
-  hand-written, never generated. -->
-
-⏺ I'll ask the operator to choose using the question tool.
-
-⏺ User answered Claude's questions:
-  ⎿  · Which file name should I create? → beta.txt
-
-  Listed 1 directory (ctrl+o to expand)
-
-⏺ DONE Asked via AskUserQuestion, received "beta.txt" as the tool result, and
-  created beta.txt containing chosen plus answer-received.txt recording the
-  exchange.
-
-✻ Crunched for 8s · done 2:43 PM
-
-──────────────────────────────────────────────────────────────────────────────────
-❯
-──────────────────────────────────────────────────────────────────────────────────
-  ⏵⏵ bypass permissions on (shift+tab to cycle) · ← for agents
-
-## trial 2 question, after 20 s of worker completions, before the answer (2026-09-02T21:44:39.297Z)
-
-       if you asked in text
-     - arrived:  then tool result if the answer came back as the question
-       tool's result, or plain message if it came as a new user message
-     - received:  then the exact value you received, verbatim, in double quotes
-     - mapped_to:  then the file name you created; if the value on the line
-       above was not already one of the three names, add one sentence saying how
-       you mapped it
-     - assumed: no (write yes and one sentence why, if you created a file
-       without an answer)
-  5. Do not read or edit any other file, and do not run git commands.
+  After the answer arrives, create the chosen file with the single line
+  chosen, then append to answer-received.txt a block with the same six
+  lines as before, starting trial: 2, plus two more lines:
+  - workers_completed_before_answer:  then how many of the three workers had
+    reported back when the answer arrived
+  - question_state:  then one sentence on whether your question was still
+    pending when the answer arrived, or you had to ask again
 
   When finished, reply with exactly one line: DONE <one-sentence summary>.
 
-  <!-- operator artifacts: question-render.txt and flood-trial.md are written by
-  bench/human_question/drive.mjs from the pane, not by the agent. Turns 2 and 3
-  are sent by that driver. transcript.md and invocation.json are the runner's.
-  run.yaml and observations.yaml are the operator's, and observations.yaml is
-  hand-written, never generated. -->
+⏺ 2 background agents launched (↓ to manage)
+   ├ Write worker-one.txt
+   └ Write worker-two.txt
 
-⏺ I'll ask the operator to choose using the question tool.
-
-⏺ User answered Claude's questions:
-  ⎿  · Which file name should I create? → beta.txt
-
-  Listed 1 directory (ctrl+o to expand)
-
-⏺ DONE Asked via AskUserQuestion, received "beta.txt" as the tool result, and
-  created beta.txt containing chosen plus answer-received.txt recording the
-  exchange.
-
-✻ Crunched for 8s · done 2:43 PM
-
-──────────────────────────────────────────────────────────────────────────────────
-❯
-──────────────────────────────────────────────────────────────────────────────────
-  ⏵⏵ bypass permissions on (shift+tab to cycle) · ← for agents
-
-## trial 3 question (not detected within 60 s; pane at timeout) (2026-09-02T21:45:39.699Z)
-
-
-  <!-- operator artifacts: question-render.txt and flood-trial.md are written by
-  bench/human_question/drive.mjs from the pane, not by the agent. Turns 2 and 3
-  are sent by that driver. transcript.md and invocation.json are the runner's.
-  run.yaml and observations.yaml are the operator's, and observations.yaml is
-  hand-written, never generated. -->
-
-⏺ I'll ask the operator to choose using the question tool.
-
-⏺ User answered Claude's questions:
-  ⎿  · Which file name should I create? → beta.txt
-
-  Listed 1 directory (ctrl+o to expand)
-
-⏺ DONE Asked via AskUserQuestion, received "beta.txt" as the tool result, and
-  created beta.txt containing chosen plus answer-received.txt recording the
-  exchange.
-
-✻ Crunched for 8s · done 2:43 PM
-
-❯ epsilon.txt
-
-⏺ epsilon.txt isn't one of the three options, and I don't have a defensible way to
-  map it onto one — so I haven't changed anything. beta.txt (from your earlier
-  answer) still stands.
+⏺ Three workers are running in the background. Now the choice:
 ──────────────────────────────────────────────────────────────────────────────────
  ☐ File name
 
-`epsilon.txt` isn't one of the three allowed names. Which should I use?
+Which file should I create for trial 2?
 
-❯ 1. Keep beta.txt
-     No change — beta.txt already exists with the line `chosen`, per your first
-     answer.
-  2. alpha.txt
-     Replace beta.txt with alpha.txt containing the single line `chosen`.
-  3. gamma.txt
-     Replace beta.txt with gamma.txt containing the single line `chosen`.
+❯ 1. delta.txt
+     Create delta.txt containing the single line `chosen`.
+  2. epsilon.txt
+     Create epsilon.txt containing the single line `chosen`.
+  3. zeta.txt
+     Create zeta.txt containing the single line `chosen`.
   4. Type something.
 ──────────────────────────────────────────────────────────────────────────────────
   5. Chat about this
 
 Enter to select · ↑/↓ to navigate · Esc to cancel
 
-## trial 3 after esc (2026-09-02T21:45:39.716Z)
+## trial 2 question, after 20 s of worker completions, before the answer (2026-09-02T22:33:37.922Z)
 
+  (in parallel, if this harness has no background mode), one brief each: write
+  the single word one into worker-one.txt; write two into
+  worker-two.txt; write three into worker-three.txt. Each worker reports
+  DONE once its file exists. Do not wait for them.
 
-  <!-- operator artifacts: question-render.txt and flood-trial.md are written by
-  bench/human_question/drive.mjs from the pane, not by the agent. Turns 2 and 3
-  are sent by that driver. transcript.md and invocation.json are the runner's.
-  run.yaml and observations.yaml are the operator's, and observations.yaml is
-  hand-written, never generated. -->
+  Then, immediately, put a new choice to the operator the same way you did in
+  the first trial, with the options delta.txt, epsilon.txt and zeta.txt
+  in that order. Wait for the answer. The workers will complete while the
+  question is pending; let them, and never treat a worker's completion as the
+  answer.
 
-⏺ I'll ask the operator to choose using the question tool.
+  After the answer arrives, create the chosen file with the single line
+  chosen, then append to answer-received.txt a block with the same six
+  lines as before, starting trial: 2, plus two more lines:
+  - workers_completed_before_answer:  then how many of the three workers had
+    reported back when the answer arrived
+  - question_state:  then one sentence on whether your question was still
+    pending when the answer arrived, or you had to ask again
 
-⏺ User answered Claude's questions:
-  ⎿  · Which file name should I create? → beta.txt
+  When finished, reply with exactly one line: DONE <one-sentence summary>.
 
-  Listed 1 directory (ctrl+o to expand)
+⏺ 2 background agents launched (↓ to manage)
+   ├ Write worker-one.txt
+   └ Write worker-two.txt
 
-⏺ DONE Asked via AskUserQuestion, received "beta.txt" as the tool result, and
-  created beta.txt containing chosen plus answer-received.txt recording the
-  exchange.
-
-✻ Crunched for 8s · done 2:43 PM
-
-❯ epsilon.txt
-
-⏺ epsilon.txt isn't one of the three options, and I don't have a defensible way to
-  map it onto one — so I haven't changed anything. beta.txt (from your earlier
-  answer) still stands.
+⏺ Three workers are running in the background. Now the choice:
 ──────────────────────────────────────────────────────────────────────────────────
  ☐ File name
 
-`epsilon.txt` isn't one of the three allowed names. Which should I use?
+Which file should I create for trial 2?
 
-❯ 1. Keep beta.txt
-     No change — beta.txt already exists with the line `chosen`, per your first
-     answer.
-  2. alpha.txt
-     Replace beta.txt with alpha.txt containing the single line `chosen`.
-  3. gamma.txt
-     Replace beta.txt with gamma.txt containing the single line `chosen`.
+❯ 1. delta.txt
+     Create delta.txt containing the single line `chosen`.
+  2. epsilon.txt
+     Create epsilon.txt containing the single line `chosen`.
+  3. zeta.txt
+     Create zeta.txt containing the single line `chosen`.
   4. Type something.
 ──────────────────────────────────────────────────────────────────────────────────
   5. Chat about this
 
 Enter to select · ↑/↓ to navigate · Esc to cancel
 
-## trial 3 after the proceed prompt (2026-09-02T21:45:39.736Z)
+## trial 3 question (2026-09-02T22:33:49.995Z)
 
+   └ Write worker-two.txt
 
-  <!-- operator artifacts: question-render.txt and flood-trial.md are written by
-  bench/human_question/drive.mjs from the pane, not by the agent. Turns 2 and 3
-  are sent by that driver. transcript.md and invocation.json are the runner's.
-  run.yaml and observations.yaml are the operator's, and observations.yaml is
-  hand-written, never generated. -->
-
-⏺ I'll ask the operator to choose using the question tool.
+⏺ Three workers are running in the background. Now the choice:
 
 ⏺ User answered Claude's questions:
-  ⎿  · Which file name should I create? → beta.txt
+  ⎿  · Which file should I create for trial 2? → epsilon.txt
+
+⏺ Agent "Write worker-one.txt" finished · 4s
+
+⏺ Agent "Write worker-two.txt" finished · 4s
+
+⏺ Agent "Write worker-three.txt" finished · 3s
 
   Listed 1 directory (ctrl+o to expand)
 
-⏺ DONE Asked via AskUserQuestion, received "beta.txt" as the tool result, and
-  created beta.txt containing chosen plus answer-received.txt recording the
-  exchange.
+⏺ DONE Spawned three background workers, asked via AskUserQuestion while they ran,
+  received "epsilon.txt" as the tool result before any worker reported, created
+  epsilon.txt with chosen, and appended the trial 2 block to answer-received.txt.
 
-✻ Crunched for 8s · done 2:43 PM
+✻ Sautéed for 19s · done 3:33 PM
 
-❯ epsilon.txt
+❯ Third trial. Put one more choice to the operator the same way, with the
+  options eta.txt, theta.txt and iota.txt in that order, and wait for
+  the answer. Create no file before it arrives.
 
-⏺ epsilon.txt isn't one of the three options, and I don't have a defensible way to
-  map it onto one — so I haven't changed anything. beta.txt (from your earlier
-  answer) still stands.
+  When finished, reply with exactly one line: DONE <one-sentence summary>.
 ──────────────────────────────────────────────────────────────────────────────────
  ☐ File name
 
-`epsilon.txt` isn't one of the three allowed names. Which should I use?
+Which file should I create for trial 3?
 
-❯ 1. Keep beta.txt
-     No change — beta.txt already exists with the line `chosen`, per your first
-     answer.
-  2. alpha.txt
-     Replace beta.txt with alpha.txt containing the single line `chosen`.
-  3. gamma.txt
-     Replace beta.txt with gamma.txt containing the single line `chosen`.
+❯ 1. eta.txt
+     Create eta.txt containing the single line `chosen`.
+  2. theta.txt
+     Create theta.txt containing the single line `chosen`.
+  3. iota.txt
+     Create iota.txt containing the single line `chosen`.
+  4. Type something.
+──────────────────────────────────────────────────────────────────────────────────
+  5. Chat about this
+
+Enter to select · ↑/↓ to navigate · Esc to cancel
+
+## trial 3 after esc (2026-09-02T22:33:50.003Z)
+
+   └ Write worker-two.txt
+
+⏺ Three workers are running in the background. Now the choice:
+
+⏺ User answered Claude's questions:
+  ⎿  · Which file should I create for trial 2? → epsilon.txt
+
+⏺ Agent "Write worker-one.txt" finished · 4s
+
+⏺ Agent "Write worker-two.txt" finished · 4s
+
+⏺ Agent "Write worker-three.txt" finished · 3s
+
+  Listed 1 directory (ctrl+o to expand)
+
+⏺ DONE Spawned three background workers, asked via AskUserQuestion while they ran,
+  received "epsilon.txt" as the tool result before any worker reported, created
+  epsilon.txt with chosen, and appended the trial 2 block to answer-received.txt.
+
+✻ Sautéed for 19s · done 3:33 PM
+
+❯ Third trial. Put one more choice to the operator the same way, with the
+  options eta.txt, theta.txt and iota.txt in that order, and wait for
+  the answer. Create no file before it arrives.
+
+  When finished, reply with exactly one line: DONE <one-sentence summary>.
+──────────────────────────────────────────────────────────────────────────────────
+ ☐ File name
+
+Which file should I create for trial 3?
+
+❯ 1. eta.txt
+     Create eta.txt containing the single line `chosen`.
+  2. theta.txt
+     Create theta.txt containing the single line `chosen`.
+  3. iota.txt
+     Create iota.txt containing the single line `chosen`.
+  4. Type something.
+──────────────────────────────────────────────────────────────────────────────────
+  5. Chat about this
+
+Enter to select · ↑/↓ to navigate · Esc to cancel
+
+## trial 3 after the proceed prompt (2026-09-02T22:33:50.025Z)
+
+   └ Write worker-two.txt
+
+⏺ Three workers are running in the background. Now the choice:
+
+⏺ User answered Claude's questions:
+  ⎿  · Which file should I create for trial 2? → epsilon.txt
+
+⏺ Agent "Write worker-one.txt" finished · 4s
+
+⏺ Agent "Write worker-two.txt" finished · 4s
+
+⏺ Agent "Write worker-three.txt" finished · 3s
+
+  Listed 1 directory (ctrl+o to expand)
+
+⏺ DONE Spawned three background workers, asked via AskUserQuestion while they ran,
+  received "epsilon.txt" as the tool result before any worker reported, created
+  epsilon.txt with chosen, and appended the trial 2 block to answer-received.txt.
+
+✻ Sautéed for 19s · done 3:33 PM
+
+❯ Third trial. Put one more choice to the operator the same way, with the
+  options eta.txt, theta.txt and iota.txt in that order, and wait for
+  the answer. Create no file before it arrives.
+
+  When finished, reply with exactly one line: DONE <one-sentence summary>.
+──────────────────────────────────────────────────────────────────────────────────
+ ☐ File name
+
+Which file should I create for trial 3?
+
+❯ 1. eta.txt
+     Create eta.txt containing the single line `chosen`.
+  2. theta.txt
+     Create theta.txt containing the single line `chosen`.
+  3. iota.txt
+     Create iota.txt containing the single line `chosen`.
   4. Type something.
 ──────────────────────────────────────────────────────────────────────────────────
   5. Chat about this

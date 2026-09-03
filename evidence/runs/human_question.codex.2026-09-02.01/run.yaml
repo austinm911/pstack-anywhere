@@ -1,0 +1,50 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: human_question
+harness: codex
+run_id: human_question.codex.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T22:44:12.587Z
+ended_at: 2026-09-02T22:45:36.599Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: codex-cli 0.152.1
+harness_version_source: codex --version -> codex-cli 0.152.1
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .codex/auth.json and these written files: .codex/config.toml = \"approval_policy = \\\"never\\\"\\nsandbox_mode = \\\"danger-full-access\\\"\\n[features]\\nmulti_agent = true\\n\", plus herdr's codex state-reporting integration (herdr integration install codex); no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-Q4dnl5/bin/codex; driven by bench/human_question/drive.mjs, every operator action timed in drive.log"
+supersedes: null
+drive: 
+  trial1.question_seen: "options rendered, plain list"
+  trial1.answer: "typed beta.txt; turn had settled (\"done\") before the answer"
+  trial1.herdr_status_3s_after_answer: done
+  trial1.end: 
+    status: done
+    settled_by: herdr agent wait
+  trial1.answer_reached_agent: false
+  trial2.question_survived_flood: true
+  trial2.answer: "typed epsilon.txt; turn had settled (\"done\") before the answer"
+  trial2.herdr_status_3s_after_answer: done
+  trial2.end: 
+    status: done
+    settled_by: herdr agent wait
+  trial2.answer_reached_agent: false
+  trial3.after_esc: "question still on screen; turn settled (\"done\")"
+  trial3.proceed_sent_as: prompt
+  trial3.end: 
+    status: done
+    settled_by: herdr agent prompt --wait
+  trial3.trial_block_written: true
+  files_at_end: 
+    - answer-received.txt
+    - beta.txt
+    - epsilon.txt
+    - flood-trial.md
+    - question-render.txt
+    - worker-one.txt
+    - worker-three.txt
+    - worker-two.txt

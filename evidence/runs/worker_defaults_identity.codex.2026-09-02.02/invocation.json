@@ -1,0 +1,353 @@
+{
+  "herdr": {
+    "start": {
+      "error": "herdr agent start failed (1): {\"error\":{\"code\":\"agent_not_ready\",\"message\":\"agent b-worker-defaults-ident-codex-02 is blocked during startup and is not ready for prompts\"},\"id\":\"cli:agent:start\"}"
+    },
+    "start_recovered": true,
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "codex",
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.gr0QRIYne9",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.gr0QRIYne9",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-ident-codex-02",
+          "pane_id": "w1H:p3D",
+          "revision": 1,
+          "state_change_seq": 730,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87a3fb7a0012f",
+          "terminal_title": "tmp.gr0QRIYne9",
+          "terminal_title_stripped": "tmp.gr0QRIYne9",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "codex",
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.gr0QRIYne9",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.gr0QRIYne9",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-ident-codex-02",
+          "pane_id": "w1H:p3D",
+          "revision": 1,
+          "state_change_seq": 730,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87a3fb7a0012f",
+          "terminal_title": "tmp.gr0QRIYne9",
+          "terminal_title_stripped": "tmp.gr0QRIYne9",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "codex",
+      "cached_remote_version": "2026.08.28.1",
+      "evaluated_rules": [
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [
+              "Action Required"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 14,
+            "region_preview": "tmp.gr0QRIYne9"
+          },
+          "id": "osc_title_blocked",
+          "matched": false,
+          "priority": 1100,
+          "region": "osc_title",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "(?:^| )[⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏](?: |$)"
+            ],
+            "region_bytes": 14,
+            "region_preview": "tmp.gr0QRIYne9"
+          },
+          "id": "osc_title_working",
+          "matched": false,
+          "priority": 1050,
+          "region": "osc_title",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 2,
+            "contains": [
+              "↑/↓ to scroll",
+              "pgup/pgdn to",
+              "home/end to jump",
+              "q to quit"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 87,
+            "region_preview": "\n  gpt-5.6-terra default · /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/…\n"
+          },
+          "id": "transcript_viewer",
+          "matched": false,
+          "priority": 1000,
+          "region": "after_last_prompt_marker",
+          "state": "unknown"
+        },
+        {
+          "evidence": {
+            "all_count": 2,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 914,
+            "region_preview": "     line saying so and naming the command or tool call you used. Do not retry\n     with a different name and do not fall back to an unnamed worker yourself.\n\n  3. In your final reply, state in one sentence which argument selected the\n     ..."
+          },
+          "id": "trust_directory",
+          "matched": false,
+          "priority": 950,
+          "region": "top_non_empty_lines(20)",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 4,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 87,
+            "region_preview": "\n  gpt-5.6-terra default · /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/…\n"
+          },
+          "id": "live_strong_blocker",
+          "matched": false,
+          "priority": 900,
+          "region": "after_last_prompt_marker",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 4,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 0,
+            "region_preview": ""
+          },
+          "id": "weak_blocker",
+          "matched": false,
+          "priority": 600,
+          "region": "whole_recent_without_current_prompt_marker",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^[•◦]\\s+Working \\([^)]*esc to interrupt\\)(?: · .*)?$"
+            ],
+            "not_count": 1,
+            "regex": [],
+            "region_bytes": 365,
+            "region_preview": "──────────────────────────────────────────────────────────────────────────────────\n\n\n› Ask Codex to do anything\n\n  gpt-5.6-terra default · /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/…\n"
+          },
+          "id": "screen_working_fallback",
+          "matched": false,
+          "priority": 500,
+          "region": "bottom_non_empty_lines(3)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 2,
+            "regex": [
+              "\\S"
+            ],
+            "region_bytes": 14,
+            "region_preview": "tmp.gr0QRIYne9"
+          },
+          "id": "osc_title_idle",
+          "matched": true,
+          "priority": 100,
+          "region": "osc_title",
+          "state": "idle"
+        }
+      ],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": "remote:/Users/am/.local/state/herdr/agent-detection/remote/codex.toml",
+      "manifest_version": "2026.08.28.1",
+      "matched_rule": {
+        "id": "osc_title_idle",
+        "priority": 100,
+        "region": "osc_title",
+        "state": "idle"
+      },
+      "remote_update_error": null,
+      "remote_update_status": "current",
+      "screen_detection_skipped": false,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": true,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [
+      "trust the contents of this directory",
+      "hooks need review"
+    ],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.gr0QRIYne9",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.gr0QRIYne9",
+            "interactive_ready": true,
+            "name": "b-worker-defaults-ident-codex-02",
+            "pane_id": "w1H:p3D",
+            "revision": 1,
+            "state_change_seq": 730,
+            "tab_id": "w1H:t3",
+            "terminal_id": "term_65a87a3fb7a0012f",
+            "terminal_title": "tmp.gr0QRIYne9",
+            "terminal_title_stripped": "tmp.gr0QRIYne9",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "herdr",
+      "agent",
+      "start",
+      "b-worker-defaults-ident-codex-02",
+      "--kind",
+      "codex",
+      "--pane",
+      "w1H:p3D",
+      "--timeout",
+      "60000",
+      "--",
+      "-m",
+      "gpt-5.6-terra"
+    ],
+    "version": "codex-cli 0.152.1\n"
+  },
+  "model": "gpt-5.6-terra",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.gr0QRIYne9",
+  "home": {
+    "seeded": [
+      ".codex/auth.json"
+    ],
+    "written": {
+      ".codex/config.toml": "approval_policy = \"never\"\nsandbox_mode = \"danger-full-access\"\n[features]\nmulti_agent = true\n"
+    },
+    "home_seed": [
+      ".codex/agents/poteto-probe.md",
+      ".codex/agents/poteto-probe.toml"
+    ]
+  },
+  "drive": {
+    "script": "bench/worker_defaults_identity/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "definition_path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-cqIstB/.codex/agents/poteto-probe.md, /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-cqIstB/.codex/agents/poteto-probe.toml",
+      "subagents_dir_source": "~/.codex/agents (harnesses.yaml:247)",
+      "prompt_status": "done (herdr agent prompt --wait)",
+      "positive-report.txt": "written",
+      "negative-trial.txt": "written"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-cqIstB/.codex/sessions",
+  "calls": [],
+  "calls_workers": {
+    "rollout-2026-09-02T15-34-43-01a06442-a1ee-77a0-a06e-fbe1e8058863": [
+      {
+        "name": "spawn_agent",
+        "arguments": "{\"task_name\":\"positive_probe\",\"agent_type\":\"poteto-probe\",\"fork_turns\":\"all\",\"message\":\"gAAAAABqmKSKMkV0GkeSIjTaQ1669e-7Xm4od2QyzB4o3fSW1e7IFOen1eM8o10OSmtZ-5LrXG0DZZwkXTamZKGiDVpo7WtcaKoAN8251G5DUhw68BpCY-I01oJUu4o-hxrKKmVk_Os7R2aj7nrS5qXfFnYsmP1LQA==\"}",
+        "ts": "2026-09-02T22:34:50.550Z"
+      },
+      {
+        "name": "wait_agent",
+        "arguments": "{\"timeout_ms\":60000}",
+        "ts": "2026-09-02T22:34:53.359Z"
+      },
+      {
+        "name": "exec",
+        "arguments": "const r = await tools.apply_patch(\"*** Begin Patch\\n*** Add File: positive-report.txt\\n+POTETO-PROBE-OK\\n+hello\\n*** End Patch\");\ntext(typeof r === \"string\" ? r : JSON.stringify(r));",
+        "ts": "2026-09-02T22:34:57.034Z"
+      },
+      {
+        "name": "spawn_agent",
+        "arguments": "{\"task_name\":\"negative_probe\",\"agent_type\":\"poteto-absent\",\"fork_turns\":\"all\",\"message\":\"gAAAAABqmKSTmdj_td0Gi-ed3CTKeV5mJjWi1ZkPMDSlsJxQYY934r9QE_q6lYttrX7MJQ7gRGgkRzQW-rE1VXdtuA_cFuxOjuXag5g3E877okBPXcWmsacl1I5KUYnTRGWs55SAEBRZA0qEAQxPgQpWBWXvkfafdg==\"}",
+        "ts": "2026-09-02T22:34:59.156Z"
+      },
+      {
+        "name": "exec",
+        "arguments": "const r = await tools.apply_patch(\"*** Begin Patch\\n*** Add File: negative-trial.txt\\n+unknown agent_type 'poteto-absent'\\n*** End Patch\");\ntext(typeof r === \"string\" ? r : JSON.stringify(r));",
+        "ts": "2026-09-02T22:35:01.563Z"
+      }
+    ],
+    "rollout-2026-09-02T15-34-50-01a06442-bd44-75a0-887d-de6b8d472574": []
+  }
+}

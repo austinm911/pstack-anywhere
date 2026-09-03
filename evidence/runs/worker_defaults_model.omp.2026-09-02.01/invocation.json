@@ -1,0 +1,407 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/sessions/-tmp-tmp.En3GcpK9H5/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.En3GcpK9H5",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.En3GcpK9H5",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-model-omp-01",
+          "pane_id": "w1H:p3N",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 742,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87aa88528c137",
+          "terminal_title": "π > tmp.En3GcpK9H5",
+          "terminal_title_stripped": "π > tmp.En3GcpK9H5",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "omp",
+          "--model",
+          "anthropic/claude-opus-5:low"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/sessions/-tmp-tmp.En3GcpK9H5/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.En3GcpK9H5",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.En3GcpK9H5",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-model-omp-01",
+          "pane_id": "w1H:p3N",
+          "revision": 944,
+          "screen_detection_skipped": true,
+          "state_change_seq": 748,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87aa88528c137",
+          "terminal_title": "π > Spawn workers with model selection",
+          "terminal_title_stripped": "π > Spawn workers with model selection",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/sessions/-tmp-tmp.En3GcpK9H5/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.En3GcpK9H5",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.En3GcpK9H5",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-model-omp-01",
+          "pane_id": "w1H:p3N",
+          "revision": 944,
+          "screen_detection_skipped": true,
+          "state_change_seq": 748,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87aa88528c137",
+          "terminal_title": "π > Spawn workers with model selection",
+          "terminal_title_stripped": "π > Spawn workers with model selection",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "omp",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "omp",
+            "agent_session": {
+              "agent": "omp",
+              "kind": "path",
+              "source": "herdr:omp",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/sessions/-tmp-tmp.En3GcpK9H5/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.En3GcpK9H5",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.En3GcpK9H5",
+            "interactive_ready": true,
+            "name": "b-worker-defaults-model-omp-01",
+            "pane_id": "w1H:p3N",
+            "revision": 944,
+            "screen_detection_skipped": true,
+            "state_change_seq": 748,
+            "tab_id": "w1H:t3",
+            "terminal_id": "term_65a87aa88528c137",
+            "terminal_title": "π > Spawn workers with model selection",
+            "terminal_title_stripped": "π > Spawn workers with model selection",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "omp",
+      "--model",
+      "anthropic/claude-opus-5:low"
+    ],
+    "version": "omp/18.1.4\n"
+  },
+  "model": "anthropic/claude-opus-5:low",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.En3GcpK9H5",
+  "home": {
+    "seeded": [
+      ".omp/agent/agent.db",
+      ".omp/agent/secret-placeholder.key"
+    ],
+    "written": {
+      ".omp/agent/config.yml": "setupVersion: 2\n"
+    }
+  },
+  "drive": {
+    "script": "bench/worker_defaults_model/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "models": {
+        "a": "opus",
+        "b": "sonnet",
+        "source": {
+          "a": "every omp run launched as opus:low (evidence/runs/spawn_worker.omp.2026-09-02.01), the CLI form appending a thinking level; session model_change resolves it to anthropic/claude-opus-5. An agent definition's `model` is a bare pattern list with thinkingLevel separate (references/harnesses/omp/src/packages/coding-agent/src/task/agents.ts:21-31, discovery/helpers.ts:226-241), so the bare alias is the id",
+          "b": "same alias syntax, the sibling Anthropic model; not yet seen through omp, verified by this run"
+        }
+      },
+      "harness_record": "session log under /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/sessions, files newer than the turn start; the run dir's session/ is the same capture",
+      "turn": {
+        "status": "done",
+        "settled_by": "herdr agent prompt --wait"
+      },
+      "usage_record": "4 session file(s)",
+      "spawn_args": "The spawn primitive on this harness is the `task` tool. It takes no model\nargument, so the model was named in project worker definitions under\n.omp/agents/*.md (frontmatter `model:`), and each spawn selected that\ndefinition by name via the task item's `agent` field.\n\n=== Spawn call 1+2 (workers A and B, one task batch) ===\ntool: task\narguments:\n{\n  \"i\": \"Spawning workers A and B\",\n  \"context\": \"# Goal\\nModel-selection probe: each worker reports a fixed word and its own model identity.\\n# Constraints\\nNo file edits, no tools needed; answer directly.\\n# Contract\\nOutput is exactly two lines, nothing else.\",\n  \"tasks\": [\n    {\n      \"name\": \"WorkerA\",\n      \"agent\": \"worker-a\",\n      \"task\": \"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"\n    },\n    {\n      \"name\": \"WorkerB\",\n      \"agent\": \"worker-b\",\n      \"task\": \"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"\n    }\n  ]\n}\n\n=== Spawn call 3 (worker C, negative trial) ===\ntool: task\narguments:\n{\n  \"i\": \"Spawning worker C negative trial\",\n  \"context\": \"# Goal\\nNegative trial: spawn a worker pinned to a nonexistent model identifier.\\n# Constraints\\nNo file edits; answer directly.\\n# Contract\\nOutput is exactly two lines, nothing else.\",\n  \"tasks\": [\n    {\n      \"name\": \"WorkerC\",\n      \"agent\": \"worker-c\",\n      \"task\": \"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"\n    }\n  ]\n}\n\n=== Worker definition files naming the model ===\n\n--- .omp/agents/worker-a.md (full contents) ---\n---\nname: worker-a\ndescription: Worker A, pinned to the opus model.\nmodel: opus\n---\n\nFollow the brief exactly. Reply with exactly two lines and nothing else.\n\n--- .omp/agents/worker-b.md (full contents) ---\n---\nname: worker-b\ndescription: Worker B, pinned to the sonnet model.\nmodel: sonnet\n---\n\nFollow the brief exactly. Reply with exactly two lines and nothing else.\n\n--- .omp/agents/worker-c.md (full contents) ---\n---\nname: worker-c\ndescription: Worker C, pinned to a deliberately nonexistent model.\nmodel: poteto-nonexistent-model\n---\n\nFollow the brief exactly. Reply with exactly two lines and nothing else.\n"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "ANTHROPIC_OAUTH_TOKEN",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/sessions/-tmp-tmp.En3GcpK9H5",
+  "calls": [
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "pwd && ls -a",
+        "i": "Inspecting scratch repo"
+      },
+      "ts": "2026-09-02T22:36:38.733Z"
+    },
+    {
+      "name": "read",
+      "arguments": {
+        "path": "omp://",
+        "i": "Reading harness docs index"
+      },
+      "ts": "2026-09-02T22:36:38.733Z"
+    },
+    {
+      "name": "read",
+      "arguments": {
+        "path": "omp://task-agent-discovery.md",
+        "i": "Reading agent definition format"
+      },
+      "ts": "2026-09-02T22:36:40.863Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": ".omp/agents/worker-a.md",
+        "content": "---\nname: worker-a\ndescription: Worker A, pinned to the opus model.\nmodel: opus\n---\n\nFollow the brief exactly. Reply with exactly two lines and nothing else.\n",
+        "i": "Defining worker A agent"
+      },
+      "ts": "2026-09-02T22:36:47.835Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": ".omp/agents/worker-b.md",
+        "content": "---\nname: worker-b\ndescription: Worker B, pinned to the sonnet model.\nmodel: sonnet\n---\n\nFollow the brief exactly. Reply with exactly two lines and nothing else.\n",
+        "i": "Defining worker B agent"
+      },
+      "ts": "2026-09-02T22:36:47.835Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": ".omp/agents/worker-c.md",
+        "content": "---\nname: worker-c\ndescription: Worker C, pinned to a deliberately nonexistent model.\nmodel: poteto-nonexistent-model\n---\n\nFollow the brief exactly. Reply with exactly two lines and nothing else.\n",
+        "i": "Defining worker C agent"
+      },
+      "ts": "2026-09-02T22:36:47.835Z"
+    },
+    {
+      "name": "task",
+      "arguments": {
+        "context": "# Goal\nModel-selection probe: each worker reports a fixed word and its own model identity.\n# Constraints\nNo file edits, no tools needed; answer directly.\n# Contract\nOutput is exactly two lines, nothing else.",
+        "tasks": [
+          {
+            "name": "WorkerA",
+            "agent": "worker-a",
+            "task": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`."
+          },
+          {
+            "name": "WorkerB",
+            "agent": "worker-b",
+            "task": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`."
+          }
+        ],
+        "i": "Spawning workers A and B"
+      },
+      "ts": "2026-09-02T22:36:52.941Z"
+    },
+    {
+      "name": "task",
+      "arguments": {
+        "context": "# Goal\nNegative trial: spawn a worker pinned to a nonexistent model identifier.\n# Constraints\nNo file edits; answer directly.\n# Contract\nOutput is exactly two lines, nothing else.",
+        "tasks": [
+          {
+            "name": "WorkerC",
+            "agent": "worker-c",
+            "task": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`."
+          }
+        ],
+        "i": "Spawning worker C negative trial"
+      },
+      "ts": "2026-09-02T22:36:56.291Z"
+    },
+    {
+      "name": "hub",
+      "arguments": {
+        "op": "wait",
+        "timeoutMs": 300000,
+        "i": "Waiting for workers"
+      },
+      "ts": "2026-09-02T22:36:58.541Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "grep -n \"alpha\" -A2 -B2 /dev/null; true",
+        "i": "noop"
+      },
+      "ts": "2026-09-02T22:37:24.540Z"
+    },
+    {
+      "name": "read",
+      "arguments": {
+        "path": "history://WorkerB",
+        "i": "Reading worker B transcript"
+      },
+      "ts": "2026-09-02T22:37:24.540Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "negative-trial.txt",
+        "content": "hard error\n\nError: No model selected.\n\nUse /login, set an API key environment variable, or create /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/agent.db\n\nThen use /model to select a model.\n    at #Zs (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:17889:38280)\n    at async prompt (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:17889:36739)\n    at async <anonymous> (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:18623:566)\n    at async MFn (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:18623:632)\n    at async <anonymous> (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:18628:2148)\n    at async KG (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:18628:4573)\n    at async CG (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:18692:8056)\n    at async #c (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:14188:1099)\n    at processTicksAndRejections (native:7:39)\n\n(job status: failed (exit 1), duration 247ms; no worker reply was produced)\n",
+        "i": "Recording negative trial"
+      },
+      "ts": "2026-09-02T22:37:35.223Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "self-reports.txt",
+        "content": "self-report, not authoritative: what each worker said about its own model\nA\tselected: opus\treported: anthropic/claude-opus-5\nB\tselected: sonnet\treported: cursor/claude-4-sonnet\n",
+        "i": "Writing self reports"
+      },
+      "ts": "2026-09-02T22:37:35.223Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "spawn-args.txt",
+        "content": "The spawn primitive on this harness is the `task` tool. It takes no model\nargument, so the model was named in project worker definitions under\n.omp/agents/*.md (frontmatter `model:`), and each spawn selected that\ndefinition by name via the task item's `agent` field.\n\n=== Spawn call 1+2 (workers A and B, one task batch) ===\ntool: task\narguments:\n{\n  \"i\": \"Spawning workers A and B\",\n  \"context\": \"# Goal\\nModel-selection probe: each worker reports a fixed word and its own model identity.\\n# Constraints\\nNo file edits, no tools needed; answer directly.\\n# Contract\\nOutput is exactly two lines, nothing else.\",\n  \"tasks\": [\n    {\n      \"name\": \"WorkerA\",\n      \"agent\": \"worker-a\",\n      \"task\": \"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"\n    },\n    {\n      \"name\": \"WorkerB\",\n      \"agent\": \"worker-b\",\n      \"task\": \"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"\n    }\n  ]\n}\n\n=== Spawn call 3 (worker C, negative trial) ===\ntool: task\narguments:\n{\n  \"i\": \"Spawning worker C negative trial\",\n  \"context\": \"# Goal\\nNegative trial: spawn a worker pinned to a nonexistent model identifier.\\n# Constraints\\nNo file edits; answer directly.\\n# Contract\\nOutput is exactly two lines, nothing else.\",\n  \"tasks\": [\n    {\n      \"name\": \"WorkerC\",\n      \"agent\": \"worker-c\",\n      \"task\": \"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"\n    }\n  ]\n}\n\n=== Worker definition files naming the model ===\n\n--- .omp/agents/worker-a.md (full contents) ---\n---\nname: worker-a\ndescription: Worker A, pinned to the opus model.\nmodel: opus\n---\n\nFollow the brief exactly. Reply with exactly two lines and nothing else.\n\n--- .omp/agents/worker-b.md (full contents) ---\n---\nname: worker-b\ndescription: Worker B, pinned to the sonnet model.\nmodel: sonnet\n---\n\nFollow the brief exactly. Reply with exactly two lines and nothing else.\n\n--- .omp/agents/worker-c.md (full contents) ---\n---\nname: worker-c\ndescription: Worker C, pinned to a deliberately nonexistent model.\nmodel: poteto-nonexistent-model\n---\n\nFollow the brief exactly. Reply with exactly two lines and nothing else.\n",
+        "i": "Recording spawn arguments"
+      },
+      "ts": "2026-09-02T22:37:46.160Z"
+    }
+  ],
+  "calls_workers": {
+    "WorkerA": [
+      {
+        "name": "yield",
+        "arguments": {
+          "i": "Submitting two-line probe result",
+          "result": {},
+          "type": "result"
+        },
+        "ts": "2026-09-02T22:36:56.614Z"
+      }
+    ],
+    "WorkerB": [
+      {
+        "name": "glob",
+        "arguments": {
+          "i": "check current directory contents",
+          "path": "."
+        },
+        "ts": "2026-09-02T22:37:20.402Z"
+      },
+      {
+        "name": "read",
+        "arguments": {
+          "path": "worker-a.md"
+        },
+        "ts": "2026-09-02T22:37:20.402Z"
+      },
+      {
+        "name": "read",
+        "arguments": {
+          "path": "worker-b.md"
+        },
+        "ts": "2026-09-02T22:37:20.402Z"
+      },
+      {
+        "name": "read",
+        "arguments": {
+          "path": "worker-c.md"
+        },
+        "ts": "2026-09-02T22:37:20.402Z"
+      },
+      {
+        "name": "read",
+        "arguments": {
+          "path": ".bench-scratch"
+        },
+        "ts": "2026-09-02T22:37:20.402Z"
+      }
+    ],
+    "WorkerC": []
+  }
+}

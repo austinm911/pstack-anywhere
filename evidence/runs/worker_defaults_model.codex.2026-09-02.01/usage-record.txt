@@ -1,0 +1,11 @@
+source: harness session log, /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-46IBEU/.codex/sessions, every *.jsonl written after the prompt was sent (find -newer), tokens "model"/"modelId" counted per file with grep -oE | sort | uniq -c
+selections: A=gpt-5.6-terra B=gpt-5.6-luna C=poteto-nonexistent-model
+harness: codex
+
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-46IBEU/.codex/sessions/2026/09/02/rollout-2026-09-02T15-38-50-01a06446-64e7-74d0-b039-9440effc160f.jsonl
+   6 "model":"gpt-5.6-terra"
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-46IBEU/.codex/sessions/2026/09/02/rollout-2026-09-02T15-38-57-01a06446-82da-7b12-a15d-7199026f2ab3.jsonl
+   6 "model":"gpt-5.6-terra"
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-46IBEU/.codex/sessions/2026/09/02/rollout-2026-09-02T15-39-02-01a06446-961f-77e2-a8c8-148244351701.jsonl
+   5 "model":"gpt-5.6-luna"
+   1 "model":"gpt-5.6-terra"

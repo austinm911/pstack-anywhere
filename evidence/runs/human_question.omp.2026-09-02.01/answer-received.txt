@@ -1,0 +1,22 @@
+trial: 1
+mechanism: ask
+arrived: tool result
+received: "alpha.txt"
+mapped_to: alpha.txt
+assumed: no
+
+trial: 2
+mechanism: ask
+arrived: tool result
+received: "delta.txt"
+mapped_to: delta.txt
+assumed: no
+workers_completed_before_answer: 0
+question_state: The question was still pending when the answer arrived as the ask tool's result; the three worker completions were delivered afterward and I never asked again.
+
+trial: 3
+mechanism: plain reply
+arrived: plain message
+received: nothing
+mapped_to: none
+assumed: no

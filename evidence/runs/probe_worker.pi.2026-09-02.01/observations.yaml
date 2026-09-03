@@ -1,0 +1,22 @@
+# Hand-written by the operator from the artifacts in this directory.
+#
+# This run is incomplete: probe-activity.log, a required artifact, was never
+# produced because the worker never took its prompt (see probe.side_effect).
+# The observations below are recorded so the failure is readable; a rerun
+# follows as probe_worker.pi.2026-09-02.02.
+observations:
+  - id: probe.mechanism
+    observed: 'herdr_get_agent, arguments {"target": "probe-worker"}, called once per probe turn (four calls), supplied by the @andrewjacop/pi-herdr extension loaded with -e (run.yaml extension; invocation.json cli.command). The worker had been started with herdr_start_agent {name: "probe-worker", agent: "omp", cwd: <scratch>, prompt: <the loop brief>} after a first attempt with agent: "pi" was rejected, verbatim "Error (VALIDATION_ERROR): expected pi, detected omp"; the second attempt returned "Started omp agent "probe-worker" in pane w1H:p48."'
+    source: 'invocation.json calls[0..5] name and arguments; session/2026-09-02T22-45-13-129Z_01a0644c-3d29-7fba-b108-63eb3d49aeb8.jsonl toolResult 22:45:22.415Z, 22:45:34.287Z; run.yaml extension'
+  - id: probe.states_reported
+    observed: 'all four probes returned the identical string, verbatim "Agent "probe-worker" (omp): pane w1H:p48, status idle." at 22:46:10.733Z, 22:46:36.583Z, 22:47:01.093Z and 22:49:09.875Z. The parent relayed each as "DONE Liveness: "Agent "probe-worker" (omp): pane w1H:p48, status idle."; used herdr_get_agent with {"target":"probe-worker"}."'
+    source: 'session jsonl toolResult entries for herdr_get_agent at those four timestamps; probes.yaml probes[0..3].reply; run.yaml drive.probe_1 through probe_4'
+  - id: probe.granularity
+    observed: 'observed in this run: only "idle". Not exercised: "working", "done", "blocked", which herdr reported for other agents in this workspace during the sibling run worker_defaults_model.pi.2026-09-02.01 (herdr_list_agents there listed [working], [done], [idle]), and which herdr''s pane list exposes as agent_status. The value is a herdr pane agent state, not the worker harness''s own state, and it never distinguished running from finished here because the worker never ran'
+    source: 'session jsonl herdr_get_agent toolResults (four times "status idle"); evidence/runs/worker_defaults_model.pi.2026-09-02.01 session jsonl toolResult 22:36:17.490Z herdr_list_agents for the other values'
+  - id: probe.side_effect
+    observed: 'none measurable, because there was no activity to disturb: probe-activity.log was never created (run.yaml drive.log_final.lines: 0; cadence.md "(log absent or empty)" in every window; the scratch dir at harvest held only cadence.md, codedb.snapshot, probes.yaml). The omp worker pane w1H:p48 opened from the operator''s real HOME (bench/README.md), reached its idle welcome screen with "Connected to MCP servers: executor, codedb, deepwiki" and an empty input box, and the prompt passed in herdr_start_agent never appeared in it; the operator read that pane after the run and found no turn, and the operator''s ~/.omp/agent/sessions/-tmp-tmp.MBFogui0nW/ was an empty directory. herdr_get_agent did not wake it either: status stayed idle across all four probes and the log stayed absent, so the probe did not resume, but this run cannot show that a running worker would have been left alone'
+    source: 'cadence.md; run.yaml drive.unprobed_window, drive.before_final_probe, drive.log_final; probes.yaml log_lines_before/after (all 0); operator pane read of w1H:p48 after harvest and the empty session directory in the operator''s HOME, neither copied here'
+  - id: probe.post_completion
+    observed: 'the fourth probe at 22:49:09.875Z returned the same "status idle" as the first three. The worker had not completed, it had never started its loop, so idle here means never-ran, indistinguishable from the idle a finished worker would show'
+    source: 'session jsonl toolResult 22:49:09.875Z herdr_get_agent; probes.yaml probes[3]; run.yaml drive.probe_4'

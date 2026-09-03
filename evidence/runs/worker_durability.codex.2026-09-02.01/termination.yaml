@@ -1,0 +1,17 @@
+method: command
+pid: 15184
+pid_source: "herdr pane process-info --pane w1H:p4P, foreground process group of the agent pane, read before the spawn"
+pid_alive_before_quit: true
+pid_alive_5s_after_quit: false
+terminated_at: 2026-09-02T23:57:03.601Z
+clock: "UTC, Date.toISOString on the bench host, read by drive.mjs when ctx.quit returned"
+spawn_prompted_at: 2026-09-02T23:56:11.756Z
+heartbeats_before_termination: 
+  - 2026-09-02T23:56:31Z
+  - 2026-09-02T23:57:01Z
+read_after_wait_at: 2026-09-03T00:03:11.779Z
+heartbeats_total: 2
+heartbeats_after_termination: 0
+heartbeat_lines_after_termination: 
+  []
+done_txt: null

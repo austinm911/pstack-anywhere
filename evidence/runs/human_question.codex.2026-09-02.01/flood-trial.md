@@ -1,0 +1,21 @@
+# human_question flood trial, codex gpt-5.6-terra, UTC order
+
+- 2026-09-02T22:44:28.125Z turn 2 prompt sent
+- 2026-09-02T22:44:48.223Z question rendered (plain list)
+- 2026-09-02T22:44:48.235Z worker completion landed: worker-one.txt
+- 2026-09-02T22:44:48.235Z worker completion landed: worker-two.txt
+- 2026-09-02T22:44:48.240Z question still on screen, turn pending
+- 2026-09-02T22:44:50.275Z question still on screen, turn settled ("done")
+- 2026-09-02T22:44:52.290Z worker completion landed: worker-three.txt
+- 2026-09-02T22:44:52.296Z question still on screen, turn settled ("done")
+- 2026-09-02T22:44:54.315Z question still on screen, turn settled ("done")
+- 2026-09-02T22:44:56.338Z question still on screen, turn settled ("done")
+- 2026-09-02T22:44:58.356Z question still on screen, turn settled ("done")
+- 2026-09-02T22:45:00.384Z question still on screen, turn settled ("done")
+- 2026-09-02T22:45:02.419Z question still on screen, turn settled ("done")
+- 2026-09-02T22:45:04.438Z question still on screen, turn settled ("done")
+- 2026-09-02T22:45:06.468Z question still on screen, turn settled ("done")
+- 2026-09-02T22:45:08.473Z before answering: 3/3 worker files present, question survived
+- 2026-09-02T22:45:08.483Z answered: typed epsilon.txt
+- 2026-09-02T22:45:11.514Z turn ended: {"status":"done","settled_by":"herdr agent wait"}; answer did NOT reach the agent (no trial: 2 block)
+- 2026-09-02T22:45:11.527Z files after answer: answer-received.txt, beta.txt, flood-trial.md, question-render.txt, worker-one.txt, worker-three.txt, worker-two.txt

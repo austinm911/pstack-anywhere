@@ -1,0 +1,18 @@
+hard error
+
+Error: No model selected.
+
+Use /login, set an API key environment variable, or create /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/agent.db
+
+Then use /model to select a model.
+    at #Zs (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:17889:38280)
+    at async prompt (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:17889:36739)
+    at async <anonymous> (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:18623:566)
+    at async MFn (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:18623:632)
+    at async <anonymous> (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:18628:2148)
+    at async KG (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:18628:4573)
+    at async CG (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:18692:8056)
+    at async #c (/Users/am/.bun/install/global/node_modules/@oh-my-pi/pi-coding-agent/dist/cli.js:14188:1099)
+    at processTicksAndRejections (native:7:39)
+
+(job status: failed (exit 1), duration 247ms; no worker reply was produced)

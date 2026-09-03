@@ -1,0 +1,13 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: identity.definition_path
+    unsatisfiable: 'pi has no subagent definition directory: harnesses.yaml:331 records subagentsDir: null for pi, and the verified note at harnesses.yaml:360-364 says there is no subagent loader and no agents setting. The driver seeded nothing (definition.txt: "no definition installed: harnesses.yaml records subagentsDir: null for pi (harnesses.yaml:331) / negative trial only"; run.yaml drive.definition_path) and struck step 1 from the prompt. This run was launched stock, without --extension: run.yaml has no extension key and invocation.json extension is null, the argv is ["pi","--model","openai-codex/gpt-5.6-luna"]'
+  - id: identity.selection_argument
+    observed: 'none. Stock pi exposes no spawn or delegate primitive (harnesses.yaml:307-308: "A stock pi has no delegation tool"), and none of the eight assistant tool calls in the session selects a worker: they are bash (4), read (2), write (2). The agent''s DONE line claims "The "definition" argument was skipped for the first spawn and passed as "poteto-absent" for the second", but no tool call carries any such argument, so that sentence is narration with no call behind it'
+    source: invocation.json calls[0..7] name and arguments; session/2026-09-02T22-33-11-005Z_01a06441-385d-7d0e-8e75-1b754a67ca98.jsonl last assistant message text; transcript.md lines 166-167
+  - id: identity.token_present
+    observed: 'false. No worker ran; positive-report.txt is the one line the operator note asked for, "skipped: no subagent definition directory (harnesses.yaml:331)", and POTETO-PROBE-OK appears nowhere in the session or scratch files'
+    source: positive-report.txt line 1; invocation.json calls[6].arguments.content; session jsonl (no occurrence of POTETO-PROBE-OK)
+  - id: identity.unknown_name_behavior
+    observed: 'no spawn was attempted, so neither a hard error, a warning, nor a fallback was produced. The agent inspected its environment (pi --help, the scratch HOME, the pi package docs, env for herdr/subagent variables), found no worker mechanism, and wrote negative-trial.txt as one line, verbatim "no definition installed: harnesses.yaml records subagentsDir: null for pi (harnesses.yaml:331)", which paraphrases definition.txt rather than reporting output of a poteto-absent spawn; it names no command or tool call as the prompt required. The absence of any delegation tool in stock pi is the finding: an unknown name cannot be passed anywhere'
+    source: negative-trial.txt line 1; invocation.json calls[7].arguments.content; invocation.json calls[2], calls[4], calls[5] (the bash probes for a spawn mechanism); transcript.md lines 55-138

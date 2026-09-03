@@ -1,0 +1,14 @@
+source: harness session log, /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/sessions, every *.jsonl written after the prompt was sent (find -newer), tokens "model"/"modelId" counted per file with grep -oE | sort | uniq -c
+selections: A=opus B=sonnet C=poteto-nonexistent-model
+harness: omp
+
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/sessions/-tmp-tmp.En3GcpK9H5/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1.jsonl
+   1 "model":"anthropic/claude-opus-5"
+  10 "model":"claude-opus-5"
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/sessions/-tmp-tmp.En3GcpK9H5/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1/WorkerA.jsonl
+   1 "model":"anthropic/claude-opus-5"
+   1 "model":"claude-opus-5"
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/sessions/-tmp-tmp.En3GcpK9H5/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1/WorkerB.jsonl
+   2 "model":"claude-4-sonnet"
+   1 "model":"cursor/claude-4-sonnet"
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MTOpr8/.omp/agent/sessions/-tmp-tmp.En3GcpK9H5/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1/WorkerC.jsonl

@@ -1,0 +1,212 @@
+# Written by bench/probe_worker/drive.mjs. Each probe is one prompt turn to the
+# parent; `reply` is the transcript text that followed it, verbatim. Times are
+# UTC from the bench host.
+spawn_done_at: 2026-09-02T22:44:55.084Z
+spawn_reply: |-
+  ╭─── ⇶ Task 1 agent ───────────────────╮
+  │ Goal                                 │
+  │                                      │
+  │ Generate a timestamp activity log in │
+  │ the scratch repo at                  │
+  │ /var/folders/4n/6mnm6cw94yq_yhfvcxxf │
+  │ t                                    │
+  │ 3180000gp/T/tmp.oiGATooz4h.          │
+  │                                      │
+  │ Constraints                          │
+  │                                      │
+  │ - Append only; never truncate or     │
+  │   rewrite probe-activity.log.        │
+  │ - No formatters, linters, or test    │
+  │   suites.                            │
+  │                                      │
+  │ Contract                             │
+  │                                      │
+  │ - File: probe-activity.log in the    │
+  │   current working directory, 18      │
+  │   lines, one UTC ISO 8601 timestamp  │
+  │   per line.                          │
+  ├──────────────────────────────────────┤
+  │ • ProbeWorker ⟦sonic⟧ # Target File  │
+  │ `probe-activity.log` in t…           │
+  ╰──────────────────────────────────────╯
+
+   DONE Spawned background worker
+   ProbeWorker (job id ProbeWorker, agent
+   sonic) to append 18 UTC ISO-8601
+   timestamps to probe-activity.log over
+   3 minutes; not waiting on it.
+
+   Subagents
+    └─ • ProbeWorker ⟦sonic⟧ Complete
+   assignment thoroughly: ↵ # Tar…
+
+  Spawn background worker to log timestamp
+   ⠦ 10s  > ◔ Opus 5 > 🗑 …ooz4h ▶─3%──┃1M─
+  ╰─
+probe_prompt: |-
+  Check on the worker you spawned without resuming or re-prompting it: report
+  its liveness verbatim as your harness reports it, and name the primitive you
+  used, with its arguments. Do not read probe-activity.log to answer.
+
+  When finished, reply with exactly one line: DONE <one-sentence summary>.
+unprobed_window_end: 2026-09-02T22:45:25.099Z
+probed_window_end: 2026-09-02T22:46:22.859Z
+probes:
+  - n: 1
+    sent_at: 2026-09-02T22:45:25.099Z
+    replied_at: 2026-09-02T22:45:31.237Z
+    herdr_status: "done"
+    settled_by: "herdr agent prompt --wait"
+    log_lines_before: 3
+    log_lines_after: 4
+    reply_anchored_to_prompt_echo: true
+    done_line: "DONE hub jobs reports ProbeWorker"
+    reply: |-
+      :
+       report
+       its liveness verbatim as your harness
+       reports it, and name the primitive you
+       used, with its arguments. Do not read
+       probe-activity.log to answer.
+
+       When finished, reply with exactly one
+       line: DONE <one-sentence summary>.
+
+
+      ⓘ waiting on 1 job
+      └─ ⢿ ⟦task⟧ ProbeWorker 35.7s
+
+       Primitive: hub with op: "jobs" (no
+       other arguments).
+
+       Verbatim harness report:
+
+       ```
+      ## Still Running (1)
+
+      - `ProbeWorker` [task] — ProbeWorker
+       ```
+
+       DONE hub jobs reports ProbeWorker
+       still running under "Still Running
+       (1)".
+
+       Subagents
+        └─ • ProbeWorker ⟦sonic⟧ Complete
+       assignment thoroughly: ↵ # Tar…
+
+      Spawn background worker to log timestamp
+       ⠏ 46s  > ◔ Opus 5 > 🗑 …ooz4h ▶─3%──┃1M─
+      ╰─
+  - n: 2
+    sent_at: 2026-09-02T22:45:51.248Z
+    replied_at: 2026-09-02T22:45:56.922Z
+    herdr_status: "done"
+    settled_by: "herdr agent prompt --wait"
+    log_lines_before: 6
+    log_lines_after: 7
+    reply_anchored_to_prompt_echo: true
+    done_line: "DONE hub jobs again reports ProbeWorker still running under \"Still Running (1)\"."
+    reply: |-
+      : report
+       its liveness verbatim as your harness reports it, and name the primitive you
+       used, with its arguments. Do not read probe-activity.log to answer.
+
+       When finished, reply with exactly one line: DONE <one-sentence summary>.
+
+
+      ⓘ waiting on 1 job
+      └─ ⣟ ⟦task⟧ ProbeWorker 1m1s
+
+       Primitive: hub with op: "jobs" (no other arguments).
+
+       Verbatim:
+
+       ```
+      ## Still Running (1)
+
+      - `ProbeWorker` [task] — ProbeWorker
+       ```
+
+       DONE hub jobs again reports ProbeWorker still running under "Still Running (1)".
+
+       Subagents
+        └─ • ProbeWorker ⟦sonic⟧ Complete assignment thoroughly: ↵ # Tar…
+
+                                               Spawn background worker to log timestamps
+       ⠙ 1m  > ◔ Opus 5 > 🗑 tmp.oiGATooz4h > ⑂ main ?1 > $0.18 ▶─3%────┃1M─◀ 👥 1 agent
+      ╰─
+  - n: 3
+    sent_at: 2026-09-02T22:46:16.931Z
+    replied_at: 2026-09-02T22:46:22.847Z
+    herdr_status: "done"
+    settled_by: "herdr agent prompt --wait"
+    log_lines_before: 9
+    log_lines_after: 9
+    reply_anchored_to_prompt_echo: true
+    done_line: "DONE hub jobs reports ProbeWorker still running under \"Still Running (1)\"."
+    reply: |-
+      : report
+       its liveness verbatim as your harness reports it, and name the primitive you
+       used, with its arguments. Do not read probe-activity.log to answer.
+
+       When finished, reply with exactly one line: DONE <one-sentence summary>.
+
+
+      ⓘ waiting on 1 job
+      └─ ⣽ ⟦task⟧ ProbeWorker 1m27s
+
+       Primitive: hub with op: "jobs" (no other arguments).
+
+       Verbatim:
+
+       ```
+      ## Still Running (1)
+
+      - `ProbeWorker` [task] — ProbeWorker
+       ```
+
+       DONE hub jobs reports ProbeWorker still running under "Still Running (1)".
+
+       Subagents
+        └─ • ProbeWorker ⟦sonic⟧ Complete assignment thoroughly: ↵ # Tar…
+
+                                               Spawn background worker to log timestamps
+       ⠴ 1m  > ◔ Opus 5 > 🗑 tmp.oiGATooz4h > ⑂ main ?1 > $0.21 ▶─3%────┃1M─◀ 👥 1 agent
+      ╰─
+  - n: 4
+    sent_at: 2026-09-02T22:48:25.101Z
+    replied_at: 2026-09-02T22:48:31.539Z
+    herdr_status: "done"
+    settled_by: "herdr agent prompt --wait"
+    log_lines_before: 18
+    log_lines_after: 18
+    reply_anchored_to_prompt_echo: true
+    done_line: "DONE hub list reports ProbeWorker [sonic · sub · idle] — parent Main, active"
+    reply: |-
+      : report
+       its liveness verbatim as your harness reports it, and name the primitive you
+       used, with its arguments. Do not read probe-activity.log to answer.
+
+       When finished, reply with exactly one line: DONE <one-sentence summary>.
+
+
+      ✉ IRC peers 0 running · 1 idle · 0 parked
+      └─ ● idle ProbeWorker sonic sub · of Main just now
+
+       Primitive: hub with op: "list" (no other arguments); hub jobs no longer carries
+       the row since the job settled and its result was delivered.
+
+       Verbatim:
+
+       ```
+      1 peer(s) (running 0, idle 1, parked 0; shown 1, truncated 0):
+      - ProbeWorker [sonic · sub · idle] — parent Main, active 27.0s ago
+       ```
+
+       DONE hub list reports ProbeWorker [sonic · sub · idle] — parent Main, active
+       27.0s ago.
+
+                                               Spawn background worker to log timestamps
+       π  > ◔ Opus 5 > 🗑 tmp.oiGATooz4h > ⑂ main ?1 > $0.27 ▶─3%─────────────────┃───1M─
+      ╰─

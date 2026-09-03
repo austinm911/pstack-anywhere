@@ -1,0 +1,49 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: human_question
+harness: pi
+run_id: human_question.pi.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T22:40:24.152Z
+ended_at: 2026-09-02T22:43:23.139Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: 0.84.4
+harness_version_source: pi --version -> 0.84.4
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .pi/agent/auth.json, plus herdr's pi state-reporting integration (herdr integration install pi); no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-SW5sZJ/bin/pi; driven by bench/human_question/drive.mjs, every operator action timed in drive.log"
+supersedes: null
+extension: "@andrewjacop/pi-herdr, loaded explicitly with -e ~/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr"
+drive: 
+  trial1.question_seen: "options rendered, plain list"
+  trial1.answer: "typed beta.txt; turn had settled (\"done\") before the answer"
+  trial1.herdr_status_3s_after_answer: working
+  trial1.end: 
+    status: done
+    settled_by: herdr agent wait
+  trial1.answer_reached_agent: true
+  trial2.question_survived_flood: false
+  trial2.answer: "typed epsilon.txt; turn had settled (\"done\") before the answer"
+  trial2.herdr_status_3s_after_answer: working
+  trial2.end: 
+    status: done
+    settled_by: herdr agent wait
+  trial2.answer_reached_agent: true
+  trial3.after_esc: "question gone; turn settled (\"done\")"
+  trial3.proceed_sent_as: prompt
+  trial3.end: 
+    status: done
+    settled_by: herdr agent prompt --wait
+  trial3.trial_block_written: true
+  files_at_end: 
+    - answer-received.txt
+    - beta.txt
+    - codedb.snapshot
+    - epsilon.txt
+    - flood-trial.md
+    - question-render.txt

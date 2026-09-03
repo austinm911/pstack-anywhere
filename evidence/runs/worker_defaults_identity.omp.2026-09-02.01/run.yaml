@@ -1,0 +1,26 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: worker_defaults_identity
+harness: omp
+run_id: worker_defaults_identity.omp.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T22:35:10.190Z
+ended_at: 2026-09-02T22:35:32.670Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: omp/18.1.4
+harness_version_source: omp --version -> omp/18.1.4
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .omp/agent/agent.db, .omp/agent/secret-placeholder.key and these written files: .omp/agent/config.yml = \"setupVersion: 2\\n\" and these files from bench/worker_defaults_identity/home/omp: .omp/agent/agents/poteto-probe.md, plus herdr's omp state-reporting integration (herdr integration install omp); no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, ANTHROPIC_OAUTH_TOKEN, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-hp5wSA/bin/omp; driven by bench/worker_defaults_identity/drive.mjs, every operator action timed in drive.log"
+supersedes: null
+drive: 
+  definition_path: /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-hp5wSA/.omp/agent/agents/poteto-probe.md
+  subagents_dir_source: ~/.omp/agent/agents (harnesses.yaml:421)
+  prompt_status: done (herdr agent prompt --wait)
+  positive-report.txt: written
+  negative-trial.txt: written

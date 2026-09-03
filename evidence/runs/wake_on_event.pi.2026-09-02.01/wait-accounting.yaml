@@ -1,0 +1,116 @@
+# Sources. herdr: `herdr agent get` (agent_status, revision, state_change_seq);
+# it exposes no turn or token counter. session_log: every *.jsonl under the
+# scratch HOME at the snapshot, assistant entries counted and the last usage
+# object seen. Zero growth in assistant_entries across during_wait minus
+# before_wait, beyond the single turn that entered the wait, is the claim.
+sources:
+  herdr: herdr agent get, fields agent_status, revision, state_change_seq
+  session_log: [".pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.J64YX3vH9l--/2026-09-02T22-54-45-455Z_01a06454-f8cf-75c4-8e1d-80673cccc663.jsonl"]
+wait_call: |
+  timeout 1200 sh -c 'while [ ! -e event.flag ]; do sleep 30; done'
+  shell command
+  file appearance
+snapshots:
+  before_wait: {
+    "label": "before_wait",
+    "at": "2026-09-02T22:54:48.049Z",
+    "files": [],
+    "lines": 0,
+    "assistant_entries": 0,
+    "usage": null,
+    "herdr": {
+      "agent_status": "idle",
+      "revision": 1,
+      "state_change_seq": 846
+    }
+  }
+  during_wait: {
+    "label": "during_wait",
+    "at": "2026-09-02T22:56:48.059Z",
+    "files": [
+      ".pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.J64YX3vH9l--/2026-09-02T22-54-45-455Z_01a06454-f8cf-75c4-8e1d-80673cccc663.jsonl"
+    ],
+    "lines": 7,
+    "assistant_entries": 2,
+    "usage": {
+      "input": 1979,
+      "output": 142,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 95,
+      "totalTokens": 2121,
+      "cost": {
+        "input": 0.0003958,
+        "output": 0.0001704,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0.0005662
+      }
+    },
+    "herdr": {
+      "agent_status": "working",
+      "revision": 1,
+      "state_change_seq": 847
+    }
+  }
+  after_wake: {
+    "label": "after_wake",
+    "at": "2026-09-02T22:57:11.049Z",
+    "files": [
+      ".pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.J64YX3vH9l--/2026-09-02T22-54-45-455Z_01a06454-f8cf-75c4-8e1d-80673cccc663.jsonl"
+    ],
+    "lines": 13,
+    "assistant_entries": 5,
+    "usage": {
+      "input": 2430,
+      "output": 118,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 88,
+      "totalTokens": 2548,
+      "cost": {
+        "input": 0.00048600000000000005,
+        "output": 0.0001416,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0.0006276000000000001
+      }
+    },
+    "herdr": {
+      "agent_status": "done",
+      "revision": 1,
+      "state_change_seq": 856
+    }
+  }
+  after_trial2: {
+    "label": "after_trial2",
+    "at": "2026-09-02T23:02:06.147Z",
+    "files": [
+      ".pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.J64YX3vH9l--/2026-09-02T22-54-45-455Z_01a06454-f8cf-75c4-8e1d-80673cccc663.jsonl"
+    ],
+    "lines": 23,
+    "assistant_entries": 10,
+    "usage": {
+      "input": 797,
+      "output": 21,
+      "cacheRead": 2560,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 3378,
+      "cost": {
+        "input": 0.00015940000000000003,
+        "output": 0.0000252,
+        "cacheRead": 0.0000512,
+        "cacheWrite": 0,
+        "total": 0.0002358
+      }
+    },
+    "herdr": {
+      "agent_status": "done",
+      "revision": 1,
+      "state_change_seq": 861
+    }
+  }
+assistant_entries_during_wait: 2
+assistant_entries_wait_to_wake: 3
+state_change_seq_during_wait: 1

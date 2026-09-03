@@ -1,0 +1,283 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "codex",
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.YttGvvwc3G",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.YttGvvwc3G",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-ident-codex-01",
+          "pane_id": "w1H:p3C",
+          "revision": 0,
+          "state_change_seq": 717,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a879f40c54012e",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "codex",
+          "-m",
+          "gpt-5.6-terra"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": null,
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "codex",
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.YttGvvwc3G",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.YttGvvwc3G",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-ident-codex-01",
+          "pane_id": "w1H:p3C",
+          "revision": 0,
+          "state_change_seq": 717,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a879f40c54012e",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "codex",
+      "cached_remote_version": "2026.08.28.1",
+      "evaluated_rules": [
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [
+              "Action Required"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 0,
+            "region_preview": ""
+          },
+          "id": "osc_title_blocked",
+          "matched": false,
+          "priority": 1100,
+          "region": "osc_title",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "(?:^| )[⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏](?: |$)"
+            ],
+            "region_bytes": 0,
+            "region_preview": ""
+          },
+          "id": "osc_title_working",
+          "matched": false,
+          "priority": 1050,
+          "region": "osc_title",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 2,
+            "contains": [
+              "↑/↓ to scroll",
+              "pgup/pgdn to",
+              "home/end to jump",
+              "q to quit"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 121,
+            "region_preview": "  2. Trust all and continue\n  3. Continue without trusting (hooks won't run)\n\n  Press enter to confirm or esc to go back\n"
+          },
+          "id": "transcript_viewer",
+          "matched": false,
+          "priority": 1000,
+          "region": "after_last_prompt_marker",
+          "state": "unknown"
+        },
+        {
+          "evidence": {
+            "all_count": 2,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 249,
+            "region_preview": "\n  Hooks need review\n  1 hook is new or changed.\n  Hooks can run outside the sandbox after you trust them.\n\n› 1. Review hooks\n  2. Trust all and continue\n  3. Continue without trusting (hooks won't run)\n\n  Press enter to confirm or esc to g..."
+          },
+          "id": "trust_directory",
+          "matched": false,
+          "priority": 950,
+          "region": "top_non_empty_lines(20)",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 4,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 121,
+            "region_preview": "  2. Trust all and continue\n  3. Continue without trusting (hooks won't run)\n\n  Press enter to confirm or esc to go back\n"
+          },
+          "id": "live_strong_blocker",
+          "matched": false,
+          "priority": 900,
+          "region": "after_last_prompt_marker",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 4,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 0,
+            "region_preview": ""
+          },
+          "id": "weak_blocker",
+          "matched": false,
+          "priority": 600,
+          "region": "whole_recent_without_current_prompt_marker",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^[•◦]\\s+Working \\([^)]*esc to interrupt\\)(?: · .*)?$"
+            ],
+            "not_count": 1,
+            "regex": [],
+            "region_bytes": 121,
+            "region_preview": "  2. Trust all and continue\n  3. Continue without trusting (hooks won't run)\n\n  Press enter to confirm or esc to go back\n"
+          },
+          "id": "screen_working_fallback",
+          "matched": false,
+          "priority": 500,
+          "region": "bottom_non_empty_lines(3)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 2,
+            "regex": [
+              "\\S"
+            ],
+            "region_bytes": 0,
+            "region_preview": ""
+          },
+          "id": "osc_title_idle",
+          "matched": false,
+          "priority": 100,
+          "region": "osc_title",
+          "state": "idle"
+        }
+      ],
+      "fallback_reason": "default_known_agent_idle_fallback",
+      "local_override_shadowing_remote": false,
+      "manifest_source": "remote:/Users/am/.local/state/herdr/agent-detection/remote/codex.toml",
+      "manifest_version": "2026.08.28.1",
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": "current",
+      "screen_detection_skipped": false,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [],
+    "prompts": [
+      null
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "codex",
+      "-m",
+      "gpt-5.6-terra"
+    ],
+    "version": "codex-cli 0.152.1\n"
+  },
+  "model": "gpt-5.6-terra",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.YttGvvwc3G",
+  "home": {
+    "seeded": [
+      ".codex/auth.json"
+    ],
+    "written": {
+      ".codex/config.toml": "approval_policy = \"never\"\nsandbox_mode = \"danger-full-access\"\n[features]\nmulti_agent = true\n"
+    },
+    "home_seed": [
+      ".codex/agents/poteto-probe.md",
+      ".codex/agents/poteto-probe.toml"
+    ]
+  },
+  "drive": {
+    "script": "bench/worker_defaults_identity/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "definition_path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-0oMJ6R/.codex/agents/poteto-probe.md, /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-0oMJ6R/.codex/agents/poteto-probe.toml",
+      "subagents_dir_source": "~/.codex/agents (harnesses.yaml:247)",
+      "prompt_status": "prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"agent_prompt_stalled\",\"message\":\"agent prompt produced no observed state change within 5000 ms; status is idle and state_change_seq remained 717\"},\"id\":\"cli:agent:prompt\"}",
+      "positive-report.txt": "missing",
+      "negative-trial.txt": "missing"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": null,
+  "calls": null,
+  "calls_workers": {},
+  "calls_note": "no session files under ~/.codex/sessions (nothing matched /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.YttGvvwc3G)"
+}

@@ -1,0 +1,3 @@
+self-report, not authoritative: what each worker said about its own model
+A	selected: opus	reported: anthropic/claude-opus-5
+B	selected: sonnet	reported: cursor/claude-4-sonnet

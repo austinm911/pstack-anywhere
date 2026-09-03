@@ -1,0 +1,429 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UW3b7j/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.MBFogui0nW--/2026-09-02T22-45-13-129Z_01a0644c-3d29-7fba-b108-63eb3d49aeb8.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+          "interactive_ready": true,
+          "name": "b-probe-worker-pi-01",
+          "pane_id": "w1H:p46",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 803,
+          "tab_id": "w1H:t4",
+          "terminal_id": "term_65a87c9c20f0d148",
+          "terminal_title": "π - tmp.MBFogui0nW",
+          "terminal_title_stripped": "π - tmp.MBFogui0nW",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "pi",
+          "--model",
+          "openai-codex/gpt-5.6-luna",
+          "-e",
+          "/Users/am/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UW3b7j/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.MBFogui0nW--/2026-09-02T22-45-13-129Z_01a0644c-3d29-7fba-b108-63eb3d49aeb8.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+          "interactive_ready": true,
+          "name": "b-probe-worker-pi-01",
+          "pane_id": "w1H:p46",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 828,
+          "tab_id": "w1H:t4",
+          "terminal_id": "term_65a87c9c20f0d148",
+          "terminal_title": "π - tmp.MBFogui0nW",
+          "terminal_title_stripped": "π - tmp.MBFogui0nW",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UW3b7j/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.MBFogui0nW--/2026-09-02T22-45-13-129Z_01a0644c-3d29-7fba-b108-63eb3d49aeb8.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+          "interactive_ready": true,
+          "name": "b-probe-worker-pi-01",
+          "pane_id": "w1H:p46",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 828,
+          "tab_id": "w1H:t4",
+          "terminal_id": "term_65a87c9c20f0d148",
+          "terminal_title": "π - tmp.MBFogui0nW",
+          "terminal_title_stripped": "π - tmp.MBFogui0nW",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "pi",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UW3b7j/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.MBFogui0nW--/2026-09-02T22-45-13-129Z_01a0644c-3d29-7fba-b108-63eb3d49aeb8.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+            "interactive_ready": true,
+            "name": "b-probe-worker-pi-01",
+            "pane_id": "w1H:p46",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 812,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87c9c20f0d148",
+            "terminal_title": "π - tmp.MBFogui0nW",
+            "terminal_title_stripped": "π - tmp.MBFogui0nW",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UW3b7j/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.MBFogui0nW--/2026-09-02T22-45-13-129Z_01a0644c-3d29-7fba-b108-63eb3d49aeb8.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+            "interactive_ready": true,
+            "name": "b-probe-worker-pi-01",
+            "pane_id": "w1H:p46",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 816,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87c9c20f0d148",
+            "terminal_title": "π - tmp.MBFogui0nW",
+            "terminal_title_stripped": "π - tmp.MBFogui0nW",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UW3b7j/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.MBFogui0nW--/2026-09-02T22-45-13-129Z_01a0644c-3d29-7fba-b108-63eb3d49aeb8.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+            "interactive_ready": true,
+            "name": "b-probe-worker-pi-01",
+            "pane_id": "w1H:p46",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 820,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87c9c20f0d148",
+            "terminal_title": "π - tmp.MBFogui0nW",
+            "terminal_title_stripped": "π - tmp.MBFogui0nW",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UW3b7j/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.MBFogui0nW--/2026-09-02T22-45-13-129Z_01a0644c-3d29-7fba-b108-63eb3d49aeb8.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+            "interactive_ready": true,
+            "name": "b-probe-worker-pi-01",
+            "pane_id": "w1H:p46",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 822,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87c9c20f0d148",
+            "terminal_title": "π - tmp.MBFogui0nW",
+            "terminal_title_stripped": "π - tmp.MBFogui0nW",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UW3b7j/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.MBFogui0nW--/2026-09-02T22-45-13-129Z_01a0644c-3d29-7fba-b108-63eb3d49aeb8.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+            "interactive_ready": true,
+            "name": "b-probe-worker-pi-01",
+            "pane_id": "w1H:p46",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 828,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87c9c20f0d148",
+            "terminal_title": "π - tmp.MBFogui0nW",
+            "terminal_title_stripped": "π - tmp.MBFogui0nW",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "pi",
+      "--model",
+      "openai-codex/gpt-5.6-luna",
+      "-e",
+      "/Users/am/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr"
+    ],
+    "version": "0.84.4\n"
+  },
+  "model": "openai-codex/gpt-5.6-luna",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+  "home": {
+    "seeded": [
+      ".pi/agent/auth.json"
+    ],
+    "written": {},
+    "extension": {
+      "name": "@andrewjacop/pi-herdr",
+      "args": [
+        "-e",
+        "~/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr"
+      ]
+    }
+  },
+  "drive": {
+    "script": "bench/probe_worker/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "spawn": {
+        "at": "2026-09-02T22:45:36.736Z",
+        "status": "done",
+        "settled_by": "herdr agent prompt --wait"
+      },
+      "unprobed_window": {
+        "at": "2026-09-02T22:46:06.756Z",
+        "lines": 0,
+        "last": null
+      },
+      "probe_1": {
+        "at": "2026-09-02T22:46:06.756Z",
+        "ended": "2026-09-02T22:46:14.185Z",
+        "done": "DONE    Spawne  d",
+        "status": "done",
+        "lines_before": 0,
+        "lines_after": 0
+      },
+      "probe_2": {
+        "at": "2026-09-02T22:46:34.197Z",
+        "ended": "2026-09-02T22:46:38.934Z",
+        "done": "DONE    Spawne  d",
+        "status": "done",
+        "lines_before": 0,
+        "lines_after": 0
+      },
+      "probe_3": {
+        "at": "2026-09-02T22:46:58.945Z",
+        "ended": "2026-09-02T22:47:04.171Z",
+        "done": "DONE    Spawne  d",
+        "status": "done",
+        "lines_before": 0,
+        "lines_after": 0
+      },
+      "before_final_probe": {
+        "at": "2026-09-02T22:49:06.750Z",
+        "lines": 0,
+        "last": null
+      },
+      "probe_4": {
+        "at": "2026-09-02T22:49:06.750Z",
+        "ended": "2026-09-02T22:49:13.411Z",
+        "done": "DONE Spawned",
+        "status": "done",
+        "lines_before": 0,
+        "lines_after": 0
+      },
+      "log_final": {
+        "lines": 0,
+        "unparsed": 0
+      }
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-UW3b7j/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.MBFogui0nW--",
+  "calls": [
+    {
+      "name": "herdr_start_agent",
+      "arguments": {
+        "name": "probe-worker",
+        "agent": "pi",
+        "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+        "prompt": "Run a shell loop that appends one line to `probe-activity.log` in the current directory every 10 seconds for 3 minutes (18 lines), each line the current UTC time in ISO 8601 form, e.g. `date -u +%Y-%m-%dT%H:%M:%SZ >> probe-activity.log`. Do not truncate or rewrite the file. When the loop ends, report the line count and the last line. Do not ask me questions; execute this asynchronously and report only after it ends."
+      },
+      "ts": "2026-09-02T22:45:21.775Z"
+    },
+    {
+      "name": "herdr_start_agent",
+      "arguments": {
+        "name": "probe-worker",
+        "agent": "omp",
+        "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.MBFogui0nW",
+        "prompt": "Run a shell loop that appends one line to `probe-activity.log` in the current directory every 10 seconds for 3 minutes (18 lines), each line the current UTC time in ISO 8601 form, e.g. `date -u +%Y-%m-%dT%H:%M:%SZ >> probe-activity.log`. Do not truncate or rewrite the file. When the loop ends, report the line count and the last line. Do not ask me questions; execute this asynchronously and report only after it ends."
+      },
+      "ts": "2026-09-02T22:45:30.357Z"
+    },
+    {
+      "name": "herdr_get_agent",
+      "arguments": {
+        "target": "probe-worker"
+      },
+      "ts": "2026-09-02T22:46:10.726Z"
+    },
+    {
+      "name": "herdr_get_agent",
+      "arguments": {
+        "target": "probe-worker"
+      },
+      "ts": "2026-09-02T22:46:36.572Z"
+    },
+    {
+      "name": "herdr_get_agent",
+      "arguments": {
+        "target": "probe-worker"
+      },
+      "ts": "2026-09-02T22:47:01.087Z"
+    },
+    {
+      "name": "herdr_get_agent",
+      "arguments": {
+        "target": "probe-worker"
+      },
+      "ts": "2026-09-02T22:49:09.865Z"
+    }
+  ],
+  "calls_workers": {}
+}

@@ -4,3 +4,12 @@ arrived: tool result
 received: "beta.txt"
 mapped_to: beta.txt
 assumed: no
+
+trial: 2
+mechanism: AskUserQuestion
+arrived: tool result
+received: "epsilon.txt"
+mapped_to: epsilon.txt
+assumed: no
+workers_completed_before_answer: 0
+question_state: The question was still pending and was answered as the AskUserQuestion tool result; all three worker completion notifications arrived only after that answer, and I never had to ask again.

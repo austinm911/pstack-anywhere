@@ -104,7 +104,7 @@ travels with its skill and a skill directory works anywhere on its own.
 | skills with work left | 0 of 45 |
 | occurrences | 91 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions |
-| verification | 15 of 120 cells verified, 19 attestations, 10 scenarios defined |
+| verification | 38 of 120 cells verified, 42 attestations, 10 scenarios defined |
 
 `bun scripts/coupling.mjs check` is the gate. The work left, the per-harness
 resolutions, and the evidence state are in [PORTABILITY.md](PORTABILITY.md).

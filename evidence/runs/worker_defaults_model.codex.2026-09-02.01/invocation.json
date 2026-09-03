@@ -1,0 +1,365 @@
+{
+  "herdr": {
+    "start": {
+      "error": "herdr agent start failed (1): {\"error\":{\"code\":\"agent_not_ready\",\"message\":\"agent b-worker-defaults-model-codex-01 is blocked during startup and is not ready for prompts\"},\"id\":\"cli:agent:start\"}"
+    },
+    "start_recovered": true,
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "codex",
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.SoSc5VQBJq",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.SoSc5VQBJq",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-model-codex-01",
+          "pane_id": "w1H:p3S",
+          "revision": 1,
+          "state_change_seq": 759,
+          "tab_id": "w1H:t4",
+          "terminal_id": "term_65a87b2ad5af713b",
+          "terminal_title": "tmp.SoSc5VQBJq",
+          "terminal_title_stripped": "tmp.SoSc5VQBJq",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "codex",
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.SoSc5VQBJq",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.SoSc5VQBJq",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-model-codex-01",
+          "pane_id": "w1H:p3S",
+          "revision": 1,
+          "state_change_seq": 759,
+          "tab_id": "w1H:t4",
+          "terminal_id": "term_65a87b2ad5af713b",
+          "terminal_title": "tmp.SoSc5VQBJq",
+          "terminal_title_stripped": "tmp.SoSc5VQBJq",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "codex",
+      "cached_remote_version": "2026.08.28.1",
+      "evaluated_rules": [
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [
+              "Action Required"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 14,
+            "region_preview": "tmp.SoSc5VQBJq"
+          },
+          "id": "osc_title_blocked",
+          "matched": false,
+          "priority": 1100,
+          "region": "osc_title",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "(?:^| )[⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏](?: |$)"
+            ],
+            "region_bytes": 14,
+            "region_preview": "tmp.SoSc5VQBJq"
+          },
+          "id": "osc_title_working",
+          "matched": false,
+          "priority": 1050,
+          "region": "osc_title",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 2,
+            "contains": [
+              "↑/↓ to scroll",
+              "pgup/pgdn to",
+              "home/end to jump",
+              "q to quit"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 87,
+            "region_preview": "\n  gpt-5.6-terra default · /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/…\n"
+          },
+          "id": "transcript_viewer",
+          "matched": false,
+          "priority": 1000,
+          "region": "after_last_prompt_marker",
+          "state": "unknown"
+        },
+        {
+          "evidence": {
+            "all_count": 2,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 966,
+            "region_preview": "• Started `/root/worker_b`\n\n• Waiting for agents\n\n• Completed `/root/worker_b`\n\n• Finished waiting\n  └ No agents completed yet\n\n• Workers A and B returned self-reports; the invalid-model trial produced a hard\n  spawn error. I’m recording th..."
+          },
+          "id": "trust_directory",
+          "matched": false,
+          "priority": 950,
+          "region": "top_non_empty_lines(20)",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 4,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 87,
+            "region_preview": "\n  gpt-5.6-terra default · /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/…\n"
+          },
+          "id": "live_strong_blocker",
+          "matched": false,
+          "priority": 900,
+          "region": "after_last_prompt_marker",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 4,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 0,
+            "region_preview": ""
+          },
+          "id": "weak_blocker",
+          "matched": false,
+          "priority": 600,
+          "region": "whole_recent_without_current_prompt_marker",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^[•◦]\\s+Working \\([^)]*esc to interrupt\\)(?: · .*)?$"
+            ],
+            "not_count": 1,
+            "regex": [],
+            "region_bytes": 365,
+            "region_preview": "──────────────────────────────────────────────────────────────────────────────────\n\n\n› Ask Codex to do anything\n\n  gpt-5.6-terra default · /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/…\n"
+          },
+          "id": "screen_working_fallback",
+          "matched": false,
+          "priority": 500,
+          "region": "bottom_non_empty_lines(3)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 2,
+            "regex": [
+              "\\S"
+            ],
+            "region_bytes": 14,
+            "region_preview": "tmp.SoSc5VQBJq"
+          },
+          "id": "osc_title_idle",
+          "matched": true,
+          "priority": 100,
+          "region": "osc_title",
+          "state": "idle"
+        }
+      ],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": "remote:/Users/am/.local/state/herdr/agent-detection/remote/codex.toml",
+      "manifest_version": "2026.08.28.1",
+      "matched_rule": {
+        "id": "osc_title_idle",
+        "priority": 100,
+        "region": "osc_title",
+        "state": "idle"
+      },
+      "remote_update_error": null,
+      "remote_update_status": "current",
+      "screen_detection_skipped": false,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": true,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [
+      "trust the contents of this directory",
+      "hooks need review"
+    ],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.SoSc5VQBJq",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.SoSc5VQBJq",
+            "interactive_ready": true,
+            "name": "b-worker-defaults-model-codex-01",
+            "pane_id": "w1H:p3S",
+            "revision": 1,
+            "state_change_seq": 759,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87b2ad5af713b",
+            "terminal_title": "tmp.SoSc5VQBJq",
+            "terminal_title_stripped": "tmp.SoSc5VQBJq",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "herdr",
+      "agent",
+      "start",
+      "b-worker-defaults-model-codex-01",
+      "--kind",
+      "codex",
+      "--pane",
+      "w1H:p3S",
+      "--timeout",
+      "60000",
+      "--",
+      "-m",
+      "gpt-5.6-terra"
+    ],
+    "version": "codex-cli 0.152.1\n"
+  },
+  "model": "gpt-5.6-terra",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.SoSc5VQBJq",
+  "home": {
+    "seeded": [
+      ".codex/auth.json"
+    ],
+    "written": {
+      ".codex/config.toml": "approval_policy = \"never\"\nsandbox_mode = \"danger-full-access\"\n[features]\nmulti_agent = true\n"
+    }
+  },
+  "drive": {
+    "script": "bench/worker_defaults_model/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "models": {
+        "a": "gpt-5.6-terra",
+        "b": "gpt-5.6-luna",
+        "source": {
+          "a": "run.yaml model of every codex run (evidence/runs/spawn_worker.codex.2026-09-02.01); session rollout-*.jsonl turn_context.model records the same slug per thread",
+          "b": "the openai-codex provider model every pi run used on this same OpenAI account (evidence/runs/spawn_worker.pi.2026-09-02.01 session model_change provider openai-codex modelId gpt-5.6-luna); not yet seen through codex -m, verified by this run"
+        }
+      },
+      "harness_record": "session log under /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-46IBEU/.codex/sessions, files newer than the turn start; the run dir's session/ is the same capture",
+      "turn": {
+        "status": "done",
+        "settled_by": "herdr agent prompt --wait"
+      },
+      "usage_record": "3 session file(s)",
+      "spawn_args": "spawn_agent({\"task_name\":\"worker_a\",\"fork_turns\":\"none\",\"model\":\"gpt-5.6-terra\",\"message\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the\\nmodel identifier you believe you are running as, or `unknown`.\"})\nspawn_agent({\"task_name\":\"worker_b\",\"fork_turns\":\"none\",\"model\":\"gpt-5.6-luna\",\"message\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the\\nmodel identifier you believe you are running as, or `unknown`.\"})\nspawn_agent({\"task_name\":\"worker_c\",\"fork_turns\":\"none\",\"model\":\"poteto-nonexistent-model\",\"message\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the\\nmodel identifier you believe you are running as, or `unknown`.\"})\n"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-46IBEU/.codex/sessions",
+  "calls": [],
+  "calls_workers": {
+    "rollout-2026-09-02T15-38-50-01a06446-64e7-74d0-b039-9440effc160f": [
+      {
+        "name": "spawn_agent",
+        "arguments": "{\"task_name\":\"worker_a\",\"fork_turns\":\"none\",\"model\":\"gpt-5.6-terra\",\"message\":\"gAAAAABqmKWB5Ct2lGrSojEVHxXISRNS_psXt_KBQnpQTg0QdgfPIiGnG6SxzwRjMpUamWzCRKxZ-wxtdnpA_WniIP9gJDMRpXL0FHAR-Rm4Dg1TzJlsncB1tubjze-PlphDvfLJAuApoV9JGICTZJHxDzGulQ6QuqQTnC9pJfkuXpUoDc3BO0CTK-Z8mu5OA3vT1iv6i8Re3wrupyVRFOjPkDQlKkel3uD3DbhO7u-e4WDuNevP5DuCMoN2XEa9YlSWmPNWitsK_owc6WZQ3s5qvnhHvQP5vKpZ6luWdrdvYoKYsbNqVe4=\"}",
+        "ts": "2026-09-02T22:38:57.713Z"
+      },
+      {
+        "name": "wait_agent",
+        "arguments": "{\"timeout_ms\":600000}",
+        "ts": "2026-09-02T22:38:59.461Z"
+      },
+      {
+        "name": "spawn_agent",
+        "arguments": "{\"task_name\":\"worker_b\",\"fork_turns\":\"none\",\"model\":\"gpt-5.6-luna\",\"message\":\"gAAAAABqmKWG54VuG0YsN8TuiA1TNQNvxjeQOd3DEmRM4lDGsh2a9WeEJVinwkQMCmEh6ZnaE3EvfqyGoU3RGJop6qVn-9uaf9hAoYNk9iPSWUFfhMLGSFzC38Hwes2UQJ6K6P4vstTSp5O1wpE8OJefuIpFfyoYOt8pVdslqNWhnz75oxUOoC0ivg9YbaG_jpPFPBWArt2CNZtFmzny0myF7-xJYPetKGjl-it-zlEzl2I68M0ZJOkqQ7VD79UvtA3PeBBUB9TqRwMQ5hc25yiksNZ-gIziVknWe9DQ-yr4hvx7HNYoywA=\"}",
+        "ts": "2026-09-02T22:39:02.653Z"
+      },
+      {
+        "name": "wait_agent",
+        "arguments": "{\"timeout_ms\":600000}",
+        "ts": "2026-09-02T22:39:03.902Z"
+      },
+      {
+        "name": "spawn_agent",
+        "arguments": "{\"task_name\":\"worker_c\",\"fork_turns\":\"none\",\"model\":\"poteto-nonexistent-model\",\"message\":\"gAAAAABqmKWMx333uDb9MLB6-y5yFiJxsO4bcOPHQCPuBQ7QEzEVrSXb3lKk54ti7bWE5DNeotjbxxbmR4d-t1xdLv88OTaMdoITSrgAYpz1JKWIMqh2peDquXMUJUpJzPcAJroGufNYK_IvJRARKpgZKEQM8dLrufa4hZ9_BrHA3nIfUQbIYtRqWdT_7F6KNTBnPU-fchR01M2QeHhA7AqXKdYLI1w_YrD7qUxvrsTN98x92CV-gHu8G0_BjXwHs2g0AOfIjH9wZPzrzRua3qIsT8ALbUip2S2w-NtwwpsF35Jr801f0tM=\"}",
+        "ts": "2026-09-02T22:39:08.685Z"
+      },
+      {
+        "name": "exec",
+        "arguments": "const patch = \"*** Begin Patch\\n*** Add File: negative-trial.txt\\n+hard error\\n+Unknown model `poteto-nonexistent-model` for spawn_agent. Available models: gpt-5.6-sol, gpt-5.6-terra, gpt-5.6-luna, gpt-5.5, gpt-5.4\\n*** Add File: self-reports.txt\\n+self-report, not authoritative: what each worker said about its own model\\n+gpt-5.6-terra, gpt-5.6-sol\\n+gpt-5.6-luna, gpt-5\\n*** Add File: spawn-args.txt\\n+spawn_agent({\\\"task_name\\\":\\\"worker_a\\\",\\\"fork_turns\\\":\\\"none\\\",\\\"model\\\":\\\"gpt-5.6-terra\\\",\\\"message\\\":\\\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the\\\\nmodel identifier you believe you are running as, or `unknown`.\\\"})\\n+spawn_agent({\\\"task_name\\\":\\\"worker_b\\\",\\\"fork_turns\\\":\\\"none\\\",\\\"model\\\":\\\"gpt-5.6-luna\\\",\\\"message\\\":\\\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the\\\\nmodel identifier you believe you are running as, or `unknown`.\\\"})\\n+spawn_agent({\\\"task_name\\\":\\\"worker_c\\\",\\\"fork_turns\\\":\\\"none\\\",\\\"model\\\":\\\"poteto-nonexistent-model\\\",\\\"message\\\":\\\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the\\\\nmodel identifier you believe you are running as, or `unknown`.\\\"})\\n*** End Patch\";\nconst r = await tools.apply_patch(patch);\ntext(typeof r === \"string\" ? r : JSON.stringify(r));",
+        "ts": "2026-09-02T22:39:20.300Z"
+      }
+    ],
+    "rollout-2026-09-02T15-38-57-01a06446-82da-7b12-a15d-7199026f2ab3": [],
+    "rollout-2026-09-02T15-39-02-01a06446-961f-77e2-a8c8-148244351701": []
+  }
+}

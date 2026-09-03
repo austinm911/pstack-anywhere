@@ -228,6 +228,13 @@ harnesses:
       # bench drivers end a session with this slash command (ctx.quit method
       # "command"). /exit is an alias. Pinned: references/harnesses/codex/src/codex-rs/tui/src/slash_command.rs:67-68,103
       quit_command: /quit
+      # Typing /quit opens the slash popup; the first Enter selects the entry
+      # into the composer and a second submits it. Observed 2026-09-02 on
+      # 0.152.1 in two of three runs (the composer read "› /quit" with the
+      # session still up), so the composer line is matched and answered.
+      quit_dialog:
+        - match: '›\s*/quit\b'
+          keys: [enter]
     upstream:
       repo: https://github.com/openai/codex
       ref: e017e93aceafb2fe04bed1c926e448a5fb4f913d
@@ -389,6 +396,12 @@ harnesses:
       extra_args: []
       home:
         copy: [.omp/agent/agent.db, .omp/agent/secret-placeholder.key]
+        # The copied agent.db anthropic row is an oauth credential whose refresh
+        # expired on 2026-08-25; the live anthropic auth on this machine is the
+        # env var, so it is the one declared value that crosses the wrapper.
+        # Name the provider in the model: a bare alias fuzzy-matches every
+        # provider the db reaches (observed 2026-09-02: opus -> cursor).
+        env: [ANTHROPIC_OAUTH_TOKEN]
         # A fresh HOME starts the 5-step setup wizard, whose first step is a
         # provider sign-in; this is the flag that marks it done.
         write:

@@ -8,21 +8,44 @@ scenario: human_question
 harness: claude
 run_id: human_question.claude.2026-09-02.01
 coupling_version: 2
-
-started_at: null
-ended_at: null
-operator: null
-machine: null
-os: null
-harness_version: null
-
-# Required by the evidence contract's required_metadata.
-harness_version_source: null
-clock: null
-environment_deltas: null
-
-# The run id this one corrects, or null. A run is never edited after its
-# digests are recorded; a correction is a new run. It has to name an
-# earlier run of human_question on claude, and it only takes effect
-# once this run itself is complete.
+started_at: 2026-09-02T22:32:47.928Z
+ended_at: 2026-09-02T22:33:50.138Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: 2.1.258 (Claude Code)
+harness_version_source: claude --version -> 2.1.258 (Claude Code)
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with  and these written files: .claude.json = \"{\\\"hasCompletedOnboarding\\\":true,\\\"bypassPermissionsModeAccepted\\\":true,\\\"theme\\\":\\\"dark\\\"}\", plus herdr's claude state-reporting integration (herdr integration install claude), launched with --dangerously-skip-permissions; no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, CLAUDE_CODE_OAUTH_TOKEN, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-wz1aRD/bin/claude; driven by bench/human_question/drive.mjs, every operator action timed in drive.log"
 supersedes: null
+drive: 
+  trial1.question_seen: "options rendered, selectable list"
+  trial1.answer: "keys down,enter (selected beta.txt); turn had settled (\"blocked\") before the answer"
+  trial1.herdr_status_3s_after_answer: working
+  trial1.end: 
+    status: done
+    settled_by: herdr agent wait
+  trial1.answer_reached_agent: true
+  trial2.question_survived_flood: true
+  trial2.answer: "keys down,enter (selected epsilon.txt); turn had settled (\"blocked\") before the answer"
+  trial2.herdr_status_3s_after_answer: working
+  trial2.end: 
+    status: done
+    settled_by: herdr agent wait
+  trial2.answer_reached_agent: true
+  trial3.after_esc: "question still on screen; turn settled (\"blocked\")"
+  trial3.proceed_sent_as: prompt
+  trial3.proceed.delivered_as: typed (herdr reported blocked)
+  trial3.end: 
+    status: done
+    settled_by: typed into the pane
+  trial3.trial_block_written: false
+  files_at_end: 
+    - answer-received.txt
+    - beta.txt
+    - epsilon.txt
+    - flood-trial.md
+    - question-render.txt
+    - worker-one.txt
+    - worker-three.txt
+    - worker-two.txt

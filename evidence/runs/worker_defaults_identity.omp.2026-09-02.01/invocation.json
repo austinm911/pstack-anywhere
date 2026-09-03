@@ -1,0 +1,287 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-hp5wSA/.omp/agent/sessions/-tmp-tmp.3vjp7vLIov/2026-09-02T22-35-11-676Z_01a06443-0fbc-70de-9653-4add826c3d66.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.3vjp7vLIov",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.3vjp7vLIov",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-identit-omp-01",
+          "pane_id": "w1H:p3J",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 732,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87a5e2fd30134",
+          "terminal_title": "π > tmp.3vjp7vLIov",
+          "terminal_title_stripped": "π > tmp.3vjp7vLIov",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "omp",
+          "--model",
+          "anthropic/claude-opus-5:low"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-hp5wSA/.omp/agent/sessions/-tmp-tmp.3vjp7vLIov/2026-09-02T22-35-11-676Z_01a06443-0fbc-70de-9653-4add826c3d66.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.3vjp7vLIov",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.3vjp7vLIov",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-identit-omp-01",
+          "pane_id": "w1H:p3J",
+          "revision": 212,
+          "screen_detection_skipped": true,
+          "state_change_seq": 735,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87a5e2fd30134",
+          "terminal_title": "π > Spawn poteto-probe and record reports",
+          "terminal_title_stripped": "π > Spawn poteto-probe and record reports",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-hp5wSA/.omp/agent/sessions/-tmp-tmp.3vjp7vLIov/2026-09-02T22-35-11-676Z_01a06443-0fbc-70de-9653-4add826c3d66.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.3vjp7vLIov",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.3vjp7vLIov",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-identit-omp-01",
+          "pane_id": "w1H:p3J",
+          "revision": 212,
+          "screen_detection_skipped": true,
+          "state_change_seq": 735,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87a5e2fd30134",
+          "terminal_title": "π > Spawn poteto-probe and record reports",
+          "terminal_title_stripped": "π > Spawn poteto-probe and record reports",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "omp",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "omp",
+            "agent_session": {
+              "agent": "omp",
+              "kind": "path",
+              "source": "herdr:omp",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-hp5wSA/.omp/agent/sessions/-tmp-tmp.3vjp7vLIov/2026-09-02T22-35-11-676Z_01a06443-0fbc-70de-9653-4add826c3d66.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.3vjp7vLIov",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.3vjp7vLIov",
+            "interactive_ready": true,
+            "name": "b-worker-defaults-identit-omp-01",
+            "pane_id": "w1H:p3J",
+            "revision": 212,
+            "screen_detection_skipped": true,
+            "state_change_seq": 735,
+            "tab_id": "w1H:t3",
+            "terminal_id": "term_65a87a5e2fd30134",
+            "terminal_title": "π > Spawn poteto-probe and record reports",
+            "terminal_title_stripped": "π > Spawn poteto-probe and record reports",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "omp",
+      "--model",
+      "anthropic/claude-opus-5:low"
+    ],
+    "version": "omp/18.1.4\n"
+  },
+  "model": "anthropic/claude-opus-5:low",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.3vjp7vLIov",
+  "home": {
+    "seeded": [
+      ".omp/agent/agent.db",
+      ".omp/agent/secret-placeholder.key"
+    ],
+    "written": {
+      ".omp/agent/config.yml": "setupVersion: 2\n"
+    },
+    "home_seed": [
+      ".omp/agent/agents/poteto-probe.md"
+    ]
+  },
+  "drive": {
+    "script": "bench/worker_defaults_identity/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "definition_path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-hp5wSA/.omp/agent/agents/poteto-probe.md",
+      "subagents_dir_source": "~/.omp/agent/agents (harnesses.yaml:421)",
+      "prompt_status": "done (herdr agent prompt --wait)",
+      "positive-report.txt": "written",
+      "negative-trial.txt": "written"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "ANTHROPIC_OAUTH_TOKEN",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-hp5wSA/.omp/agent/sessions/-tmp-tmp.3vjp7vLIov",
+  "calls": [
+    {
+      "name": "task",
+      "arguments": {
+        "i": "Spawning poteto-probe worker",
+        "context": "# Goal\nProbe test.",
+        "tasks": [
+          {
+            "name": "Probe1",
+            "agent": "poteto-probe",
+            "task": "Reply with the word hello."
+          }
+        ]
+      },
+      "ts": "2026-09-02T22:35:18.259Z"
+    },
+    {
+      "name": "hub",
+      "arguments": {
+        "op": "wait",
+        "i": "Waiting for probe",
+        "ids": [
+          "Probe1"
+        ]
+      },
+      "ts": "2026-09-02T22:35:20.396Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "positive-report.txt",
+        "content": "POTETO-PROBE-OK\nhello\n",
+        "i": "Writing positive report"
+      },
+      "ts": "2026-09-02T22:35:26.742Z"
+    },
+    {
+      "name": "task",
+      "arguments": {
+        "i": "Negative trial with absent name",
+        "context": "# Goal\nNegative probe.",
+        "tasks": [
+          {
+            "name": "Probe2",
+            "agent": "poteto-absent",
+            "task": "Reply with the word hello."
+          }
+        ]
+      },
+      "ts": "2026-09-02T22:35:26.742Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "negative-trial.txt",
+        "content": "Task Probe2 failed preflight: Unknown agent \"poteto-absent\". Available: poteto-probe, scout, designer, reviewer, security-reviewer, librarian, task, sonic\n",
+        "i": "Writing negative trial"
+      },
+      "ts": "2026-09-02T22:35:29.238Z"
+    }
+  ],
+  "calls_workers": {
+    "Probe1": [
+      {
+        "name": "yield",
+        "arguments": {
+          "i": "Yielding probe reply",
+          "result": {
+            "data": {
+              "report": "POTETO-PROBE-OK\nhello",
+              "first_line": "POTETO-PROBE-OK",
+              "reply": "hello"
+            }
+          }
+        },
+        "ts": "2026-09-02T22:35:23.479Z"
+      }
+    ]
+  }
+}

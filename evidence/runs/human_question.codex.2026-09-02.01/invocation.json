@@ -1,0 +1,522 @@
+{
+  "herdr": {
+    "start": {
+      "error": "herdr agent start failed (1): {\"error\":{\"code\":\"agent_not_ready\",\"message\":\"agent b-human-question-codex-01 is blocked during startup and is not ready for prompts\"},\"id\":\"cli:agent:start\"}"
+    },
+    "start_recovered": true,
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "codex",
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+          "interactive_ready": true,
+          "name": "b-human-question-codex-01",
+          "pane_id": "w1H:p44",
+          "revision": 1,
+          "state_change_seq": 811,
+          "tab_id": "w1H:t4",
+          "terminal_id": "term_65a87c6348d95146",
+          "terminal_title": "tmp.BzTI21y8aM",
+          "terminal_title_stripped": "tmp.BzTI21y8aM",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "codex",
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+          "interactive_ready": true,
+          "name": "b-human-question-codex-01",
+          "pane_id": "w1H:p44",
+          "revision": 1,
+          "state_change_seq": 811,
+          "tab_id": "w1H:t4",
+          "terminal_id": "term_65a87c6348d95146",
+          "terminal_title": "tmp.BzTI21y8aM",
+          "terminal_title_stripped": "tmp.BzTI21y8aM",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "codex",
+      "cached_remote_version": "2026.08.28.1",
+      "evaluated_rules": [
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [
+              "Action Required"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 14,
+            "region_preview": "tmp.BzTI21y8aM"
+          },
+          "id": "osc_title_blocked",
+          "matched": false,
+          "priority": 1100,
+          "region": "osc_title",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [
+              "(?:^| )[⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏](?: |$)"
+            ],
+            "region_bytes": 14,
+            "region_preview": "tmp.BzTI21y8aM"
+          },
+          "id": "osc_title_working",
+          "matched": false,
+          "priority": 1050,
+          "region": "osc_title",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 2,
+            "contains": [
+              "↑/↓ to scroll",
+              "pgup/pgdn to",
+              "home/end to jump",
+              "q to quit"
+            ],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 87,
+            "region_preview": "\n  gpt-5.6-terra default · /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/…\n"
+          },
+          "id": "transcript_viewer",
+          "matched": false,
+          "priority": 1000,
+          "region": "after_last_prompt_marker",
+          "state": "unknown"
+        },
+        {
+          "evidence": {
+            "all_count": 2,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 1304,
+            "region_preview": "  └ epsilon.txt (+1 -0)\n    1 +chosen\n\n──────────────────────────────────────────────────────────────────────────────────\n\n• Which file should I create?\n\n  1. eta.txt\n  2. theta.txt\n  3. iota.txt\n\n───────────────────────────────────────────..."
+          },
+          "id": "trust_directory",
+          "matched": false,
+          "priority": 950,
+          "region": "top_non_empty_lines(20)",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 4,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 87,
+            "region_preview": "\n  gpt-5.6-terra default · /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/…\n"
+          },
+          "id": "live_strong_blocker",
+          "matched": false,
+          "priority": 900,
+          "region": "after_last_prompt_marker",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 4,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 0,
+            "regex": [],
+            "region_bytes": 0,
+            "region_preview": ""
+          },
+          "id": "weak_blocker",
+          "matched": false,
+          "priority": 600,
+          "region": "whole_recent_without_current_prompt_marker",
+          "state": "blocked"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [
+              "^[•◦]\\s+Working \\([^)]*esc to interrupt\\)(?: · .*)?$"
+            ],
+            "not_count": 1,
+            "regex": [],
+            "region_bytes": 365,
+            "region_preview": "──────────────────────────────────────────────────────────────────────────────────\n\n\n› Ask Codex to do anything\n\n  gpt-5.6-terra default · /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/…\n"
+          },
+          "id": "screen_working_fallback",
+          "matched": false,
+          "priority": 500,
+          "region": "bottom_non_empty_lines(3)",
+          "state": "working"
+        },
+        {
+          "evidence": {
+            "all_count": 0,
+            "any_count": 0,
+            "contains": [],
+            "line_regex": [],
+            "not_count": 2,
+            "regex": [
+              "\\S"
+            ],
+            "region_bytes": 14,
+            "region_preview": "tmp.BzTI21y8aM"
+          },
+          "id": "osc_title_idle",
+          "matched": true,
+          "priority": 100,
+          "region": "osc_title",
+          "state": "idle"
+        }
+      ],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": "remote:/Users/am/.local/state/herdr/agent-detection/remote/codex.toml",
+      "manifest_version": "2026.08.28.1",
+      "matched_rule": {
+        "id": "osc_title_idle",
+        "priority": 100,
+        "region": "osc_title",
+        "state": "idle"
+      },
+      "remote_update_error": null,
+      "remote_update_status": "current",
+      "screen_detection_skipped": false,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": true,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [
+      "trust the contents of this directory",
+      "hooks need review"
+    ],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+            "interactive_ready": true,
+            "name": "b-human-question-codex-01",
+            "pane_id": "w1H:p44",
+            "revision": 1,
+            "state_change_seq": 796,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87c6348d95146",
+            "terminal_title": "tmp.BzTI21y8aM",
+            "terminal_title_stripped": "tmp.BzTI21y8aM",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:wait",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+            "interactive_ready": true,
+            "name": "b-human-question-codex-01",
+            "pane_id": "w1H:p44",
+            "revision": 1,
+            "state_change_seq": 796,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87c6348d95146",
+            "terminal_title": "tmp.BzTI21y8aM",
+            "terminal_title_stripped": "tmp.BzTI21y8aM",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_info"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+            "interactive_ready": true,
+            "name": "b-human-question-codex-01",
+            "pane_id": "w1H:p44",
+            "revision": 1,
+            "state_change_seq": 800,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87c6348d95146",
+            "terminal_title": "tmp.BzTI21y8aM",
+            "terminal_title_stripped": "tmp.BzTI21y8aM",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:wait",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+            "interactive_ready": true,
+            "name": "b-human-question-codex-01",
+            "pane_id": "w1H:p44",
+            "revision": 1,
+            "state_change_seq": 800,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87c6348d95146",
+            "terminal_title": "tmp.BzTI21y8aM",
+            "terminal_title_stripped": "tmp.BzTI21y8aM",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_info"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+            "interactive_ready": true,
+            "name": "b-human-question-codex-01",
+            "pane_id": "w1H:p44",
+            "revision": 1,
+            "state_change_seq": 807,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87c6348d95146",
+            "terminal_title": "tmp.BzTI21y8aM",
+            "terminal_title_stripped": "tmp.BzTI21y8aM",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "codex",
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+            "interactive_ready": true,
+            "name": "b-human-question-codex-01",
+            "pane_id": "w1H:p44",
+            "revision": 1,
+            "state_change_seq": 811,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87c6348d95146",
+            "terminal_title": "tmp.BzTI21y8aM",
+            "terminal_title_stripped": "tmp.BzTI21y8aM",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "herdr",
+      "agent",
+      "start",
+      "b-human-question-codex-01",
+      "--kind",
+      "codex",
+      "--pane",
+      "w1H:p44",
+      "--timeout",
+      "60000",
+      "--",
+      "-m",
+      "gpt-5.6-terra"
+    ],
+    "version": "codex-cli 0.152.1\n"
+  },
+  "model": "gpt-5.6-terra",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.BzTI21y8aM",
+  "home": {
+    "seeded": [
+      ".codex/auth.json"
+    ],
+    "written": {
+      ".codex/config.toml": "approval_policy = \"never\"\nsandbox_mode = \"danger-full-access\"\n[features]\nmulti_agent = true\n"
+    }
+  },
+  "drive": {
+    "script": "bench/human_question/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "trial1.question_seen": "options rendered, plain list",
+      "trial1.answer": "typed beta.txt; turn had settled (\"done\") before the answer",
+      "trial1.herdr_status_3s_after_answer": "done",
+      "trial1.end": {
+        "status": "done",
+        "settled_by": "herdr agent wait"
+      },
+      "trial1.answer_reached_agent": false,
+      "trial2.question_survived_flood": true,
+      "trial2.answer": "typed epsilon.txt; turn had settled (\"done\") before the answer",
+      "trial2.herdr_status_3s_after_answer": "done",
+      "trial2.end": {
+        "status": "done",
+        "settled_by": "herdr agent wait"
+      },
+      "trial2.answer_reached_agent": false,
+      "trial3.after_esc": "question still on screen; turn settled (\"done\")",
+      "trial3.proceed_sent_as": "prompt",
+      "trial3.end": {
+        "status": "done",
+        "settled_by": "herdr agent prompt --wait"
+      },
+      "trial3.trial_block_written": true,
+      "files_at_end": [
+        "answer-received.txt",
+        "beta.txt",
+        "epsilon.txt",
+        "flood-trial.md",
+        "question-render.txt",
+        "worker-one.txt",
+        "worker-three.txt",
+        "worker-two.txt"
+      ]
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-Q4dnl5/.codex/sessions",
+  "calls": [],
+  "calls_workers": {
+    "rollout-2026-09-02T15-44-17-01a0644b-64b6-78d2-8ee2-bda710dd5901": [
+      {
+        "name": "exec",
+        "arguments": "const patch = \"*** Begin Patch\\n*** Add File: beta.txt\\n+chosen\\n*** Add File: answer-received.txt\\n+trial: 1\\n+mechanism: plain reply\\n+arrived: plain message\\n+received: \\\"beta.txt\\\"\\n+mapped_to: beta.txt\\n+assumed: no\\n*** End Patch\";\nawait tools.apply_patch(patch);\ntext(\"recorded\");",
+        "ts": "2026-09-02T22:44:38.746Z"
+      },
+      {
+        "name": "spawn_agent",
+        "arguments": "{\"task_name\":\"worker_one\",\"fork_turns\":\"all\",\"message\":\"gAAAAABqmKbZDunWZacZuIG-2EBxKkZq6umcFxxhJEActuzjQQ4HXM9ms1Gy_F8ZRxl-OZNyq5h1OjJoEjWkc93fq2DoQScJqG0uqWmcikx7kSsKgfGy173RIhYPUq2R6woGHE7VVoo_bTjk3VNTPYHrT1Y3RQY0wZ8KXUam1gN1FI94iadNKJa8SGnJpNxYAjYsQDU_ZgNbxmg_4nFE-EKPAP_rq1pJMYW4zRLdtkXdxNfu3PleMUikoCIBismFWwY8O6WIjr-A6eG5HablD1MDa_L_qJ1yjNUL2UjfNp7x26_UM_J10ffGP4y9zxi8ZtdzwxxA4Ug30sa4Nc7NQYx3NEzYlNBtaQ==\"}",
+        "ts": "2026-09-02T22:44:41.281Z"
+      },
+      {
+        "name": "spawn_agent",
+        "arguments": "{\"task_name\":\"worker_two\",\"fork_turns\":\"all\",\"message\":\"gAAAAABqmKbbeEJrCF9ILONt-S-i-PkrF2JQNrO4jU3OroDW5_eEIF_aafmSRfwMuYgljMY1kqhiAo70TKCSF6-rlClsJtEj7QrBWsvo3O41j7CoRODGUvfGlvNy4aQLlc98x-wDfTVnvlax708oCeVZ5htg_mlOuOOEhWowuLTr3x2rjBxIjtoaPqOxSD82CzURI0VG8AS8v0P9M_9Skdv4FAhX4gx-2y8hx4G2zww0RGpNkceau_DCcFctsgnVhN6ytpyYPqD94oskao3z8QNO_ha8cLNbxTjZB3hvKNHPGSN5mS3utwIH-hY63sfcIWY42txRbH0fvI8S9h0tzkHvknPutJrVmA==\"}",
+        "ts": "2026-09-02T22:44:43.452Z"
+      },
+      {
+        "name": "spawn_agent",
+        "arguments": "{\"task_name\":\"worker_three\",\"fork_turns\":\"all\",\"message\":\"gAAAAABqmKbekMyEdBeWrhv2luxlXGIARzc8BRWDx-eKuv97rz_c0oGNq07b8wtjJLKCPP1UucN1qr5QfFiE-QPBGZnuivB5Cz4NzOcvKk_43Yw7KIrBo8tfS7iwxD0cGhr6mMLrxO7MOAO0OC7DnMGkEPnTZv2BWM4FLB0yjjfxg1IbNH97jDYd8dw274tSmVp5R3AUpQvU6Ma_VsMgQt_CrUtLI7FKY-4nAThrS9alCTCMQBYL2006qtNbOeWxNC6k0LO2LmNykvrYjMYqMGVqO-ksWWD9PbsZVF8iqa0cq4Nf2LaUVaZe3a_yi2wzkwF9n197LZJ5egKfwgjB4EjZCT2pe3eYJHCdoBDAxRSj7YR1kopQ9-0=\"}",
+        "ts": "2026-09-02T22:44:46.581Z"
+      },
+      {
+        "name": "list_agents",
+        "arguments": "{}",
+        "ts": "2026-09-02T22:45:17.224Z"
+      },
+      {
+        "name": "exec",
+        "arguments": "const patch = \"*** Begin Patch\\n*** Update File: answer-received.txt\\n@@\\n assumed: no\\n+trial: 2\\n+mechanism: plain reply\\n+arrived: plain message\\n+received: \\\"epsilon.txt\\\"\\n+mapped_to: epsilon.txt\\n+assumed: no\\n+workers_completed_before_answer: 3\\n+question_state: The question was still pending when the answer arrived.\\n*** Add File: epsilon.txt\\n+chosen\\n*** End Patch\";\nawait tools.apply_patch(patch);\ntext(\"recorded\");",
+        "ts": "2026-09-02T22:45:23.831Z"
+      },
+      {
+        "name": "exec",
+        "arguments": "const patch = \"*** Begin Patch\\n*** Update File: answer-received.txt\\n@@\\n question_state: The question was still pending when the answer arrived.\\n+trial: 3\\n+mechanism: plain reply\\n+arrived: plain message\\n+received: \\\"nothing\\\"\\n+mapped_to: none\\n+assumed: no\\n*** End Patch\";\nawait tools.apply_patch(patch);\ntext(\"recorded\");",
+        "ts": "2026-09-02T22:45:35.140Z"
+      }
+    ],
+    "rollout-2026-09-02T15-44-41-01a0644b-c0cf-7df2-8799-63c20556a4ff": [
+      {
+        "name": "exec",
+        "arguments": "const r = await tools.apply_patch(\"*** Begin Patch\\n*** Add File: worker-one.txt\\n+one\\n*** End Patch\");\ntext(typeof r === \"string\" ? r : JSON.stringify(r));",
+        "ts": "2026-09-02T22:44:46.508Z"
+      }
+    ],
+    "rollout-2026-09-02T15-44-43-01a0644b-c93f-7210-a1eb-e96fa1a7c6f9": [
+      {
+        "name": "exec",
+        "arguments": "const r = await tools.apply_patch(\"*** Begin Patch\\n*** Add File: worker-two.txt\\n+two\\n*** End Patch\");\ntext(typeof r === \"string\" ? r : JSON.stringify(r));",
+        "ts": "2026-09-02T22:44:48.149Z"
+      }
+    ],
+    "rollout-2026-09-02T15-44-46-01a0644b-d597-7ef1-a988-2f99135c39a6": [
+      {
+        "name": "exec",
+        "arguments": "const r = await tools.apply_patch(\"*** Begin Patch\\n*** Add File: worker-three.txt\\n+three\\n*** End Patch\"); text(String(r));",
+        "ts": "2026-09-02T22:44:51.006Z"
+      }
+    ]
+  }
+}

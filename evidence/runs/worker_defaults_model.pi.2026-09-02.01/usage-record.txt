@@ -1,0 +1,8 @@
+source: harness session log, /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-L8CR1p/.pi/agent/sessions, every *.jsonl written after the prompt was sent (find -newer), tokens "model"/"modelId" counted per file with grep -oE | sort | uniq -c
+selections: A=openai-codex/gpt-5.6-luna B=openai-codex/gpt-5.6-terra C=poteto-nonexistent-model
+harness: pi
+note: pi has no native worker; a pi-herdr delegate runs in a pane opened from the operator's real HOME, so its log is not under the scratch HOME and cannot appear here. Only the parent's own record is below.
+
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-L8CR1p/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.R1WITmQj8B--/2026-09-02T22-34-49-501Z_01a06442-b91d-7560-b043-61f3ff396a9f.jsonl
+  15 "model":"gpt-5.6-luna"
+   1 "modelId":"gpt-5.6-luna"

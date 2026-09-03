@@ -1,0 +1,14 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: identity.definition_path
+    observed: '/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-hp5wSA/.omp/agent/agents/poteto-probe.md, seeded from bench/worker_defaults_identity/home/omp into the scratch HOME''s ~/.omp/agent/agents (subagentsDir, harnesses.yaml:421 per drive.log). Contents: YAML frontmatter "name: poteto-probe", "description: Probe worker that proves a named definition''s instructions reached it. Select by name only.", then the body "You are the poteto-probe worker. The first line of every report you produce is exactly: POTETO-PROBE-OK Nothing else goes on that line: no punctuation, no prefix, no markdown. ..." OMP loaded it: the negative-trial error lists poteto-probe first among the available agents'
+    source: definition.txt; run.yaml drive.definition_path and drive.subagents_dir_source; negative-trial.txt
+  - id: identity.selection_argument
+    observed: 'task tool, argument tasks[0].agent: "poteto-probe" (positive trial, tasks[0].name "Probe1") and tasks[0].agent: "poteto-absent" (negative trial, name "Probe2"), both with task "Reply with the word hello."'
+    source: invocation.json calls[0].arguments.tasks[0].agent and calls[3].arguments.tasks[0].agent
+  - id: identity.token_present
+    observed: 'true; the worker''s first assistant message is the text "POTETO-PROBE-OK\nhello", it then yielded {"report":"POTETO-PROBE-OK\nhello","first_line":"POTETO-PROBE-OK","reply":"hello"}, and the parent received that through hub wait as <task-result id="Probe1" agent="poteto-probe" status="completed">. The worker''s user prompt is only "Complete assignment thoroughly: Reply with the word hello."; the token appears in the definition body and not in the brief'
+    source: session/2026-09-02T22-35-11-676Z_01a06443-0fbc-70de-9653-4add826c3d66/Probe1.jsonl first assistant message text and user message text; Probe1.md; parent jsonl toolResult toolu_01FqY7LYTipvME7n7Xp7RLKq; invocation.json calls_workers.Probe1[0]; positive-report.txt
+  - id: identity.unknown_name_behavior
+    observed: 'hard error, no fallback: the task call with agent "poteto-absent" returned the tool result text verbatim "Task Probe2 failed preflight: Unknown agent "poteto-absent". Available: poteto-probe, scout, designer, reviewer, security-reviewer, librarian, task, sonic". No worker was spawned for it: session/<id>/ holds only Probe1.jsonl and Probe1.md, and calls_workers has only Probe1. Note the result carries isError: false, so the refusal is text the parent must read rather than a flagged tool error'
+    source: negative-trial.txt; session/2026-09-02T22-35-11-676Z_01a06443-0fbc-70de-9653-4add826c3d66.jsonl toolResult toolu_016Toz8EzgiMsMPQeXFotpM2 (isError false); session/2026-09-02T22-35-11-676Z_01a06443-0fbc-70de-9653-4add826c3d66/ listing; invocation.json calls_workers

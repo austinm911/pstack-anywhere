@@ -1,0 +1,376 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-L8CR1p/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.R1WITmQj8B--/2026-09-02T22-34-49-501Z_01a06442-b91d-7560-b043-61f3ff396a9f.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.R1WITmQj8B",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.R1WITmQj8B",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-model-pi-01",
+          "pane_id": "w1H:p3E",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 728,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87a4989e9a130",
+          "terminal_title": "π - tmp.R1WITmQj8B",
+          "terminal_title_stripped": "π - tmp.R1WITmQj8B",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "pi",
+          "--model",
+          "openai-codex/gpt-5.6-luna",
+          "-e",
+          "/Users/am/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-L8CR1p/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.R1WITmQj8B--/2026-09-02T22-34-49-501Z_01a06442-b91d-7560-b043-61f3ff396a9f.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.R1WITmQj8B",
+          "focused": true,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.R1WITmQj8B",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-model-pi-01",
+          "pane_id": "w1H:p3E",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 755,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87a4989e9a130",
+          "terminal_title": "π - tmp.R1WITmQj8B",
+          "terminal_title_stripped": "π - tmp.R1WITmQj8B",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-L8CR1p/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.R1WITmQj8B--/2026-09-02T22-34-49-501Z_01a06442-b91d-7560-b043-61f3ff396a9f.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.R1WITmQj8B",
+          "focused": true,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.R1WITmQj8B",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-model-pi-01",
+          "pane_id": "w1H:p3E",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 755,
+          "tab_id": "w1H:t3",
+          "terminal_id": "term_65a87a4989e9a130",
+          "terminal_title": "π - tmp.R1WITmQj8B",
+          "terminal_title_stripped": "π - tmp.R1WITmQj8B",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "pi",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-L8CR1p/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.R1WITmQj8B--/2026-09-02T22-34-49-501Z_01a06442-b91d-7560-b043-61f3ff396a9f.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.R1WITmQj8B",
+            "focused": true,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.R1WITmQj8B",
+            "interactive_ready": true,
+            "name": "b-worker-defaults-model-pi-01",
+            "pane_id": "w1H:p3E",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 755,
+            "tab_id": "w1H:t3",
+            "terminal_id": "term_65a87a4989e9a130",
+            "terminal_title": "π - tmp.R1WITmQj8B",
+            "terminal_title_stripped": "π - tmp.R1WITmQj8B",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "pi",
+      "--model",
+      "openai-codex/gpt-5.6-luna",
+      "-e",
+      "/Users/am/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr"
+    ],
+    "version": "0.84.4\n"
+  },
+  "model": "openai-codex/gpt-5.6-luna",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.R1WITmQj8B",
+  "home": {
+    "seeded": [
+      ".pi/agent/auth.json"
+    ],
+    "written": {},
+    "extension": {
+      "name": "@andrewjacop/pi-herdr",
+      "args": [
+        "-e",
+        "~/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr"
+      ]
+    }
+  },
+  "drive": {
+    "script": "bench/worker_defaults_model/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "models": {
+        "a": "openai-codex/gpt-5.6-luna",
+        "b": "openai-codex/gpt-5.6-terra",
+        "source": {
+          "a": "run.yaml model of every pi run (evidence/runs/spawn_worker.pi.2026-09-02.01); session model_change records provider openai-codex, modelId gpt-5.6-luna",
+          "b": "the slug every codex run used on the same openai-codex provider (evidence/runs/spawn_worker.codex.2026-09-02.01); not yet seen through pi --model, verified by this run"
+        }
+      },
+      "harness_record": "session log under /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-L8CR1p/.pi/agent/sessions, files newer than the turn start; the run dir's session/ is the same capture",
+      "turn": {
+        "status": "done",
+        "settled_by": "herdr agent prompt --wait"
+      },
+      "usage_record": "1 session file(s)",
+      "spawn_args": "functions.herdr_delegate({\"name\":\"worker-a\",\"agent\":\"omp\",\"agentArgs\":[\"--model\",\"openai-codex/gpt-5.6-luna\"],\"prompt\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"})\nfunctions.herdr_delegate({\"name\":\"worker-b\",\"agent\":\"omp\",\"agentArgs\":[\"--model\",\"openai-codex/gpt-5.6-terra\"],\"prompt\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"})\nfunctions.herdr_delegate({\"name\":\"worker-c\",\"agent\":\"omp\",\"agentArgs\":[\"--model\",\"poteto-nonexistent-model\"],\"prompt\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"})\n"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-L8CR1p/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.R1WITmQj8B--",
+  "calls": [
+    {
+      "name": "herdr_delegate",
+      "arguments": {
+        "name": "worker-A",
+        "agent": "pi",
+        "agentArgs": [
+          "--model",
+          "openai-codex/gpt-5.6-luna"
+        ],
+        "prompt": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.",
+        "timeoutMs": 120000,
+        "closeOnSuccess": false,
+        "onBlocked": "return"
+      },
+      "ts": "2026-09-02T22:34:59.569Z"
+    },
+    {
+      "name": "herdr_delegate",
+      "arguments": {
+        "name": "worker-a",
+        "agent": "pi",
+        "agentArgs": [
+          "--model",
+          "openai-codex/gpt-5.6-luna"
+        ],
+        "prompt": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.",
+        "timeoutMs": 120000,
+        "closeOnSuccess": false,
+        "onBlocked": "return"
+      },
+      "ts": "2026-09-02T22:35:05.117Z"
+    },
+    {
+      "name": "herdr_delegate",
+      "arguments": {
+        "name": "worker-a",
+        "agent": "omp",
+        "agentArgs": [
+          "--model",
+          "openai-codex/gpt-5.6-luna"
+        ],
+        "prompt": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.",
+        "timeoutMs": 120000,
+        "closeOnSuccess": false,
+        "onBlocked": "return"
+      },
+      "ts": "2026-09-02T22:35:10.436Z"
+    },
+    {
+      "name": "herdr_delegate",
+      "arguments": {
+        "name": "worker-b",
+        "agent": "omp",
+        "agentArgs": [
+          "--model",
+          "openai-codex/gpt-5.6-terra"
+        ],
+        "prompt": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.",
+        "timeoutMs": 120000,
+        "closeOnSuccess": false,
+        "onBlocked": "return"
+      },
+      "ts": "2026-09-02T22:36:04.110Z"
+    },
+    {
+      "name": "herdr_list_agents",
+      "arguments": {},
+      "ts": "2026-09-02T22:36:17.481Z"
+    },
+    {
+      "name": "herdr_read_agent",
+      "arguments": {
+        "target": "worker-a",
+        "source": "recent-unwrapped",
+        "lines": 100
+      },
+      "ts": "2026-09-02T22:36:19.566Z"
+    },
+    {
+      "name": "herdr_read_agent",
+      "arguments": {
+        "target": "worker-b",
+        "source": "recent-unwrapped",
+        "lines": 100
+      },
+      "ts": "2026-09-02T22:36:21.648Z"
+    },
+    {
+      "name": "herdr_delegate",
+      "arguments": {
+        "name": "worker-c",
+        "agent": "omp",
+        "agentArgs": [
+          "--model",
+          "poteto-nonexistent-model"
+        ],
+        "prompt": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.",
+        "timeoutMs": 120000,
+        "closeOnSuccess": false,
+        "onBlocked": "return"
+      },
+      "ts": "2026-09-02T22:36:24.825Z"
+    },
+    {
+      "name": "herdr_read_agent",
+      "arguments": {
+        "target": "worker-b",
+        "source": "recent",
+        "lines": 200,
+        "format": "ansi"
+      },
+      "ts": "2026-09-02T22:38:30.632Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "pwd && printf '%s\\n' '---' && find . -maxdepth 2 -type f -print"
+      },
+      "ts": "2026-09-02T22:38:32.876Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "negative-trial.txt",
+        "content": "no output at all; spawn call: functions.herdr_delegate({\"name\":\"worker-c\",\"agent\":\"omp\",\"agentArgs\":[\"--model\",\"poteto-nonexistent-model\"],\"prompt\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"})\n"
+      },
+      "ts": "2026-09-02T22:38:38.205Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "self-reports.txt",
+        "content": "self-report, not authoritative: what each worker said about its own model\nA, openai-codex/gpt-5.6-luna, openai-codex/gpt-5.6-luna\nB, openai-codex/gpt-5.6-terra, -5\n"
+      },
+      "ts": "2026-09-02T22:38:41.961Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "spawn-args.txt",
+        "content": "functions.herdr_delegate({\"name\":\"worker-a\",\"agent\":\"omp\",\"agentArgs\":[\"--model\",\"openai-codex/gpt-5.6-luna\"],\"prompt\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"})\nfunctions.herdr_delegate({\"name\":\"worker-b\",\"agent\":\"omp\",\"agentArgs\":[\"--model\",\"openai-codex/gpt-5.6-terra\"],\"prompt\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"})\nfunctions.herdr_delegate({\"name\":\"worker-c\",\"agent\":\"omp\",\"agentArgs\":[\"--model\",\"poteto-nonexistent-model\"],\"prompt\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\"})\n"
+      },
+      "ts": "2026-09-02T22:38:47.358Z"
+    },
+    {
+      "name": "herdr_get_pane",
+      "arguments": {
+        "paneId": "w1H:p3K"
+      },
+      "ts": "2026-09-02T22:38:51.672Z"
+    }
+  ],
+  "calls_workers": {}
+}

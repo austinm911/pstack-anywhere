@@ -900,3 +900,1041 @@ attestations:
       HOME with only auth and the symlinked skill, environment cleared to the
       runner's allowlist, TERM now read from the pane.
       pi 0.84.4, gpt-5.6-luna, no extension. Verbatim column and cell, capabilities.md read from $HOME/.agents/skills/poteto-mode after listing that root. Supersedes the .01 degrade: the file is reachable from a root pi reads. One discarded attempt read a stray copy under the operator's TMPDIR left by manual tests; that copy was removed and the run redone.
+  - id: worker_durability-claude-2026-09-02
+    method: exercised
+    axis: worker_durability
+    harness: claude
+    scenario: worker_durability
+    run: worker_durability.claude.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 98842429835396974134b1e5542d2b80b0fb096705f871beef751981d4adb8e9
+      - path: drive.log
+        digest: a43b816203a6aedd3577f5808b4f644af5c3f2e22daeab9dcc68f13c03fce194
+      - path: heartbeat.log
+        digest: 25db52cea290dda9f1bc6bebcd52f231e42d73f1f36f0316d9c476db3ae52781
+      - path: invocation.json
+        digest: ec9296ca21bb426ab9b2c3a8bdcf878b8621ce41a32e9a4fddca9e6825fc68a0
+      - path: observations.yaml
+        digest: 7e1c5609d07dc4fa3b7c8f0c629f11ed1f614899e32f179a3f66b9679a0a2ea0
+      - path: reattach-attempt.md
+        digest: 32c6322e317018a85b0c93a30a89793fa5418fbd77e8e9bb0bf935863ca9d94f
+      - path: run.yaml
+        digest: 4b65fe0e9f79b96d1deef647725916ce80ff7fb3c5aa81970317fa7f2c6ea534
+      - path: session/8e39711e-3abf-473e-a321-90bcab449aa1.jsonl
+        digest: b8e39bec5b4c12f894708503970c7359fc2e3571646e60b6c63bbee29411d722
+      - path: session/a9ec07be-31f3-400f-8606-c226de20fb0d/subagents/agent-a5d61e6858f02ad0f.jsonl
+        digest: 0df29a2c2851d8ba7771dec01cb52083f183c3956bdae85222b02b3c809bd48c
+      - path: session/a9ec07be-31f3-400f-8606-c226de20fb0d/subagents/agent-a5d61e6858f02ad0f.meta.json
+        digest: ea71851f71435ab0bb14b65f9aae104d94ab4da283f310b5053d021c9dbd485b
+      - path: session/a9ec07be-31f3-400f-8606-c226de20fb0d.jsonl
+        digest: 2fb85cad65e5f2fcacb0672406b6974d5370b87022cfa0c7d0d8010a892feae5
+      - path: session/ca4b62d5-7eee-4707-885c-cab85db6b981.jsonl
+        digest: 159caf1ccad85e4e648d0dd8723e6333ee0c1a90e926220e369abf78167dfefd
+      - path: termination.yaml
+        digest: d057633331f5e70a5148c3d502b66d17aeee2f3aed81bd73bb5bb33dd3deeb01
+      - path: transcript.md
+        digest: 04133c57ea98968e54e80519b279fd57df5affbe2acf93ac77eed32be7bf5df4
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Claude Code 2.1.258, --model opus (claude-opus-5). Grounds the claude
+      worker_durability cell at drop: heartbeats_after_termination is zero
+      after the real exit at 22:17:17Z on a worker mid-run (its wait loop ended
+      "Exit code 137"), completion_marker absent, reattach reached nothing and
+      result_recoverable is only the partial subagent jsonl. Caveat: /exit
+      opened a dialog, the operator chose "Move to background" by hand, so
+      termination.yaml's 22:16:23Z predates the exit by 53 s and its one
+      "after" heartbeat fell inside that gap; reattach-attempt.md is a driver
+      placeholder, the attempt lives in the ca4b62d5 session log.
+  - id: probe_worker-claude-2026-09-02
+    method: exercised
+    axis: probe_worker
+    harness: claude
+    scenario: probe_worker
+    run: probe_worker.claude.2026-09-02.01
+    artifacts:
+      - path: cadence.md
+        digest: 6a4773525a048886400754b173cf09e6582100facc2a1729fb13f5b7a77d2e5c
+      - path: CHECKLIST.md
+        digest: 1d993e06f89127a9ba21c0377605efc0ad28d3d3d943fb87e1c75e1716af136c
+      - path: drive.log
+        digest: 189141f408506d523ddd7c79bd32a84245aff8ec27e60ba62beac88592badb1c
+      - path: invocation.json
+        digest: 6668c1c7b8d4f2f0163592bb691958c69f85f4236a34d3c10a43badad0b8068d
+      - path: observations.yaml
+        digest: 4ae9cdcffdbcf926bf4d85837815170c710b5539ba162f9eb82499e682ebb82d
+      - path: probe-activity.log
+        digest: b2545f2712ce925d8a126cd461487bbcf4927d2ec3c0b5bed155efd54b4bf185
+      - path: probes.yaml
+        digest: 57d6385b4848da68aab9d22ce42d03f13e88971a7bd4500074c6fe15be8988bd
+      - path: run.yaml
+        digest: f007d79b6095f179e8422070ae25782f4d66acf574481c9f9d204e22c2307d10
+      - path: session/7353e47d-89f4-4a41-bf4f-637de4c3887b/subagents/agent-a8064ebed038610db.jsonl
+        digest: 0f9d6de68b77e2727ffc5011974a63b2c9611201d63f357df2678cd4463fa202
+      - path: session/7353e47d-89f4-4a41-bf4f-637de4c3887b/subagents/agent-a8064ebed038610db.meta.json
+        digest: 5856b9a28c492e011177603c4566c89a9ad08f5c000f0adf2bbfe3232a4ac309
+      - path: session/7353e47d-89f4-4a41-bf4f-637de4c3887b.jsonl
+        digest: 6bde6253211d45e75dc3f00e15d205e245e09fcbdc74f61dd751e09b75ebeb0c
+      - path: transcript.md
+        digest: 34a304806a8deb2e3e26e9e9b5af24f43337069e6eb4a025c6312c02f9376ee9
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Claude Code 2.1.258, --model opus (claude-opus-5). Grounds the claude
+      probe_worker cell at degrade: probe.mechanism is ListAgents plus
+      TaskOutput block false on the Agent handle, probe.side_effect is none and
+      nothing resumed, but probe.granularity is existence-only: ListAgents
+      lists peer sessions, not subagents, and TaskOutput on the finished
+      worker errors "No task found". Caveat: the parent held its turn open
+      until the worker finished, so all four probes ran after completion and
+      no running state was ever read; the cell rests on the finished side
+      alone.
+  - id: wake_on_event-claude-2026-09-02
+    method: exercised
+    axis: wake_on_event
+    harness: claude
+    scenario: wake_on_event
+    run: wake_on_event.claude.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: b3c4ecdaf0f0ed6136d91372396b8b6893744b3d4e5051efdde5b954cccb1396
+      - path: drive.log
+        digest: 947130ab291ece8e9b706096553414d38ffe3cc6df7115711da699e5b87a7b7c
+      - path: invocation.json
+        digest: abf5611a340931e7f3a0981bf830800903cf11420e370002f5bca0fc9fcf273d
+      - path: no-trigger-trial.md
+        digest: d25844d3d127d19c192ccc3754dfb6e7fbffe73d5dd4326f8c4a7a4336dcf8d1
+      - path: observations.yaml
+        digest: d502109b35bda3fb84f7f460496756523ee70fa390666afaa33f0802a9037f9a
+      - path: run.yaml
+        digest: 23b836386144440ea25978481189fdc919a4c7cba4a0fbd612790153817f3f8f
+      - path: session/b946c0a8-7d84-4403-a4e2-a6d4a9382bd8.jsonl
+        digest: 27ed255d7c6d1b18c3de142c2d2f48f9139ec17329d45909a62f7db32a48affd
+      - path: timeline.yaml
+        digest: 774f0243dab0969968c2df546c9ead8b28181fa6236acb9233896d68690f1a5e
+      - path: transcript.md
+        digest: 81f085d7af963836084b6b5ec4b42f0340304c741d9b31e129a23e69e717b739
+      - path: wait-accounting.yaml
+        digest: 1b1f1991afa0617a12139557192392de906ee8991b70245b95e456274f1f4db4
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Claude Code 2.1.258, --model opus (claude-opus-5). Grounds the claude
+      wake_on_event cell at substitute: no Monitor
+      primitive exists (wake.mechanism), but a run_in_background Bash kqueue
+      wait let the parent end its turn and wake on task completion with
+      wake.turns_during_wait zero assistant entries and wake.latency 4 s. No
+      heartbeat was used. Caveat: wake.timeout_behavior was not exercised,
+      trial 2 ended after 28 s of its budget with the wait still running, so
+      the distinguishable timeout is the script's exit-2 path by design only.
+  - id: worker_defaults_identity-claude-2026-09-02
+    method: exercised
+    axis: worker_defaults
+    parameter: identity
+    harness: claude
+    scenario: worker_defaults_identity
+    run: worker_defaults_identity.claude.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 2f8773b8a4dadeb2013f3a584baaf386d5ad2e8e308a7fa5b5224d161679944b
+      - path: definition.txt
+        digest: 6825a61b517c7d06f20528a543f8b4de8ebd6b68d691d9cee9b4abe92a839286
+      - path: drive.log
+        digest: 4486aa0cac24db0936c8985ae5fe3a17feb55fac39b1c4802117d100e456f126
+      - path: invocation.json
+        digest: e7c403600842acbc40ed81d718d9549c57f39b7bd3a4c8e04ea7b63d501341ee
+      - path: negative-trial.txt
+        digest: efcd7685a771ab1abe24b0138f6ae2c5508feec3067424e8b8d3fee7ddc0bd14
+      - path: observations.yaml
+        digest: 6a691956ba95736ad8ced2ed9987b5107bb43f364e621e5d4a3110943a845903
+      - path: positive-report.txt
+        digest: b65e6f219ce3358c0e553e3c2ab1d1327329719a854c38bbd8b7b59fa2f29910
+      - path: run.yaml
+        digest: f648029e06548f828410e4b73521ac7b1d1856cdb21cb74cd270a76722203d45
+      - path: session/9a5e4379-048b-4645-9e41-f9fa86e9bbb6/subagents/agent-a6efdd64e252ec111.jsonl
+        digest: 08c91444e9f5002d483595a7e874fd499da1dcbb5a5997d427f8e98db0b31adf
+      - path: session/9a5e4379-048b-4645-9e41-f9fa86e9bbb6/subagents/agent-a6efdd64e252ec111.meta.json
+        digest: 2c3d0fc5359473afa407e7f2654c5a1aaeb6e731f029c98d2e4872b6e2866da4
+      - path: session/9a5e4379-048b-4645-9e41-f9fa86e9bbb6.jsonl
+        digest: 5cf92b905aa6775de8286beb77962c1e7da1e4b1b543ef3774992b3cbef79a7f
+      - path: transcript.md
+        digest: c3e3e11c60a127e28b82d78ba06728d687cef7f239858573767672e36ade051a
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth plus .claude/agents/poteto-probe.md (run.yaml
+      environment_deltas lists exactly what was seeded). Claude Code 2.1.258,
+      --model opus (claude-opus-5). Grounds the claude worker_defaults.identity
+      cell at substitute: identity.selection_argument is Agent subagent_type,
+      identity.token_present true from the definition body, and
+      identity.unknown_name_behavior a hard error listing the available
+      agents. The hard error also meets the native criterion; substitute holds
+      only on the per-harness .md definition format, a parity.allowed
+      difference.
+  - id: worker_defaults_model-claude-2026-09-02
+    method: exercised
+    axis: worker_defaults
+    parameter: model
+    harness: claude
+    scenario: worker_defaults_model
+    run: worker_defaults_model.claude.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 1664ac5f77c5304a7326c37628a9a778540dbc62f0523344fe46a6606d383e1c
+      - path: drive.log
+        digest: 077c72f547ca6640f56783dd56daa2bdfa6f74c4d6a73334d8bd96c6af2d6a7d
+      - path: invocation.json
+        digest: 115cf920b6fc7f7578d047ee7bece80ecf720aeeeb694523d63af81d5f0ffa42
+      - path: negative-trial.txt
+        digest: fcb05a9e1be90dc3c6ec2dd83715041d8539a056989ab5c3925cadf4f7cd3213
+      - path: observations.yaml
+        digest: d087ae9443873fed7bbae3179a6ae94c87e11d5826d2893de5cf96f50baa7303
+      - path: run.yaml
+        digest: d123737a21f375e2ffa8774cac6fa05e580017abac15dbb6be7996d2710b7ad2
+      - path: self-reports.txt
+        digest: c70749ae23cf4149c50c42d800f8cb44059d39bb318aac0bdbe03c49ca1b86af
+      - path: session/4c29d19c-028f-4a3f-acc9-d69ef81a56d9/subagents/agent-a49c3ed7251104725.jsonl
+        digest: d244b03e6326d42410cb63cda4837772670e68fe4d12fc7119b135ed6947969e
+      - path: session/4c29d19c-028f-4a3f-acc9-d69ef81a56d9/subagents/agent-a49c3ed7251104725.meta.json
+        digest: a351e32f17fb0c2bc51d5421163f1080015ec724f96aaf07a0057b3f840a9212
+      - path: session/4c29d19c-028f-4a3f-acc9-d69ef81a56d9/subagents/agent-ae8fc3b092e9709d9.jsonl
+        digest: 13fd0650b125f60bb50a3d70c9b1c1e02ce041e3d7ae63620340c792062f17ca
+      - path: session/4c29d19c-028f-4a3f-acc9-d69ef81a56d9/subagents/agent-ae8fc3b092e9709d9.meta.json
+        digest: 95d119f3032b8110e83ab73aedb3d0e8de746023bf5667d40a8b324e00c7b0d6
+      - path: session/4c29d19c-028f-4a3f-acc9-d69ef81a56d9.jsonl
+        digest: 1e95d9c08f4ae3a41ec2f270ec78ec70ba8fef206233b4976981a9646ef206b4
+      - path: transcript.md
+        digest: 5b7d4290357de7d2141a8d9320b1f0e48795ae424d5b097ff87b2cf508066dae
+      - path: usage-record.txt
+        digest: 04bf08cd7965fd06ac1519b43627c95d39d116c3c2c06b5456bb2af15437a628
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Claude Code 2.1.258, --model opus (claude-opus-5). Grounds the claude
+      worker_defaults.model cell on what the observations show, no tier
+      recorded per the scenario: model.selection_argument is the Agent model
+      argument taking a tier alias, model.harness_reported reads claude-opus-5
+      and claude-sonnet-5 from the subagent jsonl message.model, so
+      model.selections_differed is true, and model.unknown_slug_behavior is an
+      InputValidationError naming sonnet, opus, haiku, fable with no worker
+      spawned. There is no role-slot mechanism; selection is per call.
+  - id: human_question-claude-2026-09-02
+    method: exercised
+    axis: human_question
+    harness: claude
+    scenario: human_question
+    run: human_question.claude.2026-09-02.01
+    artifacts:
+      - path: answer-received.txt
+        digest: 7a31ab070cc49d06b9b2bdd9de5486ef8d863fd831cd7b7118d44e8cb06fe04e
+      - path: CHECKLIST.md
+        digest: 3b0a9e49a1bf84900fbde721d38a4ea6dcc66fdc8a409227b75fd6813c357691
+      - path: drive.log
+        digest: 103468d32f828d72cc4fae95d00da11567e0a85fae47979ecaaaaf47d0d95c42
+      - path: flood-trial.md
+        digest: 17111bd893e820126713f89de2d154bd0e6e7cf1b31a4d08181cc5a18eac0502
+      - path: invocation.json
+        digest: a326e1d90a2088f23e0fd2be216776d536cb2c19875e34b36427e48a91a8c27e
+      - path: observations.yaml
+        digest: ae411e01e4373857520aab1cf1cc41f00ae099ae3fc68be2857380684146f64b
+      - path: question-render.txt
+        digest: 171628790f2c561d13f9563d952b36c8e3b4f3539b66a4a101a03fbbb7d147e6
+      - path: run.yaml
+        digest: 821f414ed9f7e1384031817e661f296f9e1e3adbbd5367f0654a1c3b496084c3
+      - path: session/ab1ee32d-f36a-4915-845f-a71f45312196/subagents/agent-a0f35f5b3655fe900.jsonl
+        digest: ec68b7d8be4191cd59622e8ea38029b1258dfb4a3f693e4dca1e4bf222f165e3
+      - path: session/ab1ee32d-f36a-4915-845f-a71f45312196/subagents/agent-a0f35f5b3655fe900.meta.json
+        digest: 3c22c38be87f79e0628173103e92969bca86a0ba77deac8bc9cd96bf36108ceb
+      - path: session/ab1ee32d-f36a-4915-845f-a71f45312196/subagents/agent-a432f3f5accf87487.jsonl
+        digest: 00d231760fa2ce9a3cb36a10974f00dfc1cbb65b7b7e9885508633b7e35a4900
+      - path: session/ab1ee32d-f36a-4915-845f-a71f45312196/subagents/agent-a432f3f5accf87487.meta.json
+        digest: d08ddad8b6c8e353819252e2bf8ef73dd092c9d64a013888a2e72dd6f51f8345
+      - path: session/ab1ee32d-f36a-4915-845f-a71f45312196/subagents/agent-ade8e343378995e27.jsonl
+        digest: cbd6e5b3faf0192e84005081881484ab6cecd8f961fd5f5b164f1acff977826b
+      - path: session/ab1ee32d-f36a-4915-845f-a71f45312196/subagents/agent-ade8e343378995e27.meta.json
+        digest: 4212d5d5ad78fb80570cb69edeb24322afa219b8542fba378ef4c9356e16e161
+      - path: session/ab1ee32d-f36a-4915-845f-a71f45312196.jsonl
+        digest: 2d69d8098dd425eeb4e8442e3a63fd4eac89012dee452710778585ef1593e4f4
+      - path: transcript.md
+        digest: 9d8fe28193374b8f87bb2db08c87c704fea67eb0af455b83b54c67f0c8d8bc6f
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Claude Code 2.1.258, --model opus (claude-opus-5). Grounds the claude
+      human_question cell at substitute: question.mechanism is AskUserQuestion
+      with enumerated options, question.options_discrete a cursor list, and
+      question.pending_survives_flood true, three task-notifications held
+      behind the gate with reason absorbed_mid_turn. Caveats:
+      question.answer_shape is the option label string, not an identifier, and
+      the cancel trial is inconclusive, the driver's esc never reached the
+      panel and the agent produced nothing after asking
+      (question.unanswered_behavior).
+  - id: probe_worker-codex-2026-09-02
+    method: exercised
+    axis: probe_worker
+    harness: codex
+    scenario: probe_worker
+    run: probe_worker.codex.2026-09-02.01
+    artifacts:
+      - path: cadence.md
+        digest: 377ecea07a548a36faf0c25165ab07e742a5e02745833f6e705274bf9445cd8a
+      - path: CHECKLIST.md
+        digest: d9fd09f153c64e0a845bf8b340d548136fabc71f35299d6030012e53d2e583c0
+      - path: drive.log
+        digest: 794dd066d262a5d93c4776a02b8034b41a1ed835dc8b6421db46cf71608a8aa0
+      - path: invocation.json
+        digest: 6a2f2d928cdab6fb6c572c7963618fda25a4126c60ec49f7bf67911a7acbaa81
+      - path: observations.yaml
+        digest: 11f7fe5d0e3599daa88f36e462e7a25125d03a3010bb5e37c51dbe22be2d7fcf
+      - path: probe-activity.log
+        digest: 85869f5619b1ca3a2873ae2c8d6e14b84603a7d2c38c9ff5570f78238a1aa037
+      - path: probes.yaml
+        digest: 6b12126cff4e48c3c09b7d05e146ad55fe86006644399b640321804b557e7946
+      - path: run.yaml
+        digest: 1f45d04478930978dadcd5983eabee2c38714be2ecfb70482b82574fa77162f6
+      - path: session/2026/09/02/rollout-2026-09-02T16-13-21-01a06466-0116-7d73-90fd-5bde03991be0.jsonl
+        digest: 62d627b180816c1b57cabb35877915ce0b86b4e7223ac595ba39841bc33c6742
+      - path: session/2026/09/02/rollout-2026-09-02T16-13-30-01a06466-2460-7803-ac65-99f3f3b23a0e.jsonl
+        digest: 304cd2ac0332f65fe42bc9314f5f4f5a7ca342bb59c5ada294cdc6e50d73a175
+      - path: transcript.md
+        digest: d7782b5b2371226d1d7c8259935efd8a97843410b634af82396fc5f3cea014d7
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Codex 0.152.1 with -m gpt-5.6-terra and multi_agent enabled by the seeded
+      config. Grounds the codex probe_worker cell at substitute:
+      probe.mechanism is list_agents, a session-wide status read with no
+      per-agent argument; probe.states_reported gives "running" three times and
+      a {"completed": <final message>} object after the worker finished, so
+      probe.granularity is more than existence-only; probe.side_effect is none
+      on an 18-line, 10 s cadence log, and probe.post_completion shows no
+      restart. The status enum carries no idle-or-awaiting-input variant, and
+      the extra variants were read from the installed binary, not exercised.
+  - id: wake_on_event-codex-2026-09-02
+    method: exercised
+    axis: wake_on_event
+    harness: codex
+    scenario: wake_on_event
+    run: wake_on_event.codex.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: c00a2edb9f7dd1406b6f253e584252554a1eb9b8bc9189d59537309069838ea8
+      - path: drive.log
+        digest: 1a6a2fa7e871b96e3ef2403015b982c1690ac9ac64fcc55fe58391b13ac36264
+      - path: invocation.json
+        digest: 33b83cf00afe7a8771389ac932543ebf2a4ed9f58c650970e6daf3af29aa391a
+      - path: no-trigger-trial.md
+        digest: 35b68360072c96910d069a18ed08d34213b52bf0ca76ee240770f50859341db1
+      - path: observations.yaml
+        digest: fec7c09b95423cbdb6eaf6329d203b35928d6d886c04b77506cbde46b237a581
+      - path: run.yaml
+        digest: 5204c409dadb724a128fe4e17357fd5150e438bf102542cee97900f1e80849a9
+      - path: session/2026/09/02/rollout-2026-09-02T16-18-20-01a0646a-8f65-7a93-813c-dfda1271f701.jsonl
+        digest: 59203351956bc47037481cbc598c732a6b2feabba24371b838b0dacfb026a0c2
+      - path: timeline.yaml
+        digest: 0e132ccfdc5b386294aad70837dbb3fe915c9d9442680a717c96a5edd9d2cab4
+      - path: transcript.md
+        digest: 0a510877e4eab956143c252c7953d42d782c00ac0298022e9ad8c1878b9d8996
+      - path: wait-accounting.yaml
+        digest: 562746f213b955c400259916696edd3b10230a7fa2d16bc0d1c47213d8fe3166
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Codex 0.152.1, gpt-5.6-terra. Grounds the codex wake_on_event cell at
+      degrade: wake.mechanism is a zsh sleep-30 loop the agent wrote inside
+      exec_command, re-entered through write_stdin and the exec-cell wait tool;
+      wake.turns_during_wait counts 4 model round trips and one assistant
+      message across the 122 s wait; wake.latency is 22 s, 18 of them the
+      loop's sleep granularity. wake.event_kinds names wait_agent for a worker
+      finishing as the only first-class wait, seen in other runs, not here.
+      wake.timeout_behavior: the loop's own 1200 s bound was never reached,
+      the driver sent esc at 319 s, so the exit 124 path is by construction.
+  - id: worker_defaults_identity-codex-2026-09-02-02
+    method: exercised
+    axis: worker_defaults
+    parameter: identity
+    harness: codex
+    scenario: worker_defaults_identity
+    run: worker_defaults_identity.codex.2026-09-02.02
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 7abc90849dd63c9945deced3e5b8933d40d47d696e85fb1529349334781a5615
+      - path: definition.txt
+        digest: de5f899bab8dad49fc9914690479ef05ba35b12d20e000ccd93e00fb49832baf
+      - path: drive.log
+        digest: b0c30572b565149f8076479b2117e81b67e1a3d42b2fa2148d77e7e3bbac3136
+      - path: invocation.json
+        digest: f8ade02d377e38839eeb194874f47a236e440c97c48c9f34fed39ff75cffaff3
+      - path: negative-trial.txt
+        digest: 77a908e807349fd90af35ba75c012f90dcee8c1b9015d6e028fb78436a00c448
+      - path: observations.yaml
+        digest: 6b57e02ce9ee7aca542d0b4e38a39aeab2edf3fb62736c6d913dadd06bd224ec
+      - path: positive-report.txt
+        digest: b65e6f219ce3358c0e553e3c2ab1d1327329719a854c38bbd8b7b59fa2f29910
+      - path: run.yaml
+        digest: b0afc8745065155dec521a7e5c8dc75b9d855745d994fd5b3d20911a8e83a9d0
+      - path: session/2026/09/02/rollout-2026-09-02T15-34-43-01a06442-a1ee-77a0-a06e-fbe1e8058863.jsonl
+        digest: 7cedc853e42b6050633ec461497c628e06a8131f58cc2941e2f822dae3f935d9
+      - path: session/2026/09/02/rollout-2026-09-02T15-34-50-01a06442-bd44-75a0-887d-de6b8d472574.jsonl
+        digest: bdeab9dceaf6cd8529ba5fc6aa22a743f01fa37a098dfb484c8bddfe3054fab1
+      - path: transcript.md
+        digest: dd583eee12d075d9e30a61ba62f78bcbae0267d678b969e4bb78ba0ea1919996
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth plus the poteto-probe definition (run.yaml environment_deltas
+      lists exactly what was seeded). Codex 0.152.1, gpt-5.6-terra. Grounds the
+      codex worker_defaults.identity cell at substitute: identity.token_present
+      is true with the token coming from the definition body, delivered to the
+      worker thread as a developer message with agent_role poteto-probe, and
+      identity.unknown_name_behavior is a hard error ("unknown agent_type
+      'poteto-absent'") with no second worker created. Differences from
+      upstream sit inside parity.allowed: the selection argument is agent_type
+      on spawn_agent, and the definition lives in ~/.codex/agents. Both a .md
+      and a .toml definition were seeded, so which file the loader read is not
+      settled by this run.
+  - id: worker_defaults_model-codex-2026-09-02
+    method: exercised
+    axis: worker_defaults
+    parameter: model
+    harness: codex
+    scenario: worker_defaults_model
+    run: worker_defaults_model.codex.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 40681ee17a5a847879b0a4a4c93040c5f49d4265139fc3d8ddbeb8183b1137b7
+      - path: drive.log
+        digest: 609cc6cfffb0e304b8f1f037e51add763837aea887f134be53ca8f7c88726e31
+      - path: invocation.json
+        digest: 36d71c621588c29db745dfd09df90fc5444171efe623ebfcd922d8d5d59f8366
+      - path: negative-trial.txt
+        digest: f5d616a8a3b657c125c952f1b3201dc4eccb651fd8120345d6d50d552569044b
+      - path: observations.yaml
+        digest: 054b0a29e844b37c9c543ed8d7f26a929add1cd2af000d0a83c27f5e477da5f3
+      - path: run.yaml
+        digest: 71a450f668ce11c532d72ea8e5ddccf4120f6ae315d67e4846a404aae61fc9cb
+      - path: self-reports.txt
+        digest: 5d52bfe1143d3ddf66f7ebb5a4fe76b17c861e702561ee904580f074e3680413
+      - path: session/2026/09/02/rollout-2026-09-02T15-38-50-01a06446-64e7-74d0-b039-9440effc160f.jsonl
+        digest: 333989ee310be454d4ba2cdd5aeb4574e4704c57a9b3d26aedb049400d31f314
+      - path: session/2026/09/02/rollout-2026-09-02T15-38-57-01a06446-82da-7b12-a15d-7199026f2ab3.jsonl
+        digest: a4f560adc7862e59bb97057aab9228dbcbe49323c8cb9de83ac8f7fe45a0fc56
+      - path: session/2026/09/02/rollout-2026-09-02T15-39-02-01a06446-961f-77e2-a8c8-148244351701.jsonl
+        digest: 41b1985c7b6ee4f151938cf1ff37d5ad9b1bea45047c5262dce800756da026f2
+      - path: transcript.md
+        digest: 419c6b9054062e7c3aa3af70ab986a1a1f6e7494a545a699623677c504516dd8
+      - path: usage-record.txt
+        digest: 2cb2fde3bccf71ac11ec04efcf916b5a503a95081a1dd5714d517bba546a702f
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Codex 0.152.1, parent on gpt-5.6-terra. Grounds the codex
+      worker_defaults.model cell at no named tier, since the scenario forbids
+      recording one: model.selection_argument is an explicit
+      model slug on spawn_agent; model.harness_reported reads gpt-5.6-terra and
+      gpt-5.6-luna from each worker rollout's turn_context.model, matching the
+      selections, so model.selections_differed is true; model.self_report is
+      wrong for both workers (gpt-5.6-sol, gpt-5); model.unknown_slug_behavior
+      is a hard error listing the five available models, no third worker. The
+      only model record is the harness's own session log, not a usage readout.
+  - id: human_question-codex-2026-09-02
+    method: exercised
+    axis: human_question
+    harness: codex
+    scenario: human_question
+    run: human_question.codex.2026-09-02.01
+    artifacts:
+      - path: answer-received.txt
+        digest: be49d0c2efd4d986a7cbb318fca6a4c1ab4d7e23d749ba71c5b5cc0da627dd03
+      - path: CHECKLIST.md
+        digest: 076b19c0d48c31e1c97476f4b8ad0c4a0c9b2bfdb7caee53e01435dce3973467
+      - path: drive.log
+        digest: da4d036d881fa6b2e0a94d27dcb1865d51eb12722a0b573e43a5ac353cc6b05b
+      - path: flood-trial.md
+        digest: 670d45fb62dee67e049899aef1e9b576c4fef1f5e803f80c73b231451615fcd6
+      - path: invocation.json
+        digest: 7ff10c48d60f603bd57cbbe53cf6ff17e0e16b9dee99dab6bc58a5cdfc61b499
+      - path: observations.yaml
+        digest: 897809deeaa10025fe1cfb67c5a47b6541229854fbcdeb3aace8664a8b8433b0
+      - path: question-render.txt
+        digest: 2307c00aaaa4b41f449134dc8f6efd6fd2a0899a23957680d896355887dcae55
+      - path: run.yaml
+        digest: 10fcbbb2607709ccaa8259f0ec8910a9f968d12435a375b8692806d91cf0bf7e
+      - path: session/2026/09/02/rollout-2026-09-02T15-44-17-01a0644b-64b6-78d2-8ee2-bda710dd5901.jsonl
+        digest: fcd2a93a54fd60e069868c7feefcf27a1c55335b66d10f7b512f6bac820ee695
+      - path: session/2026/09/02/rollout-2026-09-02T15-44-41-01a0644b-c0cf-7df2-8799-63c20556a4ff.jsonl
+        digest: d9c5cb97cbcd8294c386a7daa4beb98817fc9e5377951deec9b108ebca39a6d2
+      - path: session/2026/09/02/rollout-2026-09-02T15-44-43-01a0644b-c93f-7210-a1eb-e96fa1a7c6f9.jsonl
+        digest: 61c665cb1259f3ec50bab0bacec18d8fafb85f005b8b9ef1bf716f69d45b977a
+      - path: session/2026/09/02/rollout-2026-09-02T15-44-46-01a0644b-d597-7ef1-a988-2f99135c39a6.jsonl
+        digest: d7ff41b317ba1dd66300a9caa5dec65718a8a4f605541876677589a5f6abc4f9
+      - path: transcript.md
+        digest: 4a7481ba78d190700415e402eb230c2b19ecdfaa96f9e1c994a05e0a31fea536
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      Codex 0.152.1, gpt-5.6-terra. Grounds the codex human_question cell at
+      degrade: question.mechanism is plain reply text in all three trials, no
+      request_user_input call in the rollout; question.options_discrete is a
+      prose numbered list with nothing selectable; question.answer_shape is
+      free text merged into the next user message, with the mapping turn
+      recorded; question.pending_survives_flood shows the turn ended before the
+      workers reported, so only the pane text persisted, nothing was pending;
+      question.unanswered_behavior made no file and assumed nothing. The binary
+      carries request_user_input but the rollout does not record the per-turn
+      tool list, so whether Default mode offered it is not readable here.
+  - id: worker_durability-pi-2026-09-02
+    method: exercised
+    axis: worker_durability
+    harness: pi
+    scenario: worker_durability
+    run: worker_durability.pi.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 889b7707f69c379b646521b9a63d805d1240998ef0ff2868d332bff0a7803494
+      - path: drive.log
+        digest: 357d71b22f7341cc0685c51576dd28d2def0ae50e6fc3c8d42975f45c7e7a9c3
+      - path: heartbeat.log
+        digest: 67c78b55d2e1fbc1144ca5704f441699d30eb101c9484ad1ddbe46934d3a1000
+      - path: invocation.json
+        digest: 6e28d59a693052f17e950991b759fdfb842f60065a951f29c37d3a5a498c0371
+      - path: observations.yaml
+        digest: 266beaba1ad9e6e764f9ce28030b0f352e95bde8aa3a77beb9beb35d577d2c93
+      - path: reattach-attempt.md
+        digest: 8ed56e23eba973830ae8df5de6fb96adcf16b6d725a0fe8575af45a35c73b391
+      - path: run.yaml
+        digest: df4cab6d78297ed1771a64526e0e969baf14757ffe9bf93829b954dcc9268236
+      - path: session/2026-09-02T23-03-13-168Z_01a0645c-b810-79d3-b7e9-5ca3bbc97ec9.jsonl
+        digest: 2d475483721ba48a3a553c1b81ca447a384708f563af2b7160f4e9114e574b2b
+      - path: session/2026-09-02T23-10-16-059Z_01a06463-2bfb-7644-91fa-f5753ef701db.jsonl
+        digest: c9416f44ed08cda10e0005b056958754a1e4915e23c2c24cc1c3a7b970706a70
+      - path: termination.yaml
+        digest: 5204f3d0d3e8d72dc7442c27fdce4fc806be9f1ebc8db7b57eb77e492a6b7804
+      - path: transcript.md
+        digest: 337270276d63272eb9d7ad1719faefeea9f35514a8b9df0116b09129af54031b
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded),
+      bench/worker_durability/drive.mjs timing every step. pi 0.84.4,
+      openai-codex/gpt-5.6-luna, @andrewjacop/pi-herdr loaded by -e. Grounds
+      the pi worker_durability cell at extension: heartbeats_after_termination
+      9 of 11 after /quit killed pid 96132, completion_marker present, reattach
+      and result_recoverable through the herdr agent handle from a fresh
+      session. The worker was an omp pane herdr opened from the operator's
+      real HOME (herdr_start_agent agent "pi" was rejected, "expected pi,
+      detected omp"), so survival belongs to the herdr server, not to pi, and
+      the report is gone once that pane closes. The cell's fallback,
+      "subagents die with the session", is what a stock pi run would show.
+  - id: wake_on_event-pi-2026-09-02
+    method: exercised
+    axis: wake_on_event
+    harness: pi
+    scenario: wake_on_event
+    run: wake_on_event.pi.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 3807e8038d081c2c060d0959f89242c53e722302221a5b28d5bc3a3127e58eba
+      - path: drive.log
+        digest: 0628f641dc0fe015be80f6b4c220a6f5bb911d3a6fc83d6f6fc1b18bb75f0b95
+      - path: invocation.json
+        digest: 8a72786a6ece8af8d6ac7f8905f3d09be85c178647fd284c33f83b2505805104
+      - path: no-trigger-trial.md
+        digest: b53df5f6f7266b3042c26f2a1ffb11832d901d2b5f7748c853948ecc77702179
+      - path: observations.yaml
+        digest: aeff3c8b7abccc171e8e8fd908e3eb6b9b51b8bc5cc29703d2821d2da49c251a
+      - path: run.yaml
+        digest: 481dce58ba43a389ebdef6fff2ddad6eda1b43cf64029da5e04be821b493d4a6
+      - path: session/2026-09-02T22-54-45-455Z_01a06454-f8cf-75c4-8e1d-80673cccc663.jsonl
+        digest: 1ba3efa7b4968e65a84444b2044737262283c3d9a840e1f61b302b3527656af6
+      - path: timeline.yaml
+        digest: 205e5bc21a12ee3b33c95e503225b47ec6b87eae5189b6ecccfd4eb667d14f2b
+      - path: transcript.md
+        digest: 168e60a276cda78a6bb4b5828a36ea537a0e8a17c41b4cd782df61827854269e
+      - path: wait-accounting.yaml
+        digest: bd717ef709c4baea9df5812d89fc9e25c1f2235eb4a7ac893eca88395e229184
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded),
+      bench/wake_on_event/drive.mjs timing every step. pi 0.84.4,
+      openai-codex/gpt-5.6-luna, no extension: run.yaml has no extension key.
+      Grounds the pi wake_on_event cell at substitute:
+      wake.mechanism is one blocking bash call polling for the file
+      inside a shell loop, wake.turns_during_wait is zero (the session log has
+      nothing between the bash call and its result), wake.latency 15 s from
+      trigger, all of it the loop's 30 s polling interval. No heartbeat turn
+      ran; the heartbeat is the path when no blocking wait fits.
+      Caveat on wake.timeout_behavior: the untriggered wait was aborted by the
+      driver at 280 s, so the 1200 s timeout was never reached, and a fired
+      wait and a timed-out one both return "(no output)", distinguishable only
+      by exit status.
+  - id: worker_defaults_identity-pi-2026-09-02
+    method: exercised
+    axis: worker_defaults
+    parameter: identity
+    harness: pi
+    scenario: worker_defaults_identity
+    run: worker_defaults_identity.pi.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 603816d35687531ec4648c18302347e72595f1ab3b888cec2e35d917ca75f958
+      - path: definition.txt
+        digest: 746941cd45ecb3438043fb0be877a58c0302e9d834201e0b1f382eaea896ce9b
+      - path: drive.log
+        digest: 3b3516fb565d926dd675278b0c6c62d0c47b3e8172863cb49b2cb8a61eb31cd0
+      - path: invocation.json
+        digest: 1109d95baa3feb2b25f189c408540e99b08f11e8c35f9c6dd3426ccc58ae447c
+      - path: negative-trial.txt
+        digest: 53b3dfe4479e9a74357319fa2695bba25629ee61e59f6833617c52eba4f055c0
+      - path: observations.yaml
+        digest: f307a3904322f52b9ba99469c7fd25c493fca807c41dcae08142b35712e7e3e2
+      - path: positive-report.txt
+        digest: f131db6a6b8aac5217eae90c2e132acea9e46affdbe49e815b548de887bc057b
+      - path: run.yaml
+        digest: aa365b4a1fde4bf62b0e2aa802561053c6b8b4772e816b9f9b14c54d627198fc
+      - path: session/2026-09-02T22-33-11-005Z_01a06441-385d-7d0e-8e75-1b754a67ca98.jsonl
+        digest: 246e82fc4786ea603554d722825d65636e2415f3c5aa039faf6fa235d35e0fc2
+      - path: transcript.md
+        digest: 764902b5362bfea16e5075c56781f00ab6821002340f79088cd18173cc43f8fa
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded),
+      bench/worker_defaults_identity/drive.mjs. pi 0.84.4,
+      openai-codex/gpt-5.6-luna, no extension: run.yaml has no extension key,
+      so this run exercises the cell's fallback, not its extension path.
+      Grounds the pi worker_defaults.identity cell at drop, the fallback:
+      identity.definition_path is unsatisfiable (harnesses.yaml:331 records no
+      subagent dir, nothing was seeded), identity.token_present is false, and
+      identity.selection_argument is none because stock pi has no spawn call
+      to pass a name to. The agent's DONE line narrates a skipped and a
+      poteto-absent spawn that no tool call backs. Whether pi-herdr reads an
+      agents directory was not tested here.
+  - id: worker_defaults_model-pi-2026-09-02
+    method: exercised
+    axis: worker_defaults
+    parameter: model
+    harness: pi
+    scenario: worker_defaults_model
+    run: worker_defaults_model.pi.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 41b2fc00c10fa7d6e6141a9ac4b0e5bd2d9622b700920fef0ea2af230d9de6ad
+      - path: drive.log
+        digest: 274c3fed170739add67a5dae8a3330b3d3cbdd70e21ea2a891b55a845c666ee3
+      - path: invocation.json
+        digest: 98224ad71ac8e65b2a6d42c0595712ca04f6b8212d6900a7f7ad24df85d25eab
+      - path: negative-trial.txt
+        digest: 7bcae6a66d2327ebd63511b6a87ad1133694707b5f1a4fc5b2c3acd6c8834d03
+      - path: observations.yaml
+        digest: 6b3496c6d54f5d846847fc6ea893e425dbe821e1cbcbff1fe8f7c5b9b54238d3
+      - path: run.yaml
+        digest: 28e5ea2f2d1acfbd8be44a192a63c08a125d2e2c5ae1ba43e6bd54f3a19c5a84
+      - path: self-reports.txt
+        digest: ed538860018c2f645c3b6c324bb4fa23afe78586c02aab537a4517968f925a52
+      - path: session/2026-09-02T22-34-49-501Z_01a06442-b91d-7560-b043-61f3ff396a9f.jsonl
+        digest: ffa596268e37aa8f7ca78e0a15bc03cb950762e0e239667d15a01413938ecfd7
+      - path: transcript.md
+        digest: 7bb16ee0736be6a460384dd2b75d230c5b9d70bd364c21cdbcbd346de04b38be
+      - path: usage-record.txt
+        digest: c47e89f79bca8ed3f5f7b70375fe850c4dd8053d60ebbb79e5b1dc6a2f08513d
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded),
+      bench/worker_defaults_model/drive.mjs. pi 0.84.4,
+      openai-codex/gpt-5.6-luna, @andrewjacop/pi-herdr loaded by -e. Grounds
+      the pi worker_defaults.model cell at no recorded value, as the scenario
+      requires when model.harness_reported is unsatisfiable: the delegates ran
+      as omp panes under the operator's real HOME, so no worker session log
+      is in the run. What the observations show: model.selection_argument is
+      herdr_delegate agentArgs ["--model", "<slug>"], passed straight to the
+      delegate's own flag, not a role slot; model.self_report gave the luna
+      slug for A and the literal "-5" for B; model.unknown_slug_behavior was a
+      NOT_STARTED timeout after 2 min that never named the slug.
+  - id: human_question-pi-2026-09-02
+    method: exercised
+    axis: human_question
+    harness: pi
+    scenario: human_question
+    run: human_question.pi.2026-09-02.01
+    artifacts:
+      - path: answer-received.txt
+        digest: be49d0c2efd4d986a7cbb318fca6a4c1ab4d7e23d749ba71c5b5cc0da627dd03
+      - path: CHECKLIST.md
+        digest: 7fc6fe617ae81279fff511f2dd19e02d9f4b4c8e22ef227a6ae89b79d216e278
+      - path: drive.log
+        digest: 1f9eba9c8e6f54fc4fe4bc0cdeee4a1520607df545f942a831966e4e35e551e6
+      - path: flood-trial.md
+        digest: 7d3446ececded24e818ae3c2847cba01ec0cad347a135f39bd0440e360198888
+      - path: invocation.json
+        digest: bc4106500dff21843c011800e2bb8a042bfe4dd96e8174e09ced77ea00fcbb0d
+      - path: observations.yaml
+        digest: 822102879ca390e435b6c6c0e56dd45be0a062a99084f1272a9fd3e168ca9fda
+      - path: question-render.txt
+        digest: fe21c6ecd6b01eef47bc7fd300a50f71896abd7da9684939e85c37bdd308014b
+      - path: run.yaml
+        digest: 27e95383d233a9f00945e9e70ce3be4fc5f3d41ba63940e2b3e441785cf445e9
+      - path: session/2026-09-02T22-40-24-880Z_01a06447-d730-769e-9588-648383b80adf.jsonl
+        digest: 333c70a88defc273ec8a44fa458fe478a11bd3162a42f2718d1ba5147ecdf697
+      - path: transcript.md
+        digest: 26d254fbe57bdf152011e58dbca09f93602155885210a54f921a6085cfff6d0a
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded),
+      bench/human_question/drive.mjs. pi 0.84.4, openai-codex/gpt-5.6-luna,
+      @andrewjacop/pi-herdr loaded by -e; it registers no ask tool, so the
+      recorded extension supplies nothing here. Grounds the pi human_question
+      cell at degrade:
+      question.mechanism is a plain numbered list in the reply and the turn
+      ends, question.options_discrete is prose answered by typing the name,
+      question.pending_survives_flood is false since nothing is held pending,
+      question.unanswered_behavior held (57 s idle, no assumption, no file).
+      The flood never landed: three omp workers sat idle with no output, and
+      the agent's "3 completed" line is contradicted by flood-trial.md. Trials
+      2 and 3 rendered one or two characters per line in a squeezed pane.
+  - id: worker_durability-omp-2026-09-02
+    method: exercised
+    axis: worker_durability
+    harness: omp
+    scenario: worker_durability
+    run: worker_durability.omp.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: bb7f71a7667d796839d2734b444cd720059c4823aafe1786e7ee2270fab0c2e8
+      - path: drive.log
+        digest: d838b4c4cf44c2c0a4ec3dd3afde7085cc4311f54f0462f303140c5e7d3eaaff
+      - path: heartbeat.log
+        digest: 0a38a5483bf38381dc96c08ebf380673399197907cfeca4594c96f1f86f9e1c6
+      - path: invocation.json
+        digest: ceca62846e9aa0b2904308321926b11abccfa97c01aab9c20a2c9cbf40f4ddd0
+      - path: observations.yaml
+        digest: 13837e09d44500d859079e6100765882ec0fbfd2bd1cd66d93de603b79ba60b7
+      - path: reattach-attempt.md
+        digest: 26b14d4f21cfd2da2b76dbf2d79597950bb524c80650312e90011f458fed156e
+      - path: run.yaml
+        digest: 9dbd6f4105265366a6ee468dc2d77a6b9c7f246405c1fbe9fef865c23738ee14
+      - path: session/2026-09-02T22-56-56-724Z_01a06456-f994-7546-a6b8-e2478deeb0ba/Heartbeat.jsonl
+        digest: eefc03d87f69dbfc98727e239ec3bf09ddcf7d3dfacaa528be644053c4e90697
+      - path: session/2026-09-02T22-56-56-724Z_01a06456-f994-7546-a6b8-e2478deeb0ba/Heartbeat.md
+        digest: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      - path: session/2026-09-02T22-56-56-724Z_01a06456-f994-7546-a6b8-e2478deeb0ba.jsonl
+        digest: 7ae49f4fe1d1ee0901814f0a8d879238bf7b0d73fa62f48eed75a6cd5fe18d69
+      - path: session/2026-09-02T23-03-59-614Z_01a0645d-6d7e-7098-8ce5-57ac4e6118e8.jsonl
+        digest: bc2382cf9194859e64e5a0b5a2547498c890de23450598f4dd252f373d67666a
+      - path: termination.yaml
+        digest: f08f44f15abe0530bc678170de954580461d646a8e737ae3763f51631367de57
+      - path: transcript.md
+        digest: a9dec885509f20279257fc55927c7d63ea09d3a93e7f38c0cf8d260c94279830
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      omp 18.1.4, --model anthropic/claude-opus-5:low. Grounds the omp
+      worker_durability cell at drop: durability.heartbeats_after_termination
+      is zero on a worker that was mid-run (blocked in hub wait on its loop
+      job) when /quit ended pid 85839, and the parent's exit cancelled that
+      job and disposed the subagent 50 ms later. durability.reattach found no
+      handle from a fresh session and durability.result_recoverable found no
+      report, only a partial Heartbeat.jsonl read as a plain file from disk.
+  - id: probe_worker-omp-2026-09-02
+    method: exercised
+    axis: probe_worker
+    harness: omp
+    scenario: probe_worker
+    run: probe_worker.omp.2026-09-02.01
+    artifacts:
+      - path: cadence.md
+        digest: 63fd1b4b282ccad268f5f8c68947793c2a7963113db3b775e6a5586a0e448a10
+      - path: CHECKLIST.md
+        digest: 221543e7e001e5e7f9e9157a016ab9e623933783c9238544592ecf37d4067fba
+      - path: drive.log
+        digest: 4446d3a327595eff8682ff37f4b06ffd8423d0256a5c8c3b3ef2d7f3e2b827ed
+      - path: invocation.json
+        digest: 4695ee189ff0930dd997c5b6e160ee22dcba584f13cf2bbfd290b7e0aaf45143
+      - path: observations.yaml
+        digest: 4b331ea6258e29e035f077563c9644d7854fea57eee8ae36c07efe8b623a138c
+      - path: probe-activity.log
+        digest: 232be4cf0b624ea89b1ae2b553d13041018a3dbac02931bbb3572c86c8c82aa7
+      - path: probes.yaml
+        digest: 7ddda73d4528fbd7146c3955f8eedba2f300c9fac5c4c7ab26d87707d9f85c93
+      - path: run.yaml
+        digest: b74d554f4dd9a1e17100765fd15b996359ff40f2e8d694affce8290970758edd
+      - path: session/2026-09-02T22-44-42-131Z_01a0644b-c413-7177-b865-d9561e4f42d7/ProbeWorker.jsonl
+        digest: a6a7b9c551643d2ff3d282ce02d9dd447edec92ffb97f8f72b10f8ea89c76fe7
+      - path: session/2026-09-02T22-44-42-131Z_01a0644b-c413-7177-b865-d9561e4f42d7/ProbeWorker.md
+        digest: 69efe10331fa821683b5972c229af583c7a6b23945ac958636faf9ee8e0679e0
+      - path: session/2026-09-02T22-44-42-131Z_01a0644b-c413-7177-b865-d9561e4f42d7.jsonl
+        digest: e50794039403027cccc0d77636d3c071538c84478b71e2977a2bc51dff8fd00b
+      - path: transcript.md
+        digest: 1a7c88637fbcbb04ab8ac4584514e2faa4bd738d787f262e5e03ecb1ede59ef9
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      omp 18.1.4, --model anthropic/claude-opus-5:low. Grounds the omp
+      probe_worker cell at substitute: probe.states_reported gives running,
+      running, running, idle, and probe.side_effect is none, with the log at
+      10 s spacing across both windows and one user message in the worker's
+      transcript. Caveat: probe.mechanism used hub op:"jobs" for the three
+      live probes but hub op:"list" for the fourth, because a settled job
+      leaves hub jobs once its result is delivered; a "completed" job status
+      was never observed, and running versus awaiting input is not
+      distinguished by either primitive.
+  - id: wake_on_event-omp-2026-09-02
+    method: exercised
+    axis: wake_on_event
+    harness: omp
+    scenario: wake_on_event
+    run: wake_on_event.omp.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 141256061e4a7e365b9b26f276f5dd0af0528794fe1dbf8464b572ab336025dc
+      - path: drive.log
+        digest: abf3f271ca35db60f3e68e8c566f5a685989c4f94af9675a18135449780b97b4
+      - path: invocation.json
+        digest: 1d4e227d721d52593a9943ee0bb6b3d7d4bedd464e985315275eea40ce116f66
+      - path: no-trigger-trial.md
+        digest: e69e063e6a1880fe7a626ab1dd3403e795e90a47fedb5bde3846e87c8093f1fa
+      - path: observations.yaml
+        digest: c9004e1f3a30ba380c6db91a29fbe634045295b4a4c656b4f6083fbfbe66a55c
+      - path: run.yaml
+        digest: a97bc5f214cb13cddc9750713bc1fc5f9fb1c72b1acdb9e66ae0dd0d83ecaf71
+      - path: session/2026-09-02T22-49-22-600Z_01a06450-0ba8-70eb-9bb5-4dc183621d48.jsonl
+        digest: dfac72273be0e56cfc7a6a76eabfe57f7e880e2acbc98f9a12f35afb8baddce1
+      - path: timeline.yaml
+        digest: 2967038c72bbdee0d282545761407ea15274b05ba3f7a42341f1bc160b82c333
+      - path: transcript.md
+        digest: fcfa3b86f0d0ab2d27eff54b408af97429a58f09b8224aa789f53a44d8495c86
+      - path: wait-accounting.yaml
+        digest: 85b649d9c1859a675ba8dd170718791a2fccfcd666d77f8bcd133d147e829c7d
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      omp 18.1.4, --model anthropic/claude-opus-5:low. Grounds the omp
+      wake_on_event cell at substitute: wake.mechanism is hub op:"wait" on a
+      background bash job wrapping watchman-wait, since no harness wait takes
+      a file directly; wake.turns_during_wait counts zero turns inside the 31 s
+      and 236 s hub waits, with one turn spent before entry when the bash tool
+      auto-backgrounded the command at 60 s; wake.latency was under 100 ms.
+      wake.timeout_behavior: no bound expired, the operator's Esc returned a
+      {status: running} snapshot distinguishable from trial 1's completed one,
+      so a natural expiry is documented but not observed.
+  - id: worker_defaults_identity-omp-2026-09-02
+    method: exercised
+    axis: worker_defaults
+    parameter: identity
+    harness: omp
+    scenario: worker_defaults_identity
+    run: worker_defaults_identity.omp.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: 0bde860a3458d535b9e90b0ea71d498323e3d32836a24365040d82fff6cf9fe8
+      - path: definition.txt
+        digest: f606507c0c9bac099afcc1a7fe05d9677032dbcd15dc4dcc6f8adb0146a8cf0e
+      - path: drive.log
+        digest: 778690aaac1f2d6dc2cfa2c4844621966c87584026e9949cf74ddf220f3a2913
+      - path: invocation.json
+        digest: 5864b6f13821e884d8a3d15b5c2f96306ea7cbd9b939e9eff8681a47fd8b8961
+      - path: negative-trial.txt
+        digest: a54300fd49c3d050c69331dad56f2d59de505cb9a3679d23cb8c3112df055d78
+      - path: observations.yaml
+        digest: f2f3e32a3b2b23f70666a770ab13e06ce2d13b8ac1702b1424a5fe4f5b07fdb6
+      - path: positive-report.txt
+        digest: b65e6f219ce3358c0e553e3c2ab1d1327329719a854c38bbd8b7b59fa2f29910
+      - path: run.yaml
+        digest: 0646bd60ca402a91204049d603a6711f0792f3be33a04c9c149dd09667a3bf10
+      - path: session/2026-09-02T22-35-11-676Z_01a06443-0fbc-70de-9653-4add826c3d66/Probe1.jsonl
+        digest: 28d29c3d9d94c4fde8d0c409c7ce381fe294f60a841c2f72304c3e27650a560a
+      - path: session/2026-09-02T22-35-11-676Z_01a06443-0fbc-70de-9653-4add826c3d66/Probe1.md
+        digest: 9ad67f1a8d62481ea13914e0af67b03d7d146646dc40834a37eabc635dac5591
+      - path: session/2026-09-02T22-35-11-676Z_01a06443-0fbc-70de-9653-4add826c3d66.jsonl
+        digest: a8a838592c353fc40db494d20c73a8bc35d30f38f7fc43f6d8030844cfa8c6c2
+      - path: transcript.md
+        digest: 7ff414e77081b18efca24c0109c3a77c7866f1a34e95822a7b9a3e056a220f65
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth plus the poteto-probe definition seeded into ~/.omp/agent/agents
+      (run.yaml environment_deltas lists exactly what was seeded). omp 18.1.4,
+      --model anthropic/claude-opus-5:low. Grounds the omp
+      worker_defaults.identity cell at substitute: identity.token_present is
+      true from the definition body, not the brief, and
+      identity.unknown_name_behavior is a hard preflight error naming the
+      available agents, with no worker spawned. The differences from upstream
+      are the ones parity.allowed lists: the task item's `agent` field
+      (identity.selection_argument) and a per-harness directory with omp's
+      frontmatter. Caveat: the refusal arrives as tool result text with
+      isError false, so the parent has to read it rather than catch it.
+  - id: worker_defaults_model-omp-2026-09-02
+    method: exercised
+    axis: worker_defaults
+    parameter: model
+    harness: omp
+    scenario: worker_defaults_model
+    run: worker_defaults_model.omp.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: ffb833e3aecaa862b488823d7aafd033ef00c94f1461dba86c01e35da028bf5f
+      - path: drive.log
+        digest: ec969f68f06b31cb199fe2afcff9ffb56143c88034930e41f2a0dc716c6e0ac1
+      - path: invocation.json
+        digest: d1637a6543094a012bb6cb7a5cb1d02c74960f5eb04f6363b3b42270c70862eb
+      - path: negative-trial.txt
+        digest: df2f4a759ff6b67da377a9ea0258768b5c8fae8cbb3314f449dd4c65ff26d731
+      - path: observations.yaml
+        digest: c63643664f4b40cf2d34990ced190b1d463ee3d5ce4ae08ce794bc2a23e23355
+      - path: run.yaml
+        digest: 9f2000a14d57db58e47712068dbaa723f2315e545308ddec94486b480e48458d
+      - path: self-reports.txt
+        digest: 6d4d82222d9c6a9f5f118d804f9257641e226d380bb3a1f0db91379edc6a3e38
+      - path: session/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1/WorkerA.jsonl
+        digest: e85605790635d1b0738eb20e2ea3d8144bc58a4228ef905f66048c955ab58948
+      - path: session/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1/WorkerA.md
+        digest: 25052d4c1c6284f997dd43f5a4e546c152f1f68ec3bfadd45089c37c9ba96d78
+      - path: session/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1/WorkerB.jsonl
+        digest: b56574cce5b7f788446a1413c9138f47acea36c5120751e6262fbb53a719278f
+      - path: session/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1/WorkerB.md
+        digest: ad8e18099dd01adddaa80eeaa6f2094ce04ae47ba5e927ef7b5862a2b4d16d57
+      - path: session/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1/WorkerC.jsonl
+        digest: 0ebaa52620b1fd3c5438b9b329d81aa14e34e2eb29cd4301685aef2ce05c1e3a
+      - path: session/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1/WorkerC.md
+        digest: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      - path: session/2026-09-02T22-36-29-585Z_01a06444-4011-724f-99b5-959583edeff1.jsonl
+        digest: db44d2b6b72826685200643458803d1a47a192db2444cbd8d0079cc63eb65531
+      - path: transcript.md
+        digest: a5ad7a2e55ca929d3a1afc22bcd4663c471add32701ee511f1e7310036373f24
+      - path: usage-record.txt
+        digest: a504578fcf5392b37e3ea959fc4980fb99b5251319bde587728d7d84cb4bab70
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      omp 18.1.4, --model anthropic/claude-opus-5:low. Grounds the omp
+      worker_defaults.model cell at no named tier; the observations show:
+      model.selection_argument is the definition frontmatter `model:` picked
+      through the task item's `agent` field, since task takes no model
+      argument. model.harness_reported, from the per-worker session logs,
+      is anthropic/claude-opus-5 for "opus" and cursor/claude-4-sonnet for
+      "sonnet": the bare alias fuzzy-matched the cursor provider through the
+      copied agent.db's live cursor login, not anthropic's sonnet. So
+      model.selections_differed is true and model.unknown_slug_behavior is a
+      hard error, though its text blames auth ("No model selected"), not the
+      slug. Role slots were not exercised.
+  - id: human_question-omp-2026-09-02
+    method: exercised
+    axis: human_question
+    harness: omp
+    scenario: human_question
+    run: human_question.omp.2026-09-02.01
+    artifacts:
+      - path: answer-received.txt
+        digest: e33fc781f9f75398fc5845faa9546799f446163e1735accba048512846a22a04
+      - path: CHECKLIST.md
+        digest: 4574837b09f3f0c7b182598c560da7c113df7f0877c79973bc77642238995417
+      - path: drive.log
+        digest: aa0386cdc404531f013cafca034ea977b6a6dc58f68fc2f8d6dd28c87bd8193b
+      - path: flood-trial.md
+        digest: ee29728dcbf8f08ad75e5b9c6676bb249943e8c4a24f47c47b5cb61ce7e64e1c
+      - path: invocation.json
+        digest: de4d34d581e8f05bec3b1d0382774be8bcfca807194640466fdd4e460dd2ef31
+      - path: observations.yaml
+        digest: dc0253a683e3b783befa991cbd5f07c241e04b8e4b3c98a266637ce6d8e5182e
+      - path: question-render.txt
+        digest: fd974046df21e95839428c3d6a7b64d17a5a5d04acd850f333d7945bf9dfcd1a
+      - path: run.yaml
+        digest: c24b550241b4a56e9b0f34f9b4eea9096dbe30f871811476b658e345f494bf0a
+      - path: session/2026-09-02T22-39-01-496Z_01a06446-9178-7441-8572-21f88189eccb/WorkerOne.jsonl
+        digest: 0d7e42601ba763e387953af06ce712e390dcf4e088fcf051e2106fd78689a644
+      - path: session/2026-09-02T22-39-01-496Z_01a06446-9178-7441-8572-21f88189eccb/WorkerOne.md
+        digest: 150c1c516b60b980a622756842c56d56c488aeddcdefcafabdd037cc06fb050c
+      - path: session/2026-09-02T22-39-01-496Z_01a06446-9178-7441-8572-21f88189eccb/WorkerThree.jsonl
+        digest: ab22355333d20316d7a78c1491fe6966d9baa1c595d3ec327bfc99b9818b720f
+      - path: session/2026-09-02T22-39-01-496Z_01a06446-9178-7441-8572-21f88189eccb/WorkerThree.md
+        digest: 3f41ff80d8a86102385cfc889193d5e629a5060b32ebbcf0d7a896edf67c2a01
+      - path: session/2026-09-02T22-39-01-496Z_01a06446-9178-7441-8572-21f88189eccb/WorkerTwo.jsonl
+        digest: 7f596bb04816481a7cb6c3c9975982f0fe396aa2486d767b404186a9d8b271d1
+      - path: session/2026-09-02T22-39-01-496Z_01a06446-9178-7441-8572-21f88189eccb/WorkerTwo.md
+        digest: 5aa30dbe100fa24cccfad8732d424eecf6aa4f36c76612f66998b0de96b6d9a1
+      - path: session/2026-09-02T22-39-01-496Z_01a06446-9178-7441-8572-21f88189eccb.jsonl
+        digest: 773275d92215bd61e045beb79a397fba25148275b5edb162ce64201a42eb0c9a
+      - path: transcript.md
+        digest: 72287e43bd19669ab7dc8d35c1b4020c236e86ed9abd22c4a550f64a16a61ea1
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth (run.yaml environment_deltas lists exactly what was seeded).
+      omp 18.1.4, --model anthropic/claude-opus-5:low. Grounds the omp
+      human_question cell at substitute: question.mechanism is the ask tool
+      with enumerated options (question.options_discrete), question.answer_shape
+      is the selected label in details.selectedOptions with no mapping turn,
+      and question.pending_survives_flood is yes, the three completions queued
+      behind the open dialog and delivered only after the answer. Caveats: the
+      driver's typed answers landed on option 1 both times, a keystroke fault
+      against an arrow-key dialog, not a harness mapping; and no third ask was
+      ever open, so question.unanswered_behavior shows only that the agent
+      created nothing when told to proceed without an answer.
+  - id: worker_durability-codex-2026-09-02
+    method: exercised
+    axis: worker_durability
+    harness: codex
+    scenario: worker_durability
+    run: worker_durability.codex.2026-09-02.01
+    artifacts:
+      - path: CHECKLIST.md
+        digest: a0df950ab84a1189dfbcb9ec03d351bccc485955bd9bbba21798eec928333e20
+      - path: drive.log
+        digest: 1c4665686961cce21d56f058e421b3f18bdddf170dfe50a9acd7bec89d356656
+      - path: heartbeat.log
+        digest: 6fd37c790a9e6104c46401273e3bbb13db241d80c0b73f15012a3ea94b599b34
+      - path: invocation.json
+        digest: 42123092df94acb78d9a6bdaf359930a88b4ac8ce6dbb8aa1e9a969d784247d2
+      - path: observations.yaml
+        digest: e99b021f10c23feaf72f82f85084698750eb72e9033cb12807d71fad217ef68d
+      - path: reattach-attempt.md
+        digest: a5504f244d52cd450f7d458e71581c5a66ac10a90c69bca3582ecc736533fd07
+      - path: run.yaml
+        digest: 403a6342c9434fb5d1b3822cea3c96f49b208fa0c12ae839ead4b3716404dc14
+      - path: session/2026/09/02/rollout-2026-09-02T16-56-09-01a0648d-3096-70d2-a845-95efb4860f76.jsonl
+        digest: d6eeda256744c35d82fc08eeb5877afced673478b81993ab13739cf41c4f402f
+      - path: session/2026/09/02/rollout-2026-09-02T16-56-21-01a0648d-5c89-75c1-9153-ceb0e0c29732.jsonl
+        digest: b2ac6a592469ad9dd029c3a4c67a54dc6643e602bae3c528a546236cf12c2fb2
+      - path: session/2026/09/02/rollout-2026-09-02T17-03-15-01a06493-b11c-7cf0-a9bd-b3dc3fde4b1d.jsonl
+        digest: 705a7012e489467f24786c3df87acab1f2ed182a1ca82de3360ddf6c2f599562
+      - path: termination.yaml
+        digest: af4ef6218b34c77750441c1acf9b13d68bbcaa3ddc5aaea84ebc12e2202ebb6a
+      - path: transcript.md
+        digest: 8fa6c2dbffdf3bc1b3c2a2e675c6b16e09bdb18f055870c0da18d20f9c335a18
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      Driven by bench/run.mjs through a Herdr pane under a scratch HOME holding
+      only auth plus a config.toml enabling multi_agent (run.yaml
+      environment_deltas lists exactly what was seeded). Codex 0.152.1,
+      -m gpt-5.6-terra. Grounds the codex worker_durability cell at drop:
+      durability.heartbeats_after_termination is zero on a worker that was
+      mid-run (its single exec_command loop, process 74368, had yielded at 30 s
+      and was sleeping toward its third line) when /quit ended pid 15184; the
+      worker's rollout records turn_aborted "interrupted" 103 ms after the
+      quit and the exec closed as failed, exit_code -1. durability.reattach
+      found no live handle from a fresh session (list_agents shows only /root,
+      followup_task and send_message to /root/heartbeat_worker return "not
+      found", codex resume needs a tty) and durability.result_recoverable
+      found no report, only the partial worker rollout read as a plain file
+      under $HOME/.codex/sessions. Caveats: /quit needed a second Enter, since
+      the first only selects it from the slash popup into the composer
+      (harnesses.yaml codex quit_dialog); and two earlier attempts of this
+      scenario were discarded, one of them because the parent never exited on
+      the single Enter.

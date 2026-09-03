@@ -1,0 +1,35 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: wake_on_event
+harness: codex
+run_id: wake_on_event.codex.2026-09-02.01
+coupling_version: 2
+started_at: 2026-09-02T23:18:15.111Z
+ended_at: 2026-09-02T23:26:32.430Z
+operator: am
+machine: MBP-M4.local
+os: darwin 25.5.0
+harness_version: codex-cli 0.152.1
+harness_version_source: codex --version -> codex-cli 0.152.1
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .codex/auth.json and these written files: .codex/config.toml = \"approval_policy = \\\"never\\\"\\nsandbox_mode = \\\"danger-full-access\\\"\\n[features]\\nmulti_agent = true\\n\", plus herdr's codex state-reporting integration (herdr integration install codex); no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-Gak6g9/bin/codex; driven by bench/wake_on_event/drive.mjs, every operator action timed in drive.log"
+supersedes: null
+drive: 
+  accounting.before_wait: 2026-09-02T23:18:21.582Z assistant_entries=0 seq=897 status=done
+  trial1.prompt_sent: 2026-09-02T23:18:21.582Z
+  accounting.during_wait: 2026-09-02T23:20:21.615Z assistant_entries=2 seq=898 status=working
+  trial1.wait_call: "\"zsh -c 'deadline=$((SECONDS + 1200)); while [[ ! -e event.flag && $SECONDS -lt $deadline ]]; do sleep 30; done; if [[ -e event.flag ]]; then exit 0; else exit 124; fi'\"\nshell command\nnone"
+  trial1.triggered: 2026-09-02T23:20:21Z
+  accounting.after_wake: 2026-09-02T23:21:01.209Z assistant_entries=3 seq=901 status=done
+  trial1.returned: 2026-09-02T23:21:01.161Z status=done settled_by=herdr agent prompt --wait
+  trial1.woke_at: "2026-09-02T23:20:43Z\n{\"chunk_id\":\"3b74da\",\"wall_time_seconds\":25.262590083,\"exit_code\":0,\"original_token_count\":0,\"output\":\"\"}"
+  trial2.prompt_sent: 2026-09-02T23:21:01.252Z budget_ms=319158
+  trial2.outcome: "2026-09-02T23:26:20.543Z status=prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"timeout\",\"message\":\"timed out waiting for agent status\"},\"id\":\"cli:agent:prompt\"} still_waiting=true"
+  trial2.abort: "esc sent: the wait was still running past the budget"
+  trial2.closing: 2026-09-02T23:26:31.308Z status=done
+  accounting.after_trial2: 2026-09-02T23:26:31.369Z assistant_entries=7 seq=909 status=done
+  artifacts: wait-accounting.yaml timeline.yaml no-trigger-trial.md written to scratch

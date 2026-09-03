@@ -1,0 +1,21 @@
+# human_question flood trial, omp anthropic/claude-opus-5:low, UTC order
+
+- 2026-09-02T22:40:10.230Z turn 2 prompt sent
+- 2026-09-02T22:41:10.657Z question not detected within 60 s
+- 2026-09-02T22:41:10.668Z worker completion landed: worker-one.txt
+- 2026-09-02T22:41:10.668Z worker completion landed: worker-three.txt
+- 2026-09-02T22:41:10.668Z worker completion landed: worker-two.txt
+- 2026-09-02T22:41:10.673Z question NOT on screen, turn settled ("blocked")
+- 2026-09-02T22:41:12.699Z question NOT on screen, turn settled ("blocked")
+- 2026-09-02T22:41:14.726Z question NOT on screen, turn settled ("blocked")
+- 2026-09-02T22:41:16.749Z question NOT on screen, turn settled ("blocked")
+- 2026-09-02T22:41:18.769Z question NOT on screen, turn settled ("blocked")
+- 2026-09-02T22:41:20.788Z question NOT on screen, turn settled ("blocked")
+- 2026-09-02T22:41:22.823Z question NOT on screen, turn settled ("blocked")
+- 2026-09-02T22:41:24.850Z question NOT on screen, turn settled ("blocked")
+- 2026-09-02T22:41:26.872Z question NOT on screen, turn settled ("blocked")
+- 2026-09-02T22:41:28.901Z question NOT on screen, turn settled ("blocked")
+- 2026-09-02T22:41:30.904Z before answering: 3/3 worker files present, question gone from the pane
+- 2026-09-02T22:41:30.916Z answered: typed epsilon.txt
+- 2026-09-02T22:41:33.959Z turn ended: {"status":"blocked","settled_by":"herdr agent wait"}; answer did NOT reach the agent (no trial: 2 block)
+- 2026-09-02T22:41:33.971Z files after answer: alpha.txt, answer-received.txt, flood-trial.md, question-render.txt, worker-one.txt, worker-three.txt, worker-two.txt

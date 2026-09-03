@@ -1,0 +1,20 @@
+trial: 1
+mechanism: plain reply
+arrived: plain message
+received: "beta.txt"
+mapped_to: beta.txt
+assumed: no
+trial: 2
+mechanism: plain reply
+arrived: plain message
+received: "epsilon.txt"
+mapped_to: epsilon.txt
+assumed: no
+workers_completed_before_answer: 3
+question_state: The question was still pending when the answer arrived.
+trial: 3
+mechanism: plain reply
+arrived: plain message
+received: "nothing"
+mapped_to: none
+assumed: no

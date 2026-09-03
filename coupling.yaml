@@ -135,7 +135,7 @@ axes:
       cursor: { parity: native, use: "cloud agents run off-machine and survive a restart" }
       claude: { parity: drop, use: "subagents die with the session" }
       codex: { parity: drop, use: "subagents die with the session" }
-      pi: { parity: drop, use: "subagents die with the session" }
+      pi: { parity: extension, use: "a pi-herdr delegate runs in its own herdr pane and outlives the parent; the report lives only while that pane does", fallback: "subagents die with the session" }
       omp: { parity: drop, use: "subagents die with the session" }
     consequence: >-
       Every playbook that spans a restart must externalize a worker's output the
@@ -156,9 +156,9 @@ axes:
     resolution:
       cursor: { parity: native, use: "dashboard shows agent state without a resume" }
       claude: { parity: degrade, use: "job status only, no liveness for every delegate kind" }
-      codex: { parity: degrade, use: "job status only" }
+      codex: { parity: substitute, use: "list_agents, running or completed with the final message; no idle state" }
       pi: { parity: extension, use: "the job status the task extension exposes", fallback: "none, wait for the result" }
-      omp: { parity: substitute, use: 'hub op:"jobs"' }
+      omp: { parity: substitute, use: 'hub op:"jobs" while live, hub op:"list" once settled' }
     occurrences:
       - path: skills/poteto-mode/playbooks/orchestrate.md
       - path: skills/poteto-mode/playbooks/shipping.md
@@ -168,9 +168,9 @@ axes:
     what: Sleep until an external event fires, rather than polling on a timer.
     resolution:
       cursor: { parity: native, use: "/loop built-in" }
-      claude: { parity: degrade, use: "heartbeat sized to when the result is worth re-checking" }
+      claude: { parity: substitute, use: "one background Bash wait, wake on its completion; heartbeat only when no such wait fits" }
       codex: { parity: degrade, use: "heartbeat sized to when the result is worth re-checking" }
-      pi: { parity: degrade, use: "heartbeat sized to when the result is worth re-checking" }
+      pi: { parity: substitute, use: "one blocking bash wait; heartbeat only when no such wait fits" }
       omp: { parity: substitute, use: 'hub op:"wait"' }
     consequence: >-
       Upstream already documents the heartbeat as its own no-event path, so the
@@ -254,8 +254,8 @@ axes:
     resolution:
       cursor: { parity: native, use: "AskQuestion" }
       claude: { parity: substitute, use: "the ask tool" }
-      codex: { parity: substitute, use: "request_user_input tool, root thread only, mode-gated" }
-      pi: { parity: extension, use: "an ask tool an extension registers via registerTool", fallback: "a plain question in the reply" }
+      codex: { parity: degrade, use: "a plain question in the reply; request_user_input exists but is mode-gated and was not offered under stock config" }
+      pi: { parity: degrade, use: "a plain question in the reply; no recorded extension registers an ask tool" }
       omp: { parity: substitute, use: "the ask tool" }
     consequence: >-
       orchestrate.md parks human gates in gates.md so a completion flood cannot

@@ -1,0 +1,359 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-75zl0J/.omp/agent/sessions/-tmp-tmp.g0TbyM5ViW/2026-09-02T22-49-22-600Z_01a06450-0ba8-70eb-9bb5-4dc183621d48.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.g0TbyM5ViW",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.g0TbyM5ViW",
+          "interactive_ready": true,
+          "name": "b-wake-on-event-omp-01",
+          "pane_id": "w1H:p49",
+          "revision": 2,
+          "screen_detection_skipped": true,
+          "state_change_seq": 829,
+          "tab_id": "w1H:t4",
+          "terminal_id": "term_65a87d8a05f8714b",
+          "terminal_title": "π > tmp.g0TbyM5ViW",
+          "terminal_title_stripped": "π > tmp.g0TbyM5ViW",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "omp",
+          "--model",
+          "anthropic/claude-opus-5:low"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-75zl0J/.omp/agent/sessions/-tmp-tmp.g0TbyM5ViW/2026-09-02T22-49-22-600Z_01a06450-0ba8-70eb-9bb5-4dc183621d48.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.g0TbyM5ViW",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.g0TbyM5ViW",
+          "interactive_ready": true,
+          "name": "b-wake-on-event-omp-01",
+          "pane_id": "w1H:p49",
+          "revision": 4665,
+          "screen_detection_skipped": true,
+          "state_change_seq": 850,
+          "tab_id": "w1H:t4",
+          "terminal_id": "term_65a87d8a05f8714b",
+          "terminal_title": "π > Block until event.flag appears",
+          "terminal_title_stripped": "π > Block until event.flag appears",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "omp",
+          "agent_session": {
+            "agent": "omp",
+            "kind": "path",
+            "source": "herdr:omp",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-75zl0J/.omp/agent/sessions/-tmp-tmp.g0TbyM5ViW/2026-09-02T22-49-22-600Z_01a06450-0ba8-70eb-9bb5-4dc183621d48.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.g0TbyM5ViW",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.g0TbyM5ViW",
+          "interactive_ready": true,
+          "name": "b-wake-on-event-omp-01",
+          "pane_id": "w1H:p49",
+          "revision": 4665,
+          "screen_detection_skipped": true,
+          "state_change_seq": 850,
+          "tab_id": "w1H:t4",
+          "terminal_id": "term_65a87d8a05f8714b",
+          "terminal_title": "π > Block until event.flag appears",
+          "terminal_title_stripped": "π > Block until event.flag appears",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "omp",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "omp",
+            "agent_session": {
+              "agent": "omp",
+              "kind": "path",
+              "source": "herdr:omp",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-75zl0J/.omp/agent/sessions/-tmp-tmp.g0TbyM5ViW/2026-09-02T22-49-22-600Z_01a06450-0ba8-70eb-9bb5-4dc183621d48.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.g0TbyM5ViW",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.g0TbyM5ViW",
+            "interactive_ready": true,
+            "name": "b-wake-on-event-omp-01",
+            "pane_id": "w1H:p49",
+            "revision": 1497,
+            "screen_detection_skipped": true,
+            "state_change_seq": 838,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87d8a05f8714b",
+            "terminal_title": "π > Block until event.flag appears",
+            "terminal_title_stripped": "π > Block until event.flag appears",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      null,
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "omp",
+            "agent_session": {
+              "agent": "omp",
+              "kind": "path",
+              "source": "herdr:omp",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-75zl0J/.omp/agent/sessions/-tmp-tmp.g0TbyM5ViW/2026-09-02T22-49-22-600Z_01a06450-0ba8-70eb-9bb5-4dc183621d48.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.g0TbyM5ViW",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.g0TbyM5ViW",
+            "interactive_ready": true,
+            "name": "b-wake-on-event-omp-01",
+            "pane_id": "w1H:p49",
+            "revision": 4665,
+            "screen_detection_skipped": true,
+            "state_change_seq": 850,
+            "tab_id": "w1H:t4",
+            "terminal_id": "term_65a87d8a05f8714b",
+            "terminal_title": "π > Block until event.flag appears",
+            "terminal_title_stripped": "π > Block until event.flag appears",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "omp",
+      "--model",
+      "anthropic/claude-opus-5:low"
+    ],
+    "version": "omp/18.1.4\n"
+  },
+  "model": "anthropic/claude-opus-5:low",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.g0TbyM5ViW",
+  "home": {
+    "seeded": [
+      ".omp/agent/agent.db",
+      ".omp/agent/secret-placeholder.key"
+    ],
+    "written": {
+      ".omp/agent/config.yml": "setupVersion: 2\n"
+    }
+  },
+  "drive": {
+    "script": "bench/wake_on_event/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "accounting.before_wait": "2026-09-02T22:49:24.831Z assistant_entries=0 seq=829 status=idle",
+      "trial1.prompt_sent": "2026-09-02T22:49:24.832Z",
+      "accounting.during_wait": "2026-09-02T22:51:24.871Z assistant_entries=5 seq=830 status=working",
+      "trial1.wait_call": "watchman-wait . -p 'event.flag' -m 1 -t 1200\nshell command\nfile creation, file modification, file deletion/rename (watchman filesystem change notifications)",
+      "trial1.triggered": "2026-09-02T22:51:24Z",
+      "accounting.after_wake": "2026-09-02T22:51:28.405Z assistant_entries=6 seq=838 status=done",
+      "trial1.returned": "2026-09-02T22:51:28.392Z status=done settled_by=herdr agent prompt --wait",
+      "trial1.woke_at": "2026-09-02T22:51:24Z\nwait returned: watchman-wait exit 0, output: event.flag (event.flag present)",
+      "trial2.prompt_sent": "2026-09-02T22:51:28.460Z budget_ms=247120",
+      "trial2.outcome": "2026-09-02T22:55:35.663Z status=prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"timeout\",\"message\":\"timed out waiting for agent status\"},\"id\":\"cli:agent:prompt\"} still_waiting=true",
+      "trial2.abort": "esc sent: the wait was still running past the budget",
+      "trial2.closing": "2026-09-02T22:55:48.399Z status=done",
+      "accounting.after_trial2": "2026-09-02T22:55:48.408Z assistant_entries=14 seq=850 status=done",
+      "artifacts": "wait-accounting.yaml timeline.yaml no-trigger-trial.md written to scratch"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "ANTHROPIC_OAUTH_TOKEN",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-75zl0J/.omp/agent/sessions/-tmp-tmp.g0TbyM5ViW",
+  "calls": [
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "which fswatch; which inotifywait; which watchman; echo ---",
+        "i": "Checking for file watchers"
+      },
+      "ts": "2026-09-02T22:49:31.653Z"
+    },
+    {
+      "name": "read",
+      "arguments": {
+        "path": "omp://",
+        "i": "Checking harness docs index"
+      },
+      "ts": "2026-09-02T22:49:31.653Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "which watchman-wait watchman-make; python3 -c \"import pywatchman\" 2>&1 | tail -1",
+        "i": "Checking watchman-wait availability"
+      },
+      "ts": "2026-09-02T22:49:37.133Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "wait-call.txt",
+        "content": "watchman-wait . -p 'event.flag' -m 1 -t 1200\nshell command\nfile creation, file modification, file deletion/rename (watchman filesystem change notifications)\n",
+        "i": "Recording wait call"
+      },
+      "ts": "2026-09-02T22:49:45.378Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "out=$(watchman-wait . -p 'event.flag' -m 1 -t 1200 2>&1); rc=$?; date -u +%FT%TZ > woke-at.txt; if [ -e event.flag ]; then printf 'wait returned: watchman-wait exit %s, output: %s (event.flag present)\\n' \"$rc\" \"$out\" >> woke-at.txt; else printf 'event.flag is absent; wait returned: watchman-wait exit %s, output: %s\\n' \"$rc\" \"$out\" >> woke-at.txt; fi; cat woke-at.txt",
+        "i": "Blocking on watchman-wait for event.flag",
+        "timeout": 1300
+      },
+      "ts": "2026-09-02T22:49:51.431Z"
+    },
+    {
+      "name": "hub",
+      "arguments": {
+        "op": "wait",
+        "ids": [
+          "bg_3"
+        ],
+        "i": "Waiting on watchman job",
+        "timeoutMs": 1300000
+      },
+      "ts": "2026-09-02T22:50:54.014Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "ls -a; stat -f '%N %m' event.flag 2>&1",
+        "i": "Checking repo state"
+      },
+      "ts": "2026-09-02T22:51:32.649Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "wait-call.txt",
+        "content": "watchman-wait . -p 'event.flag' -m 1 -t 1200\nshell command\nfile creation, file modification, file deletion/rename (watchman filesystem change notifications)\n",
+        "i": "Rewriting wait call record"
+      },
+      "ts": "2026-09-02T22:51:35.460Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "out=$(watchman-wait . -p 'event.flag' -m 1 -t 1200 2>&1); rc=$?; date -u +%FT%TZ > woke-at.txt; if [ -e event.flag ]; then printf 'wait returned: watchman-wait exit %s, output: %s (event.flag present)\\n' \"$rc\" \"$out\" >> woke-at.txt; else printf 'event.flag is absent; wait returned: watchman-wait exit %s, output: %s\\n' \"$rc\" \"$out\" >> woke-at.txt; fi; cat woke-at.txt",
+        "i": "Blocking on watchman-wait again",
+        "timeout": 1300
+      },
+      "ts": "2026-09-02T22:51:39.206Z"
+    },
+    {
+      "name": "hub",
+      "arguments": {
+        "op": "wait",
+        "ids": [
+          "bg_5"
+        ],
+        "i": "Waiting on watchman job",
+        "timeoutMs": 1300000
+      },
+      "ts": "2026-09-02T22:52:41.738Z"
+    },
+    {
+      "name": "hub",
+      "arguments": {
+        "op": "cancel",
+        "ids": [
+          "bg_5"
+        ],
+        "i": "Cancelling aborted wait job"
+      },
+      "ts": "2026-09-02T22:55:41.930Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "printf 'trial 2: wait interrupted (operator aborted; job bg_5 cancelled) — watchman-wait . -p '\"'\"'event.flag'\"'\"' -m 1 -t 1200 returned nothing, no output and no exit status; event.flag absent\\n' >> woke-at.txt; cat woke-at.txt",
+        "i": "Appending interruption line"
+      },
+      "ts": "2026-09-02T22:55:45.349Z"
+    }
+  ],
+  "calls_workers": {}
+}
