@@ -6,32 +6,45 @@
 [Lauren Tan (@poteto)](https://x.com/poteto) is a pack of skills and principles
 for rigorous AI-assisted engineering: 21 principle skills, a `/poteto-mode`
 router, and playbooks for stacked PRs and subagent fleets. It ships as a Cursor
-plugin and assumes Cursor primitives throughout.
+plugin and assumes Cursor primitives throughout. This repo is a port. Same
+skills, same mode names, same playbook vocabulary, with the Cursor-specific
+parts named and replaced. Whether it works on your harness is answered in
+[Status](#status).
 
-This is a port. Same skills, same mode names, same playbook vocabulary, with the
-Cursor-specific parts named and replaced.
+## Install
 
-## Where it goes
-
-Use whatever already manages your skills. The pack is `skills/<name>/SKILL.md`,
-the layout every manager consumes, so nothing here competes with one. Four
-paths, pick one.
-
-**1. A vendoring skill manager** (loadout or similar). Point it at this repo
-and take the whole `skills/` directory. It flattens the pack into one root and
-links that root into `~/.agents/skills`, `~/.claude/skills`, and
-`~/.pi/agent/skills`.
-
-**2. `npx skills add`.**
+The recommended path is `npx skills add`. It walks `skills/<name>/SKILL.md` and
+links or copies each skill into every agent root it knows.
 
 ```sh
 npx skills add austinm911/pstack-anywhere
 ```
 
-It walks `skills/<name>/SKILL.md` and links or copies each skill into every
-agent root it knows.
+Then run the doctor from the root it installed into:
 
-**3. A plugin.** Claude Code: `/plugin marketplace add austinm911/pstack-anywhere`,
+```sh
+bun <skills root>/setup-pstack-anywhere/scripts/doctor.mjs
+```
+
+The doctor checks that every sibling the pack references is present in that
+root, that no skill in that root or any other known root resolves to a different
+copy, and names the three common skill names, `tdd`, `teach`, `unslop`, when
+another definition of one is found.
+
+Install the pack whole. Skills address each other as `../<name>/`, so a partial
+install (`npx skills add --skill <one>`, or linking a single directory) leaves
+dangling references.
+
+### Other ways
+
+The pack is `skills/<name>/SKILL.md`, the layout every skill manager consumes,
+so any of these works. Every path finishes with the same doctor command above.
+
+A vendoring skill manager (loadout or similar). Point it at this repo and take
+the whole `skills/` directory. It flattens the pack into one root and links that
+root into `~/.agents/skills`, `~/.claude/skills`, and `~/.pi/agent/skills`.
+
+A plugin. Claude Code: `/plugin marketplace add austinm911/pstack-anywhere`,
 then install `pstack-anywhere`. Codex: `/plugins`, then Add Marketplace with
 `austinm911/pstack-anywhere` and install `pstack-anywhere` from it. The repo
 carries `.agents/plugins/marketplace.json`, and at the pinned Codex source
@@ -40,7 +53,7 @@ read `.claude-plugin/plugin.json` and take skills from the plugin's `skills/`
 directory. Each path was exercised once, on Claude Code and Codex 0.153.0,
 under a scratch HOME.
 
-**4. The plain fallback.**
+The plain fallback:
 
 ```sh
 bun scripts/install.mjs            # ~/.agents/skills and ~/.claude/skills
@@ -57,20 +70,31 @@ is seen once. Four copies in four roots collide by skill name instead. Evidence
 for each claim is pinned upstream source under `references/harnesses/<id>/`,
 cited line by line in each `MANIFEST.md`.
 
-Install the pack whole. Skills address each other as `../<name>/`, so a partial
-install (`npx skills add --skill <one>`, or linking a single directory) leaves
-dangling references.
+## Vocabulary
 
-Every path finishes the same way:
+These terms are used the same way in every doc and ledger in this repo.
 
-```sh
-bun <skills root>/setup-pstack-anywhere/scripts/doctor.mjs
-```
+**harness**: one of Cursor (upstream), Claude Code, Codex, pi, Oh My Pi (OMP).
 
-The doctor checks that every sibling the pack references is present in that
-root, that no skill in that root or any other known root resolves to a different
-copy, and names the three common skill names, `tdd`, `teach`, `unslop`, when
-another definition of one is found.
+**domain**: one axis, or one axis plus one parameter for a parameter set. 21
+axes make 24 domains.
+
+**cell**: one domain on one harness. 24 x 5 = 120 cells.
+
+**occurrence**: one domain in one file. Its status is resolved, unresolved,
+missing, or not checked.
+
+**parity**: how a cell resolves: native, substitute, degrade, drop, extension.
+
+**verification**: the strongest saved evidence for a cell: exercised, static
+(both count as verified), observed_local, stale, superseded, unverified, void.
+
+Rendered tables use this legend:
+
+| term | legend |
+| --- | --- |
+| parity | 🟢 substitute, 🟡 degrade, 🔴 drop, 🧩 extension, ⚫ native |
+| verification | ✅ exercised, 📎 static, ⚪ unverified, ⚠ stale, void, superseded |
 
 ## Layout
 
@@ -81,19 +105,21 @@ harnesses.yaml   distribution targets, config files, and hook mechanism per harn
 references/      pinned upstream source per harness, with the pin and a refetch block
 scripts/         coupling.mjs: derives the ledger, renders what it derives, lints
 scripts/install.mjs  fallback: symlinks skills/ into a root, then runs the doctor
-.claude-plugin/  plugin manifest, read by Claude Code and Codex, plus the Claude marketplace
-.agents/plugins/ Codex marketplace
+.claude-plugin/, .agents/plugins/  plugin manifests for Claude and Codex, plus each marketplace
 PORTABILITY.md   generated: what remains, per-harness resolutions, evidence state
 UPSTREAM.md      pinned SHA, divergence log, decisions
 ```
 
 Claude, Codex, and OMP discover skills as `<root>/<skill-name>/SKILL.md`, one
 level deep. pi also walks nested Markdown but stops at any directory holding a
-`SKILL.md`, so that one layout works everywhere and the pack needs no
-per-harness transform. Skills are self-contained, so `skills/poteto-mode/scripts/`
-travels with its skill and a skill directory works anywhere on its own.
+`SKILL.md`, so one layout works everywhere and the pack needs no per-harness
+transform. Skills are self-contained, so `skills/poteto-mode/scripts/` travels
+with its skill and a skill directory works anywhere on its own.
 
 ## Status
+
+Per-harness results are in [PORTABILITY.md](PORTABILITY.md#for-reviewers); the
+table below is rendered from coupling.yaml.
 
 <!-- BEGIN GENERATED coupling-summary -->
 
@@ -102,7 +128,7 @@ travels with its skill and a skill directory works anywhere on its own.
 | measure | value |
 | --- | --- |
 | upstream pin | `b9ddc83`, path `pstack` |
-| skills reached | 13 of 45: `architect` (1 of 1 checked), `arena` (2 of 2 checked), `automate-me` (3 of 3 checked), `how` (2 of 2 checked), `interrogate` (2 of 2 checked), `no-comments` (1 of 1 checked), `poteto-mode` (67 of 68 checked), `recall` (1 of 1 checked), `reflect` (6 of 6 checked), `setup-pstack-anywhere` (0 of 1 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (2 of 2 checked) |
+| skills reached | 13 of 45, [see PORTABILITY.md](PORTABILITY.md#skills-the-port-reached) |
 | skills with work left | 0 of 45 |
 | occurrences | 91 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions |

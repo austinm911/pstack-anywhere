@@ -1,30 +1,12 @@
-# Attestation registry. The index from a coupling.yaml cell to the thing that
-# grounds it.
-#
-# This file is empty, and empty is correct. Nothing in this repo has been
-# exercised against a harness yet. Every cell in coupling.yaml therefore derives
-# to unverified, which is the honest starting state and not a defect to be
-# cleared by writing rows here.
-#
-# The registry is an index, not a verdict. It says "this claim points at that
-# artifact". Whether the artifact still supports the claim is recomputed by
-# scripts/coupling.mjs on every run, from the digests below. A record that
-# survives the file it cites is a stale record, and the engine says so.
-#
-# Three rules that the shape below exists to enforce:
-#
-#   1. No row asserts a result. There is no pass field, no parity field, and no
-#      status field anywhere in a record. Parity comes from coupling.yaml.
-#      Verification is derived by the engine from method plus digest freshness.
-#      A record that could carry a verdict would eventually carry a wrong one.
-#
-#   2. Absence never means verified. A cell with no record here is unverified,
-#      full stop. Nothing about an empty registry may be read as "no problems
-#      found", because nothing was looked at.
-#
-#   3. A digest per cited file, not one per repo ref. A single ref bump would
-#      otherwise invalidate everything or nothing, and staleness has to localize
-#      to the one file that actually changed.
+# Attestation registry: the records that raise a coupling.yaml cell's
+# verification. Records index, never judge. There is no pass, parity, or
+# status field; scripts/coupling.mjs derives verification from the method
+# and from digest freshness on every run. An empty list means nothing was
+# looked at, so every cell is unverified.
+# Run artifacts live under evidence/runs/; each cited file gets its own digest.
+# Supersedes: a later record for the same axis, parameter, and harness may
+# name an earlier one. The earlier record stays readable and counts for nothing.
+# Terms: README.md#vocabulary
 
 version: 1
 
@@ -32,67 +14,59 @@ version: 1
 
 semantics:
   empty_means: >-
-    Unverified. No harness has been exercised, no source has been cited, and no
-    local observation has been recorded. This is a statement about what has been
-    done, not about what is true.
+    Unverified. No harness was exercised, no source cited, no local
+    observation recorded. It says what was done, not what is true.
   derived_elsewhere: >-
-    scripts/coupling.mjs derives each cell's verification from the records here.
-    Nothing in this file may be hand-set to a verification tier. The absence of
-    any such key is deliberate; treat its appearance in a future record as a bug.
+    scripts/coupling.mjs derives each cell's verification from the records
+    here. No record may carry a verification tier by hand; treat such a key
+    as a bug.
   precedence: >-
-    exercised outranks observed_local outranks static outranks unverified, and
-    that ordering decides what a cell displays and nothing else. A stronger
-    record does not erase a weaker one; both stay, and a reader can see that a
-    source citation was later backed by a real run. Whether a cell counts as
-    verified is folded over every record on it rather than over the strongest
-    one, so adding an observed_local note beside a valid static citation raises
-    what the cell shows and never lowers what it has earned.
+    exercised outranks observed_local, which outranks static, which outranks
+    unverified. The order only decides what a cell displays. A stronger record
+    does not erase a weaker one; both stay. Whether a cell counts as verified
+    is folded over every record on it, so adding an observed_local note beside
+    a valid static citation raises what the cell shows and never lowers what
+    it has earned.
   never_verified: >-
     observed_local never renders as verified, at any count. It is a note about
-    one machine on one day, and it is recorded precisely so it stops being
-    mistaken for proof.
+    one machine on one day.
   staleness: >-
     A record whose cited file no longer matches its digest is stale. Stale is
-    not a downgrade to unverified and not a failure of the claim. It means the
-    ground moved and a human has to look again.
+    not unverified and not a failed claim. The ground moved and a human has to
+    look again.
   void: >-
-    A record that does not validate grounds nothing, and ranks below
-    unverified. There is no tier a malformed record falls back to: a record
-    whose run is not complete, whose digests do not cover the run directory, or
-    whose citation resolves to nothing raises no cell at all.
+    A record that does not validate grounds nothing and ranks below
+    unverified. A record whose run is not complete, whose digests do not cover
+    the run directory, or whose citation resolves to nothing raises no cell.
   superseded: >-
     A record that a later record replaces, for the same axis, parameter, and
-    harness. It stays readable and counts for nothing, which is the whole
-    difference between superseding a record and deleting one.
+    harness. It stays readable and counts for nothing.
 
 methods:
   - id: static
     means: >-
-      A claim read out of pinned upstream source saved under references/. Proves
+      A claim read from pinned upstream source saved under references/. Proves
       what the code says, not what the installed binary does.
     requires:
       - >-
-        At least one `sources` entry under references/, carrying the file's
+        At least one `sources` entry under references/, with the file's
         sha256, the upstream repo and ref, a line range, and an expected
         substring the engine finds at that range.
       - >-
-        A harness that has saved source at all. cursor is upstream's own target
-        and has none, so no cell of its can reach static however it is written.
+        A harness with saved source. cursor is upstream's own target and has
+        none, so no cursor cell can reach static.
     cannot_support: >-
-      Any scenario in conformance/scenarios.yaml. Scenarios are runs. Reading a
-      dispatcher is not watching a worker survive a restart, so a static record
-      that names a scenario is rejected rather than read as weak evidence.
+      Any scenario in conformance/scenarios.yaml. Scenarios are runs, so a
+      static record that names a scenario is rejected.
   - id: observed_local
     means: >-
-      Behavior seen on one operator's machine, not reproducible from anything in
-      this repo. The class that exists so this kind of note stops being filed as
-      static.
+      Behavior seen on one operator's machine, not reproducible from this
+      repo. This class exists so such notes are not filed as static.
     requires:
       - >-
         An `observation` block: machine, os, cli_version, the
         cli_version_command that printed it, a UTC date, and a verbatim excerpt
-        of what was seen. Every field, because an observation missing its
-        machine or its version cannot be re-checked by anyone.
+        of what was seen. Every field, or nobody can re-check it.
     cannot_support: A verified rendering, ever. See semantics.never_verified.
   - id: exercised
     means: >-
@@ -104,33 +78,28 @@ methods:
         names this harness, and a `run` directory under evidence/runs/ that is
         complete against that scenario's evidence contract.
       - >-
-        An `artifacts` list carrying the sha256 of every file in that
-        directory, with no file omitted and no path recorded that is not there.
-        Every one of them is a regular file: a symlink is not a file the run
-        produced, and nothing here digests one.
+        An `artifacts` list with the sha256 of every file in that directory,
+        no file omitted and no path recorded that is not there. Each is a
+        regular file; symlinks are never digested.
       - >-
         Every declared observation recorded in the run, each entry exactly
         `{id, observed, source}` or exactly `{id, unsatisfiable}` with the
-        reason in text, and the second shape only where the scenario declares
-        an `unsatisfiable_when` for that observation.
+        reason in text. The second shape is allowed only where the scenario
+        declares an `unsatisfiable_when` for that observation.
       - >-
         A run no later complete run supersedes. A correction is a later run of
         the same scenario on the same harness that names this one in
-        `supersedes`; when there is one, this run is void and a record citing
-        it is rejected naming the run that corrected it, unless a later record
-        supersedes the citing record too, in which case it stays readable and
-        counts for nothing.
+        `supersedes`. If one exists, this run is void and a record citing it
+        is rejected naming the correcting run, unless a later record supersedes
+        the citing record too; then it stays readable and counts for nothing.
     cannot_support: >-
       A cell for a harness the run did not touch. One run grounds one harness.
 
 # ---------------------------------------------------------------------------
 
-# Documentation only. The engine validates every record against this shape and
-# rejects any key not named here, because a key it does not know is grounding
-# that nothing checks. The method decides which grounding keys a record may
-# carry: a key belonging to another method is a record grounded two ways at
-# once, where only one of them is ever read. This block is not itself a record
-# and adds nothing to the empty list below.
+# Documentation only. The engine rejects any record key not named here. The
+# method decides which grounding keys a record may carry; a key from another
+# method is rejected. This block is not a record.
 record_schema:
   id:
     required: true
@@ -146,18 +115,16 @@ record_schema:
   parameter:
     required: false
     what: >-
-      A parameter id, required when the axis is a parameter set and forbidden
+      A parameter id. Required when the axis is a parameter set, forbidden
       otherwise. worker_defaults takes background, readonly, identity, or model.
   harness:
     required: true
     what: >-
-      One harness id, which must resolve in coupling.yaml. One record never
-      covers several harnesses, because the coupling ledger's own rule is that
-      the gap is per cell and never per row.
+      One harness id that resolves in coupling.yaml. One record never covers
+      several harnesses; the gap is per cell, never per row.
   scenario:
     required: >-
-      For method exercised. Forbidden for static, which grounds no scenario,
-      and for observed_local, which grounds a machine rather than a run.
+      For method exercised. Forbidden for static and observed_local.
     what: >-
       A scenario id in conformance/scenarios.yaml. It must resolve, its axis
       and parameter must be this record's cell, and this record's harness must
@@ -166,26 +133,25 @@ record_schema:
     required: For method exercised. Forbidden for every other method.
     what: >-
       A directory name under evidence/runs/, matching that scenario's run_id
-      form. The directory must exist, must encode this record's scenario and
-      harness, and must be complete against the scenario's evidence contract:
-      every required artifact a regular file carrying something other than
-      whitespace, every observation satisfied or legally waived, and no later
-      complete run of the same scenario and harness superseding it. See
-      run_states in conformance/scenarios.yaml: complete is the only state a
-      record may cite, and citing it is still not a verification by itself.
+      form. It must exist, encode this record's scenario and harness, and be
+      complete against the scenario's evidence contract: every required
+      artifact a regular file with non-whitespace content, every observation
+      satisfied or legally waived, and no later complete run of the same
+      scenario and harness superseding it. See run_states in
+      conformance/scenarios.yaml: complete is the only state a record may
+      cite, and citing it is still not a verification by itself.
   artifacts:
     required: For method exercised. Forbidden for every other method.
     what: >-
-      One entry per file in the run directory; see artifact_entry. The list
-      covers every file, with nothing left out and nothing recorded that is not
-      there, so a file that appeared after the record was written is something
-      the record has to answer for. A digest that no longer matches the bytes
-      on disk is void_conditions.digest_mismatch in conformance/scenarios.yaml.
+      One entry per file in the run directory; see artifact_entry. Every file,
+      nothing left out, nothing recorded that is not there. A digest that no
+      longer matches disk is void_conditions.digest_mismatch in
+      conformance/scenarios.yaml.
   sources:
     required: >-
-      At least one for static. Allowed and checked for observed_local, where an
-      observation may cite the source it confirms or contradicts. Forbidden for
-      exercised, whose grounding is the run.
+      At least one for static. Allowed and checked for observed_local, where
+      an observation may cite the source it confirms or contradicts. Forbidden
+      for exercised.
     what: A list of source entries; see source_entry.
   observation:
     required: For method observed_local. Forbidden for every other method.
@@ -201,52 +167,49 @@ record_schema:
     required: Whenever `supersedes` is set. Otherwise optional.
     what: >-
       What this record does and does not establish. Use it to narrow an
-      overreaching citation rather than deleting the citation, and to carry the
-      reason a superseding record replaced the earlier one.
+      overreaching citation instead of deleting it, and to give the reason a
+      superseding record replaced the earlier one.
   supersedes:
     required: false
     what: >-
-      The id of an earlier record in this file. It must not be this record, and
-      it must be about the same cell: the same axis, parameter, and harness. A
-      superseded record stays readable and counts for nothing.
+      The id of an earlier record in this file. Not this record, and about the
+      same cell: same axis, parameter, and harness. A superseded record stays
+      readable and counts for nothing.
 
 source_entry:
   path:
     required: true
     what: >-
-      Repo-relative, under references/, with no `..` segment. A path outside
-      the repo cannot be re-checked offline and is not a source. Neither is a
-      file this repo generates, because citing one is the ledger citing itself,
-      and neither is another harness's saved source: a claim about one harness
-      is not grounded in another harness's code.
+      Repo-relative, under references/, with no `..` segment. Not a path
+      outside the repo, not a file this repo generates, and not another
+      harness's saved source.
   digest:
     required: true
     what: >-
-      sha256 of the file at `path`, written by the tooling. Never typed by hand:
-      a hand-written digest is a claim about a file rather than a reading of one.
-      This is what makes staleness localize to a single file.
+      sha256 of the file at `path`, written by the tooling, never typed by
+      hand. This is what makes staleness localize to a single file.
   lines:
     required: true
     what: >-
-      `<from>` or `<from>-<to>`, the range supporting the claim, expressed in
-      the ORIGINAL upstream file's numbering. A range that lands outside the
-      saved file is rejected rather than resolved to nothing.
+      `<from>` or `<from>-<to>`, the range supporting the claim, in the
+      ORIGINAL upstream file's numbering. A range outside the saved file is
+      rejected.
     truncated_files: >-
-      Several saved references are excerpts named `<name>.L<a>-L<b>.<ext>`. Cite
-      upstream numbers; the engine reads <a> from the filename and subtracts the
-      offset itself. Citing the naive line number inside an excerpt points at
-      unrelated code and manufactures a citation that resolves to nothing.
+      Several saved references are excerpts named `<name>.L<a>-L<b>.<ext>`.
+      Cite upstream numbers; the engine reads <a> from the filename and
+      subtracts the offset. A naive line number inside an excerpt points at
+      unrelated code.
   expect:
     required: true
     what: >-
       A substring the engine must find within the cited range. A citation the
-      engine cannot confirm is not a citation. This is also what turns an
-      upstream refactor into a stale record instead of a silent lie.
+      engine cannot confirm is not a citation. An upstream refactor then makes
+      the record stale instead of silently wrong.
   upstream:
     required: true
     what: >-
-      The repo and ref the file was saved at, so the citation survives being
-      read years later. Cross-check against the ref in harnesses.yaml.
+      The repo and ref the file was saved at. Cross-check against the ref in
+      harnesses.yaml.
 
 artifact_entry:
   path:
@@ -259,7 +222,7 @@ artifact_entry:
     what: >-
       sha256 of that file, recomputed from disk on every read.
       `bun scripts/coupling.mjs probe inspect <run-id>` prints all of them.
-      A digest typed by hand is a claim about a file, not a reading of one.
+      Never typed by hand.
 
 # ---------------------------------------------------------------------------
 

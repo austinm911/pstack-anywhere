@@ -1,66 +1,18 @@
-# Coupling ledger. The single source for everything in skills/ that upstream
-# resolved through a Cursor primitive, a Cursor-team plugin, or a path only a
-# Cursor plugin install provides.
+# Coupling ledger: every Cursor primitive, Cursor-team plugin, or Cursor-only
+# path the port replaces, resolved per harness. Humans edit this file.
+# PORTABILITY.md, the README status block, and capabilities.md are rendered
+# from it: run `bun run render` after edits. Terms: README.md#vocabulary
 #
-# Schema v2. One flat `axes` list replaces v1's four sibling tiers, because the
-# tiers differed in prose fields and not in kind of thing: every entry is a
-# semantic axis with a resolution, some attributed tokens, and a set of declared
-# occurrences. `kind` carries what v1 encoded as list membership.
-#
-# kind:
-#   capability      a harness primitive. Resolution varies per harness, so the
-#                   gap is declared per cell, never per row.
-#   parameter_set   a capability whose coupling is a set of call parameters. Each
-#                   parameter carries its own per-harness cell.
-#   role            a named job whose tool is the user's choice. The pack names
-#                   the role and never a vendor. Values come from the override
-#                   file that /setup-pstack-anywhere writes.
-#   prerequisite    a binary, not a harness feature. Missing it removes the
-#                   playbooks that depend on it.
-#   path_assumption a filesystem path that only a Cursor plugin install
-#                   provides. Not a capability, and it fails silently rather
-#                   than degrading, which makes it the most dangerous kind.
-#   naming          an upstream name the port renamed. Its token guards the
-#                   rename against regression.
-#   frontmatter     a frontmatter surface. The lint cannot see these, because
-#                   the keys never contain the word Cursor.
-#
-# Exactly one resolution shape per axis:
-#   resolution   a map of harness id to { parity, use }. Must cover every
-#                declared harness.
-#   invariant    one { parity, use } that does not vary by harness. For a role
-#                or a prerequisite `use` is the absent path, the thing to do
-#                when the tool is not there. For a path_assumption it is the
-#                replacement addressing. For a naming axis it is the new name.
-#   parameters   a list of { id, resolution }, each resolution shaped like the
-#                per-harness map above. The axis parity is the worst of them.
-#
-# parity values:
-#   native       the harness has the primitive under its own name
-#   substitute   a different primitive does the same job
-#   extension   the primitive exists but is not on by default; use names it, fallback names the path without it
-#   degrade      no equivalent, and `use` names the weaker path explicitly
-#   drop         the step does not apply, and the playbook must say so
-#
-# Three things are DERIVED and must never be written here. scripts/coupling.mjs
-# rejects the keys status, ported, verified, implementation, and verification
-# anywhere in this file.
-#
-#   implementation  per occurrence, from the working tree. An occurrence whose
-#                   file is gone is `missing`; one whose file still matches a
-#                   token of its own axis is `unported`; otherwise `ported`.
-#                   Token attribution is what makes this derived rather than
-#                   asserted, which is why `tokens` live on the axis.
-#   parity          read out of resolution / invariant / parameters above.
-#   verification    from evidence/attestations.yaml, which is a separate file
-#                   because it is volatile. No record means `unverified`, and
-#                   unverified is the correct default for every cell here.
-#
-# `occurrences` exists so a refresh diff against upstream is actionable. A token
-# that moves to a new file is new port work, not a silent pass. Every path is
-# full repo-relative and resolves under exactly one root: there is no
-# skills/poteto-mode fallback, because a bare `SKILL.md` would silently
-# misattribute to poteto-mode once a second skill is ported.
+# Schema v2. Each `axes` entry has id, kind, what, tokens, occurrences, and
+# exactly one of: resolution (every harness id to { parity, use }), invariant
+# (one { parity, use }; use = absent path for role/prerequisite, replacement
+# addressing for path_assumption, new name for naming), parameters (list of
+# { id, resolution }; axis parity is the worst). kind: capability,
+# parameter_set, role, prerequisite, path_assumption, naming, frontmatter.
+# parity: native, substitute, extension (add fallback), degrade (use names the
+# weaker path), drop (playbook must say so). scripts/coupling.mjs rejects keys
+# status, ported, verified, implementation, verification anywhere here. Paths
+# are full repo-relative under one root; no skills/poteto-mode fallback.
 
 version: 2
 
@@ -578,9 +530,8 @@ axes:
       everywhere but Cursor, so there is nothing to port and nothing to track
       per file.
 
-# The cross-cutting lint. Axis tokens above are attributed; this is the one
-# pattern that belongs to no single axis, because a bare mention of Cursor can
-# be legitimate in a harness column or a real disk path.
+# Cross-cutting lint: the one pattern that belongs to no axis. A bare mention
+# of Cursor is fine in a harness column or a real disk path.
 lint:
   scan: skills/**/*.md
   cursor_mentions:
@@ -601,15 +552,11 @@ lint:
     - path: skills/setup-pstack-anywhere/SKILL.md
       why: 'Names the Cursor rule-file location, since Cursor is a supported target.'
 
-# Files derived from this ledger. `rendered` means the file is on disk and
-# `coupling.mjs check` fails on drift. `planned` means the renderer exists and
-# the file has not been written yet, which reports as pending rather than drift.
-#
-# `marker` names a bounded region inside a hand-written file, delimited by
-# `<!-- BEGIN GENERATED <marker> -->` and its END twin. The renderer replaces
-# that region and nothing else, so README keeps its prose and still cannot hold
-# a stale count. A markered target whose region is missing is a ledger error,
-# not a silent no-op.
+# Files rendered from this ledger. `rendered`: on disk, `coupling.mjs check`
+# fails on drift. `planned`: renderer exists, file not written yet, reports as
+# pending. `marker` names the region between `<!-- BEGIN GENERATED <marker> -->`
+# and its END twin; only that region is replaced. A missing region is a ledger
+# error, not a silent no-op.
 generated:
   - path: skills/poteto-mode/capabilities.md
     renderer: capabilities
@@ -622,8 +569,8 @@ generated:
     state: rendered
     marker: coupling-summary
 
-# Volatile inputs, read when present. Absent files are not an error: every cell
-# then derives unverified, which is the honest default.
+# Volatile inputs, read when present. A missing file is not an error: every
+# cell then derives unverified.
 evidence:
   scenarios: conformance/scenarios.yaml
   attestations: evidence/attestations.yaml

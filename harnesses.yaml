@@ -1,58 +1,47 @@
-# Per-harness targets and mechanisms.
+# Per-harness skill roots, config files, hook formats, and the cli block that
+# bench/run.mjs uses. Edited by hand, against pinned upstream source only.
 #
-# Every field here is either verified against pinned upstream source or marked
-# unverified. The evidence lives in references/harnesses/<id>/, which holds the
-# upstream files themselves plus a MANIFEST.md with the pin, a refetch block, and
-# a line-cited finding per claim. Correct this file only against those sources.
+# Pin rule: every claim about a harness cites references/harnesses/<id>/ at its
+# pin. That dir holds the upstream files plus a MANIFEST.md with the pin, a
+# refetch block, and a line-cited finding per claim. Cursor has no evidence dir.
 #
-# Skill layout: a skill is <skillsRoot>/<skill-name>/SKILL.md with `name` and
-# `description` frontmatter. Claude, Codex, and OMP scan one level deep and read
-# only that filename. pi is looser, it also walks nested Markdown, but it stops
-# at any directory holding a SKILL.md, so the shared layout works everywhere and
-# skills/ needs no per-harness transform.
+# Skill layout: <skillsRoot>/<skill-name>/SKILL.md with `name` and `description`
+# frontmatter. Claude, Codex, and OMP scan one level deep. pi also walks nested
+# Markdown but stops at any directory holding a SKILL.md, so skills/ ships as is.
 #
-# Two separate concerns live here. Distribution is a skills directory, and it is
-# nearly the same everywhere. Configuration is role values, which have to sit in
-# loaded context rather than a skills directory, so they land in a context file
-# or a rule file and carry their own hazards.
-
-# How this file is kept honest.
+# Terms: README.md#vocabulary
 references:
   dir: references/harnesses
   manifest: references/harnesses/<id>/MANIFEST.md
   refetch: >-
-    Each MANIFEST.md carries a shell block that re-pulls every saved file at a
-    new ref, plus the one-liner that reads the current head SHA. Bump the ref,
-    re-run the block, diff, then update this file.
+    Each MANIFEST.md has a shell block that re-pulls every saved file at a new
+    ref, plus a one-liner that reads the current head SHA. Bump the ref, run the
+    block, diff, then update this file.
   lastChecked: 2026-08-31
 
-# Where the pack goes.
+# Where the pack goes. ~/.agents/skills is read natively by Codex, pi, and OMP.
+# Claude Code needs its own root, which can be a symlink.
 #
-# ~/.agents/skills is read natively by Codex, pi, and OMP, so one location covers
-# three of four harnesses. Claude Code is the only holdout and needs its own
-# root. Two locations, not four, and the second can be a symlink.
-#
-# The pack ships no installer of its own. skills/<name>/SKILL.md is the layout a
-# vendoring skill manager, `npx skills add`, and the Claude and Codex plugin
-# manifests (.claude-plugin/plugin.json, .agents/plugins/marketplace.json) all
-# consume, taken whole. scripts/install.mjs is the plain fallback: per-skill
-# symlinks into ~/.agents/skills and ~/.claude/skills. Every path ends with
-# skills/setup-pstack-anywhere/scripts/doctor.mjs, run from the installed root,
-# which checks sibling skills, duplicates across the roots below, and the
-# common names tdd, teach, unslop. No hooks ship; no skill depends on one.
+# No installer ships. skills/<name>/SKILL.md is the layout a vendoring skill
+# manager, `npx skills add`, and the Claude and Codex plugin manifests
+# (.claude-plugin/plugin.json, .agents/plugins/marketplace.json) consume whole.
+# scripts/install.mjs is the fallback: per-skill symlinks into ~/.agents/skills
+# and ~/.claude/skills. Every path ends with
+# skills/setup-pstack-anywhere/scripts/doctor.mjs, run from the installed root.
+# It checks sibling skills, duplicates across the roots below, and the common
+# names tdd, teach, unslop. No hooks ship; no skill depends on one.
 distribution:
   canonical: ~/.agents/skills
   alsoRead: ~/.agent/skills
 
-  # Whether the harness reads the shared root, with the pinned source that says so.
+  # Does the harness read the shared root? Each answer cites its pinned source.
   readsAgentsSkills:
     codex: >-
       Yes, in source. At user scope the loader pushes
-      home_dir.join(AGENTS_DIR_NAME).join(SKILLS_DIR_NAME), and it also walks
-      every directory from project root through cwd for .agents/skills. The
-      Codex-home root is the deprecated one, kept only for backward
-      compatibility. See codex/src/codex-rs/ext/skills/src/host_roots.rs:95-108
-      and :137-184.
+      home_dir.join(AGENTS_DIR_NAME).join(SKILLS_DIR_NAME), and it walks every
+      directory from project root through cwd for .agents/skills. The
+      Codex-home root is deprecated, kept for backward compatibility. See
+      codex/src/codex-rs/ext/skills/src/host_roots.rs:95-108 and :137-184.
     pi: >-
       Yes. Documented global roots are ~/.pi/agent/skills/ and ~/.agents/skills/,
       plus a trusted ancestor walk of project .agents/skills up to the Git root.
@@ -60,25 +49,24 @@ distribution:
     omp: >-
       Yes. The `agents` provider maps both .agent and .agents under each user
       home, at priority 70, gated by its own enableAgentsUser and
-      enableAgentsProject toggles independent of the claude and codex toggles.
+      enableAgentsProject toggles, independent of the claude and codex toggles.
       See omp/src/packages/coding-agent/src/discovery/agents.ts:26-29 and
       :138-179.
     claude: >-
-      No. Unverifiable from upstream source either way, since the CLI ships
-      bundled and the public repo carries no skills loader. Treated as no, so
-      Claude gets its own root.
+      No. The CLI ships bundled and the public repo has no skills loader, so
+      upstream source cannot settle this. Treated as no, so Claude gets its own
+      root.
 
   symlinksAreSafe: >-
     OMP resolves every discovered skill with fs.realpath, keeps a realPathSet,
     and silently skips a path that resolves to a file it already loaded. So one
     canonical copy in ~/.agents/skills plus a symlink at ~/.claude/skills/<name>
-    loads once, with one winning name. Copies have distinct realpaths, so they do
-    not collapse and instead fall through name-based first-wins, with a warning
-    on a custom-directory collision. See
-    omp/src/packages/coding-agent/src/extensibility/skills.ts:225-264.
+    loads once, with one winning name. Copies have distinct realpaths, so they
+    fall through name-based first-wins, with a warning on a custom-directory
+    collision. See omp/src/packages/coding-agent/src/extensibility/skills.ts:225-264.
 
-# Where role values go. Not a skills directory, because the values have to be in
-# loaded context for a skill to read them.
+# Where role values go. A skill can only read them from loaded context, so they
+# live in a context file or a rule file, never in a skills directory.
 configuration:
   shadowing: >-
     On OMP only one user-scope context file survives across all providers, and
@@ -89,7 +77,7 @@ configuration:
     and :905-936.
   notShareable: >-
     Hooks, tool names, and subagent definitions. Four incompatible hook
-    mechanisms, so anything depending on a hook needs four writers.
+    mechanisms, so anything that depends on a hook needs four writers.
 
 harnesses:
   - id: claude

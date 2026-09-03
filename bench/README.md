@@ -1,25 +1,32 @@
 # bench
 
-Drives a conformance scenario against one harness, inside a herdr session.
+Runs one conformance scenario against one harness inside a herdr session and
+saves the evidence for that cell (terms: [vocabulary](../README.md#vocabulary)).
 
 ```sh
 bun bench/run.mjs <scenario> <harness> <model> [--extension] [--skill <name>]   # e.g. spawn_worker omp anthropic/claude-opus-5:low
 ```
 
-Name the provider in the model. A bare alias like `opus` is fuzzy-matched
-against every provider the copied auth reaches, and a second signed-in
-provider (omp's cursor provider resolved `opus` to `cursor/claude-4.5-opus-high`
-on 2026-09-02) changes the backend and its tool surface under the same run id.
-
-```sh
-```
-
-Scenario ids come from `bun scripts/coupling.mjs probe list`. Each needs a
+`<scenario>` is an id from `bun scripts/coupling.mjs probe list`. Each needs a
 `bench/<scenario>/` holding `prompt.md`, the exact text sent to the agent, and
-`setup.sh`, which prepares a scratch dir and prints its path; a scenario with
+`setup.sh`, which prepares a scratch dir and prints its path. A scenario with
 more than one step adds `drive.mjs`, and one that needs a file in the harness's
-config tree adds `home/<harness>/` (both below). Launch flags come from the
-`cli:` block in `harnesses.yaml`.
+config tree adds `home/<harness>/` (both below).
+
+`<harness>` is a key in `harnesses.yaml`. Launch flags come from its `cli:`
+block.
+
+`<model>` must name the provider. A bare alias like `opus` is fuzzy-matched
+against every provider the copied auth reaches. A second signed-in provider
+changes the backend and its tool surface under the same run id: on 2026-09-02
+omp's cursor provider resolved `opus` to `cursor/claude-4.5-opus-high`.
+
+`--extension` and `--skill <name>` are described under "The launch is stock".
+
+A run writes `evidence/runs/<run-id>/` with `run.yaml`, `transcript.md`,
+`invocation.json`, `session/`, the scenario's artifacts (including
+`probe.after.txt`), and `drive.log` when a driver ran. "What gets written"
+below describes each file. `observations.yaml` is left for you to write.
 
 ## The launch is stock
 
@@ -35,7 +42,7 @@ was seeded under `environment_deltas`.
 `--extension` adds the harness's `cli.extension` to the launch and records it in
 `run.yaml` under `extension`, which is how an extension-tier cell gets its run.
 Note: pi's extension is `pi-subagents`, and its delegated children run under
-the scratch `HOME` rather than the operator's real home.
+the scratch `HOME`, not the operator's real home.
 
 `--skill <name>` symlinks `skills/<name>` into the harness's `skillsRoot` under
 the scratch HOME (the path from `harnesses.yaml`, with `~` expanded to that
@@ -139,7 +146,7 @@ Into `evidence/runs/<run-id>/`, created by `probe prepare`:
 
 - `run.yaml`, the prepared manifest with every field filled from the run
 - `transcript.md`, `herdr agent read --source recent-unwrapped`. It may be a
-  viewport rather than the whole session if the harness uses the alternate screen
+  viewport instead of the whole session if the harness uses the alternate screen
 - `invocation.json`, the herdr start, prompt, get, and explain responses plus the
   harness argv, its version output, the model, the scratch dir, what the scratch
   home was seeded with, and `calls`, every assistant tool call parsed out of the

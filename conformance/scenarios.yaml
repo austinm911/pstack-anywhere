@@ -1,96 +1,66 @@
-# Conformance scenarios. The executable half of the portability contract.
+# Conformance scenarios: procedures and rubrics for the high-risk domains in
+# coupling.yaml. This file asserts no outcome and no parity value. A scenario
+# is a procedure plus a rubric; an unexecuted scenario is unverified, not failed.
 #
-# coupling.yaml says what a capability resolves to per harness. It cannot say
-# whether anyone ever watched that resolution work. This file defines the runs
-# that would settle it, in enough detail that two operators on two machines
-# produce comparable records.
+# Coverage: one scenario per high-risk domain (every capability axis plus every
+# parameter of a parameter set). `bun scripts/coupling.mjs check` fails when a
+# domain has no scenario or when two scenarios cover one. A path_assumption may
+# carry a scenario but is not gated.
 #
-# Scope: the high-risk axes only. High-risk means a wrong cell here silently
-# changes what a playbook does rather than failing loudly, so prose alone is not
-# good enough. Every other axis in coupling.yaml stays prose-resolved.
-#
-# Coverage is checked, not asserted. The unit of coverage is the domain, not the
-# cell: one scenario per high-risk domain, where a domain is a capability axis
-# or one parameter of a parameter set with no harness in it. A scenario's
-# `applies_to` expands that single procedure across the harness cells it is
-# runnable on. The high-risk set is derived from coupling.yaml as every
-# capability axis plus every parameter of a parameter set, and
-# `bun scripts/coupling.mjs check` fails when a domain has no scenario
-# or when two scenarios cover one domain. A capability axis added upstream
-# therefore arrives uncovered and is named, rather than silently missed.
-# A path_assumption may also carry a scenario (skill addressing is something a
-# run can prove), but it is not gated as high-risk coverage.
-#
-# What this file is not:
-#   - It records no outcome. A scenario is a procedure and a rubric. Results
-#     live in evidence/runs/<run-id>/ and are indexed by evidence/attestations.yaml.
-#     The engine rejects an outcome-shaped key by name, so what happened
-#     cannot be stored beside the procedure that produced it.
-#   - It asserts no parity value. parity_criteria maps observations onto the five
-#     coupling.yaml parity values; a parity value is earned by a recorded run,
-#     never by this file.
-#   - An unexecuted scenario is not a failure. It is unverified, which is the
-#     honest default for every axis and harness until a run exists.
-#
-# Join keys. A scenario binds to coupling.yaml by `axis`, and for the
-# worker_defaults parameter set additionally by `parameter`. A run binds to a
-# scenario by `scenario` plus `harness`. Nothing joins on array position.
+# Outcomes live in evidence/runs/<run-id>/, indexed by evidence/attestations.yaml.
+# Join keys: a scenario binds to coupling.yaml by `axis`, plus `parameter` for a
+# parameter set; a run binds by `scenario` plus `harness`. Terms: README.md#vocabulary
 
 version: 1
 
-# Harness ids are the ones coupling.yaml declares. cursor is the upstream
-# baseline and gets no exemption here: a cursor cell earns `exercised` on the
-# same artifacts as everyone else, and until a cursor run exists its cells are
-# upstream-derived like the rest.
+# The harness ids coupling.yaml declares. cursor gets no exemption: a cursor
+# cell earns `exercised` on the same artifacts as every other harness.
 harnesses: [cursor, claude, codex, pi, omp]
 
 # ---------------------------------------------------------------------------
 
-# How a completed run maps onto a coupling.yaml parity value. The mapping is
-# per harness and per scenario, never per row, because one harness can be native
-# on spawn_worker and drop on worker_durability.
+# How a completed run maps onto a coupling.yaml parity value, judged per
+# harness and per scenario.
 parity_rubric:
   native: >-
-    Every required observation is satisfied, by a single first-class primitive
-    the harness documents for this purpose, with no operator-supplied glue
-    beyond the scenario's own setup.
+    Every required observation is satisfied by a single first-class primitive
+    the harness documents for this purpose, with no operator glue beyond the
+    scenario's own setup.
   substitute: >-
-    Every required observation is satisfied, but through a primitive whose name
-    or shape differs from upstream's. Only the differences enumerated in the
-    scenario's parity.allowed may be involved. A difference not enumerated there
-    is not a substitute, it is a finding: record it and leave the cell
-    unresolved until the scenario is amended.
+    Every required observation is satisfied through a primitive whose name or
+    shape differs from upstream's. Only differences listed in the scenario's
+    parity.allowed may be involved. Any other difference is a finding: record
+    it and leave the cell unresolved until the scenario is amended.
   extension: >-
-    The primitive is supplied by an extension the run names in run.yaml under
+    The primitive comes from an extension the run names in run.yaml under
     `extension`, and every observation is satisfied through it. A run that used
-    an extension without recording it is void, and a run with the extension
-    absent scores the fallback path, never extension.
+    an extension without recording it is void. A run with the extension absent
+    scores the fallback path, never extension.
   degrade: >-
     At least one required observation is satisfied only through a weaker path,
-    and the run names that path explicitly. A degrade record is incomplete
-    without the `weaker_path` field, because degrade read as "roughly fine" is
-    the failure mode this whole file exists to stop.
+    and the run names that path in the `weaker_path` field. A degrade record
+    without `weaker_path` is incomplete.
   drop: >-
-    At least one required observation is unsatisfiable on this harness, with the
-    run recording why. Drop is a real, defensible answer. It is not an absence
-    of data, and an unexecuted scenario must never be recorded as drop.
+    At least one required observation is unsatisfiable on this harness, and the
+    run records why. Drop is a real answer, not an absence of data. An
+    unexecuted scenario must never be recorded as drop.
 
-# Conditions that void a run outright. A void run is not a drop and not a
-# degrade. It is a run that proves nothing and must be re-executed.
+# Conditions that void a run. A void run is neither a drop nor a degrade; it
+# proves nothing and must be re-executed.
 void_conditions:
   - id: missing_observation
     when: >-
       A required observation is neither satisfied with a source nor recorded as
-      unsatisfiable with a reason; or it is recorded as both observed and
-      unsatisfiable at once; or it is recorded as unsatisfiable where the
-      scenario declares no `unsatisfiable_when` for it.
+      unsatisfiable with a reason; or it is recorded as both at once; or it is
+      recorded as unsatisfiable where the scenario declares no
+      `unsatisfiable_when` for it.
     why: >-
       Silence is the cheapest way to manufacture a pass, and a waiver the
       scenario never authorized is silence with a sentence in front of it.
   - id: self_report_only
     when: >-
-      The only source for an observation is the agent's own narration of what it
-      did, where the scenario names an out-of-band source.
+      The only source for an observation is the agent's own narration, where
+      the scenario names an out-of-band source.
     why: An agent describing a tool call is not evidence that the tool ran.
   - id: setup_not_reached
     when: The scenario's preconditions were not all true at the recorded start timestamp.
@@ -107,104 +77,92 @@ void_conditions:
       holds an environment secret: a NAME=value whose name ends in KEY, TOKEN,
       SECRET, or PASSWORD, or an `sk-` API key.
     why: >-
-      The run's files carry an environment secret and must not be attested;
-      delete and re-run under a clean environment.
+      A run carrying an environment secret must not be attested. Delete it and
+      re-run under a clean environment.
   - id: superseded
     when: >-
       A later complete run of the same scenario on the same harness names this
       run in `supersedes`. A correction is strictly later than the run it
-      corrects, on date then counter, and a prepared, incomplete, or void
-      directory naming `supersedes` corrects nothing.
+      corrects, on date then counter. A prepared, incomplete, or void directory
+      naming `supersedes` corrects nothing.
     why: >-
-      The correction is the run that says it corrects. A record citing the run
-      that was corrected would ground a claim its own author already withdrew.
-      The same-cell and ordering constraints are what keep this a correction
-      rather than a way to erase an unrelated run.
+      A record citing a corrected run would ground a claim its own author
+      withdrew. The same-cell and ordering rules keep this a correction rather
+      than a way to erase an unrelated run.
 
 # What `probe inspect <run-id>` reports for a run directory. The state is
 # judged from the directory on every read and is never written into it.
 run_states:
   absent: >-
     Nothing under evidence/runs/ that the engine enumerates as a run. A name
-    with no directory behind it, an entry that is a regular file, and a symlink
-    pointing at a directory elsewhere all read the same way: there is no run to
-    judge, and citing the id is an error rather than a judgement of whatever
-    the path resolves to.
+    with no directory behind it, a regular file, and a symlink to a directory
+    elsewhere all read the same way: there is no run to judge, and citing the
+    id is an error.
   unexecuted: >-
     A manifest whose started_at and ended_at are unset. This is what
-    `probe prepare <scenario> <harness>` leaves behind, and it proves nothing.
+    `probe prepare <scenario> <harness>` leaves behind. It proves nothing.
   incomplete: >-
-    Run, and the evidence contract is not satisfied: run.yaml absent, a
-    required field unset or malformed, or a required artifact missing or
-    holding nothing. An artifact that is empty, whitespace-only, or a symlink
-    rather than a regular file of this run's own is not a produced artifact,
-    and neither is anything in the directory that is not a regular file.
+    Run, but the evidence contract is not satisfied: run.yaml absent, a
+    required field unset or malformed, or a required artifact missing or empty.
+    An artifact that is empty, whitespace-only, or a symlink rather than a
+    regular file of this run's own is not a produced artifact, and neither is
+    anything in the directory that is not a regular file.
   void: >-
     A void_condition fired, or the run id, scenario, harness, or observation
     set does not hold together. The run proves nothing and must be re-executed.
-    A run a later complete run supersedes is void here too, whatever its own
+    A run a later complete run supersedes is void too, whatever its own
     directory holds. Void is neither a drop nor a degrade.
   complete: >-
-    Every required artifact is a regular file with content in it, run.yaml and
+    Every required artifact is a regular file with content, run.yaml and
     observations.yaml both satisfy the contract, and no later complete run
     supersedes this one. This is the only state an `exercised` attestation may
-    cite, and it is still not a verification: the citing record must also carry
-    the sha256 of every file in the directory.
+    cite, and the citing record must also carry the sha256 of every file in
+    the directory.
 
 # ---------------------------------------------------------------------------
 
-# What every run must produce, regardless of scenario. Each scenario adds its
-# own artifacts on top of this through `evidence.artifacts`.
+# What every run must produce, whatever the scenario. Each scenario adds its
+# own artifacts through `evidence.artifacts`.
 evidence_contract:
   run_dir: evidence/runs/<run-id>/
   run_id:
     form: <scenario-id>.<harness-id>.<YYYY-MM-DD>.<counter>
     example: spawn_worker.omp.2026-09-14.01
     constraint: >-
-      One path segment and nothing else: scenario id and harness id are
-      [a-z0-9_]+, the date is YYYY-MM-DD, the counter is two or more digits. A
-      run id carrying a slash or a `..` segment is void, and so is one whose
-      scenario and harness do not match the run.yaml inside the directory.
+      One path segment: scenario id and harness id are [a-z0-9_]+, the date is
+      YYYY-MM-DD, the counter is two or more digits. A run id with a slash or a
+      `..` segment is void, and so is one whose scenario and harness do not
+      match the run.yaml inside the directory.
     note: >-
       The counter disambiguates repeats on one day. A re-run never overwrites a
-      run dir; supersession is expressed by a later run, and the earlier record
-      stays readable.
+      run dir; a later run supersedes it and the earlier record stays readable.
 
-  # Every path below has to exist in the run dir as a regular file AND carry
-  # something. A required artifact that is empty, holds only whitespace, or is
-  # a symlink to a file elsewhere leaves the run incomplete: it is a filename,
-  # not a record of anything, and a directory of them is the cheapest hollow
-  # run there is. Where the honest result is no output, the artifact says so in
-  # one line, so an empty artifact always means nobody looked.
+  # Every path below must exist in the run dir as a regular file with content.
+  # An empty, whitespace-only, or symlinked artifact leaves the run incomplete.
+  # Where the honest result is no output, the artifact says so in one line.
   required_artifacts:
     - path: run.yaml
       holds: >-
-        The run manifest, one flat map, every field below present and filled
-        from the run itself: `scenario`, `harness`, and `run_id`, all three
-        equal to what the run id encodes; `coupling_version`, the coupling.yaml
-        version the run was authored against; `started_at` and `ended_at` as
-        UTC timestamps with an offset, in that order; `operator`, `machine`,
-        `os`; `harness_version` as the harness itself reports it; every field
-        named in required_metadata below; `supersedes`, naming the earlier
-        run this one corrects or null, under the rules in `supersession`; and
-        optionally `extension`, the name and version of the extension that
-        supplied the primitive, required when the recorded parity is extension.
-        A version the operator typed from memory is not a version. `probe
+        The run manifest, one flat map, every field present and filled from the
+        run itself: `scenario`, `harness`, and `run_id`, all three equal to
+        what the run id encodes; `coupling_version`, the coupling.yaml version
+        the run was authored against; `started_at` and `ended_at` as UTC
+        timestamps with an offset, in that order; `operator`, `machine`, `os`;
+        `harness_version` as the harness itself reports it; every field named
+        in required_metadata below; `supersedes`, the earlier run this one
+        corrects or null, under the rules in `supersession`; and optionally
+        `extension`, the name and version of the extension that supplied the
+        primitive, required when the recorded parity is extension. `probe
         prepare` writes this file with every field present and null, which is
-        what makes the run read as unexecuted until it is run.
+        what makes the run read as unexecuted.
     - path: observations.yaml
       holds: >-
         `observations:`, one entry per observation id the scenario declares, in
-        scenario order, with none added, omitted, or reordered. An entry is
-        exactly `{id, observed, source}` or exactly `{id, unsatisfiable}` and
-        nothing else. `observed` is the raw recorded value, a scalar, and `false`
-        is a reading like any other: several observations are answered by not
-        seeing the thing. `source` is which artifact and where in it, written
-        out as text, because a locator that is not text locates nothing. Under
-        the second shape, `unsatisfiable` is the reason, also written out as
-        text. No entry carries both shapes, because that says both that the
-        observation was made and that it could not be, and no entry carries any
-        other key. The second shape is legal only where the scenario declares an
+        scenario order, none added, omitted, or reordered. An entry is exactly
+        `{id, observed, source}` or exactly `{id, unsatisfiable}`. `observed` is
+        the raw recorded scalar; `false` is a reading like any other. `source`
+        is which artifact and where in it, as text. `unsatisfiable` is the
+        reason, as text, and is legal only where the scenario declares an
         `unsatisfiable_when` for that observation id; a waiver anywhere else
         voids the run. A missing entry voids the run; see
         void_conditions.missing_observation.
@@ -212,23 +170,22 @@ evidence_contract:
       holds: >-
         The verbatim tool name and full argument object for every primitive the
         run exercised, in call order, with timestamps. Argument names matter as
-        much as values, because the parity question is usually about shape.
+        much as values.
     - path: transcript.md
       holds: >-
-        The verbatim session excerpt covering the run window, including the
-        agent's turns, tool results, and any refusal or error text. Redact
-        secrets in place and mark each redaction; do not summarize.
+        The verbatim session excerpt covering the run window: agent turns, tool
+        results, and any refusal or error text. Redact secrets in place and
+        mark each redaction; do not summarize.
 
-  # Each entry is one `field: what it holds` pair, and the field name is the
-  # key the engine then requires in every run.yaml. Adding a pair here adds a
-  # required manifest field; prose here would be a requirement nothing checks.
+  # Each entry is one `field: what it holds` pair. The field name becomes a
+  # required key in every run.yaml.
   required_metadata:
     - harness_version_source: >-
-        The command that printed the version and its raw output, so a later
-        reader can tell a CLI version from an npm package version.
+        The command that printed the version and its raw output, so a reader
+        can tell a CLI version from an npm package version.
     - clock: >-
         Timestamps in UTC. Several scenarios turn on ordering between two
-        events, so a run with only relative durations cannot be checked.
+        events, so relative durations alone cannot be checked.
     - environment_deltas: >-
         Any non-default harness configuration in effect, quoted from the config
         file. A run under a customized agent set is not a run of the default.
@@ -237,47 +194,37 @@ evidence_contract:
     algorithm: sha256
     covers: >-
       Every file in the run dir, not only the declared artifacts. An exercised
-      attestation carries one path and digest per file, with nothing in the
-      directory left out and nothing recorded that is not there, so a file that
-      appeared after the record was written is something the record answers for.
+      attestation carries one path and digest per file, nothing left out and
+      nothing recorded that is not there.
     authored_by: >-
       The tooling, never a person. `probe inspect <run-id>` recomputes and
-      prints every digest. A hand-written digest is a claim about a file rather
-      than a reading of one.
+      prints every digest. A hand-written digest is a claim, not a reading.
 
   unsatisfiable_observations: >-
-    Recorded, never dropped. An observation that cannot be made on a harness is
-    the single most informative thing a run produces, and it is what separates
-    drop from unverified. It is also the one thing a run may leave unobserved,
-    so the licence is narrow three ways: an observation is waivable only where
-    the scenario declares the `unsatisfiable_when` that makes it so, that
-    declaration is a written condition rather than a bare flag, and the run's
-    waiver is the reason in text, so `unsatisfiable: false` or `0` waives
-    nothing. No scenario may declare every one of its observations waivable,
-    which would be a procedure a run completes by observing nothing. Meeting a
-    condition the scenario never anticipated is grounds for amending the
+    Recorded, never dropped. An unsatisfiable observation is what separates
+    drop from unverified. The waiver is narrow three ways: an observation is
+    waivable only where the scenario declares an `unsatisfiable_when` for it,
+    that declaration is a written condition rather than a bare flag, and the
+    run's waiver is the reason in text, so `unsatisfiable: false` or `0` waives
+    nothing. No scenario may declare every one of its observations waivable.
+    A condition the scenario never anticipated is grounds for amending the
     scenario, not for writing the excuse into the run.
 
   supersession: >-
     A run is never edited after its digests are recorded. A correction is a new
-    run whose run.yaml sets `supersedes` to the earlier run id. That id has to
+    run whose run.yaml sets `supersedes` to the earlier run id. That id must
     name an existing run directory of the same scenario on the same harness,
     must not be the run's own id, and must be strictly earlier in run order:
     date first, then the counter compared as a number, so `.010` corrects `.09`
-    and never the other way round. A correction therefore always comes after
-    what it corrects, and two runs can never withdraw each other. The
-    correction takes effect only once it is itself complete: a prepared,
-    incomplete, or void directory naming `supersedes` withdraws nothing, and
-    that authority is read from each directory on its own, so a corrector that
-    a third run later corrects still corrected its own target. One run has one
-    corrector: two complete runs both naming the same earlier run is a
-    contradiction with no reading, and the check stops on it rather than
-    letting the order the directories happen to enumerate in pick a winner.
-    The superseded run stays readable and is void: `probe inspect` reports it
-    as void with condition `superseded` and names the run that corrected it,
-    and an exercised attestation citing it is rejected the same way.
-    Withdrawing a run and still being able to cite it would make the correction
-    cosmetic.
+    and never the reverse. The correction takes effect only once it is itself
+    complete: a prepared, incomplete, or void directory naming `supersedes`
+    withdraws nothing. That authority is read from each directory on its own,
+    so a corrector that a third run later corrects still corrected its own
+    target. One run has one corrector: two complete runs naming the same
+    earlier run is a contradiction and the check stops on it. The superseded
+    run stays readable and is void: `probe inspect` reports it as void with
+    condition `superseded` and names the corrector, and an exercised
+    attestation citing it is rejected the same way.
 
 # ---------------------------------------------------------------------------
 

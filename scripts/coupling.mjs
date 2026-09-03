@@ -1220,10 +1220,10 @@ function citationText(resolved, from, to) {
   return lines.slice(start - 1, end).join("\n");
 }
 
-// RANK is display precedence, and also the legend's key set: tierLegend renders
-// one line per key, so an entry no cell can reach is still a rendered line. A
-// record whose grounding stopped holding ranks at or below unverified rather
-// than carrying a tier it no longer earns: void, superseded, stale.
+// RANK is display precedence, and also the key set TIER_EMOJI has to cover: a
+// tier with no glyph prints its bare name in the resolutions table. A record
+// whose grounding stopped holding ranks at or below unverified rather than
+// carrying a tier it no longer earns: void, superseded, stale.
 const RANK = {
   void: 0,
   superseded: 0,
@@ -1875,34 +1875,65 @@ const INVARIANT_LEAD = {
   prerequisite: "Without the binary",
 };
 
+// The glyphs a cell prints. Single code points on purpose: a variation selector
+// after the warning sign renders as two glyphs in some terminals and breaks
+// string equality in the render check. `observed_local` never counts as
+// verified, so it shares the unverified glyph.
+const PARITY_EMOJI = {
+  substitute: "\u{1F7E2}",
+  degrade: "\u{1F7E1}",
+  drop: "\u{1F534}",
+  extension: "\u{1F9E9}",
+  native: "\u26AB",
+};
+
+const TIER_EMOJI = {
+  exercised: "\u2705",
+  static: "\u{1F4CE}",
+  unverified: "\u26AA",
+  observed_local: "\u26AA",
+  stale: "\u26A0",
+  void: "\u26A0",
+  superseded: "\u26A0",
+};
+
+const EMOJI_LEGEND =
+  `Parity: ${PARITY_EMOJI.substitute} substitute ${PARITY_EMOJI.degrade} degrade ` +
+  `${PARITY_EMOJI.drop} drop ${PARITY_EMOJI.extension} extension ${PARITY_EMOJI.native} native. ` +
+  `Verification: ${TIER_EMOJI.exercised} exercised ${TIER_EMOJI.static} static ` +
+  `${TIER_EMOJI.unverified} unverified ${TIER_EMOJI.stale} stale, void, or superseded.`;
+
+const harnessHeading = (h) => `${h.label}${h.baseline ? " (upstream)" : ""}`;
+
+// The replacement a cell names, with the fallback appended for an extension
+// cell because that is the path taken when the tool is not installed.
+const replacementText = (resolved) =>
+  resolved.parity === "extension" ? `${resolved.use}, else ${resolved.fallback}` : resolved.use;
+
 // Every resolution in the ledger, rendered once. Skill sections name their
 // domains and link here, so the same table no longer appears fourteen times
-// with a different subset of its rows.
+// with a different subset of its rows. The table carries only glyphs; the
+// replacement text sits in one list per domain under it.
 function domainResolutions(model) {
   const harnesses = model.ledger.harnesses;
   const rows = model.domains;
-  const tiers = new Set(rows.flatMap((entry) => domainVerification(model, entry).map(([, tier]) => tier)));
-  // One tier across the whole matrix makes the third fact in every cell a constant.
-  const shared = tiers.size === 1 ? [...tiers][0] : null;
   const varying = rows.filter((entry) => domainVaries(entry, harnesses));
   const uniform = rows.filter((entry) => !domainVaries(entry, harnesses));
 
   const cell = (entry, harness) => {
     const resolved = entry.spec.resolution[harness.id];
     if (!resolved) return "unknown";
-    const use = resolved.parity === "extension" ? `${resolved.use}, else ${resolved.fallback}` : resolved.use;
-    const text = `${resolved.parity}, ${cellText(use)}`;
-    return shared
-      ? text
-      : `${text}, ${model.verification.lookup(entry.axis.id, harness.id, entry.spec.parameter)}`;
+    const tier = model.verification.lookup(entry.axis.id, harness.id, entry.spec.parameter);
+    return `${PARITY_EMOJI[resolved.parity] ?? resolved.parity} ${TIER_EMOJI[tier] ?? tier}`;
   };
 
-  const verificationNote = (entry) =>
-    shared
-      ? ""
-      : ` Verification: ${domainVerification(model, entry)
-          .map(([h, tier]) => `${h.label} ${tier}`)
-          .join(", ")}.`;
+  const verificationNote = (entry) => {
+    const pairs = domainVerification(model, entry);
+    const tiers = new Set(pairs.map(([, tier]) => tier));
+    return tiers.size === 1
+      ? ` Verification: ${[...tiers][0]} on every harness.`
+      : ` Verification: ${pairs.map(([h, tier]) => `${h.label} ${tier}`).join(", ")}.`;
+  };
 
   const bullet = (entry) => {
     const { axis, spec } = entry;
@@ -1924,21 +1955,35 @@ function domainResolutions(model) {
   };
 
   const table = [
-    head(["domain", ...harnesses.map((h) => `${h.label}${h.baseline ? " (upstream)" : ""}`)]),
+    head(["domain", ...harnesses.map(harnessHeading)]),
     ...varying.map((entry) =>
       row([`\`${entry.label}\` (${entry.axis.kind})`, ...harnesses.map((h) => cell(entry, h))]),
     ),
   ].join("\n");
 
+  const replacements = varying
+    .map((entry) =>
+      [
+        `- **\`${entry.label}\`**`,
+        ...harnesses.map((h) => {
+          const resolved = entry.spec.resolution[h.id];
+          return `  - ${h.label}: ${resolved ? flow(replacementText(resolved)) : "unknown"}`;
+        }),
+      ].join("\n"),
+    )
+    .join("\n");
+
   return [
     `${plural(varying.length, "domain")} of ${rows.length} resolve differently depending on the ` +
-      `harness. Each cell reads \`parity, replacement${shared ? "" : ", verification"}\`, and an ` +
-      "`extension` cell adds `, else <fallback>` after the replacement for when the tool is not installed." +
-      (shared ? ` Every cell in the matrix is \`${shared}\`.` : "") +
-      ` ${model.baseline.label} is the upstream column: its resolutions are what upstream already ` +
+      "harness. Each cell shows the parity glyph and the verification glyph. " +
+      `${model.baseline.label} is the upstream column: its resolutions are what upstream already ` +
       "does, not a substitution this port made.",
     "",
     table,
+    "",
+    "What each harness uses, per domain in the table:",
+    "",
+    replacements,
     "",
     `The other ${plural(uniform.length, "domain")} resolve the same way on every harness:`,
     "",
@@ -1969,19 +2014,12 @@ const occurrenceDomains = (occurrence, parameters) => {
 };
 
 // Explain the occurrence state without reusing "ported", which is reserved for
-// whole skills here. The legend is this table read back.
+// whole skills here. The meanings live in README.md#vocabulary.
 const OCCURRENCE_LABEL = {
   ported: "resolved",
   unported: "unresolved",
   missing: "missing",
   unverifiable: "not checked",
-};
-
-const OCCURRENCE_MEANING = {
-  ported: "no coupling token remains in the file",
-  unported: "a coupling token is still there",
-  missing: "the declared file is gone, so the ledger is stale",
-  unverifiable: "the file is outside `lint.scan` or whole-file allowlisted, so no check reads it",
 };
 
 // Why the lint flagged the occurrence, in the token's own words. What to do about
@@ -2039,28 +2077,46 @@ function workRemaining(model) {
   const stale = blocked.filter((o) => o.implementation === "missing");
   const unread = blocked.filter((o) => o.implementation === "unverifiable");
 
-  const bridge = [
-    `${plural(attributed.length, "token hit")} carry a domain and collapse into ` +
-      `${plural(unresolved.length, "unresolved occurrence")}, one per file and domain.`,
-    `${plural(mentions.length, "hit")} name Cursor in prose with no domain to resolve into, ` +
-      `across ${plural(mentionFiles.length, "file")}.`,
-    `That is ${plural(model.findings.length, "diagnostic")} in total, and ` +
-      (regressions.length === 0
-        ? "not one of them lands in a skill the port already reached, so not one is a regression."
-        : `${regressions.length} of them land in a skill the port already reached, which makes ` +
-          "them regressions rather than remaining work."),
-    unread.length > 0 &&
-      `${plural(unread.length, "further declaration")} ` +
-        `${unread.length === 1 ? "sits" : "sit"} inside ${unread.length === 1 ? "a skill" : "skills"} the port reached, as every ` +
-        `declaration does, but no check reads ${unread.length === 1 ? "its file" : "their files"}, ` +
-        `so ${unread.length === 1 ? "it yields" : "they yield"} no diagnostic either way and the ` +
-        "count above neither covers nor clears them.",
-    stale.length > 0 &&
-      `${plural(stale.length, "declaration")} ${stale.length === 1 ? "points" : "point"} at a ` +
-        `file that is gone, so the ledger is stale ${stale.length === 1 ? "there" : "at those rows"}.`,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  // With no hit and no unresolved occurrence there is nothing to reconcile, so
+  // three sentences of zeros would only hide the one fact left: the
+  // declarations no check reads.
+  const nothingLeft =
+    unresolved.length === 0 && mentions.length === 0 && model.findings.length === 0;
+  const bridge = nothingLeft
+    ? [
+        "Nothing is left to port.",
+        unread.length > 0 &&
+          `${plural(unread.length, "declared occurrence")} ${unread.length === 1 ? "sits" : "sit"} in ` +
+            `${unread.length === 1 ? "a file" : "files"} no check reads; ` +
+            `${unread.length === 1 ? "it is" : "they are"} listed below.`,
+        stale.length > 0 &&
+          `${plural(stale.length, "declaration")} ${stale.length === 1 ? "points" : "point"} at a ` +
+            `file that is gone, so the ledger is stale ${stale.length === 1 ? "there" : "at those rows"}.`,
+      ]
+        .filter(Boolean)
+        .join(" ")
+    : [
+        `${plural(attributed.length, "token hit")} carry a domain and collapse into ` +
+          `${plural(unresolved.length, "unresolved occurrence")}, one per file and domain.`,
+        `${plural(mentions.length, "hit")} name Cursor in prose with no domain to resolve into, ` +
+          `across ${plural(mentionFiles.length, "file")}.`,
+        `That is ${plural(model.findings.length, "diagnostic")} in total, and ` +
+          (regressions.length === 0
+            ? "not one of them lands in a skill the port already reached, so not one is a regression."
+            : `${regressions.length} of them land in a skill the port already reached, which makes ` +
+              "them regressions rather than remaining work."),
+        unread.length > 0 &&
+          `${plural(unread.length, "further declaration")} ` +
+            `${unread.length === 1 ? "sits" : "sit"} inside ${unread.length === 1 ? "a skill" : "skills"} the port reached, as every ` +
+            `declaration does, but no check reads ${unread.length === 1 ? "its file" : "their files"}, ` +
+            `so ${unread.length === 1 ? "it yields" : "they yield"} no diagnostic either way and the ` +
+            "count above neither covers nor clears them.",
+        stale.length > 0 &&
+          `${plural(stale.length, "declaration")} ${stale.length === 1 ? "points" : "point"} at a ` +
+            `file that is gone, so the ledger is stale ${stale.length === 1 ? "there" : "at those rows"}.`,
+      ]
+        .filter(Boolean)
+        .join(" ");
 
   const section = (lead, columns, rows) =>
     rows.length === 0 ? [] : [lead, "", [head(columns), ...rows].join("\n"), ""];
@@ -2314,28 +2370,6 @@ function freshnessTable(model) {
   return [head(["measure", "value"]), ...rows].join("\n");
 }
 
-// The tiers a cell can print, ordered by the precedence the engine applies, so
-// the legend cannot fall behind the states the tables show.
-const TIER_MEANING = {
-  exercised: "a complete run against the scenario, an attestation, and matching file digests",
-  observed_local: "one machine on one day, which never counts as verified",
-  static: "a citation into a file in this repo that still matches its digest",
-  stale: "the cited file moved, so a human has to look again",
-  void: "the grounding does not hold, so the record counts for nothing",
-  superseded: "a later record replaced it; it stays readable and counts for nothing",
-  unverified: "no saved evidence covers the cell",
-};
-
-const tierLegend = () =>
-  Object.keys(RANK)
-    .sort((a, b) => RANK[b] - RANK[a] || a.localeCompare(b))
-    .map(
-      (tier) =>
-        `- \`${tier}\`: ${TIER_MEANING[tier] ?? "no meaning recorded"}.` +
-        (VERIFIED.includes(tier) ? " Counts as verified." : ""),
-    )
-    .join("\n");
-
 // Explain only the evidence state that needs interpretation.
 function freshnessNote(model) {
   const runs = [...model.runs.values()];
@@ -2405,8 +2439,31 @@ const reachedLabel = (group) =>
 const occurrencesRow = (counts) =>
   row(["occurrences", ORDER.map((state) => `${counts.occurrences[state]} ${OCCURRENCE_LABEL[state]}`).join(", ")]);
 
-const reachedRow = (index, reached) =>
-  row(["skills reached", `${reached.length} of ${index.size}: ${reached.map(reachedLabel).join(", ")}`]);
+// The one table a reviewer reads first: per harness, how the domains resolve,
+// how many cells carry evidence, and which domains lose something. Counts come
+// from the same cell enumeration `tally` folds, so they cannot drift from Totals.
+const LOSSY = ["drop", "degrade"];
+
+function reviewerTable(model) {
+  const rows = model.ledger.harnesses.map((harness) => {
+    const cells = enumerateCells(model, [harness.id]);
+    const parities = groupCount(cells.filter((c) => c.parity), (c) => c.parity);
+    const glyphs = Object.keys(PARITY_EMOJI)
+      .filter((p) => parities.has(p))
+      .map((p) => `${PARITY_EMOJI[p]} ${parities.get(p)}`)
+      .join("  ");
+    const lossy = cells
+      .filter((c) => LOSSY.includes(c.parity))
+      .map((c) => `\`${cellLabel(c)}\``);
+    return row([
+      harnessHeading(harness),
+      glyphs,
+      `${cells.filter((c) => c.verified).length} of ${cells.length}`,
+      lossy.length > 0 ? lossy.join(", ") : "none",
+    ]);
+  });
+  return [head(["harness", "parity", "verified cells", "drop / degrade"]), ...rows].join("\n");
+}
 
 function renderReport(model) {
   const counts = model.counts;
@@ -2451,7 +2508,7 @@ function renderReport(model) {
       `${counts.attributedHits} attributed to a domain, ${counts.mentionHits} unattributed ` +
         `Cursor mentions, ${counts.attributedHits + counts.mentionHits} in total`,
     ]),
-    reachedRow(index, reached),
+    row(["skills reached", `${reached.length} of ${index.size}: ${reached.map(reachedLabel).join(", ")}`]),
     row([
       "skills with work left",
       `${unreached.length} of ${index.size}; the other ${quiet} carry neither a declared ` +
@@ -2460,10 +2517,6 @@ function renderReport(model) {
     row(["regressions", String(counts.regressions)]),
     ...asserts,
   ].join("\n");
-
-  const occurrenceLegend = ORDER.map(
-    (state) => `- \`${OCCURRENCE_LABEL[state]}\`: ${OCCURRENCE_MEANING[state]}.`,
-  ).join("\n");
 
   const { scenarios, attestations, runs } = model.ledger.evidence;
   const evidencePaths = [scenarios, attestations, runs].filter(Boolean).map((p) => `\`${p}\``);
@@ -2480,12 +2533,19 @@ function renderReport(model) {
 
   // `counts.scenarios` is every scenario in the file; the claim below is about
   // the ones that cover a high-risk domain, which is a narrower count.
+  // `scenarioCells` walks the display union, high-risk plus elective domains a
+  // scenario also covers, so it can exceed `highRiskCells`; only
+  // `highRiskScenarioCells` sits inside the high-risk denominator.
   const covered = model.conformance.highRisk.filter((entry) => entry.scenario).length;
   const conformanceLead = [
     `Conformance scenarios cover the ${counts.highRiskDomains} of ${counts.domains} domains judged high-risk.`,
-    counts.scenarioCells === counts.highRiskCells
-      ? `Every scenario applies to all ${model.ledger.harnesses.length} harnesses, so the ${covered} of them cover every one of the ${counts.highRiskCells} high-risk cells, which is ${counts.scenarioCells} of the ${counts.cells} in the matrix.`
-      : `The ${covered} of them cover ${counts.scenarioCells} of the ${counts.highRiskCells} high-risk cells, which is ${counts.scenarioCells} of the ${counts.cells} in the matrix.`,
+    counts.highRiskScenarioCells === counts.highRiskCells
+      ? `Every scenario applies to all ${model.ledger.harnesses.length} harnesses, so the ${covered} of them cover every one of the ${counts.highRiskCells} high-risk cells.`
+      : `The ${covered} of them cover ${counts.highRiskScenarioCells} of the ${counts.highRiskCells} high-risk cells.`,
+    counts.scenarioCells > counts.highRiskScenarioCells
+      ? `${plural(counts.scenarios - covered, "further scenario")} cover${counts.scenarios - covered === 1 ? "s" : ""} an elective domain, ` +
+        `so scenarios reach ${counts.scenarioCells} of the ${counts.cells} cells in the matrix.`
+      : `That is ${counts.scenarioCells} of the ${counts.cells} cells in the matrix.`,
     `The other ${plural(counts.domains - counts.highRiskDomains, "domain")} are resolved in prose on purpose.`,
     "A scenario defines what to run and what to inspect; it does not claim a result.",
   ].join("\n");
@@ -2520,19 +2580,18 @@ function renderReport(model) {
 
 Built from \`coupling.yaml\`, the current skill files, and the evidence under
 ${evidencePaths.join(", ")}. Every number below is
-counted on each run rather than asserted in prose.
+counted on each run rather than asserted in prose. The words domain, cell,
+occurrence, parity, and verification are defined once in
+[vocabulary](README.md#vocabulary).
 
-Three units run through the report. A **domain** is one axis, or for a parameter
-set one axis plus one parameter, which is why ${model.ledger.axes.length} axes make ${counts.domains} domains. A
-**cell** is one domain on one harness, so the matrix is ${counts.cells} cells. An
-**occurrence** is one domain in one file, and its status column reads:
+${EMOJI_LEGEND}
 
-${occurrenceLegend}
+## For reviewers
 
-A cell has no status. It carries a verification instead, which is the strongest
-saved evidence for it:
+One row per harness. Parity counts run over the ${counts.domains} domains; the last
+column names the domains that lose something on that harness.
 
-${tierLegend()}
+${reviewerTable(model)}
 
 ## Totals
 
@@ -2585,7 +2644,7 @@ ${orphanTable}
 function renderSummary(model) {
   const counts = model.counts;
   const index = model.skillIndex;
-  const reached = model.skills.filter((g) => g.ported);
+  const reached = model.skills.filter((g) => g.ported).length;
   const unreached = model.skills.filter((g) => !g.ported).length;
   const upstream = model.ledger.upstream;
 
@@ -2594,7 +2653,7 @@ function renderSummary(model) {
     "",
     head(["measure", "value"]),
     row(["upstream pin", `\`${upstream.sha.slice(0, 7)}\`, path \`${upstream.path}\``]),
-    reachedRow(index, reached),
+    row(["skills reached", `${reached} of ${index.size}, [see PORTABILITY.md](PORTABILITY.md#skills-the-port-reached)`]),
     row(["skills with work left", `${unreached} of ${index.size}`]),
     occurrencesRow(counts),
     row([
@@ -2694,9 +2753,17 @@ function tally(model) {
     attestations: model.verification.tiers.length,
     scenarios: model.conformance.byId.size,
     // A domain is axis plus parameter with no harness in it. highRisk* counts
-    // are the coverage gate; scenarioCells walks the display union in coverage.
+    // are the coverage gate. `coverage` is the display union: the high-risk
+    // domains plus any elective domain a scenario also covers (pack_path via
+    // skill_identify, for one). Summing applies_to over the union is therefore
+    // larger than the high-risk cell count and must never be printed against
+    // it; highRiskScenarioCells is the sum over the high-risk rows alone.
     highRiskDomains: model.conformance.highRisk.length,
     highRiskCells: model.conformance.highRisk.length * model.ledger.harnesses.length,
+    highRiskScenarioCells: model.conformance.highRisk.reduce(
+      (n, entry) => n + (entry.scenario?.appliesTo.length ?? 0),
+      0,
+    ),
     scenarioCells: model.conformance.coverage.reduce(
       (n, entry) => n + (entry.scenario?.appliesTo.length ?? 0),
       0,
