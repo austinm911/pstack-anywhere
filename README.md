@@ -25,13 +25,13 @@ links that root into `~/.agents/skills`, `~/.claude/skills`, and
 **2. `npx skills add`.**
 
 ```sh
-npx skills add <owner>/pstack-anywhere
+npx skills add austinm911/pstack-anywhere
 ```
 
 It walks `skills/<name>/SKILL.md` and links or copies each skill into every
 agent root it knows.
 
-**3. A plugin.** Claude Code: `/plugin marketplace add <owner>/pstack-anywhere`,
+**3. A plugin.** Claude Code: `/plugin marketplace add austinm911/pstack-anywhere`,
 then install `pstack-anywhere`. Codex: the repo carries
 `.agents/plugins/marketplace.json`, and at the pinned Codex source plugins sit
 behind `[features] plugins = true` in `config.toml`. Both harnesses read
