@@ -313,10 +313,15 @@ harnesses:
         copy: [.pi/agent/auth.json]
       # A stock pi has no delegation tool. `bun bench/run.mjs ... --extension`
       # loads this one explicitly, and run.yaml records it under `extension`.
-      # Path is the operator's install, expanded against the real HOME.
+      # Pin: references/harnesses/pi/MANIFEST.md (pi-subagents v0.64.0, SHA 57fda3f9c66e961ae0bba26496ce6459226f886e).
       extension:
-        name: '@andrewjacop/pi-herdr'
-        args: ['-e', '~/.pi/agent/npm/node_modules/@andrewjacop/pi-herdr']
+        name: pi-subagents
+        version: '0.64.0'
+        args: ['-e', '~/.pi/agent/npm/node_modules/pi-subagents/index.ts']
+      # pi-subagents loads slowly enough that pi's input box shows this line
+      # for several seconds after the prompt is drawn; text pasted while it is
+      # up is dropped. The runner waits until the line is gone before prompting.
+      startup_busy: Startup is still in progress
       # observed on this machine, not pinned
       # slug: "--" + resolved cwd without its leading slash, "/" and ":" -> "-", + "--"
       session_dir: ~/.pi/agent/sessions/{cwd_slug}

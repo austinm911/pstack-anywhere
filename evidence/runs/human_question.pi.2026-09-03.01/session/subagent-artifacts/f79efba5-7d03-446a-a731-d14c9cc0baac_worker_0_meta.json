@@ -1,0 +1,130 @@
+{
+  "runId": "f79efba5-7d03-446a-a731-d14c9cc0baac",
+  "agent": "worker",
+  "task": "[prompt redacted]",
+  "exitCode": 0,
+  "processSignal": "SIGTERM",
+  "usage": {
+    "input": 2828,
+    "output": 909,
+    "cacheRead": 1536,
+    "cacheWrite": 0,
+    "cost": 0.0016871199999999999,
+    "turns": 1
+  },
+  "model": "openai-codex/gpt-5.6-luna:high",
+  "attemptedModels": [
+    "openai-codex/gpt-5.6-luna:high"
+  ],
+  "modelAttempts": [
+    {
+      "model": "openai-codex/gpt-5.6-luna:high",
+      "success": true,
+      "exitCode": 0,
+      "usage": {
+        "input": 2828,
+        "output": 909,
+        "cacheRead": 1536,
+        "cacheWrite": 0,
+        "cost": 0.0016871199999999999,
+        "turns": 1
+      }
+    }
+  ],
+  "durationMs": 19217,
+  "toolCount": 0,
+  "launchContractDigest": "a6d69d8907266ec8edb98e3555370dcd0e69fe1b819dd55263bd6a41a4c3a4c3",
+  "launchResolvedExtensions": {
+    "version": 1,
+    "source": "launch-resolved",
+    "disableAmbientExtensions": false,
+    "runtime": [
+      "sha256:7aa56be0e92e0e21"
+    ],
+    "configured": [],
+    "effective": [
+      "sha256:7aa56be0e92e0e21"
+    ],
+    "omitted": {
+      "runtime": 0,
+      "configured": 0,
+      "effective": 0
+    }
+  },
+  "acceptance": {
+    "status": "rejected",
+    "evidenceStatus": "rejected",
+    "explicit": false,
+    "effectiveAcceptance": {
+      "level": "checked",
+      "explicit": false,
+      "inferredReason": [
+        "write-capable worker/task"
+      ],
+      "criteria": [
+        {
+          "id": "criterion-1",
+          "must": "Implement the requested change without widening scope",
+          "evidence": [
+            "changed-files",
+            "tests-added",
+            "commands-run",
+            "residual-risks",
+            "no-staged-files"
+          ],
+          "severity": "required"
+        }
+      ],
+      "evidence": [
+        "changed-files",
+        "tests-added",
+        "commands-run",
+        "residual-risks",
+        "no-staged-files"
+      ],
+      "verify": [],
+      "stopRules": []
+    },
+    "inferredReason": [
+      "write-capable worker/task"
+    ],
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "must": "Implement the requested change without widening scope",
+        "evidence": [
+          "changed-files",
+          "tests-added",
+          "commands-run",
+          "residual-risks",
+          "no-staged-files"
+        ],
+        "severity": "required"
+      }
+    ],
+    "runtimeChecks": [
+      {
+        "id": "attestation",
+        "status": "failed",
+        "message": "Structured acceptance report not found."
+      }
+    ],
+    "verifyRuns": [],
+    "childReportParseError": "Structured acceptance report not found."
+  },
+  "effects": {
+    "fileMutation": {
+      "status": "not-applicable",
+      "expected": false,
+      "attempted": false,
+      "evidence": {
+        "source": "tracked-files",
+        "trackedOnly": true,
+        "changedFiles": [],
+        "attemptedMutation": false
+      }
+    }
+  },
+  "transcriptPath": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-OR3rSp/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.WWEJHTZPJp--/subagent-artifacts/f79efba5-7d03-446a-a731-d14c9cc0baac_worker_0_transcript.jsonl",
+  "timestamp": 1788411043436
+}

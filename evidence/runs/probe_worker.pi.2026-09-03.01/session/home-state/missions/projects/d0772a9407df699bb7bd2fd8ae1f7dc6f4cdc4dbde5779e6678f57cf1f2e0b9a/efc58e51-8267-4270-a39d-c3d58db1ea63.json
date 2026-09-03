@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "efc58e51-8267-4270-a39d-c3d58db1ea63",
+  "title": "[prompt redacted]",
+  "objective": "[prompt redacted]",
+  "status": "completed",
+  "createdAt": "2026-09-03T04:51:24.298Z",
+  "updatedAt": "2026-09-03T04:54:27.369Z",
+  "runs": [
+    {
+      "runId": "fb488043-fe64-492e-af31-9ad0534e65f6",
+      "mode": "single",
+      "asyncDir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/pi-subagents-uid-502/async-subagent-runs/fb488043-fe64-492e-af31-9ad0534e65f6",
+      "status": "complete",
+      "startedAt": "2026-09-03T04:51:24.311Z",
+      "completedAt": "2026-09-03T04:54:27.369Z",
+      "usage": {
+        "tokens": 4418
+      }
+    }
+  ],
+  "workflowChildren": [],
+  "decisions": [],
+  "artifacts": [
+    {
+      "kind": "status",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/pi-subagents-uid-502/async-subagent-runs/fb488043-fe64-492e-af31-9ad0534e65f6/status.json"
+    },
+    {
+      "kind": "other",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/pi-subagents-uid-502/async-subagent-runs/fb488043-fe64-492e-af31-9ad0534e65f6/events.jsonl",
+      "description": "Lifecycle events"
+    },
+    {
+      "kind": "output",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-STXZLt/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.XtW0RET881--/subagent-artifacts/fb488043-fe64-492e-af31-9ad0534e65f6_delegate_output.md"
+    }
+  ],
+  "receipts": [],
+  "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.XtW0RET881",
+  "ownerSessionId": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-STXZLt/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.XtW0RET881--/2026-09-03T04-51-09-620Z_01a0659b-44b4-71b8-a7ce-cb624d097e20.jsonl",
+  "summary": "delegate:\nLoop completed. `probe-activity.log` contains 18 lines.\n\nLast line: `2026-09-03T04:54:18Z`"
+}

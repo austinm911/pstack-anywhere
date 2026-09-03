@@ -1,0 +1,17 @@
+# Assembled by the operator from invocation, transcript, and timestamp files.
+timeline:
+  - event: spawn call issued and returned asynchronously
+    at: 2026-09-03T04:58:20.568Z
+    source: invocation.json calls[1] subagent with async true; transcript.md lines 116-118
+  - event: parent acted (parent-alive.txt written)
+    at: 2026-09-03T04:58:25Z
+    source: parent-alive.txt line 1; invocation.json calls[2] bash timestamp 2026-09-03T04:58:25.441Z
+  - event: parent entered bg_wait
+    at: 2026-09-03T04:58:32.583Z
+    source: invocation.json calls[3] bg_wait with id 3933ec1c-e68f-4434-93e9-c0a9b121e024 and timeoutMs 120000
+  - event: worker finished (worker-done.txt written)
+    at: 2026-09-03T04:59:24Z
+    source: worker-done.txt line 1; invocation.json calls_workers child bash timestamp 2026-09-03T04:58:24.733Z
+  - event: result collected by reading worker-done.txt after wait
+    at: 2026-09-03T04:59:37.776Z
+    source: invocation.json calls[4] read; transcript.md lines 148-161

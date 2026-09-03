@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "8412eaec-6b70-40c9-9ccf-617542d61937",
+  "title": "[prompt redacted]",
+  "objective": "[prompt redacted]",
+  "status": "completed",
+  "createdAt": "2026-09-03T04:58:20.578Z",
+  "updatedAt": "2026-09-03T04:59:35.630Z",
+  "runs": [
+    {
+      "runId": "3933ec1c-e68f-4434-93e9-c0a9b121e024",
+      "mode": "single",
+      "asyncDir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/pi-subagents-uid-502/async-subagent-runs/3933ec1c-e68f-4434-93e9-c0a9b121e024",
+      "status": "complete",
+      "startedAt": "2026-09-03T04:58:20.591Z",
+      "completedAt": "2026-09-03T04:59:35.630Z",
+      "usage": {
+        "tokens": 4357
+      }
+    }
+  ],
+  "workflowChildren": [],
+  "decisions": [],
+  "artifacts": [
+    {
+      "kind": "status",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/pi-subagents-uid-502/async-subagent-runs/3933ec1c-e68f-4434-93e9-c0a9b121e024/status.json"
+    },
+    {
+      "kind": "other",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/pi-subagents-uid-502/async-subagent-runs/3933ec1c-e68f-4434-93e9-c0a9b121e024/events.jsonl",
+      "description": "Lifecycle events"
+    },
+    {
+      "kind": "output",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-9O9O9Z/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.14iz5G9cPb--/subagent-artifacts/3933ec1c-e68f-4434-93e9-c0a9b121e024_delegate_output.md"
+    }
+  ],
+  "receipts": [],
+  "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.14iz5G9cPb",
+  "ownerSessionId": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-9O9O9Z/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.14iz5G9cPb--/2026-09-03T04-58-06-602Z_01a065a1-a18a-70d7-a4e6-07db8634f92d.jsonl",
+  "summary": "delegate:\nTimestamp written: `2026-09-03T04:59:24Z`"
+}

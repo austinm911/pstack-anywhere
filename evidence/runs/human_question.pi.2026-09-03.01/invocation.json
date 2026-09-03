@@ -1,0 +1,546 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-OR3rSp/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.WWEJHTZPJp--/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+          "interactive_ready": true,
+          "name": "b-human-question-pi-01",
+          "pane_id": "w1H:p4S",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1062,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8ce1970c0e17e",
+          "terminal_title": "π - tmp.WWEJHTZPJp",
+          "terminal_title_stripped": "π - tmp.WWEJHTZPJp",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "pi",
+          "--model",
+          "openai-codex/gpt-5.6-luna:high",
+          "-e",
+          "/Users/am/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-OR3rSp/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.WWEJHTZPJp--/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+          "interactive_ready": true,
+          "name": "b-human-question-pi-01",
+          "pane_id": "w1H:p4S",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1076,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8ce1970c0e17e",
+          "terminal_title": "π - tmp.WWEJHTZPJp",
+          "terminal_title_stripped": "π - tmp.WWEJHTZPJp",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-OR3rSp/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.WWEJHTZPJp--/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+          "interactive_ready": true,
+          "name": "b-human-question-pi-01",
+          "pane_id": "w1H:p4S",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1076,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8ce1970c0e17e",
+          "terminal_title": "π - tmp.WWEJHTZPJp",
+          "terminal_title_stripped": "π - tmp.WWEJHTZPJp",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "pi",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-OR3rSp/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.WWEJHTZPJp--/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb.jsonl"
+            },
+            "agent_status": "idle",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+            "interactive_ready": true,
+            "name": "b-human-question-pi-01",
+            "pane_id": "w1H:p4S",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 1064,
+            "tab_id": "w1H:t2",
+            "terminal_id": "term_65a8ce1970c0e17e",
+            "terminal_title": "π - tmp.WWEJHTZPJp",
+            "terminal_title_stripped": "π - tmp.WWEJHTZPJp",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:wait",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-OR3rSp/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.WWEJHTZPJp--/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb.jsonl"
+            },
+            "agent_status": "idle",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+            "interactive_ready": true,
+            "name": "b-human-question-pi-01",
+            "pane_id": "w1H:p4S",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 1066,
+            "tab_id": "w1H:t2",
+            "terminal_id": "term_65a8ce1970c0e17e",
+            "terminal_title": "π - tmp.WWEJHTZPJp",
+            "terminal_title_stripped": "π - tmp.WWEJHTZPJp",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_info"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-OR3rSp/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.WWEJHTZPJp--/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb.jsonl"
+            },
+            "agent_status": "idle",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+            "interactive_ready": true,
+            "name": "b-human-question-pi-01",
+            "pane_id": "w1H:p4S",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 1069,
+            "tab_id": "w1H:t2",
+            "terminal_id": "term_65a8ce1970c0e17e",
+            "terminal_title": "π - tmp.WWEJHTZPJp",
+            "terminal_title_stripped": "π - tmp.WWEJHTZPJp",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:wait",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-OR3rSp/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.WWEJHTZPJp--/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb.jsonl"
+            },
+            "agent_status": "idle",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+            "interactive_ready": true,
+            "name": "b-human-question-pi-01",
+            "pane_id": "w1H:p4S",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 1071,
+            "tab_id": "w1H:t2",
+            "terminal_id": "term_65a8ce1970c0e17e",
+            "terminal_title": "π - tmp.WWEJHTZPJp",
+            "terminal_title_stripped": "π - tmp.WWEJHTZPJp",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_info"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-OR3rSp/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.WWEJHTZPJp--/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb.jsonl"
+            },
+            "agent_status": "idle",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+            "interactive_ready": true,
+            "name": "b-human-question-pi-01",
+            "pane_id": "w1H:p4S",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 1073,
+            "tab_id": "w1H:t2",
+            "terminal_id": "term_65a8ce1970c0e17e",
+            "terminal_title": "π - tmp.WWEJHTZPJp",
+            "terminal_title_stripped": "π - tmp.WWEJHTZPJp",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-OR3rSp/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.WWEJHTZPJp--/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb.jsonl"
+            },
+            "agent_status": "idle",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+            "interactive_ready": true,
+            "name": "b-human-question-pi-01",
+            "pane_id": "w1H:p4S",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 1076,
+            "tab_id": "w1H:t2",
+            "terminal_id": "term_65a8ce1970c0e17e",
+            "terminal_title": "π - tmp.WWEJHTZPJp",
+            "terminal_title_stripped": "π - tmp.WWEJHTZPJp",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "pi",
+      "--model",
+      "openai-codex/gpt-5.6-luna:high",
+      "-e",
+      "/Users/am/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+    ],
+    "version": "0.84.4\n"
+  },
+  "model": "openai-codex/gpt-5.6-luna:high",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.WWEJHTZPJp",
+  "home": {
+    "seeded": [
+      ".pi/agent/auth.json"
+    ],
+    "written": {},
+    "extension": {
+      "name": "pi-subagents",
+      "version": "0.64.0",
+      "args": [
+        "-e",
+        "~/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+      ]
+    }
+  },
+  "drive": {
+    "script": "bench/human_question/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "trial1.question_seen": "options rendered, plain list",
+      "trial1.answer": "typed beta.txt; turn had settled (\"idle\") before the answer",
+      "trial1.herdr_status_3s_after_answer": "working",
+      "trial1.end": {
+        "status": "idle",
+        "settled_by": "herdr agent wait"
+      },
+      "trial1.answer_reached_agent": true,
+      "trial2.question_survived_flood": true,
+      "trial2.answer": "keys down,enter (selected epsilon.txt); turn had settled (\"idle\") before the answer",
+      "trial2.herdr_status_3s_after_answer": "idle",
+      "trial2.end": {
+        "status": "idle",
+        "settled_by": "herdr agent wait"
+      },
+      "trial2.answer_reached_agent": false,
+      "trial3.after_esc": "question still on screen; turn settled (\"idle\")",
+      "trial3.proceed_sent_as": "prompt",
+      "trial3.end": {
+        "status": "idle",
+        "settled_by": "herdr agent prompt --wait"
+      },
+      "trial3.trial_block_written": true,
+      "files_at_end": [
+        "answer-received.txt",
+        "beta.txt",
+        "flood-trial.md",
+        "question-render.txt",
+        "worker-three.txt"
+      ]
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-OR3rSp/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.WWEJHTZPJp--",
+  "home_state_files": 3,
+  "calls": [
+    {
+      "name": "write",
+      "arguments": {
+        "path": "beta.txt",
+        "content": "chosen\n"
+      },
+      "ts": "2026-09-03T04:50:01.207Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "answer-received.txt",
+        "content": "trial: 1\nmechanism: plain reply\narrived: plain message\nreceived: \"beta.txt\"\nmapped_to: beta.txt\nassumed: no\n"
+      },
+      "ts": "2026-09-03T04:50:01.207Z"
+    },
+    {
+      "name": "subagent",
+      "arguments": {
+        "action": "list",
+        "capabilities": true
+      },
+      "ts": "2026-09-03T04:50:10.788Z"
+    },
+    {
+      "name": "subagent",
+      "arguments": {
+        "async": true,
+        "isolation": "none",
+        "workflowScript": "const results = await runs.all([\n  {key:'worker-one', agent:'worker', task:'Write the single word `one` followed by a newline into worker-one.txt. Report DONE once the file exists.', worktree:false},\n  {key:'worker-two', agent:'worker', task:'Write the single word `two` followed by a newline into worker-two.txt. Report DONE once the file exists.', worktree:false},\n  {key:'worker-three', agent:'worker', task:'Write the single word `three` followed by a newline into worker-three.txt. Report DONE once the file exists.', worktree:false}\n]);\nreturn results;"
+      },
+      "ts": "2026-09-03T04:50:24.116Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "printf '\\ntrial: 3\\nmechanism: plain reply\\narrived: plain message\\nreceived: nothing\\nmapped_to: none\\nassumed: yes — proceeded because the operator explicitly instructed me to continue without an answer.\\n' >> answer-received.txt"
+      },
+      "ts": "2026-09-03T04:51:08.818Z"
+    }
+  ],
+  "calls_workers": {
+    "2026-09-03T04-50-24-197Z_01a0659a-9345-7728-b629-d48cabd30ff0": [
+      {
+        "name": "write",
+        "arguments": {
+          "path": "beta.txt",
+          "content": "chosen\n"
+        },
+        "ts": "2026-09-03T04:50:01.207Z"
+      },
+      {
+        "name": "write",
+        "arguments": {
+          "path": "answer-received.txt",
+          "content": "trial: 1\nmechanism: plain reply\narrived: plain message\nreceived: \"beta.txt\"\nmapped_to: beta.txt\nassumed: no\n"
+        },
+        "ts": "2026-09-03T04:50:01.207Z"
+      },
+      {
+        "name": "subagent",
+        "arguments": {
+          "action": "list",
+          "capabilities": true
+        },
+        "ts": "2026-09-03T04:50:10.788Z"
+      },
+      {
+        "name": "subagent",
+        "arguments": {
+          "async": true,
+          "isolation": "none",
+          "workflowScript": "const results = await runs.all([\n  {key:'worker-one', agent:'worker', task:'Write the single word `one` followed by a newline into worker-one.txt. Report DONE once the file exists.', worktree:false},\n  {key:'worker-two', agent:'worker', task:'Write the single word `two` followed by a newline into worker-two.txt. Report DONE once the file exists.', worktree:false},\n  {key:'worker-three', agent:'worker', task:'Write the single word `three` followed by a newline into worker-three.txt. Report DONE once the file exists.', worktree:false}\n]);\nreturn results;"
+        },
+        "ts": "2026-09-03T04:50:24.116Z"
+      }
+    ],
+    "2026-09-03T04-50-24-229Z_01a0659a-9365-7103-856e-f01b1465243c": [
+      {
+        "name": "write",
+        "arguments": {
+          "path": "beta.txt",
+          "content": "chosen\n"
+        },
+        "ts": "2026-09-03T04:50:01.207Z"
+      },
+      {
+        "name": "write",
+        "arguments": {
+          "path": "answer-received.txt",
+          "content": "trial: 1\nmechanism: plain reply\narrived: plain message\nreceived: \"beta.txt\"\nmapped_to: beta.txt\nassumed: no\n"
+        },
+        "ts": "2026-09-03T04:50:01.207Z"
+      },
+      {
+        "name": "subagent",
+        "arguments": {
+          "action": "list",
+          "capabilities": true
+        },
+        "ts": "2026-09-03T04:50:10.788Z"
+      },
+      {
+        "name": "subagent",
+        "arguments": {
+          "async": true,
+          "isolation": "none",
+          "workflowScript": "const results = await runs.all([\n  {key:'worker-one', agent:'worker', task:'Write the single word `one` followed by a newline into worker-one.txt. Report DONE once the file exists.', worktree:false},\n  {key:'worker-two', agent:'worker', task:'Write the single word `two` followed by a newline into worker-two.txt. Report DONE once the file exists.', worktree:false},\n  {key:'worker-three', agent:'worker', task:'Write the single word `three` followed by a newline into worker-three.txt. Report DONE once the file exists.', worktree:false}\n]);\nreturn results;"
+        },
+        "ts": "2026-09-03T04:50:24.116Z"
+      }
+    ],
+    "2026-09-03T04-50-24-246Z_01a0659a-9376-76d5-b4cb-07beab516369": [
+      {
+        "name": "write",
+        "arguments": {
+          "path": "beta.txt",
+          "content": "chosen\n"
+        },
+        "ts": "2026-09-03T04:50:01.207Z"
+      },
+      {
+        "name": "write",
+        "arguments": {
+          "path": "answer-received.txt",
+          "content": "trial: 1\nmechanism: plain reply\narrived: plain message\nreceived: \"beta.txt\"\nmapped_to: beta.txt\nassumed: no\n"
+        },
+        "ts": "2026-09-03T04:50:01.207Z"
+      },
+      {
+        "name": "subagent",
+        "arguments": {
+          "action": "list",
+          "capabilities": true
+        },
+        "ts": "2026-09-03T04:50:10.788Z"
+      },
+      {
+        "name": "subagent",
+        "arguments": {
+          "async": true,
+          "isolation": "none",
+          "workflowScript": "const results = await runs.all([\n  {key:'worker-one', agent:'worker', task:'Write the single word `one` followed by a newline into worker-one.txt. Report DONE once the file exists.', worktree:false},\n  {key:'worker-two', agent:'worker', task:'Write the single word `two` followed by a newline into worker-two.txt. Report DONE once the file exists.', worktree:false},\n  {key:'worker-three', agent:'worker', task:'Write the single word `three` followed by a newline into worker-three.txt. Report DONE once the file exists.', worktree:false}\n]);\nreturn results;"
+        },
+        "ts": "2026-09-03T04:50:24.116Z"
+      },
+      {
+        "name": "write",
+        "arguments": {
+          "path": "worker-three.txt",
+          "content": "three\n"
+        },
+        "ts": "2026-09-03T04:50:29.617Z"
+      }
+    ]
+  }
+}

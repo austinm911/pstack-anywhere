@@ -112,7 +112,7 @@ axes:
       cursor: { parity: native, use: 'Task with environment: "cloud"' }
       claude: { parity: substitute, use: "Agent tool (named Task in older docs), subagent_type" }
       codex: { parity: substitute, use: "task tool" }
-      pi: { parity: extension, use: "a task tool an extension registers", fallback: "do the work inline, sequentially, and say no worker ran" }
+      pi: { parity: drop, use: "a task tool an extension registers" }
       omp: { parity: substitute, use: "task tool, agent field selects the specialist" }
     tokens:
       - pattern: 'environment:\s*"cloud"'
@@ -135,7 +135,7 @@ axes:
       cursor: { parity: native, use: "cloud agents run off-machine and survive a restart" }
       claude: { parity: drop, use: "subagents die with the session" }
       codex: { parity: drop, use: "subagents die with the session" }
-      pi: { parity: extension, use: "a pi-herdr delegate runs in its own herdr pane and outlives the parent; the report lives only while that pane does", fallback: "subagents die with the session" }
+      pi: { parity: degrade, use: 'mission records under ~/.pi/agent/missions/ persist the run; no subagent({action:"children.list"}) reattachment or live report recovery after /quit; externalize side effects' }
       omp: { parity: drop, use: "subagents die with the session" }
     consequence: >-
       Every playbook that spans a restart must externalize a worker's output the
@@ -170,7 +170,7 @@ axes:
       cursor: { parity: native, use: "/loop built-in" }
       claude: { parity: substitute, use: "one background Bash wait, wake on its completion; heartbeat only when no such wait fits" }
       codex: { parity: degrade, use: "heartbeat sized to when the result is worth re-checking" }
-      pi: { parity: substitute, use: "one blocking bash wait; heartbeat only when no such wait fits" }
+      pi: { parity: degrade, use: "30-second blocking bash poll; heartbeat only when no such wait fits" }
       omp: { parity: substitute, use: 'hub op:"wait"' }
     consequence: >-
       Upstream already documents the heartbeat as its own no-event path, so the
@@ -201,28 +201,28 @@ axes:
           cursor: { parity: native, use: "run_in_background: true" }
           claude: { parity: substitute, use: "run in background" }
           codex: { parity: substitute, use: "async" }
-          pi: { parity: extension, use: "herdr_start_agent returns at once; herdr_wait_agent collects", fallback: "no delegation, the parent does the work inline" }
+          pi: { parity: degrade, use: 'subagent({async:true}) returns at once; collect the result from a file the worker wrote' }
           omp: { parity: substitute, use: 'async, or hub op:"wait" to block' }
       - id: readonly
         resolution:
           cursor: { parity: native, use: "agent mode strips MCP" }
           claude: { parity: degrade, use: "Explore agent type drops Write and Edit but keeps Bash; the constraint held by the agent's instructions, not the tool surface" }
           codex: { parity: drop, use: "no read-only agent type in stock Codex; a plain spawn_agent worker can write" }
-          pi: { parity: drop, use: "no read-only delegate exists; a pi-herdr delegate is a full agent pane, and stock pi has no delegate at all" }
+          pi: { parity: drop, use: 'subagent({agent:"scout"}), tools: read, grep, find, ls, bash, write' }
           omp: { parity: substitute, use: "scout agent is read-only" }
       - id: identity
         resolution:
           cursor: { parity: native, use: 'subagent_type: "poteto-agent"' }
           claude: { parity: substitute, use: "a poteto-agent definition in the harness subagent dir" }
           codex: { parity: substitute, use: "a poteto-agent definition in the harness subagent dir" }
-          pi: { parity: extension, use: "a poteto-agent definition where the extension reads its agents", fallback: "no identity, the parent model does the work" }
+          pi: { parity: drop, use: "no subagent definition directory exists for pi; no identity, the parent model does the work" }
           omp: { parity: substitute, use: "a poteto-agent definition in the harness subagent dir" }
       - id: model
         resolution:
           cursor: { parity: native, use: "explicit slug per role" }
           claude: { parity: substitute, use: "role slots" }
           codex: { parity: substitute, use: "role slots" }
-          pi: { parity: substitute, use: "role slots" }
+          pi: { parity: extension, use: "role slots supplied through the pi-subagents extension", fallback: "no model selection, use the parent model" }
           omp: { parity: substitute, use: "role slots, or the agent field" }
     consequence: >-
       A ported poteto-agent definition has to exist per harness. harnesses.yaml

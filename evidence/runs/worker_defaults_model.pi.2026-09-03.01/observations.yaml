@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: model.selection_argument
+    observed: 'The pi-subagents subagent call used agent: delegate, model: openai-codex/gpt-5.6-luna for trial A, model: openai-codex/gpt-5.6-terra for trial B, and model: poteto-nonexistent-model for trial C; async was false for all.'
+    source: 'invocation.json lines 234-260; transcript.md lines 198-221; usage-record.txt lines 1-3'
+  - id: model.harness_reported
+    observed: 'Trial A actually ran as openai-codex/gpt-5.6-luna and trial B as openai-codex/gpt-5.6-terra, from child meta.json model fields and the harness session usage record. The parent ran openai-codex/gpt-5.6-luna:high.'
+    source: 'session/subagent-artifacts/70ee201e-c339-46e4-a699-5d04d2ace3cc_delegate_0_meta.json lines 15-18; session/subagent-artifacts/21d65654-b065-4222-9df6-453284f5e2bc_delegate_0_meta.json lines 15-18; usage-record.txt lines 5-20; run.yaml lines 11-16'
+  - id: model.self_report
+    observed: 'Both workers self-reported unknown, labelled non-authoritative: A selected openai-codex/gpt-5.6-luna, unknown; B selected openai-codex/gpt-5.6-terra, unknown.'
+    source: 'self-reports.txt lines 1-3; session/subagent-artifacts/70ee201e-c339-46e4-a699-5d04d2ace3cc_delegate_0_output.md lines 1-2; session/subagent-artifacts/21d65654-b065-4222-9df6-453284f5e2bc_delegate_0_output.md lines 1-2'
+  - id: model.selections_differed
+    observed: 'true, the authoritative harness records differ, with trial A gpt-5.6-luna and trial B gpt-5.6-terra.'
+    source: 'usage-record.txt lines 5-20; child meta.json model fields cited for model.harness_reported'
+  - id: model.unknown_slug_behavior
+    observed: 'hard error. The negative trial returned exactly: Unknown subagent model poteto-nonexistent-model in the active Pi model registry.'
+    source: 'negative-trial.txt lines 1-2; transcript.md lines 161-165; invocation.json lines 254-260'

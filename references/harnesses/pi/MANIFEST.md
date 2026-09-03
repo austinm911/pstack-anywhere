@@ -5,6 +5,7 @@
 - Upstream date of pin: 2026-08-28
 - CLI version installed when checked: 0.84.4  (npm @earendil-works/pi-coding-agent)
 - Last checked: 2026-08-31
+- Layout: `src/` is the pi repository at its SHA; `<package>/` holds a pinned extension at its tag.
 
 ## Refetch
 
@@ -111,3 +112,23 @@ There is no native subagent loader or `agents/` directory contract in the pinned
 ## Gaps
 
 The pinned source does not expose a native subagent loader, a `hooks` settings key, or a `hooks/` directory convention. Runtime-only behavior such as project-trust prompts and any third-party extension's own subagent implementation would require inspecting that extension or running Pi. The saved clipped files preserve only the cited contiguous ranges: `resource-loader.ts` 1-547, `settings-manager.ts` 1-420, `extensions/types.ts` 1-1500, and `package-manager.ts` 1-490.
+
+## pi-subagents v0.64.0
+
+- Repo: https://github.com/nicobailon/pi-subagents
+- Ref pinned: 57fda3f9c66e961ae0bba26496ce6459226f886e (GitHub tag `v0.64.0`)
+- Upstream tag: `v0.64.0`
+- NPM version installed when checked: `0.64.0`
+- Installed package: `/Users/am/.pi/agent/npm/node_modules/pi-subagents`
+- Extension entry: `/Users/am/.pi/agent/npm/node_modules/pi-subagents/index.ts` (`package.json` `pi.extensions`; Pi's settings package entry is registered as `npm:pi-subagents@0.64.0` but filters `-index.ts`, so the bench's explicit `-e` path is required.)
+
+## Saved pi-subagents files
+
+| Local path | Upstream path | Lines saved |
+|---|---|---:|
+| `pi-subagents/docs/tool-reference.md` | `docs/tool-reference.md` | 1-482 |
+| `pi-subagents/docs/configuration.md` | `docs/configuration.md` | 1-534 |
+| `pi-subagents/docs/observability.md` | `docs/observability.md` | 1-265 |
+| `pi-subagents/docs/agents.md` | `docs/agents.md` | 1-493 |
+| `pi-subagents/agents/scout.md` | `agents/scout.md` | 1-50 |
+| `pi-subagents/package.json` | `package.json` | 1-109 |

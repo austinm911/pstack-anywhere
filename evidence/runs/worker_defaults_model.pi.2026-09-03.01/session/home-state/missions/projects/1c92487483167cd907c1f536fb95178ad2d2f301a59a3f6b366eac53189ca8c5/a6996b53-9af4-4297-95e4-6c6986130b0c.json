@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "id": "a6996b53-9af4-4297-95e4-6c6986130b0c",
+  "title": "[prompt redacted]",
+  "objective": "[prompt redacted]",
+  "status": "completed",
+  "createdAt": "2026-09-03T04:53:01.774Z",
+  "updatedAt": "2026-09-03T04:53:05.429Z",
+  "runs": [
+    {
+      "runId": "21d65654-b065-4222-9df6-453284f5e2bc",
+      "mode": "single",
+      "agent": "delegate",
+      "status": "completed",
+      "startedAt": "2026-09-03T04:53:05.429Z",
+      "completedAt": "2026-09-03T04:53:05.429Z",
+      "usage": {
+        "tokens": 2612
+      }
+    }
+  ],
+  "workflowChildren": [],
+  "decisions": [],
+  "artifacts": [
+    {
+      "kind": "output",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/subagent-artifacts/21d65654-b065-4222-9df6-453284f5e2bc_delegate_0_output.md"
+    },
+    {
+      "kind": "other",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/subagent-artifacts/21d65654-b065-4222-9df6-453284f5e2bc_delegate_0_transcript.jsonl",
+      "description": "Child transcript"
+    }
+  ],
+  "receipts": [],
+  "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.EqGpRv6RKp",
+  "ownerSessionId": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46.jsonl",
+  "summary": "Run fan-out: 1/64 used, 63 remaining\nalpha\nunknown",
+  "acceptance": {
+    "status": "rejected",
+    "evidenceStatus": "rejected",
+    "explicit": false,
+    "effectiveAcceptance": {
+      "level": "attested",
+      "explicit": false,
+      "inferredReason": [
+        "default lightweight attestation"
+      ],
+      "criteria": [
+        {
+          "id": "criterion-1",
+          "must": "Return a concise result and residual risks when applicable",
+          "evidence": [
+            "manual-notes",
+            "residual-risks"
+          ],
+          "severity": "required"
+        }
+      ],
+      "evidence": [
+        "manual-notes",
+        "residual-risks"
+      ],
+      "verify": [],
+      "stopRules": []
+    },
+    "inferredReason": [
+      "default lightweight attestation"
+    ],
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "must": "Return a concise result and residual risks when applicable",
+        "evidence": [
+          "manual-notes",
+          "residual-risks"
+        ],
+        "severity": "required"
+      }
+    ],
+    "runtimeChecks": [
+      {
+        "id": "attestation",
+        "status": "failed",
+        "message": "Structured acceptance report not found."
+      }
+    ],
+    "verifyRuns": [],
+    "childReportParseError": "Structured acceptance report not found."
+  }
+}

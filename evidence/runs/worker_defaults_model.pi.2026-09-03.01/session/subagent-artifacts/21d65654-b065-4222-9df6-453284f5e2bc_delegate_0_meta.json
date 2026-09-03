@@ -1,0 +1,121 @@
+{
+  "runId": "21d65654-b065-4222-9df6-453284f5e2bc",
+  "agent": "delegate",
+  "task": "[prompt redacted]",
+  "exitCode": 0,
+  "processSignal": "SIGTERM",
+  "usage": {
+    "input": 2568,
+    "output": 44,
+    "cacheRead": 0,
+    "cacheWrite": 0,
+    "cost": 0.005664,
+    "turns": 1
+  },
+  "model": "openai-codex/gpt-5.6-terra",
+  "attemptedModels": [
+    "openai-codex/gpt-5.6-terra"
+  ],
+  "modelAttempts": [
+    {
+      "model": "openai-codex/gpt-5.6-terra",
+      "success": true,
+      "exitCode": 0,
+      "usage": {
+        "input": 2568,
+        "output": 44,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "cost": 0.005664,
+        "turns": 1
+      }
+    }
+  ],
+  "durationMs": 3638,
+  "toolCount": 0,
+  "launchContractDigest": "3b005729a9eec7f3f38dc0ad3ce57158b6a53af335709b20283281564da6dfb6",
+  "launchResolvedExtensions": {
+    "version": 1,
+    "source": "launch-resolved",
+    "disableAmbientExtensions": false,
+    "runtime": [
+      "sha256:7aa56be0e92e0e21"
+    ],
+    "configured": [],
+    "effective": [
+      "sha256:7aa56be0e92e0e21"
+    ],
+    "omitted": {
+      "runtime": 0,
+      "configured": 0,
+      "effective": 0
+    }
+  },
+  "acceptance": {
+    "status": "rejected",
+    "evidenceStatus": "rejected",
+    "explicit": false,
+    "effectiveAcceptance": {
+      "level": "attested",
+      "explicit": false,
+      "inferredReason": [
+        "default lightweight attestation"
+      ],
+      "criteria": [
+        {
+          "id": "criterion-1",
+          "must": "Return a concise result and residual risks when applicable",
+          "evidence": [
+            "manual-notes",
+            "residual-risks"
+          ],
+          "severity": "required"
+        }
+      ],
+      "evidence": [
+        "manual-notes",
+        "residual-risks"
+      ],
+      "verify": [],
+      "stopRules": []
+    },
+    "inferredReason": [
+      "default lightweight attestation"
+    ],
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "must": "Return a concise result and residual risks when applicable",
+        "evidence": [
+          "manual-notes",
+          "residual-risks"
+        ],
+        "severity": "required"
+      }
+    ],
+    "runtimeChecks": [
+      {
+        "id": "attestation",
+        "status": "failed",
+        "message": "Structured acceptance report not found."
+      }
+    ],
+    "verifyRuns": [],
+    "childReportParseError": "Structured acceptance report not found."
+  },
+  "effects": {
+    "fileMutation": {
+      "status": "not-applicable",
+      "expected": false,
+      "attempted": false,
+      "evidence": {
+        "source": "tracked-files",
+        "trackedOnly": true,
+        "changedFiles": [],
+        "attemptedMutation": false
+      }
+    }
+  },
+  "transcriptPath": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/subagent-artifacts/21d65654-b065-4222-9df6-453284f5e2bc_delegate_0_transcript.jsonl",
+  "timestamp": 1788411185427
+}

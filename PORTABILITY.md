@@ -33,7 +33,7 @@ saved evidence for it:
 | --- | --- |
 | ledger | v2, upstream `b9ddc83` |
 | domains | 24, from 21 axes, because `worker_defaults` resolves per parameter |
-| harness cells | 38 verified of 120 (24 domains x 5 harnesses) |
+| harness cells | 40 verified of 120 (24 domains x 5 harnesses) |
 | occurrences | 91 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions, 0 in total |
 | skills reached | 13 of 45: `architect` (1 of 1 checked), `arena` (2 of 2 checked), `automate-me` (3 of 3 checked), `how` (2 of 2 checked), `interrogate` (2 of 2 checked), `no-comments` (1 of 1 checked), `poteto-mode` (67 of 68 checked), `recall` (1 of 1 checked), `reflect` (6 of 6 checked), `setup-pstack-anywhere` (0 of 1 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (2 of 2 checked) |
@@ -63,14 +63,14 @@ Next:
 
 | domain | Cursor (upstream) | Claude Code | Codex | pi | Oh My Pi |
 | --- | --- | --- | --- | --- | --- |
-| `spawn_worker` (capability) | native, Task with environment: "cloud", unverified | substitute, Agent tool (named Task in older docs), subagent_type, exercised | substitute, task tool, exercised | extension, a task tool an extension registers, else do the work inline, sequentially, and say no worker ran, exercised | substitute, task tool, agent field selects the specialist, exercised |
-| `worker_durability` (capability) | native, cloud agents run off-machine and survive a restart, unverified | drop, subagents die with the session, exercised | drop, subagents die with the session, exercised | extension, a pi-herdr delegate runs in its own herdr pane and outlives the parent; the report lives only while that pane does, else subagents die with the session, exercised | drop, subagents die with the session, exercised |
-| `probe_worker` (capability) | native, dashboard shows agent state without a resume, unverified | degrade, job status only, no liveness for every delegate kind, exercised | substitute, list_agents, running or completed with the final message; no idle state, exercised | extension, the job status the task extension exposes, else none, wait for the result, unverified | substitute, hub op:"jobs" while live, hub op:"list" once settled, exercised |
-| `wake_on_event` (capability) | native, /loop built-in, unverified | substitute, one background Bash wait, wake on its completion; heartbeat only when no such wait fits, exercised | degrade, heartbeat sized to when the result is worth re-checking, exercised | substitute, one blocking bash wait; heartbeat only when no such wait fits, exercised | substitute, hub op:"wait", exercised |
-| `worker_defaults.background` (parameter_set) | native, run_in_background: true, unverified | substitute, run in background, exercised | substitute, async, exercised | extension, herdr_start_agent returns at once; herdr_wait_agent collects, else no delegation, the parent does the work inline, unverified | substitute, async, or hub op:"wait" to block, exercised |
-| `worker_defaults.readonly` (parameter_set) | native, agent mode strips MCP, unverified | degrade, Explore agent type drops Write and Edit but keeps Bash; the constraint held by the agent's instructions, not the tool surface, exercised | drop, no read-only agent type in stock Codex; a plain spawn_agent worker can write, exercised | drop, no read-only delegate exists; a pi-herdr delegate is a full agent pane, and stock pi has no delegate at all, exercised | substitute, scout agent is read-only, exercised |
-| `worker_defaults.identity` (parameter_set) | native, subagent_type: "poteto-agent", unverified | substitute, a poteto-agent definition in the harness subagent dir, exercised | substitute, a poteto-agent definition in the harness subagent dir, exercised | extension, a poteto-agent definition where the extension reads its agents, else no identity, the parent model does the work, exercised | substitute, a poteto-agent definition in the harness subagent dir, exercised |
-| `worker_defaults.model` (parameter_set) | native, explicit slug per role, unverified | substitute, role slots, exercised | substitute, role slots, exercised | substitute, role slots, exercised | substitute, role slots, or the agent field, exercised |
+| `spawn_worker` (capability) | native, Task with environment: "cloud", unverified | substitute, Agent tool (named Task in older docs), subagent_type, exercised | substitute, task tool, exercised | drop, a task tool an extension registers, exercised | substitute, task tool, agent field selects the specialist, exercised |
+| `worker_durability` (capability) | native, cloud agents run off-machine and survive a restart, unverified | drop, subagents die with the session, exercised | drop, subagents die with the session, exercised | degrade, mission records under ~/.pi/agent/missions/ persist the run; no subagent({action:"children.list"}) reattachment or live report recovery after /quit; externalize side effects, exercised | drop, subagents die with the session, exercised |
+| `probe_worker` (capability) | native, dashboard shows agent state without a resume, unverified | degrade, job status only, no liveness for every delegate kind, exercised | substitute, list_agents, running or completed with the final message; no idle state, exercised | extension, the job status the task extension exposes, else none, wait for the result, exercised | substitute, hub op:"jobs" while live, hub op:"list" once settled, exercised |
+| `wake_on_event` (capability) | native, /loop built-in, unverified | substitute, one background Bash wait, wake on its completion; heartbeat only when no such wait fits, exercised | degrade, heartbeat sized to when the result is worth re-checking, exercised | degrade, 30-second blocking bash poll; heartbeat only when no such wait fits, exercised | substitute, hub op:"wait", exercised |
+| `worker_defaults.background` (parameter_set) | native, run_in_background: true, unverified | substitute, run in background, exercised | substitute, async, exercised | degrade, subagent({async:true}) returns at once; collect the result from a file the worker wrote, exercised | substitute, async, or hub op:"wait" to block, exercised |
+| `worker_defaults.readonly` (parameter_set) | native, agent mode strips MCP, unverified | degrade, Explore agent type drops Write and Edit but keeps Bash; the constraint held by the agent's instructions, not the tool surface, exercised | drop, no read-only agent type in stock Codex; a plain spawn_agent worker can write, exercised | drop, subagent({agent:"scout"}), tools: read, grep, find, ls, bash, write, exercised | substitute, scout agent is read-only, exercised |
+| `worker_defaults.identity` (parameter_set) | native, subagent_type: "poteto-agent", unverified | substitute, a poteto-agent definition in the harness subagent dir, exercised | substitute, a poteto-agent definition in the harness subagent dir, exercised | drop, no subagent definition directory exists for pi; no identity, the parent model does the work, exercised | substitute, a poteto-agent definition in the harness subagent dir, exercised |
+| `worker_defaults.model` (parameter_set) | native, explicit slug per role, unverified | substitute, role slots, exercised | substitute, role slots, exercised | extension, role slots supplied through the pi-subagents extension, else no model selection, use the parent model, exercised | substitute, role slots, or the agent field, exercised |
 | `human_question` (capability) | native, AskQuestion, unverified | substitute, the ask tool, exercised | degrade, a plain question in the reply; request_user_input exists but is mode-gated and was not offered under stock config, exercised | degrade, a plain question in the reply; no recorded extension registers an ask tool, exercised | substitute, the ask tool, exercised |
 | `pack_path` (path_assumption) | native, pstack/skills/... in the vendored pack, unverified | substitute, ../<name>/<file> under ~/.claude/skills; the skill is hidden from the model's listing, so the path is the only pointer, exercised | substitute, ../<name>/<file> under ~/.agents/skills; listed to the model as Poteto Mode, exercised | substitute, ../<name>/<file> under ~/.agents/skills; the skill is hidden from the model's listing, so the path is the only pointer, exercised | substitute, ../<name>/<file> under ~/.agents/skills; skill://Poteto Mode/<file> also works, keyed by frontmatter name, exercised |
 
@@ -100,15 +100,15 @@ A scenario defines what to run and what to inspect; it does not claim a result.
 
 | domain | scenario | observations | runs | verification |
 | --- | --- | --- | --- | --- |
-| `spawn_worker` | `spawn_worker` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_durability` | `worker_durability` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `probe_worker` | `probe_worker` | 5 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: unverified; Oh My Pi: exercised |
-| `wake_on_event` | `wake_on_event` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_defaults.background` | `worker_defaults_background` | 5 | 3 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: unverified; Oh My Pi: exercised |
-| `worker_defaults.readonly` | `worker_defaults_readonly` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_defaults.identity` | `worker_defaults_identity` | 4 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_defaults.model` | `worker_defaults_model` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `human_question` | `human_question` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `spawn_worker` | `spawn_worker` | 5 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `worker_durability` | `worker_durability` | 5 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `probe_worker` | `probe_worker` | 5 | 6 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `wake_on_event` | `wake_on_event` | 5 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `worker_defaults.background` | `worker_defaults_background` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `worker_defaults.readonly` | `worker_defaults_readonly` | 5 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `worker_defaults.identity` | `worker_defaults_identity` | 4 | 6 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `worker_defaults.model` | `worker_defaults_model` | 5 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `human_question` | `human_question` | 5 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
 | `pack_path` | `skill_identify` | 5 | 8 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
 
 Cursor follows the same evidence rules as every other harness, and cannot reach `static` only because this repo has no saved Cursor source to cite.
@@ -118,12 +118,12 @@ Cursor follows the same evidence rules as every other harness, and cannot reach 
 | measure | value |
 | --- | --- |
 | scenarios | 10 defined |
-| attestations | 42 recorded |
-| evidence classes | 38 exercised, 4 superseded |
-| run directories | 42 complete, 3 incomplete |
-| cells exercised | 38 of 120, a subset of the 38 verified cells in Totals |
+| attestations | 51 recorded |
+| evidence classes | 47 exercised, 4 superseded |
+| run directories | 51 complete, 3 incomplete |
+| cells exercised | 40 of 120, a subset of the 40 verified cells in Totals |
 
-3 of 45 run directories are not complete against their scenario's evidence contract, so nothing may be attested from them: `probe_worker.pi.2026-09-02.01` (incomplete), `probe_worker.pi.2026-09-02.02` (incomplete), `worker_defaults_identity.codex.2026-09-02.01` (incomplete).
+3 of 54 run directories are not complete against their scenario's evidence contract, so nothing may be attested from them: `probe_worker.pi.2026-09-02.01` (incomplete), `probe_worker.pi.2026-09-02.02` (incomplete), `worker_defaults_identity.codex.2026-09-02.01` (incomplete).
 
 Every digest is sha256, recomputed from disk on each run.
 

@@ -34,10 +34,8 @@ was seeded under `environment_deltas`.
 
 `--extension` adds the harness's `cli.extension` to the launch and records it in
 `run.yaml` under `extension`, which is how an extension-tier cell gets its run.
-Note the limit: an extension that delegates through herdr (pi-herdr) opens the
-worker's pane from herdr's own environment, the real home, so only the parent
-session is captured, and anything the parent reads back from that pane comes
-from the operator's setup.
+Note: pi's extension is `pi-subagents`, and its delegated children run under
+the scratch `HOME` rather than the operator's real home.
 
 `--skill <name>` symlinks `skills/<name>` into the harness's `skillsRoot` under
 the scratch HOME (the path from `harnesses.yaml`, with `~` expanded to that

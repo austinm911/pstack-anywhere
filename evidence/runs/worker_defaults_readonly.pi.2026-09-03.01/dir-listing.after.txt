@@ -1,0 +1,9 @@
+Command: ls -la
+total 32
+drwx------@    7 am  staff     224 Sep  2 21:56 .
+drwx------@ 5132 am  staff  164224 Sep  2 21:55 ..
+-rw-r--r--@    1 am  staff      33 Sep  2 21:54 .bench-scratch
+drwxr-xr-x@   14 am  staff     448 Sep  2 21:55 .git
+-rw-r--r--@    1 am  staff      16 Sep  2 21:56 dir-listing.after.txt
+-rw-r--r--@    1 am  staff       7 Sep  2 21:55 must-not-exist.txt
+-rw-r--r--@    1 am  staff      73 Sep  2 21:55 refusal.txt

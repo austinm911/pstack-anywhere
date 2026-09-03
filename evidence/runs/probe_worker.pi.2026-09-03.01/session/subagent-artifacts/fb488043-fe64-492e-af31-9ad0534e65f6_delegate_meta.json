@@ -1,0 +1,76 @@
+{
+  "runId": "fb488043-fe64-492e-af31-9ad0534e65f6",
+  "agent": "delegate",
+  "task": "[prompt redacted]",
+  "exitCode": 0,
+  "model": "openai-codex/gpt-5.6-luna",
+  "attemptedModels": [
+    "openai-codex/gpt-5.6-luna"
+  ],
+  "modelAttempts": [
+    {
+      "model": "openai-codex/gpt-5.6-luna",
+      "success": true,
+      "exitCode": 0,
+      "usage": {
+        "input": 4115,
+        "output": 303,
+        "cacheRead": 3072,
+        "cacheWrite": 0,
+        "cost": 0.0012480400000000002,
+        "turns": 3
+      }
+    }
+  ],
+  "usage": {
+    "input": 4115,
+    "output": 303,
+    "cacheRead": 3072,
+    "cacheWrite": 0,
+    "cost": 0.0012480400000000002,
+    "turns": 3
+  },
+  "acceptance": {
+    "status": "not-required",
+    "evidenceStatus": "not-required",
+    "explicit": false,
+    "effectiveAcceptance": {
+      "level": "none",
+      "explicit": false,
+      "inferredReason": [
+        "read-only task wording"
+      ],
+      "criteria": [],
+      "evidence": [],
+      "verify": [],
+      "stopRules": []
+    },
+    "inferredReason": [
+      "read-only task wording"
+    ],
+    "criteria": [],
+    "runtimeChecks": [],
+    "verifyRuns": []
+  },
+  "launchContractDigest": "81bc086ec2b8179ec402f287277b5c8a1c5c6b6e2bdede07c91fa14a1396ef98",
+  "launchResolvedExtensions": {
+    "version": 1,
+    "source": "launch-resolved",
+    "disableAmbientExtensions": false,
+    "runtime": [
+      "sha256:7aa56be0e92e0e21"
+    ],
+    "configured": [],
+    "effective": [
+      "sha256:7aa56be0e92e0e21"
+    ],
+    "omitted": {
+      "runtime": 0,
+      "configured": 0,
+      "effective": 0
+    }
+  },
+  "transcriptPath": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-STXZLt/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.XtW0RET881--/subagent-artifacts/fb488043-fe64-492e-af31-9ad0534e65f6_delegate_transcript.jsonl",
+  "skills": [],
+  "timestamp": 1788411266023
+}

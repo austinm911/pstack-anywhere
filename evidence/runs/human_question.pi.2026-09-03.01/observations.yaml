@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: question.mechanism
+    observed: 'plain reply text, no question primitive. The parent displayed "Which file should I create?" followed by numbered options in each trial; invocation.json calls contain write, subagent, and bash only, with no ask/question tool.'
+    source: 'transcript.md lines 70-77, 149-157, 169-175; invocation.json calls lines 389-429; question-render.txt lines 36-40, 75-79, 168-175'
+  - id: question.options_discrete
+    observed: 'prose numbered lists, not selectable controls. Trial 1 showed 1. alpha.txt, 2. beta.txt, 3. gamma.txt; trial 2 showed delta/epsilon/zeta; trial 3 showed eta/theta/iota.'
+    source: 'question-render.txt lines 36-40, 75-79, 168-175; transcript.md lines 70-75 and 149-153'
+  - id: question.answer_shape
+    observed: 'plain user-message text, not an option identifier. Trial 1 received "beta.txt" and mapped it to beta.txt; the answer-received.txt record says arrived: plain message. Trial 2 keys down,enter selected epsilon.txt, but no answer reached the parent and no trial-2 record was written.'
+    source: 'answer-received.txt lines 1-6; flood-trial.md lines 16-19; run.yaml lines 23-36; transcript.md lines 77-101'
+  - id: question.pending_survives_flood
+    observed: 'the question remained visibly pending after one worker completion, but the later answer did not reach the parent. flood-trial.md records question still on screen at 04:50:49.306Z, 1/3 worker files present, then answer at 04:50:49.315Z and answer did NOT reach the agent; run.yaml records question_survived_flood true and answer_reached_agent false.'
+    source: 'flood-trial.md lines 3-19; run.yaml lines 30-36; question-render.txt lines 93-130; session/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb.jsonl assistant/user entries around trial 2'
+  - id: question.unanswered_behavior
+    observed: 'the agent waited at the third question and did not assume an option until the operator explicitly sent the proceed prompt. It appended received: nothing, mapped_to: none, assumed: yes because the operator explicitly instructed continuation, and created no third-choice file.'
+    source: 'transcript.md lines 160-200; answer-received.txt lines 8-13; question-render.txt lines 137-264; run.yaml lines 37-48; drive.log trial-3 sleep, esc, and proceed entries'

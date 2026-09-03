@@ -1,0 +1,134 @@
+{
+  "runId": "70ee201e-c339-46e4-a699-5d04d2ace3cc",
+  "agent": "delegate",
+  "task": "[prompt redacted]",
+  "exitCode": 0,
+  "processSignal": "SIGTERM",
+  "usage": {
+    "input": 1032,
+    "output": 336,
+    "cacheRead": 1536,
+    "cacheWrite": 0,
+    "cost": 0.0006403200000000001,
+    "turns": 1
+  },
+  "model": "openai-codex/gpt-5.6-luna",
+  "attemptedModels": [
+    "openai-codex/gpt-5.6-luna"
+  ],
+  "modelAttempts": [
+    {
+      "model": "openai-codex/gpt-5.6-luna",
+      "success": true,
+      "exitCode": 0,
+      "usage": {
+        "input": 1032,
+        "output": 336,
+        "cacheRead": 1536,
+        "cacheWrite": 0,
+        "cost": 0.0006403200000000001,
+        "turns": 1
+      }
+    }
+  ],
+  "durationMs": 8640,
+  "toolCount": 0,
+  "launchContractDigest": "e57a315385c29cab4f98cb809486201be457717dc449ebc80160c9976fc920ad",
+  "launchResolvedExtensions": {
+    "version": 1,
+    "source": "launch-resolved",
+    "disableAmbientExtensions": false,
+    "runtime": [
+      "sha256:7aa56be0e92e0e21"
+    ],
+    "configured": [],
+    "effective": [
+      "sha256:7aa56be0e92e0e21"
+    ],
+    "omitted": {
+      "runtime": 0,
+      "configured": 0,
+      "effective": 0
+    }
+  },
+  "acceptance": {
+    "status": "attested",
+    "evidenceStatus": "attested",
+    "explicit": false,
+    "effectiveAcceptance": {
+      "level": "attested",
+      "explicit": false,
+      "inferredReason": [
+        "default lightweight attestation"
+      ],
+      "criteria": [
+        {
+          "id": "criterion-1",
+          "must": "Return a concise result and residual risks when applicable",
+          "evidence": [
+            "manual-notes",
+            "residual-risks"
+          ],
+          "severity": "required"
+        }
+      ],
+      "evidence": [
+        "manual-notes",
+        "residual-risks"
+      ],
+      "verify": [],
+      "stopRules": []
+    },
+    "inferredReason": [
+      "default lightweight attestation"
+    ],
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "must": "Return a concise result and residual risks when applicable",
+        "evidence": [
+          "manual-notes",
+          "residual-risks"
+        ],
+        "severity": "required"
+      }
+    ],
+    "runtimeChecks": [],
+    "verifyRuns": [],
+    "childReport": {
+      "criteriaSatisfied": [
+        {
+          "id": "criterion-1",
+          "status": "satisfied",
+          "evidence": "Returned alpha and unknown; no residual risks."
+        }
+      ],
+      "changedFiles": [],
+      "testsAddedOrUpdated": [],
+      "commandsRun": [],
+      "validationOutput": [],
+      "residualRisks": [],
+      "noStagedFiles": true,
+      "diffSummary": "No changes.",
+      "reviewFindings": [
+        "no blockers"
+      ],
+      "manualNotes": "Required two-line response provided."
+    }
+  },
+  "effects": {
+    "fileMutation": {
+      "status": "not-applicable",
+      "expected": false,
+      "attempted": false,
+      "evidence": {
+        "source": "tracked-files",
+        "trackedOnly": true,
+        "changedFiles": [],
+        "attemptedMutation": false
+      }
+    }
+  },
+  "transcriptPath": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/subagent-artifacts/70ee201e-c339-46e4-a699-5d04d2ace3cc_delegate_0_transcript.jsonl",
+  "timestamp": 1788411179227
+}

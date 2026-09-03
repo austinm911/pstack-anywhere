@@ -1,0 +1,116 @@
+# Sources. herdr: `herdr agent get` (agent_status, revision, state_change_seq);
+# it exposes no turn or token counter. session_log: every *.jsonl under the
+# scratch HOME at the snapshot, assistant entries counted and the last usage
+# object seen. Zero growth in assistant_entries across during_wait minus
+# before_wait, beyond the single turn that entered the wait, is the claim.
+sources:
+  herdr: herdr agent get, fields agent_status, revision, state_change_seq
+  session_log: [".pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.aDVdOJgIo1--/2026-09-03T04-56-10-017Z_01a0659f-da21-7dd1-9f5d-369f58b438eb.jsonl"]
+wait_call: |
+  functions.bash({"command":"deadline=$(($(date +%s)+1200)); while [ ! -e event.flag ]; do now=$(date +%s); if [ \"$now\" -ge \"$deadline\" ]; then printf '%s\\n' 'TIMEOUT: event.flag absent'; exit 124; fi; sleep 30; done; printf '%s\\n' 'event.flag appeared'","timeout":1210000})
+  shell command
+  process exit, timeout
+snapshots:
+  before_wait: {
+    "label": "before_wait",
+    "at": "2026-09-03T04:56:12.644Z",
+    "files": [],
+    "lines": 0,
+    "assistant_entries": 0,
+    "usage": null,
+    "herdr": {
+      "agent_status": "idle",
+      "revision": 1,
+      "state_change_seq": 1096
+    }
+  }
+  during_wait: {
+    "label": "during_wait",
+    "at": "2026-09-03T04:58:12.658Z",
+    "files": [
+      ".pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.aDVdOJgIo1--/2026-09-03T04-56-10-017Z_01a0659f-da21-7dd1-9f5d-369f58b438eb.jsonl"
+    ],
+    "lines": 7,
+    "assistant_entries": 2,
+    "usage": {
+      "input": 2145,
+      "output": 132,
+      "cacheRead": 5632,
+      "cacheWrite": 0,
+      "reasoning": 31,
+      "totalTokens": 7909,
+      "cost": {
+        "input": 0.000429,
+        "output": 0.0001584,
+        "cacheRead": 0.00011264,
+        "cacheWrite": 0,
+        "total": 0.0007000400000000001
+      }
+    },
+    "herdr": {
+      "agent_status": "working",
+      "revision": 1,
+      "state_change_seq": 1097
+    }
+  }
+  after_wake: {
+    "label": "after_wake",
+    "at": "2026-09-03T04:58:51.693Z",
+    "files": [
+      ".pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.aDVdOJgIo1--/2026-09-03T04-56-10-017Z_01a0659f-da21-7dd1-9f5d-369f58b438eb.jsonl"
+    ],
+    "lines": 13,
+    "assistant_entries": 5,
+    "usage": {
+      "input": 438,
+      "output": 83,
+      "cacheRead": 7680,
+      "cacheWrite": 0,
+      "reasoning": 59,
+      "totalTokens": 8201,
+      "cost": {
+        "input": 0.0000876,
+        "output": 0.0000996,
+        "cacheRead": 0.0001536,
+        "cacheWrite": 0,
+        "total": 0.0003408
+      }
+    },
+    "herdr": {
+      "agent_status": "done",
+      "revision": 1,
+      "state_change_seq": 1101
+    }
+  }
+  after_trial2: {
+    "label": "after_trial2",
+    "at": "2026-09-03T05:04:21.259Z",
+    "files": [
+      ".pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.aDVdOJgIo1--/2026-09-03T04-56-10-017Z_01a0659f-da21-7dd1-9f5d-369f58b438eb.jsonl"
+    ],
+    "lines": 23,
+    "assistant_entries": 10,
+    "usage": {
+      "input": 524,
+      "output": 25,
+      "cacheRead": 8704,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 9253,
+      "cost": {
+        "input": 0.00010480000000000001,
+        "output": 0.000029999999999999997,
+        "cacheRead": 0.00017408000000000001,
+        "cacheWrite": 0,
+        "total": 0.00030888000000000004
+      }
+    },
+    "herdr": {
+      "agent_status": "done",
+      "revision": 1,
+      "state_change_seq": 1109
+    }
+  }
+assistant_entries_during_wait: 2
+assistant_entries_wait_to_wake: 3
+state_change_seq_during_wait: 1

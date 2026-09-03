@@ -1938,3 +1938,266 @@ attestations:
       (harnesses.yaml codex quit_dialog); and two earlier attempts of this
       scenario were discarded, one of them because the parent never exited on
       the single Enter.
+  - id: spawn_worker-pi-2026-09-03
+    method: exercised
+    axis: spawn_worker
+    harness: pi
+    scenario: spawn_worker
+    run: spawn_worker.pi.2026-09-03.01
+    artifacts:
+      - { path: CHECKLIST.md, digest: ffe0cb92c209da649666447cb6034a65a971a59502a90feb8a145cd975dc6761 }
+      - { path: invocation.json, digest: 65ab502d5f2ec55d09d4a1c4241513663558fc5292004542856dcba95f4368cb }
+      - { path: observations.yaml, digest: c76d2f2f280b93a00118194bc1e80ffe4e469524fa93156a1bed59022152c5b4 }
+      - { path: probe.after.txt, digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684 }
+      - { path: probe.before.txt, digest: 4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684 }
+      - { path: run.yaml, digest: 9cb43b7a384b0098660334fa0cecb3e88837ad25e5f8e3c0e2789e40b009f03b }
+      - { path: session/2026-09-03T04-47-20-383Z_01a06597-c53f-7ad9-9579-d3d23ed9dea1.jsonl, digest: c3ee8e432c2768af1d4e909d677602f71d2468953ad3f76a4b719660e5750451 }
+      - { path: session/2026-09-03T04-47-20-383Z_01a06597-c53f-7ad9-9579-d3d23ed9dea1/forks/2026-09-03T04-47-36-593Z_01a06598-0491-792d-a94f-b75ba935a0eb.jsonl, digest: ff97214c098427294f69bff1460df1b1cd7f5593456eef6cf2ae91c7b931a55b }
+      - { path: session/home-state/missions/index/c855f598d2462eba276204a3191589f9d5e0ccfcf88302092141133410d88fa4.json, digest: 4933761c71bb15a984022662c3e4a6c33fb1c605189e487817b83cf0071ef07e }
+      - { path: session/home-state/missions/projects/f86eaf790e8ee3f62470e40ac504d7d47433c1fe448c68b81e01adf0daa95b0c/9328d24e-e553-4a13-9aa2-6ea518a819c1.json, digest: 403b2c92d28d0c953c3924a137e388caba1306deaa2bd46673630c8901dd37cd }
+      - { path: session/home-state/run-history.jsonl, digest: 909537c58a3d58ad545e0c1bfaaa6b2ef49b74674252f0145763954337ac3af5 }
+      - { path: session/subagent-artifacts/14eecde5-793e-4624-b749-a6831cc9cf50_worker_0_input.md, digest: e7bb65485b7d9bdbdccc26ede50516ff43c42525731e62229733737363e458b6 }
+      - { path: session/subagent-artifacts/14eecde5-793e-4624-b749-a6831cc9cf50_worker_0_meta.json, digest: b9da20f9b426028572a1f19535d0ccf6b0196ecc2d3cb6f89e4fc05bf6aac196 }
+      - { path: session/subagent-artifacts/14eecde5-793e-4624-b749-a6831cc9cf50_worker_0_output.md, digest: 7ab44d1f36a06af259d287f279c993d803fded532ba6d85fab3adf174ab49539 }
+      - { path: session/subagent-artifacts/14eecde5-793e-4624-b749-a6831cc9cf50_worker_0_transcript.jsonl, digest: 590a85249747228bfb4c4a3cb27c4653c479d1d612d5ab72199e27a878215453 }
+      - { path: transcript.md, digest: 4fc96d5da9198912494fbc52a1d644e67da439da9862bcab9648840e79e0bb53 }
+      - { path: worker-report.txt, digest: 7ab44d1f36a06af259d287f279c993d803fded532ba6d85fab3adf174ab49539 }
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      pi 0.84.4 with pi-subagents loaded explicitly by -e. Observation ids: spawn.primitive, spawn.separate_context, spawn.result_returned, spawn.side_effect_matches, spawn.parent_abstained. Grounds the spawn_worker pi cell at drop: "No primitive produces spawn.primitive and spawn.side_effect_matches together." The worker failed before editing probe.txt, so the required side effect was not achieved.
+
+  - id: worker_defaults_background-pi-2026-09-03
+    method: exercised
+    axis: worker_defaults
+    parameter: background
+    harness: pi
+    scenario: worker_defaults_background
+    run: worker_defaults_background.pi.2026-09-03.01
+    artifacts:
+      - { path: CHECKLIST.md, digest: e9ed991dbe4c61f1e8f41f0fbbe3e02ca7dd73e2887fd7ce7d53907aa1ae7e25 }
+      - { path: invocation.json, digest: 2f2d7d6bdf9cd008ee6b687586c0c4cb0601eabdeb953eeafb9115de8b9c4911 }
+      - { path: observations.yaml, digest: dbc525b8f90c1959bc9a60cd7db00bc5f574deff45f4d89e98b8eb9b931f33dd }
+      - { path: parent-alive.txt, digest: cb7e5b20caa16b909a7e25200666521caebcd1ae1ddb7b3150707453e41d3bad }
+      - { path: run.yaml, digest: 928a6498721cd734712db4863ec054bc382115aa36ec8d7d803650a05aa357d5 }
+      - { path: session/2026-09-03T04-58-06-602Z_01a065a1-a18a-70d7-a4e6-07db8634f92d.jsonl, digest: 4e7746d2f99faca453e62c64f85df3085d290b9077df1ccb4f58640b02f5382c }
+      - { path: session/2026-09-03T04-58-06-602Z_01a065a1-a18a-70d7-a4e6-07db8634f92d/bb214027-2875-4fb2-bc31-85813d1da777/run-0/session.jsonl, digest: 024936fbcd6bde391dfa16a3f10e8aa10aec9aed0b20b02dc64c9c2555f76da7 }
+      - { path: session/home-state/missions/index/675c2cdd8cc9834eefaf62b0a8a0108d0860878a8bca282612b7507d74d60163.json, digest: 2a72babd150f559066fd63ef619e32de4164fbc5de550be4baffebb1a1087789 }
+      - { path: session/home-state/missions/projects/9c85aab3b56ad3e4bda17688456bf87906549d490263a97ec067604223b96b5b/8412eaec-6b70-40c9-9ccf-617542d61937.json, digest: 21731a26013f9b3daf4ca7d52ad8d9c831524d77c118e3f39cb38c1aa8f46008 }
+      - { path: session/subagent-artifacts/3933ec1c-e68f-4434-93e9-c0a9b121e024_delegate_input.md, digest: 63640a10b8fff5acbd4e6b8f111fe29adb6adbac965083c924ffd64ead3e55b7 }
+      - { path: session/subagent-artifacts/3933ec1c-e68f-4434-93e9-c0a9b121e024_delegate_meta.json, digest: 20d838c0370dd8c850b48989b30812c3538a97fc2882d2a2a67e84de8e6bad32 }
+      - { path: session/subagent-artifacts/3933ec1c-e68f-4434-93e9-c0a9b121e024_delegate_output.md, digest: 21d9da3d8dfd76181352a4545753b7d3aea9db848792ddbb8102671fd962257a }
+      - { path: session/subagent-artifacts/3933ec1c-e68f-4434-93e9-c0a9b121e024_delegate_transcript.jsonl, digest: aee6066312ff7002f0adb2ff8383d73afb6470343056f9ddd554c52636b3f117 }
+      - { path: timeline.yaml, digest: 2ef1f3ebe7b76dbf151109bb9bfca5ff9a39313858b978327ec6869900310356 }
+      - { path: transcript.md, digest: 9fd01b557844d3f179234d42b66e94c71c395f9cb211ad9475f65286ff8e04f8 }
+      - { path: worker-done.txt, digest: 5c6ef1765fb84a5418ecae5bc95766ff350b16b94db43c205d11c021e3395a6c }
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      pi 0.84.4 with pi-subagents loaded explicitly by -e. Observation ids: background.control_returned_at, background.worker_finished_at, background.parent_acted_at, background.collection_mechanism, background.result_intact. Grounds the worker_defaults/background pi cell at degrade: "Non-blocking, but the result is only reachable by reading a file the worker wrote, or partly truncated. Name the weaker path." Control returned and the parent acted before completion, but collection was file-backed.
+
+  - id: worker_defaults_readonly-pi-2026-09-03
+    method: exercised
+    axis: worker_defaults
+    parameter: readonly
+    harness: pi
+    scenario: worker_defaults_readonly
+    run: worker_defaults_readonly.pi.2026-09-03.01
+    artifacts:
+      - { path: CHECKLIST.md, digest: 462b803a3fbbad595ab180ccc9e5a733d547a739fb86cb4d564f9d4f37450f05 }
+      - { path: dir-listing.after.txt, digest: bbf63d13c27bf734fd2d36b407b755ec254fadc300964e37db662de999e8b397 }
+      - { path: invocation.json, digest: bc1db79a7a85fb31a00cc4dc90ede5b0d4b984995c8feb25fd58ca09ea3fd769 }
+      - { path: observations.yaml, digest: a7bd67b361575228ce1bcbb130ad0274c5016a5c2bd836804f687eef221d0513 }
+      - { path: refusal.txt, digest: aea1d03660670b98df774d1cca9e02f37deee4464697eb57005cc578a93efc30 }
+      - { path: run.yaml, digest: 0dcd25e0445815c0755759a6db71730d65a7bc63749fc9be417bb57ecaa1c510 }
+      - { path: session/2026-09-03T04-54-55-806Z_01a0659e-b83e-7899-aed2-4f2546df2acf.jsonl, digest: cfcc3fa90e376a14147bbff87caaf6a0827ea770d19f9d59cc08945b1b4db742 }
+      - { path: session/2026-09-03T04-54-55-806Z_01a0659e-b83e-7899-aed2-4f2546df2acf/40bb4ce0-6c6c-453e-b76e-b37f310d0d60/run-0/session.jsonl, digest: 1f6117851b1ff7a9c5258fb7df736ef2316b3fea00450ba7c2d04b59c8b550fc }
+      - { path: session/home-state/missions/index/c96e9a8df6c1fe8ee80400db268f14f7c166b88b02cc7732dbf257881386e22c.json, digest: f27e1c1ded4f24debc3a60eb3ee598e91affb7b5ff178649333ee7d8f34272cb }
+      - { path: session/home-state/missions/projects/c2f01a490f1561b7f3b118709e7b5bde190d87a2107f55ab12eef797637bc782/8485993a-1fc3-45f2-a4a1-c8748f52adb3.json, digest: f02590b6a702a174fff1c53ed45569ae59d49645ab57fbf4aec7e429bde82c4b }
+      - { path: session/home-state/run-history.jsonl, digest: e378982aaa40c113815383d58e107774b8fbc56c2df62857f301fb7f0f89c4f0 }
+      - { path: session/subagent-artifacts/40bb4ce0-6c6c-453e-b76e-b37f310d0d60_delegate_0_input.md, digest: 63640a10b8fff5acbd4e6b8f111fe29adb6adbac965083c924ffd64ead3e55b7 }
+      - { path: session/subagent-artifacts/40bb4ce0-6c6c-453e-b76e-b37f310d0d60_delegate_0_meta.json, digest: 4084d387660e20f1f1955c896c248866d63e5d1c1b8ffb6112ccde8803ee7bc1 }
+      - { path: session/subagent-artifacts/40bb4ce0-6c6c-453e-b76e-b37f310d0d60_delegate_0_output.md, digest: 874b8fd916a366c75b78ac215bf60c2f68a61b50dc52a4a61915e50e4e100764 }
+      - { path: session/subagent-artifacts/40bb4ce0-6c6c-453e-b76e-b37f310d0d60_delegate_0_transcript.jsonl, digest: 8b60918cebb7122c750141231efddad8ccd43e2b1c701d6b30671e6af9a84800 }
+      - { path: tool-surface.json, digest: 5a1bc2a1cb1bf67764e7212b5749cd6ebf644b537602964d4372c3e09ad27302 }
+      - { path: transcript.md, digest: 60d0a7b54720e2465e24f8d9a7951478e794f357389681c55112967d048cf14c }
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      pi 0.84.4 with pi-subagents loaded explicitly by -e. Observation ids: readonly.attempt_made, readonly.denial_layer, readonly.tool_surface, readonly.file_absent, readonly.mechanism. Grounds the worker_defaults/readonly pi cell at drop: "The file exists after the run, or no read-only configuration exists to apply." The child had write access and created must-not-exist.txt.
+
+  - id: worker_defaults_identity-pi-2026-09-03
+    method: exercised
+    axis: worker_defaults
+    parameter: identity
+    harness: pi
+    scenario: worker_defaults_identity
+    run: worker_defaults_identity.pi.2026-09-03.01
+    artifacts:
+      - { path: CHECKLIST.md, digest: 26c7fae83643bcbade95102ddc63ddad0bf4e021b606dbea225c41341146c907 }
+      - { path: definition.txt, digest: c3cdcfe0d25b98d787ac6c9a46c80c69bc35c5c1fba9a54727763e9c23127dfe }
+      - { path: drive.log, digest: 77c1f9c3328efc61b333e0a5d143e57cc972f3ea409b494cd9ca323575fb97b6 }
+      - { path: invocation.json, digest: d5293a5996e283227f3a195ae24a78b2747cbb301a4b439b72a5cae2ea937dfc }
+      - { path: negative-trial.txt, digest: cf22e91176ccbab057085d3ebcf3424c7c03da32ffbaffe751e6707b5fa818a0 }
+      - { path: observations.yaml, digest: 8a5eb6b6bd660c7b745e4129377003b9bd58129e12991484f6be9a340db7287b }
+      - { path: positive-report.txt, digest: 0cd973aaa47e529e9b4002c31f5f718c4b5f4e15aa0e60ad32086e9ae939265f }
+      - { path: run.yaml, digest: 735b3f07a4518afb9178afa6b9fc07c4e826f48b478457138424973fc96058dc }
+      - { path: session/2026-09-03T05-01-08-948Z_01a065a4-69d4-708f-a9ad-b24e767c2af1.jsonl, digest: 91305da8bbf1043e8fd0cc1f1ffef1626d3dbdd85ebc6e3258b76a9cf0dd4dc1 }
+      - { path: transcript.md, digest: 0715a94fff25cff8c464e845f6ff42b08c57a004fc7d65e7515a7489fb7d4887 }
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      pi 0.84.4 with pi-subagents loaded explicitly by -e. Observation ids: identity.definition_path, identity.selection_argument, identity.token_present, identity.unknown_name_behavior. Grounds the worker_defaults/identity pi cell at drop: "No subagent definition directory exists, or token_present is false." Pi has no subagent definition directory, so the positive token trial was skipped.
+
+  - id: worker_defaults_model-pi-2026-09-03
+    method: exercised
+    axis: worker_defaults
+    parameter: model
+    harness: pi
+    scenario: worker_defaults_model
+    run: worker_defaults_model.pi.2026-09-03.01
+    artifacts:
+      - { path: CHECKLIST.md, digest: 2bf221b55622e05ca72d498cdfd03c9a090d60a22d47d5b1c27b611ae48e40b6 }
+      - { path: drive.log, digest: 3d4809af864c5fc99cd7f3a094d77f88d0a2ce376aa3edb46982ff578fe99212 }
+      - { path: invocation.json, digest: c9a6e0d1b5ca7a46aaa9f6aba7393d7a0eb72847c4bc3cae1c9ee49c1c0154a1 }
+      - { path: negative-trial.txt, digest: ff049748865fc20412e8f18cb201e05cbad701d7d8740b0b1ba62db3992a5984 }
+      - { path: observations.yaml, digest: 707a5097ea7f387e5431cdcfc93d34e24d1aac6ab178630cc9834e26acbc7e00 }
+      - { path: run.yaml, digest: ea2c32b2e471b1ff4aa7605d3ec38775ccb28bef662058a03d62fbd249c48077 }
+      - { path: self-reports.txt, digest: bcef18e2ba68c657c115ad6ffed6a11fff444ad0f9a4af64728ee6ac7d1a3413 }
+      - { path: session/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46.jsonl, digest: 156f439ec3171285640bbcafe4fea2189e2f02c60aee1fb3c7050b4bea4e0215 }
+      - { path: session/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46/21d65654-b065-4222-9df6-453284f5e2bc/run-0/session.jsonl, digest: 51d1c9f0722d8fec10d2490dc4ac8c064b40f43b8d002cb38a30c21d947a9294 }
+      - { path: session/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46/70ee201e-c339-46e4-a699-5d04d2ace3cc/run-0/session.jsonl, digest: a2de42f478c79ab0aa50e63116e7e8dcbf08a0499245352b71131e50988d905d }
+      - { path: session/home-state/missions/index/2936ee2a0f45433382c76ef4804d4e871d658254a3f70d30adce5b8700a56b5c.json, digest: 29d9647bdf071d5c2d0e3804ab40af435479f26acf3b974bd49af46ef65e28e9 }
+      - { path: session/home-state/missions/index/62bc9af2ba09a3859855f987f4c693ad3140aa2241db63effc4b9dbc944c3085.json, digest: 940f790a494e31100e386c8864fc099710fee19f3ff3a372abef1423017ba624 }
+      - { path: session/home-state/missions/index/c19c0e959c1fa1fa7a4794401ebc44ce1553d7529b5edebaaeecd50eb6c0897d.json, digest: 0a72e1c43d4e80b158b2a8ea3d15465ba337e1768e0a7ced5912040f02a8e1fb }
+      - { path: session/home-state/missions/projects/1c92487483167cd907c1f536fb95178ad2d2f301a59a3f6b366eac53189ca8c5/a6996b53-9af4-4297-95e4-6c6986130b0c.json, digest: b4c093a061f7bc0b2ef9171f3c17fe8825959e3f17ed26ac86e5ba57bb9dd648 }
+      - { path: session/home-state/missions/projects/1c92487483167cd907c1f536fb95178ad2d2f301a59a3f6b366eac53189ca8c5/d69c2bfe-4afe-4295-954e-c7341dc5f200.json, digest: 16ebfdf503220e26be91731ec516159c8ba269860ebf20c5aff373f988770b09 }
+      - { path: session/home-state/missions/projects/1c92487483167cd907c1f536fb95178ad2d2f301a59a3f6b366eac53189ca8c5/f3e547b6-48a2-4862-82ce-71f737728ae4.json, digest: d1dd7581e885e74fe2f63414e726f397627f625e67d5c1a70b7e22cf3a4861ac }
+      - { path: session/home-state/run-history.jsonl, digest: f4771af88a6addacb63aeecc03b14b2b59864a58f9f329506ae6b6bfa5a2c06b }
+      - { path: session/subagent-artifacts/21d65654-b065-4222-9df6-453284f5e2bc_delegate_0_input.md, digest: 63640a10b8fff5acbd4e6b8f111fe29adb6adbac965083c924ffd64ead3e55b7 }
+      - { path: session/subagent-artifacts/21d65654-b065-4222-9df6-453284f5e2bc_delegate_0_meta.json, digest: 1d61542d056a7e8996aee9418082da6d365423bde92e3169bf5b5bf38bff4161 }
+      - { path: session/subagent-artifacts/21d65654-b065-4222-9df6-453284f5e2bc_delegate_0_output.md, digest: 9b264ad829bfc104835f9c24a836d5e33f28358c31a2a8e450621685c8548b3b }
+      - { path: session/subagent-artifacts/21d65654-b065-4222-9df6-453284f5e2bc_delegate_0_transcript.jsonl, digest: c3994f478a947258e70d1a6fb947ca7855ea88a8762557104b29ef1d161b9f18 }
+      - { path: session/subagent-artifacts/70ee201e-c339-46e4-a699-5d04d2ace3cc_delegate_0_input.md, digest: 63640a10b8fff5acbd4e6b8f111fe29adb6adbac965083c924ffd64ead3e55b7 }
+      - { path: session/subagent-artifacts/70ee201e-c339-46e4-a699-5d04d2ace3cc_delegate_0_meta.json, digest: 6ccb331f85e08a1a8eb90295b3726e1978ad09faa0f37a157f57aff48fd3415f }
+      - { path: session/subagent-artifacts/70ee201e-c339-46e4-a699-5d04d2ace3cc_delegate_0_output.md, digest: 9b264ad829bfc104835f9c24a836d5e33f28358c31a2a8e450621685c8548b3b }
+      - { path: session/subagent-artifacts/70ee201e-c339-46e4-a699-5d04d2ace3cc_delegate_0_transcript.jsonl, digest: 8b55caab5bf49c44fa3ff5f0658a710d404e695e26b4f16114d7e8981aa746a7 }
+      - { path: transcript.md, digest: 68e6d1aff0a5f8c73cb2c65fe0193352b9ce53a3ddbd970a016890ae97493ad7 }
+      - { path: usage-record.txt, digest: c1c12b5bfc89f73df8c14be02233fe85cca7f5c779f9e7b224d2c1d73f28bb99 }
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      pi 0.84.4 with pi-subagents loaded explicitly by -e. Observation ids: model.selection_argument, model.harness_reported, model.self_report, model.selections_differed, model.unknown_slug_behavior. Grounds the worker_defaults/model pi cell at extension: "Substitute-level satisfaction, with the primitive coming from a recorded extension." Harness-side records matched luna and terra selections, and an unknown slug hard-errored.
+
+  - id: worker_durability-pi-2026-09-03
+    method: exercised
+    axis: worker_durability
+    harness: pi
+    scenario: worker_durability
+    run: worker_durability.pi.2026-09-03.01
+    artifacts:
+      - { path: CHECKLIST.md, digest: f42f06574d4e76e76e92fdd1b333a56cd90cb4539d79b003f57461bf64eed6c7 }
+      - { path: drive.log, digest: 2afa71580c4cea632c3300070eb607cee414610f0444e90316c61eb8dc6aa19e }
+      - { path: heartbeat.log, digest: da4ba489dc6e7fdc52a6daf6f9a7bce5d4da834cf92b9497ec1f215463eff5e7 }
+      - { path: invocation.json, digest: ad3836528765d31579a18c515fce2abd93e14b5d925604290de01abb2d6e1722 }
+      - { path: observations.yaml, digest: 6a5005dbc42ccb71df3cec388e1bf18d7a954942bde7fa316a4cada19ad9d653 }
+      - { path: reattach-attempt.md, digest: 32c6322e317018a85b0c93a30a89793fa5418fbd77e8e9bb0bf935863ca9d94f }
+      - { path: run.yaml, digest: 16091c6565c9afd1daf741793b8fa3e244a11b6ca445071bd63657fad5f7f05c }
+      - { path: session/2026-09-03T05-05-23-810Z_01a065a8-4d62-77a8-a73a-b919df3f192b.jsonl, digest: 961ce47fb7394cd52eb9c8c4b3ca5090c37c1b82db1ac5c8fa90c6bd3b71142d }
+      - { path: session/2026-09-03T05-05-23-810Z_01a065a8-4d62-77a8-a73a-b919df3f192b/forks/2026-09-03T05-05-38-812Z_01a065a8-87fc-7f4f-9b4c-3b9ae9cef452.jsonl, digest: f7b68141d35a541bcdcdc930bd6c03db1b656524bc411127b9aabe6154b5bf4b }
+      - { path: session/2026-09-03T05-12-26-496Z_01a065ae-c080-7e89-9a57-f0e3f563f7af.jsonl, digest: b606e6bf8f7208387b6f1dc9dd943b651f0941484488418be0d36e2b48af31e6 }
+      - { path: session/home-state/missions/index/3969ab22dc1f0f44ef4a0d5a7d4668eed802785f6eefd240b348afb0fdc2ea34.json, digest: 343bbc30074df8b8bb20d6b6630515fa5b8e388dc52a9cb60b9eb6f1ba9df510 }
+      - { path: session/home-state/missions/projects/c100bd5ebd29081a81003d83036b4789de4a635db3aa3df263fc802d53a8f461/0543940b-7903-477d-a229-1be0c650805a.json, digest: 3be738d15772b7048496588b38aa4754dbc46c06541c8905fec55f5003dc4abe }
+      - { path: session/subagent-artifacts/.last-cleanup, digest: a7698696eb15790bd74a3ba0d1a0e13fb69a9be795b420c119cb4387a9fa3236 }
+      - { path: session/subagent-artifacts/3a3acc41-6cdd-400c-aad4-4521f3a3c76f_worker_input.md, digest: e7bb65485b7d9bdbdccc26ede50516ff43c42525731e62229733737363e458b6 }
+      - { path: session/subagent-artifacts/3a3acc41-6cdd-400c-aad4-4521f3a3c76f_worker_meta.json, digest: a83ba0ebd7b105fc83d7e476f84adf5ccb2ea2051caa7f9bd9fea139b5bcb456 }
+      - { path: session/subagent-artifacts/3a3acc41-6cdd-400c-aad4-4521f3a3c76f_worker_output.md, digest: eb6271d26ac34758bddd1fc702c69bdcec70d0b08d27de5e4e67037708215bb0 }
+      - { path: session/subagent-artifacts/3a3acc41-6cdd-400c-aad4-4521f3a3c76f_worker_transcript.jsonl, digest: 21aa5d4b2eb063bcc43a6d47b5a35c626d894e227624c413378b56f1c60d614d }
+      - { path: termination.yaml, digest: 15fd557014b68f0fbd6d6a0415d18128964f74b85e947a16a6a066febf3621b8 }
+      - { path: transcript.md, digest: 636927208685c23ca4f3b071a62ced05e44b9d9ef6bfa688562a31f6773d16b0 }
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      pi 0.84.4 with pi-subagents loaded explicitly by -e. Observation ids: durability.parent_terminated_at, durability.heartbeats_after_termination, durability.completion_marker, durability.reattach, durability.result_recoverable. Grounds the worker_durability pi cell at degrade: "The worker survives but nothing reattaches and the report is unrecoverable, leaving only its side effects. Name the weaker path." Mission records persisted and side effects completed after /quit, but no child reattached and no live final report was recoverable.
+
+  - id: probe_worker-pi-2026-09-03
+    method: exercised
+    axis: probe_worker
+    harness: pi
+    scenario: probe_worker
+    run: probe_worker.pi.2026-09-03.01
+    artifacts:
+      - { path: CHECKLIST.md, digest: 5847ab10717db96391f8f63cf983b0076f2ccb9cc9b4095a6b711b72589ea28b }
+      - { path: cadence.md, digest: 2f0dde7adfd753ace34f95663be70af0ffff6304a8523d1f2965d888ac820bfc }
+      - { path: drive.log, digest: 9eb0115f770ada471df775eddd2295b3c0f003b3196ae8058866617c8779d4e0 }
+      - { path: invocation.json, digest: ced8b0d793944ddee8eed6636df25f3f4eba723f603849afcbdc080971c95d42 }
+      - { path: observations.yaml, digest: 34354fcec8c93bceb911ff004672f84e269c224a6ecc384a458a4eec5b5f01ca }
+      - { path: probe-activity.log, digest: e9ec400566e6f15e35cc24d2de42b55cd34bf8d4e9dae029e8aae1acb520b6d7 }
+      - { path: probes.yaml, digest: da0215f3528e082022e7a6485bfd88e64e578d72a141a96820d43b261aa19866 }
+      - { path: run.yaml, digest: 7c9b9eaa4b227ddab844f88aed5c2b2fcb653e9eef7b07c74db91e81a56c7939 }
+      - { path: session/2026-09-03T04-51-09-620Z_01a0659b-44b4-71b8-a7ce-cb624d097e20.jsonl, digest: e18f41d88d08fc04bab90aa32bbca6c7ad0415efd79d819bf1f46061c4a4a7eb }
+      - { path: session/2026-09-03T04-51-09-620Z_01a0659b-44b4-71b8-a7ce-cb624d097e20/acef4f0d-61af-4d28-9595-59b0200a8152/run-0/session.jsonl, digest: 53cdef4e6b744f0e7404cef19185acf304638d26854b070be9f4230906a9681a }
+      - { path: session/home-state/missions/index/b5f0fe37bc24f3443743bad239dfc798f041074a8d595ce651251f20857849cf.json, digest: 5fbcc23600d36e7ac9e244085b3122be08e40e02c4806190bc3c4400398c653a }
+      - { path: session/home-state/missions/projects/d0772a9407df699bb7bd2fd8ae1f7dc6f4cdc4dbde5779e6678f57cf1f2e0b9a/efc58e51-8267-4270-a39d-c3d58db1ea63.json, digest: 064d21073d52a14832fa749617e677d3fd3f6278f7d3a067e5f8a6293b6bbcda }
+      - { path: session/subagent-artifacts/fb488043-fe64-492e-af31-9ad0534e65f6_delegate_input.md, digest: 63640a10b8fff5acbd4e6b8f111fe29adb6adbac965083c924ffd64ead3e55b7 }
+      - { path: session/subagent-artifacts/fb488043-fe64-492e-af31-9ad0534e65f6_delegate_meta.json, digest: 81eb3fd635cf842fcd3fe2c1ee8fe6cb530233ec545a3beed24c1c80134d8fd1 }
+      - { path: session/subagent-artifacts/fb488043-fe64-492e-af31-9ad0534e65f6_delegate_output.md, digest: 52dd351e0cc22edd1243362c9c6a95c02251e39fb6fb6c36ba96ce545606269c }
+      - { path: session/subagent-artifacts/fb488043-fe64-492e-af31-9ad0534e65f6_delegate_transcript.jsonl, digest: 9e7ee364e5de2e229b879350f5bd20d413d39712b8966677a066b922b8c49ec0 }
+      - { path: transcript.md, digest: 56c99f61b49c8a146dcd084a8f0b0db097aafe52b189df8a80a8a6d2db1e7f9a }
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      pi 0.84.4 with pi-subagents loaded explicitly by -e. Observation ids: probe.mechanism, probe.states_reported, probe.granularity, probe.side_effect, probe.post_completion. Grounds the probe_worker pi cell at extension: "Substitute-level satisfaction, with the primitive coming from a recorded extension." The extension status action returned running, running, running, complete without side effects.
+
+  - id: wake_on_event-pi-2026-09-03
+    method: exercised
+    axis: wake_on_event
+    harness: pi
+    scenario: wake_on_event
+    run: wake_on_event.pi.2026-09-03.01
+    artifacts:
+      - { path: CHECKLIST.md, digest: 45380fadd4d18346fc7b669cbdcd433ae97598a63c63fe162664695b26678f0f }
+      - { path: drive.log, digest: 8c5fa4c1aebea2f241e7a21eb4df74fe77527ee94f0901663316b36bced6bddd }
+      - { path: invocation.json, digest: 38bb38809740246bab316994c5923a440bb879e6f32419d0f7dcf4bcab7392da }
+      - { path: no-trigger-trial.md, digest: fa4c5edeb33b4f9b8498ad6b81ea85287f6fa66d57251985b03945e644789c34 }
+      - { path: observations.yaml, digest: a86565e9490d71e290d298c3e008e5ba363c3ee92c9e95a8923066126fda1f9c }
+      - { path: run.yaml, digest: 6b4e507efc0bdc21dfac1f046fdaf8652cec89fbb4ffed13cc114b01e8af98d5 }
+      - { path: session/2026-09-03T04-56-10-017Z_01a0659f-da21-7dd1-9f5d-369f58b438eb.jsonl, digest: 0975a762b3603cb9c171ddf571a5cc01a4656d0225e8df114df28c9b432c2bc9 }
+      - { path: timeline.yaml, digest: a354de6e9fbb14d5a62600f8bbaa2279a47523cc0ef4e4f0b3cddb8518382f30 }
+      - { path: transcript.md, digest: c896b0113cc803c0cdce044645cea98a8cf5d2e28435dd318d95701c0647fd26 }
+      - { path: wait-accounting.yaml, digest: 88d8388243152e7c54101d7ae9d2c88118512407557ece8d028482d6641e2baf }
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      pi 0.84.4 with pi-subagents loaded explicitly by -e. Observation ids: wake.mechanism, wake.turns_during_wait, wake.latency, wake.event_kinds, wake.timeout_behavior. Grounds the wake_on_event pi cell at degrade: "The wait consumes parent turns. Record the measured interval and the turn count, and name the heartbeat as the weaker path." The 30-second shell poll consumed turns and returned after the measured interval.
+
+  - id: human_question-pi-2026-09-03
+    method: exercised
+    axis: human_question
+    harness: pi
+    scenario: human_question
+    run: human_question.pi.2026-09-03.01
+    artifacts:
+      - { path: CHECKLIST.md, digest: 54519fb0d3a6cf8b3b89f1bfa4fb258b0bb8b4a867e0da025ff7c011cd2e0786 }
+      - { path: answer-received.txt, digest: 7d86ced99a93bff0325084d3b32c16e037fade4902218d48853cd41768a12700 }
+      - { path: drive.log, digest: 3c465a7e17414ef85ae9a05bcf7f7926a246a483701a6b7c5b7c688eb39c6ef0 }
+      - { path: flood-trial.md, digest: 6030954936dc7e973622aa95fe577775f6e87b0cf5d641998ed92b508fda0e92 }
+      - { path: invocation.json, digest: d6826b0d25a3d70c1db093ce225c1accf899e35c78af679e929a9c407b958034 }
+      - { path: observations.yaml, digest: 45ef090a69c73a9e5b1e4907944d7f5357330a5edaadc7f96364e9c657df759b }
+      - { path: question-render.txt, digest: c15fe4ec3af3b13ab7b9ef83ca7e4bcdac66dbdd023ab7b8f8e0987411ca1bad }
+      - { path: run.yaml, digest: b2764ff0a0529a71a354022e845056195a17a50763f42801f79dfccdaa561247 }
+      - { path: session/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb.jsonl, digest: cc544dba50b2d2804480af8aeb2af51b69ffa1a4c6705003cd73cc8e9ba729f3 }
+      - { path: session/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb/forks/2026-09-03T04-50-24-197Z_01a0659a-9345-7728-b629-d48cabd30ff0.jsonl, digest: f732235d7adb15d4bcb447969b13c71086cf9c38225141637109c8b69eafbd89 }
+      - { path: session/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb/forks/2026-09-03T04-50-24-229Z_01a0659a-9365-7103-856e-f01b1465243c.jsonl, digest: 53e5e812cbb682b9edb226eeba0253e94edb4a72cd1fb597b15c21079b061aaf }
+      - { path: session/2026-09-03T04-49-47-456Z_01a0659a-03c0-7332-90d0-c26c8bfff1eb/forks/2026-09-03T04-50-24-246Z_01a0659a-9376-76d5-b4cb-07beab516369.jsonl, digest: c1306c304ac049a5fdd724922daf6265a3234314c80699508b65c78b473b2f38 }
+      - { path: session/home-state/missions/index/2c69f249f5da2f1959d278abc44ea6f98f2f6d64836e64db28792c8c3d88e2b8.json, digest: e753d952d7944916775eebfc2dd3f38fe7120aba40df7cee1f39153a2892d87c }
+      - { path: session/home-state/missions/projects/6a0d8e2166b4de431dd5731e4ce5dea6f62d707e90231a1eb1d7e01fad3fc1d2/de45f4dd-541e-49b1-8c8c-e18c8c41ba6c.json, digest: 0b300ed003bdf6bf75db849a5de2582548e4fdaca2d2843b9f0bc790984d8fa0 }
+      - { path: session/home-state/run-history.jsonl, digest: 000429cf3c2e06f504d0a96a1e2e1bfdd32167dae4d6474165ae08fad64d374e }
+      - { path: session/subagent-artifacts/2d66b0b9-eb92-4043-9833-09e7e1629fab_worker_0_input.md, digest: e7bb65485b7d9bdbdccc26ede50516ff43c42525731e62229733737363e458b6 }
+      - { path: session/subagent-artifacts/2d66b0b9-eb92-4043-9833-09e7e1629fab_worker_0_meta.json, digest: bc18bdc9b5ed7fdc0633df9c789d223385394142c14f309fc25af0b7c5a86d77 }
+      - { path: session/subagent-artifacts/2d66b0b9-eb92-4043-9833-09e7e1629fab_worker_0_output.md, digest: 283e92374ba014881095129b8bc60ca660bb6ba54d285da409df8bca1c3007f4 }
+      - { path: session/subagent-artifacts/2d66b0b9-eb92-4043-9833-09e7e1629fab_worker_0_transcript.jsonl, digest: 6dc9c3d548847b23fbc6b661f6825cda32f25ddca4214c20e8197c2f29f5031d }
+      - { path: session/subagent-artifacts/7b5ccf45-d31f-4151-9804-86ef3e8ac99d_worker_0_input.md, digest: e7bb65485b7d9bdbdccc26ede50516ff43c42525731e62229733737363e458b6 }
+      - { path: session/subagent-artifacts/7b5ccf45-d31f-4151-9804-86ef3e8ac99d_worker_0_meta.json, digest: d4df10f210a7ccb92cc813df30a0d361676b893c05931a9eed77dfdf12404b13 }
+      - { path: session/subagent-artifacts/7b5ccf45-d31f-4151-9804-86ef3e8ac99d_worker_0_output.md, digest: 2f614f13e8a9289822418436ebe30e1999791b46191e816636f0b5ef9d1f6fe9 }
+      - { path: session/subagent-artifacts/7b5ccf45-d31f-4151-9804-86ef3e8ac99d_worker_0_transcript.jsonl, digest: a1d2d1e02614ed6002190947b83380d826ceb305f918b8c94d8d455447213ae0 }
+      - { path: session/subagent-artifacts/f79efba5-7d03-446a-a731-d14c9cc0baac_worker_0_input.md, digest: e7bb65485b7d9bdbdccc26ede50516ff43c42525731e62229733737363e458b6 }
+      - { path: session/subagent-artifacts/f79efba5-7d03-446a-a731-d14c9cc0baac_worker_0_meta.json, digest: c62fbd5d60587c53de22d4c1e2231b600097e90a4349cb60a649536a0a5deebf }
+      - { path: session/subagent-artifacts/f79efba5-7d03-446a-a731-d14c9cc0baac_worker_0_output.md, digest: 2f614f13e8a9289822418436ebe30e1999791b46191e816636f0b5ef9d1f6fe9 }
+      - { path: session/subagent-artifacts/f79efba5-7d03-446a-a731-d14c9cc0baac_worker_0_transcript.jsonl, digest: a7f41eaf01121bfb656e2832767dba7e082bf9b0e85d3090db61afb44c24554c }
+      - { path: transcript.md, digest: 000c21db29cb63abec26d8b19f2e773a94db994610272561b60862f242630412 }
+    recorded: { date: 2026-09-02, by: am }
+    note: >-
+      pi 0.84.4 with pi-subagents loaded explicitly by -e. Observation ids: question.mechanism, question.options_discrete, question.answer_shape, question.pending_survives_flood, question.unanswered_behavior. Grounds the human_question pi cell at degrade: "Prose question with free-text mapping, or the gate does not survive the flood and needs the file-backed gate to hold it." Questions were prose, and the flood answer did not reach the agent.

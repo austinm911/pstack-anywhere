@@ -1,0 +1,21 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: spawn_worker
+harness: pi
+run_id: spawn_worker.pi.2026-09-03.01
+coupling_version: 2
+started_at: 2026-09-03T04:47:19.581Z
+ended_at: 2026-09-03T04:48:03.221Z
+operator: am
+machine: Mac.lan
+os: darwin 25.5.0
+harness_version: 0.84.4
+harness_version_source: pi --version -> 0.84.4
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .pi/agent/auth.json, plus herdr's pi state-reporting integration (herdr integration install pi); no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-QwGKpt/bin/pi"
+supersedes: null
+extension: "pi-subagents, loaded explicitly with -e ~/.pi/agent/npm/node_modules/pi-subagents/index.ts"

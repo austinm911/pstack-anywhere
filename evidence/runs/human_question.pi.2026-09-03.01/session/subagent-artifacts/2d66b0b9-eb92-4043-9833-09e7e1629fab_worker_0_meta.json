@@ -1,0 +1,183 @@
+{
+  "runId": "2d66b0b9-eb92-4043-9833-09e7e1629fab",
+  "agent": "worker",
+  "task": "[prompt redacted]",
+  "exitCode": 0,
+  "processSignal": "SIGTERM",
+  "usage": {
+    "input": 5362,
+    "output": 525,
+    "cacheRead": 3584,
+    "cacheWrite": 0,
+    "cost": 0.0017740800000000001,
+    "turns": 2
+  },
+  "model": "openai-codex/gpt-5.6-luna:high",
+  "attemptedModels": [
+    "openai-codex/gpt-5.6-luna:high"
+  ],
+  "modelAttempts": [
+    {
+      "model": "openai-codex/gpt-5.6-luna:high",
+      "success": true,
+      "exitCode": 0,
+      "usage": {
+        "input": 5362,
+        "output": 525,
+        "cacheRead": 3584,
+        "cacheWrite": 0,
+        "cost": 0.0017740800000000001,
+        "turns": 2
+      }
+    }
+  ],
+  "durationMs": 15136,
+  "toolCount": 1,
+  "launchContractDigest": "5572136a5ea4cbc8851c1be37e01db070b7e2611dd7d05efcdc2355b2ce82bba",
+  "launchResolvedExtensions": {
+    "version": 1,
+    "source": "launch-resolved",
+    "disableAmbientExtensions": false,
+    "runtime": [
+      "sha256:7aa56be0e92e0e21"
+    ],
+    "configured": [],
+    "effective": [
+      "sha256:7aa56be0e92e0e21"
+    ],
+    "omitted": {
+      "runtime": 0,
+      "configured": 0,
+      "effective": 0
+    }
+  },
+  "acceptance": {
+    "status": "rejected",
+    "evidenceStatus": "rejected",
+    "explicit": false,
+    "effectiveAcceptance": {
+      "level": "checked",
+      "explicit": false,
+      "inferredReason": [
+        "write-capable worker/task"
+      ],
+      "criteria": [
+        {
+          "id": "criterion-1",
+          "must": "Implement the requested change without widening scope",
+          "evidence": [
+            "changed-files",
+            "tests-added",
+            "commands-run",
+            "residual-risks",
+            "no-staged-files"
+          ],
+          "severity": "required"
+        }
+      ],
+      "evidence": [
+        "changed-files",
+        "tests-added",
+        "commands-run",
+        "residual-risks",
+        "no-staged-files"
+      ],
+      "verify": [],
+      "stopRules": []
+    },
+    "inferredReason": [
+      "write-capable worker/task"
+    ],
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "must": "Implement the requested change without widening scope",
+        "evidence": [
+          "changed-files",
+          "tests-added",
+          "commands-run",
+          "residual-risks",
+          "no-staged-files"
+        ],
+        "severity": "required"
+      }
+    ],
+    "runtimeChecks": [
+      {
+        "id": "criterion:criterion-1",
+        "status": "passed",
+        "message": "Required criterion 'criterion-1' satisfied."
+      },
+      {
+        "id": "evidence:changed-files",
+        "status": "passed",
+        "message": "changed-files evidence present."
+      },
+      {
+        "id": "evidence:tests-added",
+        "status": "not-applicable",
+        "message": "tests-added evidence explicitly reported as not applicable."
+      },
+      {
+        "id": "evidence:commands-run",
+        "status": "failed",
+        "message": "commands-run evidence missing from child report."
+      },
+      {
+        "id": "evidence:residual-risks",
+        "status": "passed",
+        "message": "residual-risks evidence present."
+      },
+      {
+        "id": "evidence:no-staged-files",
+        "status": "passed",
+        "message": "no-staged-files evidence present."
+      },
+      {
+        "id": "no-staged-files",
+        "status": "passed",
+        "message": "No staged files detected."
+      }
+    ],
+    "verifyRuns": [],
+    "childReport": {
+      "criteriaSatisfied": [
+        {
+          "id": "criterion-1",
+          "status": "satisfied",
+          "evidence": "Created worker-three.txt with exactly `three` followed by a newline."
+        }
+      ],
+      "changedFiles": [
+        "worker-three.txt"
+      ],
+      "testsAddedOrUpdated": [],
+      "commandsRun": [],
+      "validationOutput": [
+        "File write completed successfully."
+      ],
+      "residualRisks": [],
+      "noStagedFiles": true,
+      "diffSummary": "Added worker-three.txt.",
+      "reviewFindings": [
+        "no blockers"
+      ],
+      "manualNotes": ""
+    }
+  },
+  "effects": {
+    "fileMutation": {
+      "status": "not-applicable",
+      "expected": false,
+      "attempted": true,
+      "evidence": {
+        "source": "tracked-files",
+        "trackedOnly": true,
+        "changedFiles": [],
+        "attemptedMutation": false
+      }
+    }
+  },
+  "transcriptPath": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-OR3rSp/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.WWEJHTZPJp--/subagent-artifacts/2d66b0b9-eb92-4043-9833-09e7e1629fab_worker_0_transcript.jsonl",
+  "timestamp": 1788411039403
+}

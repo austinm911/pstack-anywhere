@@ -1,0 +1,333 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.EqGpRv6RKp",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.EqGpRv6RKp",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-model-pi-01",
+          "pane_id": "w1H:p4V",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1082,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8cebb3ccbf180",
+          "terminal_title": "π - tmp.EqGpRv6RKp",
+          "terminal_title_stripped": "π - tmp.EqGpRv6RKp",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "pi",
+          "--model",
+          "openai-codex/gpt-5.6-luna:high",
+          "-e",
+          "/Users/am/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.EqGpRv6RKp",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.EqGpRv6RKp",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-model-pi-01",
+          "pane_id": "w1H:p4V",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1087,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8cebb3ccbf180",
+          "terminal_title": "π - tmp.EqGpRv6RKp",
+          "terminal_title_stripped": "π - tmp.EqGpRv6RKp",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.EqGpRv6RKp",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.EqGpRv6RKp",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-model-pi-01",
+          "pane_id": "w1H:p4V",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1087,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8cebb3ccbf180",
+          "terminal_title": "π - tmp.EqGpRv6RKp",
+          "terminal_title_stripped": "π - tmp.EqGpRv6RKp",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "pi",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46.jsonl"
+            },
+            "agent_status": "idle",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.EqGpRv6RKp",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.EqGpRv6RKp",
+            "interactive_ready": true,
+            "name": "b-worker-defaults-model-pi-01",
+            "pane_id": "w1H:p4V",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 1087,
+            "tab_id": "w1H:t2",
+            "terminal_id": "term_65a8cebb3ccbf180",
+            "terminal_title": "π - tmp.EqGpRv6RKp",
+            "terminal_title_stripped": "π - tmp.EqGpRv6RKp",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "pi",
+      "--model",
+      "openai-codex/gpt-5.6-luna:high",
+      "-e",
+      "/Users/am/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+    ],
+    "version": "0.84.4\n"
+  },
+  "model": "openai-codex/gpt-5.6-luna:high",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.EqGpRv6RKp",
+  "home": {
+    "seeded": [
+      ".pi/agent/auth.json"
+    ],
+    "written": {},
+    "extension": {
+      "name": "pi-subagents",
+      "version": "0.64.0",
+      "args": [
+        "-e",
+        "~/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+      ]
+    }
+  },
+  "drive": {
+    "script": "bench/worker_defaults_model/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "models": {
+        "a": "openai-codex/gpt-5.6-luna",
+        "b": "openai-codex/gpt-5.6-terra",
+        "source": {
+          "a": "run.yaml model of every pi run (evidence/runs/spawn_worker.pi.2026-09-02.01); session model_change records provider openai-codex, modelId gpt-5.6-luna",
+          "b": "the slug every codex run used on the same openai-codex provider (evidence/runs/spawn_worker.codex.2026-09-02.01); not yet seen through pi --model, verified by this run"
+        }
+      },
+      "harness_record": "session log under /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions, files newer than the turn start; the run dir's session/ is the same capture",
+      "turn": {
+        "status": "idle",
+        "settled_by": "herdr agent prompt --wait"
+      },
+      "usage_record": "5 session file(s)",
+      "spawn_args": "functions.subagent({\"agent\":\"delegate\",\"task\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\",\"model\":\"openai-codex/gpt-5.6-luna\",\"async\":false})\nfunctions.subagent({\"agent\":\"delegate\",\"task\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\",\"model\":\"openai-codex/gpt-5.6-terra\",\"async\":false})\nfunctions.subagent({\"agent\":\"delegate\",\"task\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\",\"model\":\"poteto-nonexistent-model\",\"async\":false})\n"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--",
+  "home_state_files": 7,
+  "calls": [
+    {
+      "name": "subagent",
+      "arguments": {
+        "action": "list",
+        "capabilities": true
+      },
+      "ts": "2026-09-03T04:52:42.606Z"
+    },
+    {
+      "name": "subagent",
+      "arguments": {
+        "agent": "delegate",
+        "task": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.",
+        "model": "openai-codex/gpt-5.6-luna",
+        "async": false
+      },
+      "ts": "2026-09-03T04:52:50.556Z"
+    },
+    {
+      "name": "subagent",
+      "arguments": {
+        "agent": "delegate",
+        "task": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.",
+        "model": "openai-codex/gpt-5.6-terra",
+        "async": false
+      },
+      "ts": "2026-09-03T04:53:01.771Z"
+    },
+    {
+      "name": "subagent",
+      "arguments": {
+        "agent": "delegate",
+        "task": "Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.",
+        "model": "poteto-nonexistent-model",
+        "async": false
+      },
+      "ts": "2026-09-03T04:53:07.607Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "negative-trial.txt",
+        "content": "hard error\nUnknown subagent model 'poteto-nonexistent-model' in the active Pi model registry.\n"
+      },
+      "ts": "2026-09-03T04:53:26.566Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "self-reports.txt",
+        "content": "self-report, not authoritative: what each worker said about its own model\nA, openai-codex/gpt-5.6-luna, unknown\nB, openai-codex/gpt-5.6-terra, unknown\n"
+      },
+      "ts": "2026-09-03T04:53:26.566Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "spawn-args.txt",
+        "content": "functions.subagent({\"agent\":\"delegate\",\"task\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`. \",\"model\":\"openai-codex/gpt-5.6-luna\",\"async\":false})\nfunctions.subagent({\"agent\":\"delegate\",\"task\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`. \",\"model\":\"openai-codex/gpt-5.6-terra\",\"async\":false})\nfunctions.subagent({\"agent\":\"delegate\",\"task\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`. \",\"model\":\"poteto-nonexistent-model\",\"async\":false})\n"
+      },
+      "ts": "2026-09-03T04:53:26.566Z"
+    },
+    {
+      "name": "edit",
+      "arguments": {
+        "path": "spawn-args.txt",
+        "edits": [
+          {
+            "oldText": "`unknown`. \",\"model\":\"openai-codex/gpt-5.6-luna\"",
+            "newText": "`unknown`.\",\"model\":\"openai-codex/gpt-5.6-luna\""
+          },
+          {
+            "oldText": "`unknown`. \",\"model\":\"openai-codex/gpt-5.6-terra\"",
+            "newText": "`unknown`.\",\"model\":\"openai-codex/gpt-5.6-terra\""
+          },
+          {
+            "oldText": "`unknown`. \",\"model\":\"poteto-nonexistent-model\"",
+            "newText": "`unknown`.\",\"model\":\"poteto-nonexistent-model\""
+          }
+        ]
+      },
+      "ts": "2026-09-03T04:53:33.715Z"
+    },
+    {
+      "name": "read",
+      "arguments": {
+        "path": "negative-trial.txt"
+      },
+      "ts": "2026-09-03T04:53:38.215Z"
+    },
+    {
+      "name": "read",
+      "arguments": {
+        "path": "self-reports.txt"
+      },
+      "ts": "2026-09-03T04:53:38.215Z"
+    },
+    {
+      "name": "read",
+      "arguments": {
+        "path": "spawn-args.txt"
+      },
+      "ts": "2026-09-03T04:53:38.215Z"
+    }
+  ],
+  "calls_workers": {
+    "delegate_0": []
+  }
+}

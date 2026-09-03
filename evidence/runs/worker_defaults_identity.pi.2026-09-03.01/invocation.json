@@ -1,0 +1,249 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-NhsGoP/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.Gbd08jMHOQ--/2026-09-03T05-01-08-948Z_01a065a4-69d4-708f-a9ad-b24e767c2af1.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Gbd08jMHOQ",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Gbd08jMHOQ",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-identity-pi-01",
+          "pane_id": "w1H:p4Z",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1104,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8d0a33e8ce184",
+          "terminal_title": "π - tmp.Gbd08jMHOQ",
+          "terminal_title_stripped": "π - tmp.Gbd08jMHOQ",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "pi",
+          "--model",
+          "openai-codex/gpt-5.6-luna:high",
+          "-e",
+          "/Users/am/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-NhsGoP/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.Gbd08jMHOQ--/2026-09-03T05-01-08-948Z_01a065a4-69d4-708f-a9ad-b24e767c2af1.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Gbd08jMHOQ",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Gbd08jMHOQ",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-identity-pi-01",
+          "pane_id": "w1H:p4Z",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1106,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8d0a33e8ce184",
+          "terminal_title": "π - tmp.Gbd08jMHOQ",
+          "terminal_title_stripped": "π - tmp.Gbd08jMHOQ",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-NhsGoP/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.Gbd08jMHOQ--/2026-09-03T05-01-08-948Z_01a065a4-69d4-708f-a9ad-b24e767c2af1.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Gbd08jMHOQ",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Gbd08jMHOQ",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-identity-pi-01",
+          "pane_id": "w1H:p4Z",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1106,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8d0a33e8ce184",
+          "terminal_title": "π - tmp.Gbd08jMHOQ",
+          "terminal_title_stripped": "π - tmp.Gbd08jMHOQ",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "pi",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-NhsGoP/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.Gbd08jMHOQ--/2026-09-03T05-01-08-948Z_01a065a4-69d4-708f-a9ad-b24e767c2af1.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Gbd08jMHOQ",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Gbd08jMHOQ",
+            "interactive_ready": true,
+            "name": "b-worker-defaults-identity-pi-01",
+            "pane_id": "w1H:p4Z",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 1106,
+            "tab_id": "w1H:t2",
+            "terminal_id": "term_65a8d0a33e8ce184",
+            "terminal_title": "π - tmp.Gbd08jMHOQ",
+            "terminal_title_stripped": "π - tmp.Gbd08jMHOQ",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "pi",
+      "--model",
+      "openai-codex/gpt-5.6-luna:high",
+      "-e",
+      "/Users/am/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+    ],
+    "version": "0.84.4\n"
+  },
+  "model": "openai-codex/gpt-5.6-luna:high",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Gbd08jMHOQ",
+  "home": {
+    "seeded": [
+      ".pi/agent/auth.json"
+    ],
+    "written": {},
+    "extension": {
+      "name": "pi-subagents",
+      "version": "0.64.0",
+      "args": [
+        "-e",
+        "~/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+      ]
+    }
+  },
+  "drive": {
+    "script": "bench/worker_defaults_identity/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "definition_path": "null: harnesses.yaml records subagentsDir: null for pi (harnesses.yaml:343)",
+      "prompt_status": "done (herdr agent prompt --wait)",
+      "positive-report.txt": "written",
+      "negative-trial.txt": "written"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-NhsGoP/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.Gbd08jMHOQ--",
+  "home_state_files": 0,
+  "calls": [
+    {
+      "name": "subagent",
+      "arguments": {
+        "action": "list",
+        "capabilities": true
+      },
+      "ts": "2026-09-03T05:01:15.196Z"
+    },
+    {
+      "name": "subagent",
+      "arguments": {
+        "agent": "poteto-absent",
+        "task": "Reply with the word hello.",
+        "async": false
+      },
+      "ts": "2026-09-03T05:01:18.720Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "positive-report.txt",
+        "content": "skipped: no subagent definition directory (harnesses.yaml:343)\n"
+      },
+      "ts": "2026-09-03T05:01:29.716Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "negative-trial.txt",
+        "content": "Unknown agent: poteto-absent\nEffective cwd: /private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.Gbd08jMHOQ\nConsulted agent-definition directories:\n- builtin: /Users/am/.pi/agent/npm/node_modules/pi-subagents/agents (12 candidates)\n- user: /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-NhsGoP/.pi/agent/agents (absent)\n- user: /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-NhsGoP/.agents (absent)\nDiscovered agents:\n- claude-code (builtin)\n- claude-code-writer (builtin)\n- codex-exec (builtin)\n- codex-exec-writer (builtin)\n- cursor-agent (builtin)\n- cursor-agent-writer (builtin)\n- delegate (builtin)\n- oracle (builtin)\n- researcher (builtin)\n- reviewer (builtin)\n- scout (builtin)\n- worker (builtin)\n"
+      },
+      "ts": "2026-09-03T05:01:29.716Z"
+    }
+  ],
+  "calls_workers": {}
+}

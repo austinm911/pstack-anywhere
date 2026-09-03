@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "id": "9328d24e-e553-4a13-9aa2-6ea518a819c1",
+  "title": "[prompt redacted]",
+  "objective": "[prompt redacted]",
+  "status": "failed",
+  "createdAt": "2026-09-03T04:47:36.595Z",
+  "updatedAt": "2026-09-03T04:47:49.609Z",
+  "runs": [
+    {
+      "runId": "14eecde5-793e-4624-b749-a6831cc9cf50",
+      "mode": "single",
+      "agent": "worker",
+      "status": "failed",
+      "startedAt": "2026-09-03T04:47:49.609Z",
+      "completedAt": "2026-09-03T04:47:49.609Z",
+      "usage": {
+        "tokens": 1857
+      }
+    }
+  ],
+  "workflowChildren": [],
+  "decisions": [],
+  "artifacts": [
+    {
+      "kind": "output",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-QwGKpt/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.eIV1gWSasz--/subagent-artifacts/14eecde5-793e-4624-b749-a6831cc9cf50_worker_0_output.md"
+    },
+    {
+      "kind": "other",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-QwGKpt/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.eIV1gWSasz--/subagent-artifacts/14eecde5-793e-4624-b749-a6831cc9cf50_worker_0_transcript.jsonl",
+      "description": "Child transcript"
+    }
+  ],
+  "receipts": [],
+  "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.eIV1gWSasz",
+  "ownerSessionId": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-QwGKpt/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.eIV1gWSasz--/2026-09-03T04-47-20-383Z_01a06597-c53f-7ad9-9579-d3d23ed9dea1.jsonl",
+  "summary": "Run fan-out: 1/64 used, 63 remaining\nSubagent completed without making edits for an implementation task.\nIt appears to have returned planning or scratchpad output instead of applying changes.\n\nOutput:\nDONE Worker spawn failed; no file changes were made.\n\nOutput artifact: /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-QwGKpt/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.eIV1gWSasz--/subagent-artifacts/14eecde5-793e-4624-b749-a6831cc9cf50_worker_0_output.md",
+  "acceptance": {
+    "status": "rejected",
+    "evidenceStatus": "rejected",
+    "explicit": false,
+    "effectiveAcceptance": {
+      "level": "checked",
+      "explicit": false,
+      "inferredReason": [
+        "write-capable worker/task"
+      ],
+      "criteria": [
+        {
+          "id": "criterion-1",
+          "must": "Implement the requested change without widening scope",
+          "evidence": [
+            "changed-files",
+            "tests-added",
+            "commands-run",
+            "residual-risks",
+            "no-staged-files"
+          ],
+          "severity": "required"
+        }
+      ],
+      "evidence": [
+        "changed-files",
+        "tests-added",
+        "commands-run",
+        "residual-risks",
+        "no-staged-files"
+      ],
+      "verify": [],
+      "stopRules": []
+    },
+    "inferredReason": [
+      "write-capable worker/task"
+    ],
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "must": "Implement the requested change without widening scope",
+        "evidence": [
+          "changed-files",
+          "tests-added",
+          "commands-run",
+          "residual-risks",
+          "no-staged-files"
+        ],
+        "severity": "required"
+      }
+    ],
+    "runtimeChecks": [
+      {
+        "id": "attestation",
+        "status": "failed",
+        "message": "Structured acceptance report not found."
+      }
+    ],
+    "verifyRuns": [],
+    "childReportParseError": "Structured acceptance report not found."
+  }
+}

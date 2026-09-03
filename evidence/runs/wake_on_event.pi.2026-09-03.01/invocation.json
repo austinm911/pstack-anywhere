@@ -1,0 +1,310 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-sgZVoR/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.aDVdOJgIo1--/2026-09-03T04-56-10-017Z_01a0659f-da21-7dd1-9f5d-369f58b438eb.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aDVdOJgIo1",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aDVdOJgIo1",
+          "interactive_ready": true,
+          "name": "b-wake-on-event-pi-01",
+          "pane_id": "w1H:p4X",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1096,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8cf865279c182",
+          "terminal_title": "π - tmp.aDVdOJgIo1",
+          "terminal_title_stripped": "π - tmp.aDVdOJgIo1",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "pi",
+          "--model",
+          "openai-codex/gpt-5.6-luna:high",
+          "-e",
+          "/Users/am/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-sgZVoR/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.aDVdOJgIo1--/2026-09-03T04-56-10-017Z_01a0659f-da21-7dd1-9f5d-369f58b438eb.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aDVdOJgIo1",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aDVdOJgIo1",
+          "interactive_ready": true,
+          "name": "b-wake-on-event-pi-01",
+          "pane_id": "w1H:p4X",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1109,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8cf865279c182",
+          "terminal_title": "π - tmp.aDVdOJgIo1",
+          "terminal_title_stripped": "π - tmp.aDVdOJgIo1",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-sgZVoR/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.aDVdOJgIo1--/2026-09-03T04-56-10-017Z_01a0659f-da21-7dd1-9f5d-369f58b438eb.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aDVdOJgIo1",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aDVdOJgIo1",
+          "interactive_ready": true,
+          "name": "b-wake-on-event-pi-01",
+          "pane_id": "w1H:p4X",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1109,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8cf865279c182",
+          "terminal_title": "π - tmp.aDVdOJgIo1",
+          "terminal_title_stripped": "π - tmp.aDVdOJgIo1",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "pi",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": [],
+    "prompts": [
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-sgZVoR/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.aDVdOJgIo1--/2026-09-03T04-56-10-017Z_01a0659f-da21-7dd1-9f5d-369f58b438eb.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aDVdOJgIo1",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aDVdOJgIo1",
+            "interactive_ready": true,
+            "name": "b-wake-on-event-pi-01",
+            "pane_id": "w1H:p4X",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 1101,
+            "tab_id": "w1H:t2",
+            "terminal_id": "term_65a8cf865279c182",
+            "terminal_title": "π - tmp.aDVdOJgIo1",
+            "terminal_title_stripped": "π - tmp.aDVdOJgIo1",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      },
+      null,
+      {
+        "id": "cli:agent:prompt",
+        "result": {
+          "agent": {
+            "agent": "pi",
+            "agent_session": {
+              "agent": "pi",
+              "kind": "path",
+              "source": "herdr:pi",
+              "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-sgZVoR/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.aDVdOJgIo1--/2026-09-03T04-56-10-017Z_01a0659f-da21-7dd1-9f5d-369f58b438eb.jsonl"
+            },
+            "agent_status": "done",
+            "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aDVdOJgIo1",
+            "focused": false,
+            "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aDVdOJgIo1",
+            "interactive_ready": true,
+            "name": "b-wake-on-event-pi-01",
+            "pane_id": "w1H:p4X",
+            "revision": 1,
+            "screen_detection_skipped": true,
+            "state_change_seq": 1109,
+            "tab_id": "w1H:t2",
+            "terminal_id": "term_65a8cf865279c182",
+            "terminal_title": "π - tmp.aDVdOJgIo1",
+            "terminal_title_stripped": "π - tmp.aDVdOJgIo1",
+            "workspace_id": "w1H"
+          },
+          "type": "agent_prompted"
+        }
+      }
+    ],
+    "restarts": [],
+    "quits": []
+  },
+  "cli": {
+    "command": [
+      "pi",
+      "--model",
+      "openai-codex/gpt-5.6-luna:high",
+      "-e",
+      "/Users/am/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+    ],
+    "version": "0.84.4\n"
+  },
+  "model": "openai-codex/gpt-5.6-luna:high",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.aDVdOJgIo1",
+  "home": {
+    "seeded": [
+      ".pi/agent/auth.json"
+    ],
+    "written": {},
+    "extension": {
+      "name": "pi-subagents",
+      "version": "0.64.0",
+      "args": [
+        "-e",
+        "~/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+      ]
+    }
+  },
+  "drive": {
+    "script": "bench/wake_on_event/drive.mjs",
+    "log": "drive.log",
+    "notes": {
+      "accounting.before_wait": "2026-09-03T04:56:12.644Z assistant_entries=0 seq=1096 status=idle",
+      "trial1.prompt_sent": "2026-09-03T04:56:12.644Z",
+      "accounting.during_wait": "2026-09-03T04:58:12.658Z assistant_entries=2 seq=1097 status=working",
+      "trial1.wait_call": "functions.bash({\"command\":\"deadline=$(($(date +%s)+1200)); while [ ! -e event.flag ]; do now=$(date +%s); if [ \\\"$now\\\" -ge \\\"$deadline\\\" ]; then printf '%s\\\\n' 'TIMEOUT: event.flag absent'; exit 124; fi; sleep 30; done; printf '%s\\\\n' 'event.flag appeared'\",\"timeout\":1210000})\nshell command\nprocess exit, timeout",
+      "trial1.triggered": "2026-09-03T04:58:12Z",
+      "accounting.after_wake": "2026-09-03T04:58:51.693Z assistant_entries=5 seq=1101 status=done",
+      "trial1.returned": "2026-09-03T04:58:51.687Z status=done settled_by=herdr agent prompt --wait",
+      "trial1.woke_at": "2026-09-03T04:58:42Z\nevent.flag appeared",
+      "trial2.prompt_sent": "2026-09-03T04:58:51.704Z budget_ms=318086",
+      "trial2.outcome": "2026-09-03T05:04:09.855Z status=prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"timeout\",\"message\":\"timed out waiting for agent status\"},\"id\":\"cli:agent:prompt\"} still_waiting=true",
+      "trial2.abort": "esc sent: the wait was still running past the budget",
+      "trial2.closing": "2026-09-03T05:04:21.253Z status=done",
+      "accounting.after_trial2": "2026-09-03T05:04:21.259Z assistant_entries=10 seq=1109 status=done",
+      "artifacts": "wait-accounting.yaml timeline.yaml no-trigger-trial.md written to scratch"
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-sgZVoR/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.aDVdOJgIo1--",
+  "home_state_files": 0,
+  "calls": [
+    {
+      "name": "write",
+      "arguments": {
+        "path": "wait-call.txt",
+        "content": "functions.bash({\"command\":\"deadline=$(($(date +%s)+1200)); while [ ! -e event.flag ]; do now=$(date +%s); if [ \\\"$now\\\" -ge \\\"$deadline\\\" ]; then printf '%s\\\\n' 'TIMEOUT: event.flag absent'; exit 124; fi; sleep 30; done; printf '%s\\\\n' 'event.flag appeared'\",\"timeout\":1210000})\nshell command\nprocess exit, timeout"
+      },
+      "ts": "2026-09-03T04:56:34.482Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "deadline=$(($(date +%s)+1200)); while [ ! -e event.flag ]; do now=$(date +%s); if [ \"$now\" -ge \"$deadline\" ]; then printf '%s\\n' 'TIMEOUT: event.flag absent'; exit 124; fi; sleep 30; done; printf '%s\\n' 'event.flag appeared'",
+        "timeout": 1210000
+      },
+      "ts": "2026-09-03T04:56:39.677Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "date -u +%FT%TZ > woke-at.txt"
+      },
+      "ts": "2026-09-03T04:58:42.604Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "printf '%s\\n' 'event.flag appeared' >> woke-at.txt"
+      },
+      "ts": "2026-09-03T04:58:47.063Z"
+    },
+    {
+      "name": "write",
+      "arguments": {
+        "path": "wait-call.txt",
+        "content": "functions.bash({\"command\":\"deadline=$(($(date +%s)+1200)); while [ ! -e event.flag ]; do now=$(date +%s); if [ \\\"$now\\\" -ge \\\"$deadline\\\" ]; then printf '%s\\\\n' 'TIMEOUT: event.flag absent'; exit 124; fi; sleep 30; done; printf '%s\\\\n' 'event.flag appeared'\",\"timeout\":1210000})\nshell command\nprocess exit, timeout"
+      },
+      "ts": "2026-09-03T04:58:58.436Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "deadline=$(($(date +%s)+1200)); while [ ! -e event.flag ]; do now=$(date +%s); if [ \"$now\" -ge \"$deadline\" ]; then printf '%s\\n' 'TIMEOUT: event.flag absent'; exit 124; fi; sleep 30; done; printf '%s\\n' 'event.flag appeared'",
+        "timeout": 1210000
+      },
+      "ts": "2026-09-03T04:59:04.279Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "printf '%s\\n' 'wait interrupted; returned: Command aborted' >> woke-at.txt"
+      },
+      "ts": "2026-09-03T05:04:17.735Z"
+    }
+  ],
+  "calls_workers": {}
+}

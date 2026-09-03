@@ -1,0 +1,20 @@
+source: harness session log, /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions, every *.jsonl written after the prompt was sent (find -newer), tokens "model"/"modelId" counted per file with grep -oE | sort | uniq -c
+selections: A=openai-codex/gpt-5.6-luna B=openai-codex/gpt-5.6-terra C=poteto-nonexistent-model
+harness: pi
+
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46.jsonl
+   8 "model":"gpt-5.6-luna"
+   3 "model":"openai-codex/gpt-5.6-luna"
+   3 "model":"openai-codex/gpt-5.6-terra"
+   1 "model":"poteto-nonexistent-model"
+   1 "modelId":"gpt-5.6-luna"
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46/21d65654-b065-4222-9df6-453284f5e2bc/run-0/session.jsonl
+   1 "model":"gpt-5.6-terra"
+   1 "modelId":"gpt-5.6-terra"
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46/70ee201e-c339-46e4-a699-5d04d2ace3cc/run-0/session.jsonl
+   1 "model":"gpt-5.6-luna"
+   1 "modelId":"gpt-5.6-luna"
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/subagent-artifacts/21d65654-b065-4222-9df6-453284f5e2bc_delegate_0_transcript.jsonl
+   2 "model":"gpt-5.6-terra"
+== /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/subagent-artifacts/70ee201e-c339-46e4-a699-5d04d2ace3cc_delegate_0_transcript.jsonl
+   2 "model":"gpt-5.6-luna"

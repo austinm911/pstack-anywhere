@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: wake.mechanism
+    observed: 'the parent used one blocking `functions.bash` shell command per trial: `deadline=$(($(date +%s)+1200)); while [ ! -e event.flag ]; do now=$(date +%s); if [ "$now" -ge "$deadline" ]; then printf ''%s\\n'' ''TIMEOUT: event.flag absent''; exit 124; fi; sleep 30; done; printf ''%s\\n'' ''event.flag appeared''`, timeout 1210000. This is a shell-command poll for a file-change event, not a pi-subagents wait primitive.'
+    source: 'wait-accounting.yaml:9-12; transcript.md:74-94,176-187; no-trigger-trial.md:39-58,86-110; run.yaml drive.trial1.wait_call'
+  - id: wake.turns_during_wait
+    observed: 'the accounting snapshot records assistant_entries=0 before wait and assistant_entries=2 at 04:58:12.658Z during the first 120s wait, with herdr state_change_seq 1096 -> 1097; after wake it records assistant_entries=5. The accounting source explicitly says herdr exposes no turn/token counter, so the measurable count is two session-log assistant entries during the wait window, including the turn entering the blocking shell command.'
+    source: 'wait-accounting.yaml:1-5,14-55,114-116; drive.log:2-7'
+  - id: wake.latency
+    observed: 'operator trigger was 2026-09-03T04:58:12Z; the first post-wake action wrote `2026-09-03T04:58:42Z`, a 30-second trigger-to-action latency. The wait returned at 04:58:51.687Z.'
+    source: 'timeline.yaml:5-16; run.yaml drive.trial1.triggered, trial1.woke_at, trial1.returned; drive.log:10-16'
+  - id: wake.event_kinds
+    observed: 'the run exercised one external file-change event, creation of `event.flag` by `touch event.flag`; no harness-internal worker, peer-message, timer, or signal event kinds were exercised or documented by the shell primitive.'
+    source: 'timeline.yaml:7-8; drive.log:10-12; transcript.md:24-45'
+  - id: wake.timeout_behavior
+    observed: 'the no-trigger second trial did not return a distinguishable timeout: it remained in the same 20-minute-bounded shell poll until the driver budget elapsed at 05:04:09.855Z, then the driver sent Esc and the prompt failed with herdr status-timeout; the agent recorded `wait interrupted; returned: Command aborted`.'
+    source: 'no-trigger-trial.md:1-17,39-67,86-116; run.yaml:31-35; drive.log:20-30'

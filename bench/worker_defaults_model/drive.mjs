@@ -92,9 +92,6 @@ export default async function drive(ctx) {
     `source: harness session log, ${root}, every *.jsonl written after the prompt was sent (find -newer), tokens "model"/"modelId" counted per file with grep -oE | sort | uniq -c`,
     `selections: A=${models.a} B=${models.b} C=poteto-nonexistent-model`,
     `harness: ${ctx.harness}`,
-    ...(ctx.harness === "pi"
-      ? ["note: pi has no native worker; a pi-herdr delegate runs in a pane opened from the operator's real HOME, so its log is not under the scratch HOME and cannot appear here. Only the parent's own record is below."]
-      : []),
   ];
   const body = lines || `no session file newer than the turn under ${root}; command: ${RECORD_CMD(root, marker)}${record.err.trim() ? `\nstderr: ${record.err.trim()}` : ""}`;
   writeFileSync(join(ctx.scratch, "usage-record.txt"), `${header.join("\n")}\n\n${body}\n`);

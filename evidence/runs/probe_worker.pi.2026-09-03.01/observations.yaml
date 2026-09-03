@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: probe.mechanism
+    observed: 'the parent used pi-subagents `subagent({action:"status", id:"fb488043-fe64-492e-af31-9ad0534e65f6"})` for all four probes; invocation records the four status calls at 04:52:02.587Z, 04:52:31.515Z, 04:53:01.951Z, and 04:55:02.102Z. The worker was originally spawned with `subagent({agent:"delegate", task:<loop>, async:true, cwd:<scratch>})`.'
+    source: 'invocation.json calls[1..5], especially calls[2..5] arguments and ts; probes.yaml:76-84,117-123,156-162,197-205; run.yaml extension'
+  - id: probe.states_reported
+    observed: 'the first three probes returned verbatim `State: running`, at 04:52:09.178Z, 04:52:39.552Z, and 04:53:06.523Z; the fourth returned verbatim `State: complete` at 04:55:06.444Z.'
+    source: 'probes.yaml:55-64,98-107,137-146,176-185; transcript.md:91-99,111-117,129-135,154-162'
+  - id: probe.granularity
+    observed: 'this run exercised `running` and `complete` (finished); it did not exercise failed, blocked, idle/awaiting-input states. The returned state is the pi-subagents run state, not an existence-only handle result.'
+    source: 'probes.yaml:76-84,117-123,156-162,197-205; session/subagent-artifacts/fb488043-fe64-492e-af31-9ad0534e65f6_delegate_meta.json:5-6,33-53'
+  - id: probe.side_effect
+    observed: 'no probe side effect was observed: probe-activity.log has 18 lines, zero duplicate consecutive timestamps, and every interval is 10s across unprobed, probed, and post-third-probe windows; no restart/resume entry appears. Probe windows changed line counts only because the worker continued its scheduled loop.'
+    source: 'cadence.md:4-15,17-45; probes.yaml:55-62,98-105,137-144,176-183; invocation.json calls[2..5]'
+  - id: probe.post_completion
+    observed: 'after completion, the fourth status probe returned `State: complete` verbatim, with log lines unchanged at 18 -> 18.'
+    source: 'probes.yaml:176-205; run.yaml:52-62; cadence.md:13,22'

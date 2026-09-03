@@ -1,0 +1,2 @@
+hard error
+Unknown subagent model 'poteto-nonexistent-model' in the active Pi model registry.

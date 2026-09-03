@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: durability.parent_terminated_at
+    observed: 'the parent foreground process group PID 42220 was alive before termination; clean quit used command `/quit` at 2026-09-03T05:06:43.185Z, and the PID was not alive 5 seconds later.'
+    source: 'termination.yaml:1-8; run.yaml:33-38; drive.log:14-24'
+  - id: durability.heartbeats_after_termination
+    observed: 'nine heartbeat lines were strictly later than termination: 05:07:06Z, 05:07:36Z, 05:08:06Z, 05:08:36Z, 05:09:06Z, 05:09:36Z, 05:10:06Z, 05:10:36Z, and 05:11:06Z. There were 2 lines before termination and 11 total.'
+    source: 'termination.yaml:9-24; heartbeat.log:1-11; run.yaml:29-32,40-41'
+  - id: durability.completion_marker
+    observed: 'done.txt was present after the wait and contained exactly `finished 2026-09-03T05:11:06Z`; this timestamp is also the final heartbeat.'
+    source: 'termination.yaml:12-25; run.yaml:39-42; drive.log:25-29'
+  - id: durability.reattach
+    observed: 'the fresh session restarted as `b-worker-durability-pi-01r1` at 05:12:29.365Z. Its mission record persisted mission 0543940b-7903-477d-a229-1be0c650805a with run 3a3acc41-6cdd-400c-aad4-4521f3a3c76f complete, but `workflowChildren` was `[]`; fresh-session `subagent({action:"resume",id:<run>})` returned verbatim `Async run ... was not found in the active session`, `mission.attach-run` with `runMode:"resume"` returned `runMode is invalid`, and a second attach without runMode only attached the completed run to the mission. No `children.list` action was invoked; the fresh session only encountered `children.list` in the list of valid actions after the invalid `mission.status` call.'
+    source: 'run.yaml:43-52; session/home-state/missions/projects/c100bd5ebd29081a81003d83036b4789de4a635db3aa3df263fc802d53a8f461/0543940b-7903-477d-a229-1be0c650805a.json:9-22; transcript.md:137-164; session/2026-09-03T05-12-26-496Z_01a065ae-c080-7e89-9a57-f0e3f563f7af.jsonl:29-40'
+  - id: durability.result_recoverable
+    observed: 'the fresh session could not reattach the old active run or collect a live result by handle, but it could read the persisted worker artifact output, whose full text was `DONE Spawned background worker process 42740 to write the scheduled heartbeat and completion files.`; the completed background process result itself was not a harness result channel, and only heartbeat.log/done.txt side effects proved completion.'
+    source: 'session/subagent-artifacts/3a3acc41-6cdd-400c-aad4-4521f3a3c76f_worker_output.md:1; reattach-attempt.md:1; transcript.md:109-145,625-631; invocation.json calls[8..11], calls[17..19], calls[29..36]'

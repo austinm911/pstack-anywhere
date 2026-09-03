@@ -334,9 +334,18 @@ const answerStartup = (name, dialogs) => {
 };
 
 // Prompting a blocked agent types the prompt into whatever dialog is still up, so a pane that will not settle stops the run here.
-const settleAgent = (name) => {
+// A harness may also draw its prompt box before it accepts input (pi with
+// pi-subagents shows "Startup is still in progress"); `cli.startup_busy`
+// names that text and the prompt waits, up to a minute, until it is gone.
+const settleAgent = (name, cli) => {
   const settled = tryOr(() => herdr("agent", "wait", name, "--timeout", "30000").result?.agent?.agent_status ?? "unknown", (error) => `wait failed: ${error.code ?? error.message}`);
   if (!["idle", "done", "working", "unknown"].includes(settled)) die(6, `agent ${name} is not ready to prompt (${settled}):\n${readText(name, 60, "visible")}`);
+  if (cli.startup_busy) {
+    const busy = new RegExp(cli.startup_busy, "i");
+    for (const until = Date.now() + 60000; busy.test(readText(name, 60, "visible")); Bun.sleepSync(1000)) {
+      if (Date.now() >= until) die(6, `agent ${name} still starting after 60 s (${cli.startup_busy}):\n${readText(name, 60, "visible")}`);
+    }
+  }
   return settled;
 };
 
@@ -491,7 +500,7 @@ const makeCtx = ({ runDir, runId, harness, model, scratch, home, env, cli, pane,
       log(`restart as ${next}`);
       const started = startAgent(next, cli, pane, model, withExtension);
       const startup_answers = answerStartup(next, cli.startup ?? []);
-      const status = settleAgent(next);
+      const status = settleAgent(next, cli);
       state.name = next;
       state.ended = false;
       state.restarts.push({ name: next, start: started.start, ...(started.recovered ? { start_recovered: true } : {}), startup_answers });
@@ -564,6 +573,21 @@ const extractCalls = (text) => {
   return { calls, known };
 };
 
+// pi-subagents (references/harnesses/pi/pi-subagents/) lays its files out under the pi session dir as
+//   <parentId>.jsonl                                          parent session, holds the `subagent` toolCalls
+//   <parentId>/<runId>/run-N/session.jsonl                    one child session per run, all named session.jsonl
+//   subagent-artifacts/<runId>_<agent>_<n>_{meta.json,input.md,output.md,transcript.jsonl}
+// so a child's worker label is <agent>_<n> from its meta.json sibling (matched on the runId path
+// segment), falling back to <runId>/run-N when the meta file is missing. The transcript.jsonl is a
+// second copy of the child's session and is copied but never parsed.
+const workerKey = (rel, names) => {
+  const parts = rel.split("/");
+  const runId = parts.at(-3);
+  if (basename(rel) !== "session.jsonl" || !parts.at(-2)?.startsWith("run-") || !runId) return basename(rel, ".jsonl");
+  const meta = names.find((n) => n.startsWith(`subagent-artifacts/${runId}_`) && n.endsWith("_meta.json"));
+  return meta ? basename(meta, "_meta.json").slice(runId.length + 1) : `${runId}/${parts.at(-2)}`;
+};
+
 // The transcript only shows the TUI's collapsed tool boxes, so the arguments an agent really sent come from the harness's own session log.
 const captureSession = (runDir, template, scratch, home, startedAt) => {
   const dest = join(ROOT, runDir, "session");
@@ -571,6 +595,7 @@ const captureSession = (runDir, template, scratch, home, startedAt) => {
   const dir = template ? resolveSessionDir(template, scratch, home) : null;
   const where = dir ?? `${template ?? "no session_dir in harnesses.yaml"} (nothing matched ${scratch})`;
   const all = (dir ? readdirSync(dir, { recursive: true }) : []).map((rel) => ({ rel, s: statSync(join(dir, rel), { throwIfNoEntry: false }) }));
+  const names = all.filter(({ s }) => s?.isFile()).map(({ rel }) => rel);
   const rels = all.filter(({ s }) => s?.isFile() && s.mtimeMs >= since).map(({ rel }) => rel).sort();
   let [calls, known, workers] = [[], false, {}];
   // A reused run dir still holds the previous attempt's capture.
@@ -579,16 +604,32 @@ const captureSession = (runDir, template, scratch, home, startedAt) => {
   for (const rel of rels) {
     mkdirSync(dirname(join(dest, rel)), { recursive: true });
     copyFileSync(join(dir, rel), join(dest, rel));
-    if (!rel.endsWith(".jsonl")) continue;
+    if (!rel.endsWith(".jsonl") || (rel.startsWith("subagent-artifacts/") && rel.endsWith("_transcript.jsonl"))) continue;
     const parsed = extractCalls(readFileSync(join(dir, rel), "utf8"));
     known ||= parsed.known;
-    // A file in a subdirectory is a subagent's log, named after the worker.
-    if (rel.includes("/")) workers[basename(rel, ".jsonl")] = parsed.calls;
+    // A file in a subdirectory is a subagent's log: claude/codex/omp name it after the worker, pi-subagents needs workerKey.
+    if (rel.includes("/")) workers[workerKey(rel, names)] = parsed.calls;
     else calls = calls.concat(parsed.calls);
+  }
+  // pi-subagents keeps mission records (children.list / resume) and run history under HOME, outside the
+  // session dir: ~/.pi/agent/missions/{projects,index}/*.json and ~/.pi/agent/run-history.jsonl.
+  // The durability scenario needs them, so they land in session/home-state/ under the same freshness rule.
+  let homeState = 0;
+  for (const rel of ["missions", "run-history.jsonl"]) {
+    const src = join(home, ".pi/agent", rel);
+    const s = statSync(src, { throwIfNoEntry: false });
+    const files = s?.isDirectory() ? readdirSync(src, { recursive: true }).map((f) => join(rel, f)) : s?.isFile() ? [rel] : [];
+    for (const file of files) {
+      const stat = statSync(join(home, ".pi/agent", file), { throwIfNoEntry: false });
+      if (!stat?.isFile() || stat.mtimeMs < since) continue;
+      mkdirSync(dirname(join(dest, "home-state", file)), { recursive: true });
+      copyFileSync(join(home, ".pi/agent", file), join(dest, "home-state", file));
+      homeState++;
+    }
   }
   if (rels.length === 0) writeFileSync(join(dest, "NONE.txt"), `searched ${where}; nothing newer than ${startedAt}\n`);
   const note = rels.length === 0 ? `no session files under ${where}` : known ? null : `copied from ${dir} but not parsed: unrecognised line shape`;
-  return { dir, files: rels.length, calls: known ? calls : null, workers, note };
+  return { dir, files: rels.length, homeState, calls: known ? calls : null, workers, note };
 };
 
 // The prepared manifest's header explains why the nulls are there. Keep it, and
@@ -683,7 +724,7 @@ pane = herdr(
 let name = agentName(runId);
 const { start, argv, recovered } = startAgent(name, cli, pane, model, withExtension);
 const startupAnswers = answerStartup(name, cli.startup ?? []);
-settleAgent(name);
+settleAgent(name, cli);
 
 // Without a driver the run is one prompt. With one, the driver's last prompt
 // or wait is the run's status, and a driver that throws fails the run the
@@ -717,7 +758,7 @@ const get = gone ? null : herdr("agent", "get", name);
 const explain = gone ? null : herdr("agent", "explain", name, "--json");
 
 // Session capture is best effort: a run with no session log is still a run.
-const failed = (error) => ({ dir: null, files: 0, calls: null, workers: {}, note: `session capture failed: ${error.message}` });
+const failed = (error) => ({ dir: null, files: 0, homeState: 0, calls: null, workers: {}, note: `session capture failed: ${error.message}` });
 const session = tryOr(() => captureSession(runDir, cli.session_dir ?? null, scratch, home, startedAt), failed);
 
 writeFileSync(
@@ -741,6 +782,7 @@ writeFileSync(
       ...(driven ? { drive: { script: `bench/${scenario}/drive.mjs`, log: "drive.log", notes: driven.state.notes } } : {}),
       env_allowlist: allowlist,
       session_dir: session.dir,
+      home_state_files: session.homeState,
       calls: session.calls,
       calls_workers: session.workers,
       ...(session.note ? { calls_note: session.note } : {}),

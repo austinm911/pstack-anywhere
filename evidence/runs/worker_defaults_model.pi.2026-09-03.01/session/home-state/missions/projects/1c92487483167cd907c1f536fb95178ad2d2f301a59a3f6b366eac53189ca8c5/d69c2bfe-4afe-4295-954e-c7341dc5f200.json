@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "id": "d69c2bfe-4afe-4295-954e-c7341dc5f200",
+  "title": "[prompt redacted]",
+  "objective": "[prompt redacted]",
+  "status": "completed",
+  "createdAt": "2026-09-03T04:52:50.562Z",
+  "updatedAt": "2026-09-03T04:52:59.231Z",
+  "runs": [
+    {
+      "runId": "70ee201e-c339-46e4-a699-5d04d2ace3cc",
+      "mode": "single",
+      "agent": "delegate",
+      "status": "completed",
+      "startedAt": "2026-09-03T04:52:59.231Z",
+      "completedAt": "2026-09-03T04:52:59.231Z",
+      "usage": {
+        "tokens": 1368
+      }
+    }
+  ],
+  "workflowChildren": [],
+  "decisions": [],
+  "artifacts": [
+    {
+      "kind": "output",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/subagent-artifacts/70ee201e-c339-46e4-a699-5d04d2ace3cc_delegate_0_output.md"
+    },
+    {
+      "kind": "other",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/subagent-artifacts/70ee201e-c339-46e4-a699-5d04d2ace3cc_delegate_0_transcript.jsonl",
+      "description": "Child transcript"
+    }
+  ],
+  "receipts": [],
+  "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.EqGpRv6RKp",
+  "ownerSessionId": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46.jsonl",
+  "summary": "Run fan-out: 1/64 used, 63 remaining\nalpha\nunknown",
+  "acceptance": {
+    "status": "attested",
+    "evidenceStatus": "attested",
+    "explicit": false,
+    "effectiveAcceptance": {
+      "level": "attested",
+      "explicit": false,
+      "inferredReason": [
+        "default lightweight attestation"
+      ],
+      "criteria": [
+        {
+          "id": "criterion-1",
+          "must": "Return a concise result and residual risks when applicable",
+          "evidence": [
+            "manual-notes",
+            "residual-risks"
+          ],
+          "severity": "required"
+        }
+      ],
+      "evidence": [
+        "manual-notes",
+        "residual-risks"
+      ],
+      "verify": [],
+      "stopRules": []
+    },
+    "inferredReason": [
+      "default lightweight attestation"
+    ],
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "must": "Return a concise result and residual risks when applicable",
+        "evidence": [
+          "manual-notes",
+          "residual-risks"
+        ],
+        "severity": "required"
+      }
+    ],
+    "runtimeChecks": [],
+    "verifyRuns": [],
+    "childReport": {
+      "criteriaSatisfied": [
+        {
+          "id": "criterion-1",
+          "status": "satisfied",
+          "evidence": "Returned alpha and unknown; no residual risks."
+        }
+      ],
+      "changedFiles": [],
+      "testsAddedOrUpdated": [],
+      "commandsRun": [],
+      "validationOutput": [],
+      "residualRisks": [],
+      "noStagedFiles": true,
+      "diffSummary": "No changes.",
+      "reviewFindings": [
+        "no blockers"
+      ],
+      "manualNotes": "Required two-line response provided."
+    }
+  }
+}

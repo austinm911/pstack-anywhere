@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "f3e547b6-48a2-4862-82ce-71f737728ae4",
+  "title": "[prompt redacted]",
+  "objective": "[prompt redacted]",
+  "status": "failed",
+  "createdAt": "2026-09-03T04:53:07.610Z",
+  "updatedAt": "2026-09-03T04:53:07.613Z",
+  "runs": [],
+  "workflowChildren": [],
+  "decisions": [],
+  "artifacts": [],
+  "receipts": [],
+  "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.EqGpRv6RKp",
+  "ownerSessionId": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.EqGpRv6RKp--/2026-09-03T04-52-37-252Z_01a0659c-9b04-73b4-a67f-ec4659cdfb46.jsonl",
+  "summary": "Unknown subagent model 'poteto-nonexistent-model' in the active Pi model registry."
+}

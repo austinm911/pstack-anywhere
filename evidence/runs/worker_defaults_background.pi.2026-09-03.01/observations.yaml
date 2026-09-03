@@ -1,0 +1,17 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: background.control_returned_at
+    observed: '2026-09-03T04:58:20.568Z, the asynchronous subagent call returned control before the parent''s next bash turn.'
+    source: 'invocation.json calls[1] lines 177-185; transcript.md lines 112-121'
+  - id: background.worker_finished_at
+    observed: '2026-09-03T04:59:24Z, the UTC timestamp written inside worker-done.txt after the worker''s 60-second wait.'
+    source: 'worker-done.txt line 1; timeline.yaml lines 17-19; session/subagent-artifacts/3933ec1c-e68f-4434-93e9-c0a9b121e024_delegate_output.md line 1'
+  - id: background.parent_acted_at
+    observed: '2026-09-03T04:58:25Z, strictly between control return and worker completion; the parent wrote parent-alive.txt in its separate next turn.'
+    source: 'parent-alive.txt line 1; invocation.json calls[2] lines 187-193; timeline.yaml lines 8-13'
+  - id: background.collection_mechanism
+    observed: 'The parent used the extension''s separate bg_wait call for worker run 3933ec1c-e68f-4434-93e9-c0a9b121e024, then read worker-done.txt. The final parent report explicitly says separate wait/join.'
+    source: 'invocation.json calls[3-4] lines 194-209; transcript.md lines 133-161; timeline.yaml lines 14-25'
+  - id: background.result_intact
+    observed: 'true. The collected worker-done.txt timestamp 2026-09-03T04:59:24Z exactly matches the child output''s reported timestamp.'
+    source: 'worker-done.txt line 1; session/subagent-artifacts/3933ec1c-e68f-4434-93e9-c0a9b121e024_delegate_output.md line 1; invocation.json calls[4] lines 203-208'

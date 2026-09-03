@@ -1,0 +1,13 @@
+# Hand-written by the operator from the artifacts in this directory.
+observations:
+  - id: identity.definition_path
+    unsatisfiable: 'No pi subagent definition directory was available to install or discover poteto-probe. The run records subagentsDir: null for pi; there is no bench/worker_defaults_identity/home/pi/ seed today. The scratch HOME seeded only .pi/agent/auth.json.'
+  - id: identity.selection_argument
+    observed: 'The positive poteto-probe selection was skipped because the operator recorded no definition directory. The negative trial used functions.subagent with agent: poteto-absent, task: Reply with the word hello., async: false.'
+    source: 'run.yaml lines 19-26; invocation.json calls lines 213-229; transcript.md lines 20-27, 178-187'
+  - id: identity.token_present
+    observed: 'false/not exercised. positive-report.txt contains only skipped: no subagent definition directory (harnesses.yaml:343), so no worker report began with POTETO-PROBE-OK.'
+    source: 'positive-report.txt line 1; run.yaml lines 22-26; transcript.md lines 139-145'
+  - id: identity.unknown_name_behavior
+    observed: 'hard error, not fallback. The negative trial returned Unknown agent: poteto-absent, listed the builtin and absent user definition directories, and enumerated discovered builtin agents including delegate, oracle, scout, and worker.'
+    source: 'negative-trial.txt lines 1-19; transcript.md lines 107-136; invocation.json calls lines 223-229'

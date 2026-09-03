@@ -1,0 +1,7 @@
+{
+  "worker": null,
+  "note": "The harness did not expose a worker tool-list report for this run. The selected delegate's child session records two bash calls, but that is observed use rather than an available-tool surface.",
+  "selected_agent": "delegate",
+  "child_observed_tools": ["bash"],
+  "source": "invocation.json calls_workers; session/subagent-artifacts/40bb4ce0-6c6c-453e-b76e-b37f310d0d60_delegate_0_transcript.jsonl"
+}

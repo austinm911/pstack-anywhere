@@ -1,0 +1,13 @@
+trial: 1
+mechanism: plain reply
+arrived: plain message
+received: "beta.txt"
+mapped_to: beta.txt
+assumed: no
+
+trial: 3
+mechanism: plain reply
+arrived: plain message
+received: nothing
+mapped_to: none
+assumed: yes — proceeded because the operator explicitly instructed me to continue without an answer.

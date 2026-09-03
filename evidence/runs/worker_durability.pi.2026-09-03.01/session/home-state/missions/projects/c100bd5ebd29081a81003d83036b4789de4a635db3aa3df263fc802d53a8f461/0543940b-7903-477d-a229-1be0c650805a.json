@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "0543940b-7903-477d-a229-1be0c650805a",
+  "title": "[prompt redacted]",
+  "objective": "[prompt redacted]",
+  "status": "active",
+  "createdAt": "2026-09-03T05:05:38.813Z",
+  "updatedAt": "2026-09-03T05:13:46.061Z",
+  "runs": [
+    {
+      "runId": "3a3acc41-6cdd-400c-aad4-4521f3a3c76f",
+      "mode": "external",
+      "asyncDir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/pi-subagents-uid-502/async-subagent-runs/3a3acc41-6cdd-400c-aad4-4521f3a3c76f",
+      "status": "complete",
+      "startedAt": "2026-09-03T05:13:46.061Z",
+      "completedAt": "2026-09-03T05:06:13.961Z",
+      "usage": {
+        "tokens": 7270
+      }
+    }
+  ],
+  "workflowChildren": [],
+  "decisions": [],
+  "artifacts": [
+    {
+      "kind": "status",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/pi-subagents-uid-502/async-subagent-runs/3a3acc41-6cdd-400c-aad4-4521f3a3c76f/status.json"
+    },
+    {
+      "kind": "other",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/pi-subagents-uid-502/async-subagent-runs/3a3acc41-6cdd-400c-aad4-4521f3a3c76f/events.jsonl",
+      "description": "Lifecycle events"
+    },
+    {
+      "kind": "output",
+      "path": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MmUERy/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.8dPIGTXnuY--/subagent-artifacts/3a3acc41-6cdd-400c-aad4-4521f3a3c76f_worker_output.md"
+    }
+  ],
+  "receipts": [],
+  "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.8dPIGTXnuY",
+  "ownerSessionId": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-MmUERy/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.8dPIGTXnuY--/2026-09-03T05-05-23-810Z_01a065a8-4d62-77a8-a73a-b919df3f192b.jsonl",
+  "summary": "worker:\nDONE Spawned background worker process 42740 to write the scheduled heartbeat and completion files."
+}

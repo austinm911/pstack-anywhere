@@ -1,0 +1,223 @@
+{
+  "herdr": {
+    "start": {
+      "id": "cli:agent:start",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-9O9O9Z/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.14iz5G9cPb--/2026-09-03T04-58-06-602Z_01a065a1-a18a-70d7-a4e6-07db8634f92d.jsonl"
+          },
+          "agent_status": "idle",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.14iz5G9cPb",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.14iz5G9cPb",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-backgrou-pi-01",
+          "pane_id": "w1H:p4Y",
+          "revision": 1,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1099,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8cff553d63183",
+          "terminal_title": "π - tmp.14iz5G9cPb",
+          "terminal_title_stripped": "π - tmp.14iz5G9cPb",
+          "workspace_id": "w1H"
+        },
+        "argv": [
+          "pi",
+          "--model",
+          "openai-codex/gpt-5.6-luna:high",
+          "-e",
+          "/Users/am/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+        ],
+        "type": "agent_started"
+      }
+    },
+    "prompt": {
+      "id": "cli:agent:prompt",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-9O9O9Z/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.14iz5G9cPb--/2026-09-03T04-58-06-602Z_01a065a1-a18a-70d7-a4e6-07db8634f92d.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.14iz5G9cPb",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.14iz5G9cPb",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-backgrou-pi-01",
+          "pane_id": "w1H:p4Y",
+          "revision": 4,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1103,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8cff553d63183",
+          "terminal_title": "π - tmp.14iz5G9cPb",
+          "terminal_title_stripped": "π - tmp.14iz5G9cPb",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_prompted"
+      }
+    },
+    "get": {
+      "id": "cli:agent:get",
+      "result": {
+        "agent": {
+          "agent": "pi",
+          "agent_session": {
+            "agent": "pi",
+            "kind": "path",
+            "source": "herdr:pi",
+            "value": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-9O9O9Z/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.14iz5G9cPb--/2026-09-03T04-58-06-602Z_01a065a1-a18a-70d7-a4e6-07db8634f92d.jsonl"
+          },
+          "agent_status": "done",
+          "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.14iz5G9cPb",
+          "focused": false,
+          "foreground_cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.14iz5G9cPb",
+          "interactive_ready": true,
+          "name": "b-worker-defaults-backgrou-pi-01",
+          "pane_id": "w1H:p4Y",
+          "revision": 4,
+          "screen_detection_skipped": true,
+          "state_change_seq": 1103,
+          "tab_id": "w1H:t2",
+          "terminal_id": "term_65a8cff553d63183",
+          "terminal_title": "π - tmp.14iz5G9cPb",
+          "terminal_title_stripped": "π - tmp.14iz5G9cPb",
+          "workspace_id": "w1H"
+        },
+        "type": "agent_info"
+      }
+    },
+    "explain": {
+      "agent": "pi",
+      "cached_remote_version": null,
+      "evaluated_rules": [],
+      "fallback_reason": null,
+      "local_override_shadowing_remote": false,
+      "manifest_source": null,
+      "manifest_version": null,
+      "matched_rule": null,
+      "remote_update_error": null,
+      "remote_update_status": null,
+      "screen_detection_skip_reason": "full_lifecycle_hook_authority",
+      "screen_detection_skipped": true,
+      "skip_state_update": false,
+      "skipped_update_reason": null,
+      "state": "idle",
+      "visible_blocker": false,
+      "visible_idle": false,
+      "visible_working": false,
+      "warning": null
+    },
+    "startup_answers": []
+  },
+  "cli": {
+    "command": [
+      "pi",
+      "--model",
+      "openai-codex/gpt-5.6-luna:high",
+      "-e",
+      "/Users/am/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+    ],
+    "version": "0.84.4\n"
+  },
+  "model": "openai-codex/gpt-5.6-luna:high",
+  "scratch_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.14iz5G9cPb",
+  "home": {
+    "seeded": [
+      ".pi/agent/auth.json"
+    ],
+    "written": {},
+    "extension": {
+      "name": "pi-subagents",
+      "version": "0.64.0",
+      "args": [
+        "-e",
+        "~/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+      ]
+    }
+  },
+  "env_allowlist": [
+    "HOME",
+    "PATH",
+    "LANG",
+    "TMPDIR",
+    "USER",
+    "LOGNAME",
+    "TERM",
+    "COLORTERM",
+    "HERDR_BIN_PATH",
+    "HERDR_ENV",
+    "HERDR_PANE_ID",
+    "HERDR_SESSION_ID",
+    "HERDR_SOCKET_PATH",
+    "HERDR_STARTUP_CWD",
+    "HERDR_TAB_ID",
+    "HERDR_WORKSPACE_ID"
+  ],
+  "session_dir": "/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-9O9O9Z/.pi/agent/sessions/--private-var-folders-4n-6mnm6cw94yq_yhfvcxxft3180000gp-T-tmp.14iz5G9cPb--",
+  "home_state_files": 2,
+  "calls": [
+    {
+      "name": "subagent",
+      "arguments": {
+        "action": "list"
+      },
+      "ts": "2026-09-03T04:58:14.258Z"
+    },
+    {
+      "name": "subagent",
+      "arguments": {
+        "agent": "delegate",
+        "task": "Wait 60 seconds. Then write the current UTC timestamp into worker-done.txt in the current working directory as plain file content, and report the timestamp you wrote.",
+        "async": true,
+        "cwd": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.14iz5G9cPb"
+      },
+      "ts": "2026-09-03T04:58:20.568Z"
+    },
+    {
+      "name": "bash",
+      "arguments": {
+        "command": "date -u +%Y-%m-%dT%H:%M:%SZ > parent-alive.txt"
+      },
+      "ts": "2026-09-03T04:58:25.441Z"
+    },
+    {
+      "name": "bg_wait",
+      "arguments": {
+        "id": "3933ec1c-e68f-4434-93e9-c0a9b121e024",
+        "all": true,
+        "timeoutMs": 120000
+      },
+      "ts": "2026-09-03T04:58:32.583Z"
+    },
+    {
+      "name": "read",
+      "arguments": {
+        "path": "/private/var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/tmp.14iz5G9cPb/worker-done.txt"
+      },
+      "ts": "2026-09-03T04:59:37.776Z"
+    }
+  ],
+  "calls_workers": {
+    "bb214027-2875-4fb2-bc31-85813d1da777/run-0": [
+      {
+        "name": "bash",
+        "arguments": {
+          "command": "sleep 60; date -u '+%Y-%m-%dT%H:%M:%SZ' > worker-done.txt; printf 'timestamp='; cat worker-done.txt; printf '\\n'; git status --short -- worker-done.txt 2>/dev/null || true",
+          "timeout": 75
+        },
+        "ts": "2026-09-03T04:58:24.733Z"
+      }
+    ]
+  }
+}

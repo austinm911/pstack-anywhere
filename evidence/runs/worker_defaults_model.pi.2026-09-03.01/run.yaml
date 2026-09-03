@@ -1,0 +1,34 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: worker_defaults_model
+harness: pi
+run_id: worker_defaults_model.pi.2026-09-03.01
+coupling_version: 2
+started_at: 2026-09-03T04:52:36.430Z
+ended_at: 2026-09-03T04:53:42.730Z
+operator: am
+machine: Mac.lan
+os: darwin 25.5.0
+harness_version: 0.84.4
+harness_version_source: pi --version -> 0.84.4
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .pi/agent/auth.json, plus herdr's pi state-reporting integration (herdr integration install pi); no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/bin/pi; driven by bench/worker_defaults_model/drive.mjs, every operator action timed in drive.log"
+supersedes: null
+extension: "pi-subagents, loaded explicitly with -e ~/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+drive: 
+  models: 
+    a: openai-codex/gpt-5.6-luna
+    b: openai-codex/gpt-5.6-terra
+    source: 
+      a: "run.yaml model of every pi run (evidence/runs/spawn_worker.pi.2026-09-02.01); session model_change records provider openai-codex, modelId gpt-5.6-luna"
+      b: "the slug every codex run used on the same openai-codex provider (evidence/runs/spawn_worker.codex.2026-09-02.01); not yet seen through pi --model, verified by this run"
+  harness_record: "session log under /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-w3RoXF/.pi/agent/sessions, files newer than the turn start; the run dir's session/ is the same capture"
+  turn: 
+    status: idle
+    settled_by: herdr agent prompt --wait
+  usage_record: 5 session file(s)
+  spawn_args: "functions.subagent({\"agent\":\"delegate\",\"task\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\",\"model\":\"openai-codex/gpt-5.6-luna\",\"async\":false})\nfunctions.subagent({\"agent\":\"delegate\",\"task\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\",\"model\":\"openai-codex/gpt-5.6-terra\",\"async\":false})\nfunctions.subagent({\"agent\":\"delegate\",\"task\":\"Reply with exactly two lines. Line 1: the single word `alpha`. Line 2: the model identifier you believe you are running as, or `unknown`.\",\"model\":\"poteto-nonexistent-model\",\"async\":false})\n"

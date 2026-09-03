@@ -1,0 +1,36 @@
+# Unexecuted run manifest, written by `bun scripts/coupling.mjs probe prepare`.
+#
+# started_at and ended_at are null, so `probe inspect` reports this run as
+# unexecuted and no attestation may cite it. Fill every null from the run
+# itself: a value typed from memory is not a value.
+
+scenario: wake_on_event
+harness: pi
+run_id: wake_on_event.pi.2026-09-03.01
+coupling_version: 2
+started_at: 2026-09-03T04:56:09.390Z
+ended_at: 2026-09-03T05:04:21.640Z
+operator: am
+machine: Mac.lan
+os: darwin 25.5.0
+harness_version: 0.84.4
+harness_version_source: pi --version -> 0.84.4
+clock: "UTC, Date.toISOString on the bench host"
+environment_deltas: "launched under a scratch HOME seeded only with .pi/agent/auth.json, plus herdr's pi state-reporting integration (herdr integration install pi); no other user skill, rule, hook, MCP server, or context file was reachable; process environment cleared to HOME, PATH, LANG, TMPDIR, USER, LOGNAME, TERM, COLORTERM plus HERDR_*, the harness exec'd through /var/folders/4n/6mnm6cw94yq_yhfvcxxft3180000gp/T/bench-home-sgZVoR/bin/pi; driven by bench/wake_on_event/drive.mjs, every operator action timed in drive.log"
+supersedes: null
+extension: "pi-subagents, loaded explicitly with -e ~/.pi/agent/npm/node_modules/pi-subagents/index.ts"
+drive: 
+  accounting.before_wait: 2026-09-03T04:56:12.644Z assistant_entries=0 seq=1096 status=idle
+  trial1.prompt_sent: 2026-09-03T04:56:12.644Z
+  accounting.during_wait: 2026-09-03T04:58:12.658Z assistant_entries=2 seq=1097 status=working
+  trial1.wait_call: "functions.bash({\"command\":\"deadline=$(($(date +%s)+1200)); while [ ! -e event.flag ]; do now=$(date +%s); if [ \\\"$now\\\" -ge \\\"$deadline\\\" ]; then printf '%s\\\\n' 'TIMEOUT: event.flag absent'; exit 124; fi; sleep 30; done; printf '%s\\\\n' 'event.flag appeared'\",\"timeout\":1210000})\nshell command\nprocess exit, timeout"
+  trial1.triggered: 2026-09-03T04:58:12Z
+  accounting.after_wake: 2026-09-03T04:58:51.693Z assistant_entries=5 seq=1101 status=done
+  trial1.returned: 2026-09-03T04:58:51.687Z status=done settled_by=herdr agent prompt --wait
+  trial1.woke_at: "2026-09-03T04:58:42Z\nevent.flag appeared"
+  trial2.prompt_sent: 2026-09-03T04:58:51.704Z budget_ms=318086
+  trial2.outcome: "2026-09-03T05:04:09.855Z status=prompt failed: herdr agent prompt failed (1): {\"error\":{\"code\":\"timeout\",\"message\":\"timed out waiting for agent status\"},\"id\":\"cli:agent:prompt\"} still_waiting=true"
+  trial2.abort: "esc sent: the wait was still running past the budget"
+  trial2.closing: 2026-09-03T05:04:21.253Z status=done
+  accounting.after_trial2: 2026-09-03T05:04:21.259Z assistant_entries=10 seq=1109 status=done
+  artifacts: wait-accounting.yaml timeline.yaml no-trigger-trial.md written to scratch
