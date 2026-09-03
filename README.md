@@ -94,7 +94,9 @@ Rendered tables use this legend:
 | term | legend |
 | --- | --- |
 | parity | 🟢 substitute, 🟡 degrade, 🔴 drop, 🧩 extension, ⚫ native |
-| verification | ✅ exercised, 📎 static, ⚪ unverified, ⚠ stale, void, superseded |
+
+Verification is shown as a suffix: (unverified), (stale), (void); no suffix
+means a recorded run or cited source backs the cell.
 
 ## Layout
 

@@ -1220,8 +1220,8 @@ function citationText(resolved, from, to) {
   return lines.slice(start - 1, end).join("\n");
 }
 
-// RANK is display precedence, and also the key set TIER_EMOJI has to cover: a
-// tier with no glyph prints its bare name in the resolutions table. A record
+// RANK is display precedence, and also the key set TIER_SUFFIX has to cover: a
+// tier with no suffix prints as verified in the resolutions table. A record
 // whose grounding stopped holding ranks at or below unverified rather than
 // carrying a tier it no longer earns: void, superseded, stale.
 const RANK = {
@@ -1875,10 +1875,9 @@ const INVARIANT_LEAD = {
   prerequisite: "Without the binary",
 };
 
-// The glyphs a cell prints. Single code points on purpose: a variation selector
-// after the warning sign renders as two glyphs in some terminals and breaks
-// string equality in the render check. `observed_local` never counts as
-// verified, so it shares the unverified glyph.
+// The parity glyph a cell prints. Single code points on purpose: a variation
+// selector renders as two glyphs in some terminals and breaks string equality
+// in the render check. Verification prints as a word suffix, never a glyph.
 const PARITY_EMOJI = {
   substitute: "\u{1F7E2}",
   degrade: "\u{1F7E1}",
@@ -1887,28 +1886,32 @@ const PARITY_EMOJI = {
   native: "\u26AB",
 };
 
-const TIER_EMOJI = {
-  exercised: "\u2705",
-  static: "\u{1F4CE}",
-  unverified: "\u26AA",
-  observed_local: "\u26AA",
-  stale: "\u26A0",
-  void: "\u26A0",
-  superseded: "\u26A0",
+// A cell with no suffix has evidence. `observed_local` never counts as
+// verified, so it reads as unverified.
+const TIER_SUFFIX = {
+  unverified: " (unverified)",
+  observed_local: " (unverified)",
+  stale: " (stale)",
+  void: " (void)",
+  superseded: " (superseded)",
 };
 
 const EMOJI_LEGEND =
   `Parity: ${PARITY_EMOJI.substitute} substitute ${PARITY_EMOJI.degrade} degrade ` +
   `${PARITY_EMOJI.drop} drop ${PARITY_EMOJI.extension} extension ${PARITY_EMOJI.native} native. ` +
-  `Verification: ${TIER_EMOJI.exercised} exercised ${TIER_EMOJI.static} static ` +
-  `${TIER_EMOJI.unverified} unverified ${TIER_EMOJI.stale} stale, void, or superseded.`;
+  "Verification is shown as a suffix: (unverified), (stale), (void); no suffix means " +
+  "a recorded run or cited source backs the cell.";
 
 const harnessHeading = (h) => `${h.label}${h.baseline ? " (upstream)" : ""}`;
+
+// Angle brackets in prose (`<name>`, `<file>`) read as HTML tags on GitHub and
+// vanish, so replacement and fallback text escapes them before it is emitted.
+const escapeAngles = (text) => text.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 
 // The replacement a cell names, with the fallback appended for an extension
 // cell because that is the path taken when the tool is not installed.
 const replacementText = (resolved) =>
-  resolved.parity === "extension" ? `${resolved.use}, else ${resolved.fallback}` : resolved.use;
+  escapeAngles(resolved.parity === "extension" ? `${resolved.use}, else ${resolved.fallback}` : resolved.use);
 
 // Every resolution in the ledger, rendered once. Skill sections name their
 // domains and link here, so the same table no longer appears fourteen times
@@ -1920,11 +1923,25 @@ function domainResolutions(model) {
   const varying = rows.filter((entry) => domainVaries(entry, harnesses));
   const uniform = rows.filter((entry) => !domainVaries(entry, harnesses));
 
+  const suffix = (entry, harness) =>
+    TIER_SUFFIX[model.verification.lookup(entry.axis.id, harness.id, entry.spec.parameter)] ?? "";
+
+  // When every upstream cell is native with no evidence, the intro says so once
+  // and the column drops its suffix. Any upstream cell that breaks the pattern
+  // keeps the per-cell rendering, so the sentence never claims what is not so.
+  const upstream = harnesses.find((h) => h.baseline);
+  const upstreamPlain =
+    upstream !== undefined &&
+    varying.every((entry) => {
+      const resolved = entry.spec.resolution[upstream.id];
+      return resolved?.parity === "native" && suffix(entry, upstream) === " (unverified)";
+    });
+
   const cell = (entry, harness) => {
     const resolved = entry.spec.resolution[harness.id];
     if (!resolved) return "unknown";
-    const tier = model.verification.lookup(entry.axis.id, harness.id, entry.spec.parameter);
-    return `${PARITY_EMOJI[resolved.parity] ?? resolved.parity} ${TIER_EMOJI[tier] ?? tier}`;
+    const parity = `${PARITY_EMOJI[resolved.parity] ?? resolved.parity} ${resolved.parity}`;
+    return upstreamPlain && harness.baseline ? parity : `${parity}${suffix(entry, harness)}`;
   };
 
   const verificationNote = (entry) => {
@@ -1951,7 +1968,7 @@ function domainResolutions(model) {
       return `- **\`${entry.label}\`** (${axis.kind}). ${what} No harness has a resolution recorded for it.${verificationNote(entry)}`;
     }
     const lead = INVARIANT_LEAD[axis.kind] ?? "Same on every harness";
-    return `- **\`${entry.label}\`** (${axis.kind}, ${resolved.parity}). ${what} ${lead}: ${flow(resolved.use)}${verificationNote(entry)}`;
+    return `- **\`${entry.label}\`** (${axis.kind}, ${resolved.parity}). ${what} **${lead}:** ${flow(escapeAngles(resolved.use))}${verificationNote(entry)}`;
   };
 
   const table = [
@@ -1967,7 +1984,7 @@ function domainResolutions(model) {
         `- **\`${entry.label}\`**`,
         ...harnesses.map((h) => {
           const resolved = entry.spec.resolution[h.id];
-          return `  - ${h.label}: ${resolved ? flow(replacementText(resolved)) : "unknown"}`;
+          return `  - **${h.label}:** ${resolved ? flow(replacementText(resolved)) : "unknown"}`;
         }),
       ].join("\n"),
     )
@@ -1975,9 +1992,10 @@ function domainResolutions(model) {
 
   return [
     `${plural(varying.length, "domain")} of ${rows.length} resolve differently depending on the ` +
-      "harness. Each cell shows the parity glyph and the verification glyph. " +
-      `${model.baseline.label} is the upstream column: its resolutions are what upstream already ` +
-      "does, not a substitution this port made.",
+      "harness. Each cell shows the parity glyph and word, with a verification suffix where the " +
+      `cell has no evidence. ${model.baseline.label} is upstream` +
+      (upstreamPlain ? " and has no saved evidence, so its column is native and unverified throughout" : "") +
+      ": its resolutions are what upstream already does, not a substitution this port made.",
     "",
     table,
     "",
@@ -2320,11 +2338,12 @@ function conformanceTable(model) {
       String(entry.runs.length),
     );
     if (!uniform) {
-      cells.push(
-        entry.distinct.size === 1
-          ? `all harnesses: ${entry.byHarness[0][1]}`
-          : entry.byHarness.map(([harness, state]) => `${harness}: ${state}`).join("; "),
-      );
+      // Harnesses that share a state print once under it, so a row reads as
+      // "who has evidence; who does not" rather than five repeats of one word.
+      const grouped = [...Map.groupBy(entry.byHarness, ([, state]) => state)]
+        .map(([state, pairs]) => `${pairs.map(([harness]) => harness).join(", ")}: ${state}`)
+        .join("; ");
+      cells.push(entry.distinct.size === 1 ? `all harnesses: ${entry.byHarness[0][1]}` : grouped);
     }
     return row(cells);
   });
@@ -2450,19 +2469,22 @@ function reviewerTable(model) {
     const parities = groupCount(cells.filter((c) => c.parity), (c) => c.parity);
     const glyphs = Object.keys(PARITY_EMOJI)
       .filter((p) => parities.has(p))
-      .map((p) => `${PARITY_EMOJI[p]} ${parities.get(p)}`)
-      .join("  ");
+      .map((p) => `${PARITY_EMOJI[p]} ${parities.get(p)} ${p}`)
+      .join(", ");
     const lossy = cells
       .filter((c) => LOSSY.includes(c.parity))
       .map((c) => `\`${cellLabel(c)}\``);
     return row([
       harnessHeading(harness),
       glyphs,
-      `${cells.filter((c) => c.verified).length} of ${cells.length}`,
+      `${cells.filter((c) => c.verified).length} of ${cells.length} domains`,
       lossy.length > 0 ? lossy.join(", ") : "none",
     ]);
   });
-  return [head(["harness", "parity", "verified cells", "drop / degrade"]), ...rows].join("\n");
+  return [
+    head(["harness", `how the ${model.counts.domains} domains resolve`, "with evidence", "loses something"]),
+    ...rows,
+  ].join("\n");
 }
 
 function renderReport(model) {
@@ -2592,6 +2614,8 @@ One row per harness. Parity counts run over the ${counts.domains} domains; the l
 column names the domains that lose something on that harness.
 
 ${reviewerTable(model)}
+
+With evidence means a recorded run or a cited source file backs the cell; the rest are unverified.
 
 ## Totals
 

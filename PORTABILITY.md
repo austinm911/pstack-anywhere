@@ -8,20 +8,22 @@ counted on each run rather than asserted in prose. The words domain, cell,
 occurrence, parity, and verification are defined once in
 [vocabulary](README.md#vocabulary).
 
-Parity: 🟢 substitute 🟡 degrade 🔴 drop 🧩 extension ⚫ native. Verification: ✅ exercised 📎 static ⚪ unverified ⚠ stale, void, or superseded.
+Parity: 🟢 substitute 🟡 degrade 🔴 drop 🧩 extension ⚫ native. Verification is shown as a suffix: (unverified), (stale), (void); no suffix means a recorded run or cited source backs the cell.
 
 ## For reviewers
 
 One row per harness. Parity counts run over the 24 domains; the last
 column names the domains that lose something on that harness.
 
-| harness | parity | verified cells | drop / degrade |
+| harness | how the 24 domains resolve | with evidence | loses something |
 | --- | --- | --- | --- |
-| Cursor (upstream) | 🟢 9  🔴 3  ⚫ 10 | 0 of 24 | `graphite`, `github_cli`, `bun` |
-| Claude Code | 🟢 16  🟡 2  🔴 4 | 10 of 24 | `worker_durability`, `probe_worker`, `worker_defaults.readonly`, `graphite`, `github_cli`, `bun` |
-| Codex | 🟢 15  🟡 2  🔴 5 | 10 of 24 | `worker_durability`, `wake_on_event`, `worker_defaults.readonly`, `human_question`, `graphite`, `github_cli`, `bun` |
-| pi | 🟢 10  🟡 4  🔴 4  🧩 4 | 10 of 24 | `worker_durability`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `human_question`, `graphite`, `github_cli`, `bun` |
-| Oh My Pi | 🟢 18  🔴 4 | 10 of 24 | `worker_durability`, `graphite`, `github_cli`, `bun` |
+| Cursor (upstream) | 🟢 9 substitute, 🔴 3 drop, ⚫ 10 native | 0 of 24 domains | `graphite`, `github_cli`, `bun` |
+| Claude Code | 🟢 16 substitute, 🟡 2 degrade, 🔴 4 drop | 10 of 24 domains | `worker_durability`, `probe_worker`, `worker_defaults.readonly`, `graphite`, `github_cli`, `bun` |
+| Codex | 🟢 15 substitute, 🟡 2 degrade, 🔴 5 drop | 10 of 24 domains | `worker_durability`, `wake_on_event`, `worker_defaults.readonly`, `human_question`, `graphite`, `github_cli`, `bun` |
+| pi | 🟢 10 substitute, 🟡 4 degrade, 🔴 4 drop, 🧩 4 extension | 10 of 24 domains | `worker_durability`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `human_question`, `graphite`, `github_cli`, `bun` |
+| Oh My Pi | 🟢 18 substitute, 🔴 4 drop | 10 of 24 domains | `worker_durability`, `graphite`, `github_cli`, `bun` |
+
+With evidence means a recorded run or a cited source file backs the cell; the rest are unverified.
 
 ## Totals
 
@@ -55,98 +57,98 @@ Next:
 
 ## Domain resolutions
 
-10 domains of 24 resolve differently depending on the harness. Each cell shows the parity glyph and the verification glyph. Cursor is the upstream column: its resolutions are what upstream already does, not a substitution this port made.
+10 domains of 24 resolve differently depending on the harness. Each cell shows the parity glyph and word, with a verification suffix where the cell has no evidence. Cursor is upstream and has no saved evidence, so its column is native and unverified throughout: its resolutions are what upstream already does, not a substitution this port made.
 
 | domain | Cursor (upstream) | Claude Code | Codex | pi | Oh My Pi |
 | --- | --- | --- | --- | --- | --- |
-| `spawn_worker` (capability) | ⚫ ⚪ | 🟢 ✅ | 🟢 ✅ | 🧩 ✅ | 🟢 ✅ |
-| `worker_durability` (capability) | ⚫ ⚪ | 🔴 ✅ | 🔴 ✅ | 🟡 ✅ | 🔴 ✅ |
-| `probe_worker` (capability) | ⚫ ⚪ | 🟡 ✅ | 🟢 ✅ | 🧩 ✅ | 🟢 ✅ |
-| `wake_on_event` (capability) | ⚫ ⚪ | 🟢 ✅ | 🟡 ✅ | 🟡 ✅ | 🟢 ✅ |
-| `worker_defaults.background` (parameter_set) | ⚫ ⚪ | 🟢 ✅ | 🟢 ✅ | 🟡 ✅ | 🟢 ✅ |
-| `worker_defaults.readonly` (parameter_set) | ⚫ ⚪ | 🟡 ✅ | 🔴 ✅ | 🔴 ✅ | 🟢 ✅ |
-| `worker_defaults.identity` (parameter_set) | ⚫ ⚪ | 🟢 ✅ | 🟢 ✅ | 🧩 ✅ | 🟢 ✅ |
-| `worker_defaults.model` (parameter_set) | ⚫ ⚪ | 🟢 ✅ | 🟢 ✅ | 🧩 ✅ | 🟢 ✅ |
-| `human_question` (capability) | ⚫ ⚪ | 🟢 ✅ | 🟡 ✅ | 🟡 ✅ | 🟢 ✅ |
-| `pack_path` (path_assumption) | ⚫ ⚪ | 🟢 ✅ | 🟢 ✅ | 🟢 ✅ | 🟢 ✅ |
+| `spawn_worker` (capability) | ⚫ native | 🟢 substitute | 🟢 substitute | 🧩 extension | 🟢 substitute |
+| `worker_durability` (capability) | ⚫ native | 🔴 drop | 🔴 drop | 🟡 degrade | 🔴 drop |
+| `probe_worker` (capability) | ⚫ native | 🟡 degrade | 🟢 substitute | 🧩 extension | 🟢 substitute |
+| `wake_on_event` (capability) | ⚫ native | 🟢 substitute | 🟡 degrade | 🟡 degrade | 🟢 substitute |
+| `worker_defaults.background` (parameter_set) | ⚫ native | 🟢 substitute | 🟢 substitute | 🟡 degrade | 🟢 substitute |
+| `worker_defaults.readonly` (parameter_set) | ⚫ native | 🟡 degrade | 🔴 drop | 🔴 drop | 🟢 substitute |
+| `worker_defaults.identity` (parameter_set) | ⚫ native | 🟢 substitute | 🟢 substitute | 🧩 extension | 🟢 substitute |
+| `worker_defaults.model` (parameter_set) | ⚫ native | 🟢 substitute | 🟢 substitute | 🧩 extension | 🟢 substitute |
+| `human_question` (capability) | ⚫ native | 🟢 substitute | 🟡 degrade | 🟡 degrade | 🟢 substitute |
+| `pack_path` (path_assumption) | ⚫ native | 🟢 substitute | 🟢 substitute | 🟢 substitute | 🟢 substitute |
 
 What each harness uses, per domain in the table:
 
 - **`spawn_worker`**
-  - Cursor: Task with environment: "cloud"
-  - Claude Code: Agent tool (named Task in older docs), subagent_type
-  - Codex: task tool
-  - pi: subagent({agent:"<name>"}) via pi-subagents; fresh child context from .pi/agent/extensions/subagent/config.json, else without pi-subagents, no delegation primitive
-  - Oh My Pi: task tool, agent field selects the specialist
+  - **Cursor:** Task with environment: "cloud"
+  - **Claude Code:** Agent tool (named Task in older docs), subagent_type
+  - **Codex:** task tool
+  - **pi:** subagent({agent:"&lt;name&gt;"}) via pi-subagents; fresh child context from .pi/agent/extensions/subagent/config.json, else without pi-subagents, no delegation primitive
+  - **Oh My Pi:** task tool, agent field selects the specialist
 - **`worker_durability`**
-  - Cursor: cloud agents run off-machine and survive a restart
-  - Claude Code: subagents die with the session
-  - Codex: subagents die with the session
-  - pi: mission records under ~/.pi/agent/missions/ persist the run; no subagent({action:"children.list"}) reattachment or live report recovery after /quit; externalize side effects
-  - Oh My Pi: subagents die with the session
+  - **Cursor:** cloud agents run off-machine and survive a restart
+  - **Claude Code:** subagents die with the session
+  - **Codex:** subagents die with the session
+  - **pi:** mission records under ~/.pi/agent/missions/ persist the run; no subagent({action:"children.list"}) reattachment or live report recovery after /quit; externalize side effects
+  - **Oh My Pi:** subagents die with the session
 - **`probe_worker`**
-  - Cursor: dashboard shows agent state without a resume
-  - Claude Code: job status only, no liveness for every delegate kind
-  - Codex: list_agents, running or completed with the final message; no idle state
-  - pi: the job status the task extension exposes, else none, wait for the result
-  - Oh My Pi: hub op:"jobs" while live, hub op:"list" once settled
+  - **Cursor:** dashboard shows agent state without a resume
+  - **Claude Code:** job status only, no liveness for every delegate kind
+  - **Codex:** list_agents, running or completed with the final message; no idle state
+  - **pi:** the job status the task extension exposes, else none, wait for the result
+  - **Oh My Pi:** hub op:"jobs" while live, hub op:"list" once settled
 - **`wake_on_event`**
-  - Cursor: /loop built-in
-  - Claude Code: one background Bash wait, wake on its completion; heartbeat only when no such wait fits
-  - Codex: heartbeat sized to when the result is worth re-checking
-  - pi: 30-second blocking bash poll; heartbeat only when no such wait fits
-  - Oh My Pi: hub op:"wait"
+  - **Cursor:** /loop built-in
+  - **Claude Code:** one background Bash wait, wake on its completion; heartbeat only when no such wait fits
+  - **Codex:** heartbeat sized to when the result is worth re-checking
+  - **pi:** 30-second blocking bash poll; heartbeat only when no such wait fits
+  - **Oh My Pi:** hub op:"wait"
 - **`worker_defaults.background`**
-  - Cursor: run_in_background: true
-  - Claude Code: run in background
-  - Codex: async
-  - pi: subagent({async:true}) returns at once; collect the result from a file the worker wrote
-  - Oh My Pi: async, or hub op:"wait" to block
+  - **Cursor:** run_in_background: true
+  - **Claude Code:** run in background
+  - **Codex:** async
+  - **pi:** subagent({async:true}) returns at once; collect the result from a file the worker wrote
+  - **Oh My Pi:** async, or hub op:"wait" to block
 - **`worker_defaults.readonly`**
-  - Cursor: agent mode strips MCP
-  - Claude Code: Explore agent type drops Write and Edit but keeps Bash; the constraint held by the agent's instructions, not the tool surface
-  - Codex: no read-only agent type in stock Codex; a plain spawn_agent worker can write
-  - pi: subagent({agent:"scout"}), tools: read, grep, find, ls, bash, write
-  - Oh My Pi: scout agent is read-only
+  - **Cursor:** agent mode strips MCP
+  - **Claude Code:** Explore agent type drops Write and Edit but keeps Bash; the constraint held by the agent's instructions, not the tool surface
+  - **Codex:** no read-only agent type in stock Codex; a plain spawn_agent worker can write
+  - **pi:** subagent({agent:"scout"}), tools: read, grep, find, ls, bash, write
+  - **Oh My Pi:** scout agent is read-only
 - **`worker_defaults.identity`**
-  - Cursor: subagent_type: "poteto-agent"
-  - Claude Code: a poteto-agent definition in the harness subagent dir
-  - Codex: a poteto-agent definition in the harness subagent dir
-  - pi: subagent({agent:"<name>"}) via pi-subagents reading ~/.pi/agent/agents (harnesses.yaml:330), else without pi-subagents or a definition file, no named identity; use the parent model
-  - Oh My Pi: a poteto-agent definition in the harness subagent dir
+  - **Cursor:** subagent_type: "poteto-agent"
+  - **Claude Code:** a poteto-agent definition in the harness subagent dir
+  - **Codex:** a poteto-agent definition in the harness subagent dir
+  - **pi:** subagent({agent:"&lt;name&gt;"}) via pi-subagents reading ~/.pi/agent/agents (harnesses.yaml:330), else without pi-subagents or a definition file, no named identity; use the parent model
+  - **Oh My Pi:** a poteto-agent definition in the harness subagent dir
 - **`worker_defaults.model`**
-  - Cursor: explicit slug per role
-  - Claude Code: role slots
-  - Codex: role slots
-  - pi: role slots supplied through the pi-subagents extension, else no model selection, use the parent model
-  - Oh My Pi: role slots, or the agent field
+  - **Cursor:** explicit slug per role
+  - **Claude Code:** role slots
+  - **Codex:** role slots
+  - **pi:** role slots supplied through the pi-subagents extension, else no model selection, use the parent model
+  - **Oh My Pi:** role slots, or the agent field
 - **`human_question`**
-  - Cursor: AskQuestion
-  - Claude Code: the ask tool
-  - Codex: a plain question in the reply; request_user_input exists but is mode-gated and was not offered under stock config
-  - pi: a plain question in the reply; no recorded extension registers an ask tool
-  - Oh My Pi: the ask tool
+  - **Cursor:** AskQuestion
+  - **Claude Code:** the ask tool
+  - **Codex:** a plain question in the reply; request_user_input exists but is mode-gated and was not offered under stock config
+  - **pi:** a plain question in the reply; no recorded extension registers an ask tool
+  - **Oh My Pi:** the ask tool
 - **`pack_path`**
-  - Cursor: pstack/skills/... in the vendored pack
-  - Claude Code: ../<name>/<file> under ~/.claude/skills; the skill is hidden from the model's listing, so the path is the only pointer
-  - Codex: ../<name>/<file> under ~/.agents/skills; listed to the model as Poteto Mode
-  - pi: ../<name>/<file> under ~/.agents/skills; the skill is hidden from the model's listing, so the path is the only pointer
-  - Oh My Pi: ../<name>/<file> under ~/.agents/skills; skill://Poteto Mode/<file> also works, keyed by frontmatter name
+  - **Cursor:** pstack/skills/... in the vendored pack
+  - **Claude Code:** ../&lt;name&gt;/&lt;file&gt; under ~/.claude/skills; the skill is hidden from the model's listing, so the path is the only pointer
+  - **Codex:** ../&lt;name&gt;/&lt;file&gt; under ~/.agents/skills; listed to the model as Poteto Mode
+  - **pi:** ../&lt;name&gt;/&lt;file&gt; under ~/.agents/skills; the skill is hidden from the model's listing, so the path is the only pointer
+  - **Oh My Pi:** ../&lt;name&gt;/&lt;file&gt; under ~/.agents/skills; skill://Poteto Mode/&lt;file&gt; also works, keyed by frontmatter name
 
 The other 14 domains resolve the same way on every harness:
 
-- **`review_automation`** (role, substitute). An agentic reviewer that files PR comments. A GitHub-side service, not a harness feature, so it is the user's choice on every harness including Cursor. references/bugbot-triage.md generalizes to review-automation triage: its content is how to assess untrusted review text, which no harness changes. With no value for the role: Apply the same skeptical triage to human review comments. The posture is the portable part. Verification: unverified on every harness.
-- **`slop_strip`** (role, substitute). A pre-commit pass that strips generated slop from a diff. With no value for the role: Apply the unslop skill to the diff directly. Verification: unverified on every harness.
-- **`ui_driver`** (role, substitute). Drives a browser, Electron, or web UI for runtime verification. With no value for the role: Runtime UI verification is not available. Say so in the verification block rather than claiming a pass; a verdict of type-check-only is honest. Verification: unverified on every harness.
-- **`cli_driver`** (role, substitute). Drives a CLI or TUI for runtime verification. With no value for the role: Same as ui_driver. Name the missing verification, do not imply one. Verification: unverified on every harness.
-- **`skill_authoring`** (role, substitute). The house rules for writing a SKILL.md. With no value for the role: playbooks/authoring-a-skill.md carries the rules on its own. Verification: unverified on every harness.
-- **`model_roles`** (role, substitute). Upstream already assigns these slugs to roles. Port the roles into the prose and leave the slugs to the override file, so a model release does not churn every playbook. With no value for the role: The parent chat model, which is what inherit-parent and auto already mean. Verification: unverified on every harness.
-- **`graphite`** (prerequisite, drop). Stacked PR tooling. Upstream's stack playbooks assume it throughout. Without the binary: Stack playbooks do not apply. Shipping, autopilot-stack, and the stack safety section have no plain-git equivalent worth faking. Verification: unverified on every harness.
-- **`github_cli`** (prerequisite, drop). scripts/watch-pr reads PR state through it. Without the binary: The Babysit playbook's watcher cannot run. Verification: unverified on every harness.
-- **`bun`** (prerequisite, drop). Runtime for scripts/watch-pr and scripts/orch. Without the binary: Those levers cannot run. Verification: unverified on every harness.
-- **`trunk_reread`** (path_assumption, substitute). A multi-day program re-grounds on trunk's copy of a playbook rather than its own possibly-stale context. Depends on pack_path being inside the repo. Same on every harness: Drop the git indirection. Re-read the playbook through the harness's own skill addressing, which is already current. The staleness the trunk read guarded against was context staleness, not disk staleness, and a plain re-read fixes that. Verification: unverified on every harness.
-- **`transcript_dir`** (path_assumption, substitute). Local transcripts a worker may need to read. Same on every harness: Per-harness session directory. Left as a role-style slot because the path is user and harness specific, and no playbook depends on its shape. Verification: unverified on every harness.
-- **`setup_entrypoint`** (naming, substitute). Upstream's installer command. This port renames it, so the old name in a ported file is a regression rather than a coupling left to resolve. v1 enforced the token with no axis owning it; this is that owner. Same on every harness: The skill is /setup-pstack-anywhere. Verification: unverified on every harness.
+- **`review_automation`** (role, substitute). An agentic reviewer that files PR comments. A GitHub-side service, not a harness feature, so it is the user's choice on every harness including Cursor. references/bugbot-triage.md generalizes to review-automation triage: its content is how to assess untrusted review text, which no harness changes. **With no value for the role:** Apply the same skeptical triage to human review comments. The posture is the portable part. Verification: unverified on every harness.
+- **`slop_strip`** (role, substitute). A pre-commit pass that strips generated slop from a diff. **With no value for the role:** Apply the unslop skill to the diff directly. Verification: unverified on every harness.
+- **`ui_driver`** (role, substitute). Drives a browser, Electron, or web UI for runtime verification. **With no value for the role:** Runtime UI verification is not available. Say so in the verification block rather than claiming a pass; a verdict of type-check-only is honest. Verification: unverified on every harness.
+- **`cli_driver`** (role, substitute). Drives a CLI or TUI for runtime verification. **With no value for the role:** Same as ui_driver. Name the missing verification, do not imply one. Verification: unverified on every harness.
+- **`skill_authoring`** (role, substitute). The house rules for writing a SKILL.md. **With no value for the role:** playbooks/authoring-a-skill.md carries the rules on its own. Verification: unverified on every harness.
+- **`model_roles`** (role, substitute). Upstream already assigns these slugs to roles. Port the roles into the prose and leave the slugs to the override file, so a model release does not churn every playbook. **With no value for the role:** The parent chat model, which is what inherit-parent and auto already mean. Verification: unverified on every harness.
+- **`graphite`** (prerequisite, drop). Stacked PR tooling. Upstream's stack playbooks assume it throughout. **Without the binary:** Stack playbooks do not apply. Shipping, autopilot-stack, and the stack safety section have no plain-git equivalent worth faking. Verification: unverified on every harness.
+- **`github_cli`** (prerequisite, drop). scripts/watch-pr reads PR state through it. **Without the binary:** The Babysit playbook's watcher cannot run. Verification: unverified on every harness.
+- **`bun`** (prerequisite, drop). Runtime for scripts/watch-pr and scripts/orch. **Without the binary:** Those levers cannot run. Verification: unverified on every harness.
+- **`trunk_reread`** (path_assumption, substitute). A multi-day program re-grounds on trunk's copy of a playbook rather than its own possibly-stale context. Depends on pack_path being inside the repo. **Same on every harness:** Drop the git indirection. Re-read the playbook through the harness's own skill addressing, which is already current. The staleness the trunk read guarded against was context staleness, not disk staleness, and a plain re-read fixes that. Verification: unverified on every harness.
+- **`transcript_dir`** (path_assumption, substitute). Local transcripts a worker may need to read. **Same on every harness:** Per-harness session directory. Left as a role-style slot because the path is user and harness specific, and no playbook depends on its shape. Verification: unverified on every harness.
+- **`setup_entrypoint`** (naming, substitute). Upstream's installer command. This port renames it, so the old name in a ported file is a regression rather than a coupling left to resolve. v1 enforced the token with no axis owning it; this is that owner. **Same on every harness:** The skill is /setup-pstack-anywhere. Verification: unverified on every harness.
 - **`frontmatter_portable`** (frontmatter: `name`, `description`, `disable-model-invocation`). All three are Agent Skills standard fields. Every target honors disable-model-invocation, so the mode gating that keeps a skill out of automatic model invocation ports with no change: Claude and pi accept both the kebab-case and camelCase spellings, Codex carries it alongside its own allow_implicit_invocation, and OMP normalizes the kebab-case form to its internal `hide`. Unchanged on every harness, so there is nothing to resolve. Verification: unverified on every harness.
 - **`frontmatter_cursor_only`** (frontmatter: `mode`, `icon`, `color`, `reminder`). Cursor presentation only, and inert rather than broken elsewhere. OMP preserves unrecognized keys as unknown metadata and the other three ignore them. Left in place: removing them would widen the refresh diff against upstream for no behavior change, and they are correct when the target is Cursor. Unchanged on every harness, so there is nothing to resolve. Verification: unverified on every harness.
 
@@ -160,16 +162,16 @@ A scenario defines what to run and what to inspect; it does not claim a result.
 
 | domain | scenario | observations | runs | verification |
 | --- | --- | --- | --- | --- |
-| `spawn_worker` | `spawn_worker` | 5 | 6 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_durability` | `worker_durability` | 5 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `probe_worker` | `probe_worker` | 5 | 6 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `wake_on_event` | `wake_on_event` | 5 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_defaults.background` | `worker_defaults_background` | 5 | 4 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_defaults.readonly` | `worker_defaults_readonly` | 5 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_defaults.identity` | `worker_defaults_identity` | 4 | 7 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `worker_defaults.model` | `worker_defaults_model` | 5 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `human_question` | `human_question` | 5 | 5 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
-| `pack_path` | `skill_identify` | 5 | 8 | Cursor: unverified; Claude Code: exercised; Codex: exercised; pi: exercised; Oh My Pi: exercised |
+| `spawn_worker` | `spawn_worker` | 5 | 6 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
+| `worker_durability` | `worker_durability` | 5 | 5 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
+| `probe_worker` | `probe_worker` | 5 | 6 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
+| `wake_on_event` | `wake_on_event` | 5 | 5 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
+| `worker_defaults.background` | `worker_defaults_background` | 5 | 4 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
+| `worker_defaults.readonly` | `worker_defaults_readonly` | 5 | 5 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
+| `worker_defaults.identity` | `worker_defaults_identity` | 4 | 7 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
+| `worker_defaults.model` | `worker_defaults_model` | 5 | 5 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
+| `human_question` | `human_question` | 5 | 5 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
+| `pack_path` | `skill_identify` | 5 | 8 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
 
 Cursor follows the same evidence rules as every other harness, and cannot reach `static` only because this repo has no saved Cursor source to cite.
 
