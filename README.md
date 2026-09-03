@@ -32,11 +32,13 @@ It walks `skills/<name>/SKILL.md` and links or copies each skill into every
 agent root it knows.
 
 **3. A plugin.** Claude Code: `/plugin marketplace add austinm911/pstack-anywhere`,
-then install `pstack-anywhere`. Codex: the repo carries
-`.agents/plugins/marketplace.json`, and at the pinned Codex source plugins sit
-behind `[features] plugins = true` in `config.toml`. Both harnesses read
-`.claude-plugin/plugin.json` and take skills from the plugin's `skills/`
-directory.
+then install `pstack-anywhere`. Codex: `/plugins`, then Add Marketplace with
+`austinm911/pstack-anywhere` and install `pstack-anywhere` from it. The repo
+carries `.agents/plugins/marketplace.json`, and at the pinned Codex source
+plugins sit behind `[features] plugins = true` in `config.toml`. Both harnesses
+read `.claude-plugin/plugin.json` and take skills from the plugin's `skills/`
+directory. Each path was exercised once, on Claude Code and Codex 0.153.0,
+under a scratch HOME.
 
 **4. The plain fallback.**
 
