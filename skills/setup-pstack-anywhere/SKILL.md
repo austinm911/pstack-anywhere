@@ -38,13 +38,23 @@ convention, so it needs its own copy.
 | Codex | `~/.agents/AGENTS.md`, else `~/.codex/AGENTS.md` | reads the shared standard |
 | pi | `~/.agents/AGENTS.md`, else `~/.pi/agent/AGENTS.md` | reads the shared standard |
 | Claude Code | `~/.claude/CLAUDE.md` | no agents-directory convention |
-| Cursor | `~/.cursor/rules/pstack-models.mdc` with `alwaysApply: true` | upstream's original location |
+| Cursor | project `.cursor/rules/pstack-models.mdc` with `alwaysApply: true`, or project `AGENTS.md` | no file-based user scope: user rules live in Settings, and the CLI reads project `.cursor/rules`, `AGENTS.md`, and `CLAUDE.md` (cursor.com/docs/rules, /docs/cli/using) |
 
 Prove the shared file is loaded before relying on it. Write the block, start a
 fresh session, and confirm the harness shows it in context. If you cannot confirm
 it, use the harness-specific fallback in the table. A block the harness never
 reads is worse than no block, because every role silently reverts to its absent
 path while the file suggests otherwise.
+
+**Generated context files.** Check whether the target is generated before you
+write to it. A context manager, ruler or a personal stitcher, renders
+`AGENTS.md` and `CLAUDE.md` from sources it owns and overwrites them on the
+next run, markers and all. Write the block into the source it renders from and
+re-render. Two consequences follow. The manager usually emits one file per
+harness already, which removes the shadowing problem: it writes each harness's
+native file, so nothing has to compete for the shared one. And the format
+differences the manager cannot cross, Cursor's `.mdc` frontmatter against plain
+Markdown, are the only places a second copy is justified.
 
 Only role values belong here. Hooks, tool names, and subagent definitions are not
 shareable, because the formats differ per harness. Claude Code and Codex use an

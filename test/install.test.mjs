@@ -1,9 +1,10 @@
 // Both scripts are CLIs that read HOME, so the tests give each case a scratch
 // HOME and assert on exit code and printed lines.
 import { describe, test, expect, afterEach } from "bun:test";
-import { existsSync, mkdtempSync, mkdirSync, readdirSync, realpathSync, rmSync, symlinkSync } from "node:fs";
+import { existsSync, mkdtempSync, mkdirSync, readdirSync, realpathSync, rmSync, symlinkSync, writeFileSync, copyFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
+import { createHash } from "node:crypto";
 
 const REPO = join(dirname(new URL(import.meta.url).pathname), "..");
 const SKILLS = join(REPO, "skills");
@@ -21,7 +22,7 @@ function scratchHome() {
 }
 
 function run(home, script, ...args) {
-  const proc = Bun.spawnSync(["bun", script, ...args], { env: { ...process.env, HOME: home }, cwd: REPO });
+  const proc = Bun.spawnSync([process.execPath, script, ...args], { env: { ...process.env, HOME: home }, cwd: REPO });
   return { code: proc.exitCode, out: proc.stdout.toString(), err: proc.stderr.toString() };
 }
 
@@ -67,6 +68,32 @@ describe("install", () => {
 });
 
 describe("doctor", () => {
+  test("an explicit optional skip preserves a foreign skill but cannot skip a dependency", () => {
+    const home = scratchHome();
+    const root = join(home, ".agents/skills");
+    expect(run(home, INSTALL).code).toBe(0);
+    rmSync(join(root, "setup-pstack-anywhere"));
+    mkdirSync(join(root, "setup-pstack-anywhere"));
+    copyFileSync(join(SKILLS, "setup-pstack-anywhere/SKILL.md"), join(root, "setup-pstack-anywhere/SKILL.md"));
+    const policy = join(root, "setup-pstack-anywhere/install-policy.json");
+    rmSync(join(root, "tdd"));
+    mkdirSync(join(root, "tdd"));
+    writeFileSync(join(root, "tdd/SKILL.md"), "foreign tdd\n");
+    const doctor = join(SKILLS, DOCTOR);
+    expect(run(home, doctor, root).code).toBe(1);
+    writeFileSync(policy, JSON.stringify({ version: 1, skipped: ["tdd"] }));
+    const accepted = run(home, doctor, root);
+    expect(accepted.code).toBe(0);
+    expect(accepted.out).toContain(`skipped ${join(root, "tdd")}`);
+    writeFileSync(join(root, "setup-pstack-anywhere/SKILL.md"), "manager overlay\n");
+    expect(run(home, doctor, root).code).toBe(1);
+    writeFileSync(policy, JSON.stringify({ version: 1, skipped: ["tdd"], definitions: {
+      "setup-pstack-anywhere": createHash("sha256").update("manager overlay\n").digest("hex"),
+    } }));
+    expect(run(home, doctor, root).code).toBe(0);
+    writeFileSync(policy, JSON.stringify({ version: 1, skipped: ["poteto-mode"] }));
+    expect(run(home, doctor, root).code).toBe(1);
+  });
   test("a root holding only the setup skill is missing its siblings", () => {
     const home = scratchHome();
     const root = join(home, ".agents/skills");
@@ -78,4 +105,3 @@ describe("doctor", () => {
     expect(lines(out, "ok ")).toEqual([]);
   });
 });
-

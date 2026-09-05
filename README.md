@@ -40,7 +40,7 @@ dangling references.
 The pack is `skills/<name>/SKILL.md`, the layout every skill manager consumes,
 so any of these works. Every path finishes with the same doctor command above.
 
-A vendoring skill manager (loadout or similar). Point it at this repo and take
+A vendoring skill manager. Point it at this repo and take
 the whole `skills/` directory. It flattens the pack into one root and links that
 root into `~/.agents/skills`, `~/.claude/skills`, and `~/.pi/agent/skills`.
 
@@ -132,7 +132,7 @@ table below is rendered from coupling.yaml.
 | upstream pin | `b9ddc83`, path `pstack` |
 | skills reached | 13 of 45, [see PORTABILITY.md](PORTABILITY.md#skills-the-port-reached) |
 | skills with work left | 0 of 45 |
-| occurrences | 91 resolved, 0 unresolved, 0 missing, 2 not checked |
+| occurrences | 92 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions |
 | verification | 40 of 120 cells verified, 53 attestations, 10 scenarios defined |
 

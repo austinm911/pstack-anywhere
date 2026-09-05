@@ -8,6 +8,7 @@
     "lint": "bun scripts/coupling.mjs check",
     "render": "bun scripts/coupling.mjs render",
     "status": "bun scripts/coupling.mjs status",
+    "upstream": "bun scripts/update-upstream.mjs",
     "test": "bun test test/"
   },
   "devDependencies": {

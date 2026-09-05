@@ -74,6 +74,12 @@ const cellKey = (path, axis) => `${path}\u0000${axis}`;
 // and misattribute the moment a second skill is ported.
 const unrooted = (p) => p.startsWith("/") || p.startsWith("./") || p.split("/").includes("..");
 
+function markdownFiles(root, pattern) {
+  return [...new Glob(pattern).scanSync(root)]
+    .filter(path => !path.split("/").some(part => part === "node_modules" || part === ".git"))
+    .sort();
+}
+
 // ---------------------------------------------------------------------------
 // Load
 // ---------------------------------------------------------------------------
@@ -331,7 +337,7 @@ function scan(ledger, tokens) {
   const allowlist = (ledger.lint?.allowlist ?? []).map((entry) => entry.path);
   const allowed = (file) => allowlist.some((p) => (p.endsWith("/") ? file.startsWith(p) : file === p));
   const ignores = (ledger.lint.ignore_substrings ?? []).map((entry) => entry.value);
-  const files = [...new Glob(ledger.lint.scan).scanSync(ROOT)].sort();
+  const files = markdownFiles(ROOT, ledger.lint.scan);
   const cursor = ledger.lint.cursor_mentions;
   const cursorRegex = new RegExp(cursor.pattern, cursor.flags ?? "");
   const exemptRegex = new RegExp(cursor.context_exempt, cursor.context_exempt_flags ?? "");
@@ -2916,7 +2922,7 @@ function refresh(model, upstream) {
     model.ledger.axes.flatMap((a) => (a.occurrences ?? []).map((o) => o.path)),
   );
   console.log(`\nUpstream sweep against ${relative(process.cwd(), upstream)}:`);
-  for (const file of [...new Glob(model.ledger.lint.scan).scanSync(upstream)].sort()) {
+  for (const file of markdownFiles(upstream, model.ledger.lint.scan)) {
     const text = readFileSync(join(upstream, file), "utf8");
     const hits = model.tokens.filter((t) => t.regex.test(text));
     if (hits.length === 0 || declared.has(file)) continue;

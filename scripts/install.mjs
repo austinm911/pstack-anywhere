@@ -71,7 +71,7 @@ for (const [path, target] of links) {
   symlinkSync(target, path);
 }
 
-const doctor = Bun.spawnSync(["bun", join(roots[0], "setup-pstack-anywhere/scripts/doctor.mjs"), roots[0]], {
+const doctor = Bun.spawnSync([process.execPath, join(roots[0], "setup-pstack-anywhere/scripts/doctor.mjs"), roots[0]], {
   stdout: "inherit",
   stderr: "inherit",
 });

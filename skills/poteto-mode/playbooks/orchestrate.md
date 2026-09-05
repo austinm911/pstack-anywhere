@@ -22,7 +22,7 @@ Depth stays at coordinator, track, worker. Author the track decomposition per pr
 
 #### Store layout
 
-Create `orchestrate/<project-slug>/` in the current agent's store (path in the system prompt). Every file has exactly one writer; owners publish facts, readers aggregate at read time. Use `bun scripts/orch/orch.ts` for bookkeeping, written below as `orch`, while its canonical plain TSV and JSON stay readable without the CLI.
+Create `<repo>/.pstack/runs/<run-id>/`, ignored by Git, and pass its absolute path as `--store` or `ORCH_STORE`. Follow `../setup-pstack-anywhere/references/recovery.md` for briefs, completion archives, and interrupted-work reconciliation. Every file has exactly one writer; owners publish facts, readers aggregate at read time. Use `bun scripts/orch/orch.ts` for bookkeeping, written below as `orch`, while its canonical plain TSV and JSON stay readable without the CLI.
 
 - `preferences.md` is the standing-orders register: numbered lines, one constraint each (model policy, stack shape and count, verification bar, forbidden paths, escalation policy). Paste it verbatim into every spawn and every resume; directives decay across resumes, and each dropped one costs a human turn. When you catch yourself restating an instruction, append the line before you act (principle-encode-lessons-in-structure).
 - `overview.md` is the durable PR and issue DB. Append; never rewrite wholesale per event.
@@ -100,7 +100,7 @@ A unit is not done until its output is externalized the moment it lands, never b
 - A zombie that returns hours late reconciles against the current frontier and ledger before anything is accepted; the world moved while it slept. Salvage unique findings through a fresh unit, never a blind merge.
 - When continued spawning would produce garbage tree-wide (bad upstream output, broken acceptance, dead infra), write a stop line at the top of the standing orders, let in-flight work finish, fix the cause, clear it.
 - Bound your own infra retries the same way you bound a child's. After a few consecutive tool aborts, stop retrying: write a terminal handoff to durable state (what is done, where it lives, the exact command to resume) and end the run. Hours of retry loops against a dead executor produce nothing a handoff would not.
-- After a session restart, every subagent is dead. `worker_durability` is absent, so treat in-flight work as lost rather than reattachable. Re-read the standing orders and `units.tsv`, recompute the frontier, respawn one sub-coordinator per track from its stored brief plus current state, drain, resume. The dead session's store lock clears itself on the next write; `orch` replaces a lock whose holder pid is gone.
+- After a session restart, read the stored briefs and full reports and reconcile results against actual changes before any replacement spawn. Follow `../setup-pstack-anywhere/references/recovery.md`. Inspect native worker liveness when available; lost worker state does not mean its side effects were lost. Re-read standing orders, preserve open gates, and dispatch only the verified remaining scope. The dead session's store lock clears itself on the next write; `orch` replaces a lock whose holder pid is gone.
 
 #### Escalation
 

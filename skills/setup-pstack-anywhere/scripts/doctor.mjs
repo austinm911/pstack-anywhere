@@ -10,10 +10,11 @@
 // directory when none does). Every `../<name>/` a skill mentions must resolve
 // in that root, or the skill reads a path that is not there.
 //
-// Exit 1 when a sibling is missing, 0 otherwise. Shadowed and duplicate
-// copies are reported, not failed: a harness may well want the other one.
+// Exit 1 for missing or unexpected definitions in the selected root. Managers
+// can declare optional skips and expected overlay body hashes in install-policy.json.
 
 import { existsSync, readdirSync, realpathSync, readFileSync, statSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { join, dirname } from "node:path";
 
 const HOME = process.env.HOME;
@@ -35,6 +36,16 @@ const COMMON_NAMES = ["tdd", "teach", "unslop"];
 
 const isDir = (path) => existsSync(path) && statSync(path).isDirectory();
 const realOrNull = (path) => (existsSync(path) ? realpathSync(path) : null);
+// A skill is the same definition when its SKILL.md body matches, frontmatter
+// excluded. Path identity does not survive a skill manager that rebuilds
+// each directory as per-file links and materializes SKILL.md to inject its own
+// frontmatter, so realpath differs for a byte-identical skill.
+const body = (text) => text.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "");
+const definition = (dir) => {
+  const path = join(dir, "SKILL.md");
+  if (!existsSync(path)) return null;
+  return createHash("sha256").update(body(readFileSync(path, "utf8"))).digest("hex");
+};
 const uniq = (paths) => [...new Set(paths)];
 
 const known = uniq(KNOWN_ROOTS.map(([, root]) => root));
@@ -63,15 +74,39 @@ for (const file of markdown(PACK)) {
 }
 
 let missing = 0;
+const policyAt = (root) => {
+  const path = join(root, "setup-pstack-anywhere/install-policy.json");
+  if (!existsSync(path)) return { skipped: new Set(), definitions: {} };
+  const policy = JSON.parse(readFileSync(path, "utf8"));
+  if (policy.version !== 1 || !Array.isArray(policy.skipped) ||
+      policy.skipped.some((name) => !packSet.has(name) || siblings.has(name))) {
+    throw new Error(`invalid install policy ${path}: skips must name optional pack skills`);
+  }
+  const definitions = policy.definitions ?? {};
+  if (typeof definitions !== "object" || definitions === null || Array.isArray(definitions) ||
+      Object.entries(definitions).some(([name, hash]) => !packSet.has(name) ||
+        policy.skipped.includes(name) || typeof hash !== "string" || !/^[a-f0-9]{64}$/.test(hash))) {
+    throw new Error(`invalid install policy ${path}: definitions must map skill names to body SHA-256 hashes`);
+  }
+  return { skipped: new Set(policy.skipped), definitions };
+};
 for (const root of roots) {
-  for (const name of [...siblings].sort()) {
-    if (isDir(join(root, name))) continue;
+  const { skipped, definitions } = policyAt(root);
+  for (const name of packNames) {
+    if (skipped.has(name)) {
+      console.log(`skipped ${join(root, name)} (install policy; existing definition preserved)`);
+      continue;
+    }
+    if (definition(join(root, name)) !== null) continue;
     console.log(`missing ${join(root, name)}`);
     missing++;
   }
   for (const name of packNames) {
-    const real = realOrNull(join(root, name));
-    if (real !== null && real !== join(PACK, name)) console.log(`shadowed ${join(root, name)} -> ${real}`);
+    if (skipped.has(name)) continue;
+    const found = definition(join(root, name));
+    if (found === null || found === (definitions[name] ?? definition(join(PACK, name)))) continue;
+    console.log(`shadowed ${join(root, name)} -> ${realOrNull(join(root, name, "SKILL.md"))}`);
+    missing++;
   }
 }
 
@@ -80,10 +115,12 @@ let commonDuplicate = false;
 for (const [harness, root] of KNOWN_ROOTS) {
   if (checked.has(root) || !isDir(root)) continue;
   checked.add(root);
+  const { skipped, definitions } = policyAt(root);
   for (const name of packNames) {
-    const real = realOrNull(join(root, name));
-    if (real === null || real === join(PACK, name)) continue;
-    console.log(`duplicate ${join(root, name)} -> ${real} (${harness} root)`);
+    if (skipped.has(name)) continue;
+    const found = definition(join(root, name));
+    if (found === null || found === (definitions[name] ?? definition(join(PACK, name)))) continue;
+    console.log(`duplicate ${join(root, name)} -> ${realOrNull(join(root, name, "SKILL.md"))} (${harness} root)`);
     if (COMMON_NAMES.includes(name)) commonDuplicate = true;
   }
 }

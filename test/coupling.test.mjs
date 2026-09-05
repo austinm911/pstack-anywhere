@@ -2,9 +2,9 @@
 // point COUPLING_ROOT at it, and assert on exit code and printed lines.
 // Importing coupling.mjs is not an option, it calls process.exit at top level.
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, cpSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, dirname } from "node:path";
+import { join, dirname, basename } from "node:path";
 import { YAML } from "bun";
 
 const REPO = join(dirname(new URL(import.meta.url).pathname), "..");
@@ -31,8 +31,12 @@ const temps = [];
 function fixtureRepo(overrides) {
   const dir = mkdtempSync(join(tmpdir(), "coupling-fixture-"));
   temps.push(dir);
-  const copy = Bun.spawnSync(["cp", "-R", ...INPUTS.map((p) => join(REPO, p)), dir]);
-  if (copy.exitCode !== 0) throw new Error(`fixture copy failed: ${copy.stderr.toString()}`);
+  for (const input of INPUTS) {
+    cpSync(join(REPO, input), join(dir, input), {
+      recursive: true,
+      filter: source => basename(source) !== "node_modules" && basename(source) !== ".git",
+    });
+  }
   if (overrides) {
     const path = join(dir, "coupling.yaml");
     const ledger = YAML.parse(readFileSync(path, "utf8"));
@@ -43,7 +47,7 @@ function fixtureRepo(overrides) {
 }
 
 function run(dir, ...args) {
-  const proc = Bun.spawnSync(["bun", ENGINE, ...args], {
+  const proc = Bun.spawnSync([process.execPath, ENGINE, ...args], {
     env: { ...process.env, COUPLING_ROOT: dir },
     cwd: dir,
   });

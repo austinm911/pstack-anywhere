@@ -32,9 +32,9 @@ With evidence means a recorded run or a cited source file backs the cell; the re
 | ledger | v2, upstream `b9ddc83` |
 | domains | 24, from 21 axes, because `worker_defaults` resolves per parameter |
 | harness cells | 40 verified of 120 (24 domains x 5 harnesses) |
-| occurrences | 91 resolved, 0 unresolved, 0 missing, 2 not checked |
+| occurrences | 92 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions, 0 in total |
-| skills reached | 13 of 45: `architect` (1 of 1 checked), `arena` (2 of 2 checked), `automate-me` (3 of 3 checked), `how` (2 of 2 checked), `interrogate` (2 of 2 checked), `no-comments` (1 of 1 checked), `poteto-mode` (67 of 68 checked), `recall` (1 of 1 checked), `reflect` (6 of 6 checked), `setup-pstack-anywhere` (0 of 1 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (2 of 2 checked) |
+| skills reached | 13 of 45: `architect` (1 of 1 checked), `arena` (2 of 2 checked), `automate-me` (3 of 3 checked), `how` (2 of 2 checked), `interrogate` (2 of 2 checked), `no-comments` (1 of 1 checked), `poteto-mode` (67 of 68 checked), `recall` (1 of 1 checked), `reflect` (6 of 6 checked), `setup-pstack-anywhere` (1 of 2 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (2 of 2 checked) |
 | skills with work left | 0 of 45; the other 32 carry neither a declared occurrence nor a token hit |
 | regressions | 0 |
 | `frontmatter_portable` assert | 39 of 45 skills carry `disable-model-invocation`, counted from the tree on every run |
@@ -77,25 +77,25 @@ What each harness uses, per domain in the table:
 - **`spawn_worker`**
   - **Cursor:** Task with environment: "cloud"
   - **Claude Code:** Agent tool (named Task in older docs), subagent_type
-  - **Codex:** task tool
+  - **Codex:** spawn_agent with the exact brief; send_message for live steering and followup_task for another turn when offered
   - **pi:** subagent({agent:"&lt;name&gt;"}) via pi-subagents; fresh child context from .pi/agent/extensions/subagent/config.json, else without pi-subagents, no delegation primitive
   - **Oh My Pi:** task tool, agent field selects the specialist
 - **`worker_durability`**
   - **Cursor:** cloud agents run off-machine and survive a restart
-  - **Claude Code:** subagents die with the session
-  - **Codex:** subagents die with the session
-  - **pi:** mission records under ~/.pi/agent/missions/ persist the run; no subagent({action:"children.list"}) reattachment or live report recovery after /quit; externalize side effects
-  - **Oh My Pi:** subagents die with the session
+  - **Claude Code:** uninterrupted execution is not guaranteed after process exit; saved sessions and eligible subagents can resume with their history
+  - **Codex:** uninterrupted execution is not guaranteed after process exit; saved sessions can resume by ID, while child resumption must be checked against the current tools
+  - **pi:** saved sessions can resume by path or ID; child/job recovery depends on the installed subagent extension; inspect its native resume support before falling back to saved reports
+  - **Oh My Pi:** uninterrupted execution is not guaranteed after process exit; saved sessions can resume by ID or path, while child/job recovery depends on the current runtime
 - **`probe_worker`**
   - **Cursor:** dashboard shows agent state without a resume
   - **Claude Code:** job status only, no liveness for every delegate kind
-  - **Codex:** list_agents, running or completed with the final message; no idle state
+  - **Codex:** list_agents for observed status; collect completion messages and use wait_agent when offered
   - **pi:** the job status the task extension exposes, else none, wait for the result
   - **Oh My Pi:** hub op:"jobs" while live, hub op:"list" once settled
 - **`wake_on_event`**
   - **Cursor:** /loop built-in
   - **Claude Code:** one background Bash wait, wake on its completion; heartbeat only when no such wait fits
-  - **Codex:** heartbeat sized to when the result is worth re-checking
+  - **Codex:** wait_agent for live worker events when offered; otherwise a bounded status check or a user-authorized heartbeat
   - **pi:** 30-second blocking bash poll; heartbeat only when no such wait fits
   - **Oh My Pi:** hub op:"wait"
 - **`worker_defaults.background`**
@@ -113,7 +113,7 @@ What each harness uses, per domain in the table:
 - **`worker_defaults.identity`**
   - **Cursor:** subagent_type: "poteto-agent"
   - **Claude Code:** a poteto-agent definition in the harness subagent dir
-  - **Codex:** a poteto-agent definition in the harness subagent dir
+  - **Codex:** an available worker agent with the pstack brief and standing orders; use poteto-agent only if that definition is actually offered
   - **pi:** subagent({agent:"&lt;name&gt;"}) via pi-subagents reading ~/.pi/agent/agents (harnesses.yaml:330), else without pi-subagents or a definition file, no named identity; use the parent model
   - **Oh My Pi:** a poteto-agent definition in the harness subagent dir
 - **`worker_defaults.model`**
@@ -125,7 +125,7 @@ What each harness uses, per domain in the table:
 - **`human_question`**
   - **Cursor:** AskQuestion
   - **Claude Code:** the ask tool
-  - **Codex:** a plain question in the reply; request_user_input exists but is mode-gated and was not offered under stock config
+  - **Codex:** request_user_input_async when offered for clarification; request_user_input only in an allowed mode; otherwise a plain question, with pending gates persisted
   - **pi:** a plain question in the reply; no recorded extension registers an ask tool
   - **Oh My Pi:** the ask tool
 - **`pack_path`**
@@ -334,12 +334,13 @@ Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defau
 
 Configure which tools and models pstack uses per role.
 
-Reached: 1 declared occurrence across 1 file, 1 not checked.
+Reached: 2 declared occurrences across 2 files, 1 resolved, 1 not checked.
 
-Domains: `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
+Domains: `worker_durability`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
 
 | file | status | domains |
 | --- | --- | --- |
+| `skills/setup-pstack-anywhere/references/recovery.md` | resolved | `worker_durability` |
 | `skills/setup-pstack-anywhere/SKILL.md` | not checked | `model_roles` |
 
 1 row above reads `not checked`; the reason is in [Work remaining](#work-remaining).

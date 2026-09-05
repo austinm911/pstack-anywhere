@@ -63,7 +63,7 @@ axes:
     resolution:
       cursor: { parity: native, use: 'Task with environment: "cloud"' }
       claude: { parity: substitute, use: "Agent tool (named Task in older docs), subagent_type" }
-      codex: { parity: substitute, use: "task tool" }
+      codex: { parity: substitute, use: "spawn_agent with the exact brief; send_message for live steering and followup_task for another turn when offered" }
       pi: { parity: extension, use: 'subagent({agent:"<name>"}) via pi-subagents; fresh child context from .pi/agent/extensions/subagent/config.json', fallback: "without pi-subagents, no delegation primitive" }
       omp: { parity: substitute, use: "task tool, agent field selects the specialist" }
     tokens:
@@ -85,17 +85,19 @@ axes:
       cloud work is not, and to reattach by PR and branch rather than agent id.
     resolution:
       cursor: { parity: native, use: "cloud agents run off-machine and survive a restart" }
-      claude: { parity: drop, use: "subagents die with the session" }
-      codex: { parity: drop, use: "subagents die with the session" }
-      pi: { parity: degrade, use: 'mission records under ~/.pi/agent/missions/ persist the run; no subagent({action:"children.list"}) reattachment or live report recovery after /quit; externalize side effects' }
-      omp: { parity: drop, use: "subagents die with the session" }
+      claude: { parity: drop, use: "uninterrupted execution is not guaranteed after process exit; saved sessions and eligible subagents can resume with their history" }
+      codex: { parity: drop, use: "uninterrupted execution is not guaranteed after process exit; saved sessions can resume by ID, while child resumption must be checked against the current tools" }
+      pi: { parity: degrade, use: 'saved sessions can resume by path or ID; child/job recovery depends on the installed subagent extension; inspect its native resume support before falling back to saved reports' }
+      omp: { parity: drop, use: "uninterrupted execution is not guaranteed after process exit; saved sessions can resume by ID or path, while child/job recovery depends on the current runtime" }
     consequence: >-
-      Every playbook that spans a restart must externalize a worker's output the
-      moment it lands, which upstream already requires, and must treat a lost
-      session as lost work rather than as reattachable. The reattach-by-PR
-      instruction becomes respawn-from-stored-brief.
+      Continuing to execute while the parent is offline, resuming a persisted
+      conversation, and collecting child jobs are separate capabilities. Inspect
+      liveness first, use native resume where supported, and reconcile actual
+      work before any replacement spawn. Persist session/agent IDs, briefs and
+      reports as recovery references; a stopped process does not erase history.
     occurrences:
       - path: skills/poteto-mode/playbooks/orchestrate.md
+      - path: skills/setup-pstack-anywhere/references/recovery.md
       - path: skills/poteto-mode/playbooks/pause-safely.md
       - path: skills/poteto-mode/playbooks/session-pickup.md
       - path: skills/swarm/SKILL.md
@@ -108,7 +110,7 @@ axes:
     resolution:
       cursor: { parity: native, use: "dashboard shows agent state without a resume" }
       claude: { parity: degrade, use: "job status only, no liveness for every delegate kind" }
-      codex: { parity: substitute, use: "list_agents, running or completed with the final message; no idle state" }
+      codex: { parity: substitute, use: "list_agents for observed status; collect completion messages and use wait_agent when offered" }
       pi: { parity: extension, use: "the job status the task extension exposes", fallback: "none, wait for the result" }
       omp: { parity: substitute, use: 'hub op:"jobs" while live, hub op:"list" once settled' }
     occurrences:
@@ -121,7 +123,7 @@ axes:
     resolution:
       cursor: { parity: native, use: "/loop built-in" }
       claude: { parity: substitute, use: "one background Bash wait, wake on its completion; heartbeat only when no such wait fits" }
-      codex: { parity: degrade, use: "heartbeat sized to when the result is worth re-checking" }
+      codex: { parity: degrade, use: "wait_agent for live worker events when offered; otherwise a bounded status check or a user-authorized heartbeat" }
       pi: { parity: degrade, use: "30-second blocking bash poll; heartbeat only when no such wait fits" }
       omp: { parity: substitute, use: 'hub op:"wait"' }
     consequence: >-
@@ -166,7 +168,7 @@ axes:
         resolution:
           cursor: { parity: native, use: 'subagent_type: "poteto-agent"' }
           claude: { parity: substitute, use: "a poteto-agent definition in the harness subagent dir" }
-          codex: { parity: substitute, use: "a poteto-agent definition in the harness subagent dir" }
+          codex: { parity: substitute, use: "an available worker agent with the pstack brief and standing orders; use poteto-agent only if that definition is actually offered" }
           pi: { parity: extension, use: 'subagent({agent:"<name>"}) via pi-subagents reading ~/.pi/agent/agents (harnesses.yaml:330)', fallback: "without pi-subagents or a definition file, no named identity; use the parent model" }
           omp: { parity: substitute, use: "a poteto-agent definition in the harness subagent dir" }
       - id: model
@@ -177,10 +179,11 @@ axes:
           pi: { parity: extension, use: "role slots supplied through the pi-subagents extension", fallback: "no model selection, use the parent model" }
           omp: { parity: substitute, use: "role slots, or the agent field" }
     consequence: >-
-      A ported poteto-agent definition has to exist per harness. harnesses.yaml
-      records each subagent directory. Until it does, the identity parameter has
-      no resolution and playbooks must say so rather than naming a type that is
-      absent.
+      Use only worker identities the current tool exposes. Where a named
+      poteto-agent is required, its definition must exist in the directory
+      recorded by harnesses.yaml. Where the resolution supports an ordinary
+      worker, supply the exact pstack brief and standing orders. Never name an
+      absent agent type.
     tokens:
       - pattern: '\brun_in_background\b'
         why: run_in_background is the worker_defaults background parameter
@@ -206,7 +209,7 @@ axes:
     resolution:
       cursor: { parity: native, use: "AskQuestion" }
       claude: { parity: substitute, use: "the ask tool" }
-      codex: { parity: degrade, use: "a plain question in the reply; request_user_input exists but is mode-gated and was not offered under stock config" }
+      codex: { parity: degrade, use: "request_user_input_async when offered for clarification; request_user_input only in an allowed mode; otherwise a plain question, with pending gates persisted" }
       pi: { parity: degrade, use: "a plain question in the reply; no recorded extension registers an ask tool" }
       omp: { parity: substitute, use: "the ask tool" }
     consequence: >-
