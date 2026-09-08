@@ -23,11 +23,11 @@ Open a todolist with one entry per phase before launching anything.
 2. Choose the shape. Partition into slices, race N workers on identical briefs, or mix both. For a race or mixed shape, declare `first pass`, `rank all`, or `best-of` before spawning.
 3. Set N from the user or derive it from the shape. N is total workers, not the cloud concurrency limit.
 4. Pick the worker model from `swarm workers` in the override block `/setup-pstack-anywhere` writes when present. Otherwise use your fast code model. For a model race, name each arm's model up front.
-5. Give each worker its own writable output when it writes. Use a worktree, branch, or `/tmp/swarm-<slug>/worker-<n>/`.
+5. Give each worker its own writable output when it writes.
 
 ## Phase B: Fan out
 
-Spawn all N workers in one message with the delegate identity your harness uses (see the `identity` row in `../poteto-mode/capabilities.md`), in the background (the `background` row in `../poteto-mode/capabilities.md` names the parameter), and the configured model. Durable off-machine workers are a `worker_durability` capability absent on every harness but Cursor per `../poteto-mode/capabilities.md`, so workers run locally and their output must be externalized as it lands.
+Spawn all N workers in one message with the delegate identity your harness uses (see the `identity` row in `../poteto-mode/capabilities.md`), in the background (the `background` row in `../poteto-mode/capabilities.md` names the parameter), and the configured model. Resolve placement and continued execution through `worker_durability` in `../poteto-mode/capabilities.md`. Persist output as it arrives. A stopped worker may still have a saved session, so inspect recovery support before replacing it.
 
 When a worker must start from a non-default pushed branch, have it check that branch out in its own worktree before starting.
 

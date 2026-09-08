@@ -229,6 +229,44 @@ evidence_contract:
 # ---------------------------------------------------------------------------
 
 scenarios:
+  - id: mcp_discovery
+    axis: mcp_discovery
+    applies_to: [cursor, claude, codex, pi, omp]
+    risk: A guessed tool directory can hide available sources or invent unavailable ones.
+    question: Can the agent identify evidence tools from its actual session without assuming a tool directory?
+    setup:
+      preconditions:
+        - A scratch session with its available tool catalog captured by the operator.
+        - No task requires writing to an external system.
+      steps:
+        - Ask the agent to list its available evidence tools and the discovery source, recording gaps explicitly.
+        - Save the list in discovery.txt and preserve the actual discovery calls.
+    observations:
+      - id: discovery.source
+        observe: The session catalog or documented discovery mechanism used, from the transcript and invocation record.
+        grounds: A guessed filesystem path is not evidence of availability.
+      - id: discovery.inventory
+        observe: Compare the reported tools and gaps with the operator's captured catalog.
+        grounds: Detects invented tools and silently omitted evidence sources.
+    parity:
+      allowed:
+        - Catalog data supplied directly in the session or returned by the documented discovery tool.
+        - An explicit unavailable result when the session provides no discovery mechanism.
+      prohibited:
+        - Assuming a filesystem directory exists without session evidence.
+        - Reporting a source as searched merely because a tool for it is available.
+    parity_criteria:
+      native: The session's documented discovery reports the complete available inventory.
+      substitute: The supplied session catalog provides the same inventory without a discovery call.
+      extension: The inventory is supplied by a recorded extension.
+      degrade: The catalog exposes only part of the inventory and the gap is reported.
+      drop: No inventory is available and the agent reports discovery unavailable.
+    evidence:
+      extends: evidence_contract
+      artifacts:
+        - path: discovery.txt
+          holds: The tool inventory, discovery source, and explicit gaps.
+
   - id: spawn_worker
     axis: spawn_worker
     applies_to: [cursor, claude, codex, pi, omp]

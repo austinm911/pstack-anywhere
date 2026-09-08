@@ -78,6 +78,20 @@ describe("check on an unmodified copy", () => {
   });
 });
 
+describe("upstream primitive regressions", () => {
+  for (const primitive of ["Use the Task tool to launch an investigator.", "Read the `mcps/` directory."]) {
+    test(`rejects reintroduced instruction: ${primitive}`, () => {
+      const dir = fixtureRepo((ledger, root) => {
+        const path = join(root, "skills/why/SKILL.md");
+        writeFileSync(path, `${readFileSync(path, "utf8")}\n${primitive}\n`);
+      });
+      const { code, err } = run(dir, "check", "--gate");
+      expect(code).toBe(2);
+      expect(err).toContain("regression");
+    });
+  }
+});
+
 describe("ledger validation", () => {
   test("a fallback on a non-extension cell is a ledger error", () => {
     const dir = fixtureRepo((ledger) => {

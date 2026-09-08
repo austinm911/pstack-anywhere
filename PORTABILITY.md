@@ -12,16 +12,16 @@ Parity: 🟢 substitute 🟡 degrade 🔴 drop 🧩 extension ⚫ native. Verifi
 
 ## For reviewers
 
-One row per harness. Parity counts run over the 24 domains; the last
+One row per harness. Parity counts run over the 25 domains; the last
 column names the domains that lose something on that harness.
 
-| harness | how the 24 domains resolve | with evidence | loses something |
+| harness | how the 25 domains resolve | with evidence | loses something |
 | --- | --- | --- | --- |
-| Cursor (upstream) | 🟢 9 substitute, 🔴 3 drop, ⚫ 10 native | 0 of 24 domains | `graphite`, `github_cli`, `bun` |
-| Claude Code | 🟢 16 substitute, 🟡 2 degrade, 🔴 4 drop | 10 of 24 domains | `worker_durability`, `probe_worker`, `worker_defaults.readonly`, `graphite`, `github_cli`, `bun` |
-| Codex | 🟢 15 substitute, 🟡 2 degrade, 🔴 5 drop | 10 of 24 domains | `worker_durability`, `wake_on_event`, `worker_defaults.readonly`, `human_question`, `graphite`, `github_cli`, `bun` |
-| pi | 🟢 10 substitute, 🟡 4 degrade, 🔴 4 drop, 🧩 4 extension | 10 of 24 domains | `worker_durability`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `human_question`, `graphite`, `github_cli`, `bun` |
-| Oh My Pi | 🟢 18 substitute, 🔴 4 drop | 10 of 24 domains | `worker_durability`, `graphite`, `github_cli`, `bun` |
+| Cursor (upstream) | 🟢 10 substitute, 🔴 3 drop, ⚫ 10 native | 0 of 25 domains | `graphite`, `github_cli`, `bun` |
+| Claude Code | 🟢 17 substitute, 🟡 2 degrade, 🔴 4 drop | 10 of 25 domains | `worker_durability`, `probe_worker`, `worker_defaults.readonly`, `graphite`, `github_cli`, `bun` |
+| Codex | 🟢 16 substitute, 🟡 2 degrade, 🔴 5 drop | 10 of 25 domains | `worker_durability`, `wake_on_event`, `worker_defaults.readonly`, `human_question`, `graphite`, `github_cli`, `bun` |
+| pi | 🟢 11 substitute, 🟡 4 degrade, 🔴 4 drop, 🧩 4 extension | 10 of 25 domains | `worker_durability`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `human_question`, `graphite`, `github_cli`, `bun` |
+| Oh My Pi | 🟢 19 substitute, 🔴 4 drop | 10 of 25 domains | `worker_durability`, `graphite`, `github_cli`, `bun` |
 
 With evidence means a recorded run or a cited source file backs the cell; the rest are unverified.
 
@@ -29,15 +29,15 @@ With evidence means a recorded run or a cited source file backs the cell; the re
 
 | measure | value |
 | --- | --- |
-| ledger | v2, upstream `b9ddc83` |
-| domains | 24, from 21 axes, because `worker_defaults` resolves per parameter |
-| harness cells | 40 verified of 120 (24 domains x 5 harnesses) |
-| occurrences | 92 resolved, 0 unresolved, 0 missing, 2 not checked |
+| ledger | v2, upstream `71ed0d1` |
+| domains | 25, from 22 axes, because `worker_defaults` resolves per parameter |
+| harness cells | 40 verified of 125 (25 domains x 5 harnesses) |
+| occurrences | 101 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions, 0 in total |
-| skills reached | 13 of 45: `architect` (1 of 1 checked), `arena` (2 of 2 checked), `automate-me` (3 of 3 checked), `how` (2 of 2 checked), `interrogate` (2 of 2 checked), `no-comments` (1 of 1 checked), `poteto-mode` (67 of 68 checked), `recall` (1 of 1 checked), `reflect` (6 of 6 checked), `setup-pstack-anywhere` (1 of 2 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (2 of 2 checked) |
-| skills with work left | 0 of 45; the other 32 carry neither a declared occurrence nor a token hit |
+| skills reached | 13 of 47: `architect` (1 of 1 checked), `arena` (2 of 2 checked), `automate-me` (3 of 3 checked), `how` (3 of 3 checked), `interrogate` (3 of 3 checked), `no-comments` (2 of 2 checked), `poteto-mode` (68 of 69 checked), `recall` (1 of 1 checked), `reflect` (10 of 10 checked), `setup-pstack-anywhere` (1 of 2 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (3 of 3 checked) |
+| skills with work left | 0 of 47; the other 34 carry neither a declared occurrence nor a token hit |
 | regressions | 0 |
-| `frontmatter_portable` assert | 39 of 45 skills carry `disable-model-invocation`, counted from the tree on every run |
+| `frontmatter_portable` assert | 46 of 47 skills carry `disable-model-invocation`, counted from the tree on every run |
 
 ## Work remaining
 
@@ -57,7 +57,7 @@ Next:
 
 ## Domain resolutions
 
-10 domains of 24 resolve differently depending on the harness. Each cell shows the parity glyph and word, with a verification suffix where the cell has no evidence. Cursor is upstream and has no saved evidence, so its column is native and unverified throughout: its resolutions are what upstream already does, not a substitution this port made.
+10 domains of 25 resolve differently depending on the harness. Each cell shows the parity glyph and word, with a verification suffix where the cell has no evidence. Cursor is upstream and has no saved evidence, so its column is native and unverified throughout: its resolutions are what upstream already does, not a substitution this port made.
 
 | domain | Cursor (upstream) | Claude Code | Codex | pi | Oh My Pi |
 | --- | --- | --- | --- | --- | --- |
@@ -135,7 +135,7 @@ What each harness uses, per domain in the table:
   - **pi:** ../&lt;name&gt;/&lt;file&gt; under ~/.agents/skills; the skill is hidden from the model's listing, so the path is the only pointer
   - **Oh My Pi:** ../&lt;name&gt;/&lt;file&gt; under ~/.agents/skills; skill://Poteto Mode/&lt;file&gt; also works, keyed by frontmatter name
 
-The other 14 domains resolve the same way on every harness:
+The other 15 domains resolve the same way on every harness:
 
 - **`review_automation`** (role, substitute). An agentic reviewer that files PR comments. A GitHub-side service, not a harness feature, so it is the user's choice on every harness including Cursor. references/bugbot-triage.md generalizes to review-automation triage: its content is how to assess untrusted review text, which no harness changes. **With no value for the role:** Apply the same skeptical triage to human review comments. The posture is the portable part. Verification: unverified on every harness.
 - **`slop_strip`** (role, substitute). A pre-commit pass that strips generated slop from a diff. **With no value for the role:** Apply the unslop skill to the diff directly. Verification: unverified on every harness.
@@ -143,21 +143,22 @@ The other 14 domains resolve the same way on every harness:
 - **`cli_driver`** (role, substitute). Drives a CLI or TUI for runtime verification. **With no value for the role:** Same as ui_driver. Name the missing verification, do not imply one. Verification: unverified on every harness.
 - **`skill_authoring`** (role, substitute). The house rules for writing a SKILL.md. **With no value for the role:** playbooks/authoring-a-skill.md carries the rules on its own. Verification: unverified on every harness.
 - **`model_roles`** (role, substitute). Upstream already assigns these slugs to roles. Port the roles into the prose and leave the slugs to the override file, so a model release does not churn every playbook. **With no value for the role:** The parent chat model, which is what inherit-parent and auto already mean. Verification: unverified on every harness.
-- **`graphite`** (prerequisite, drop). Stacked PR tooling. Upstream's stack playbooks assume it throughout. **Without the binary:** Stack playbooks do not apply. Shipping, autopilot-stack, and the stack safety section have no plain-git equivalent worth faking. Verification: unverified on every harness.
-- **`github_cli`** (prerequisite, drop). scripts/watch-pr reads PR state through it. **Without the binary:** The Babysit playbook's watcher cannot run. Verification: unverified on every harness.
+- **`graphite`** (prerequisite, drop). Orchestrate's Graphite frontier and the bundled orch frontier helper. **Without the binary:** Orchestrate's Graphite frontier operations are unavailable. Shipping and the autopilot playbooks use base-branch stacks through the resolved forge and no longer require Graphite. Verification: unverified on every harness.
+- **`github_cli`** (prerequisite, drop). GitHub PR operations and scripts/watch-pr read PR state through it. **Without the binary:** The GitHub path cannot run. Use the Origin path only when its CLI is available and resolves the repository. Verification: unverified on every harness.
 - **`bun`** (prerequisite, drop). Runtime for scripts/watch-pr and scripts/orch. **Without the binary:** Those levers cannot run. Verification: unverified on every harness.
 - **`trunk_reread`** (path_assumption, substitute). A multi-day program re-grounds on trunk's copy of a playbook rather than its own possibly-stale context. Depends on pack_path being inside the repo. **Same on every harness:** Drop the git indirection. Re-read the playbook through the harness's own skill addressing, which is already current. The staleness the trunk read guarded against was context staleness, not disk staleness, and a plain re-read fixes that. Verification: unverified on every harness.
-- **`transcript_dir`** (path_assumption, substitute). Local transcripts a worker may need to read. **Same on every harness:** Per-harness session directory. Left as a role-style slot because the path is user and harness specific, and no playbook depends on its shape. Verification: unverified on every harness.
+- **`mcp_discovery`** (path_assumption, substitute). Discover the evidence tools available to the current session. **Same on every harness:** Use the session's tool catalog or its documented discovery mechanism. Report unavailable discovery as a coverage gap. Verification: unverified on every harness.
+- **`transcript_dir`** (path_assumption, substitute). Local transcripts a worker may need to read, including their record format. **Same on every harness:** Use the current harness's session directory and inspect its record format to identify the active conversation. Report unavailable history rather than assuming Cursor's layout or JSON fields. Verification: unverified on every harness.
 - **`setup_entrypoint`** (naming, substitute). Upstream's installer command. This port renames it, so the old name in a ported file is a regression rather than a coupling left to resolve. v1 enforced the token with no axis owning it; this is that owner. **Same on every harness:** The skill is /setup-pstack-anywhere. Verification: unverified on every harness.
 - **`frontmatter_portable`** (frontmatter: `name`, `description`, `disable-model-invocation`). All three are Agent Skills standard fields. Every target honors disable-model-invocation, so the mode gating that keeps a skill out of automatic model invocation ports with no change: Claude and pi accept both the kebab-case and camelCase spellings, Codex carries it alongside its own allow_implicit_invocation, and OMP normalizes the kebab-case form to its internal `hide`. Unchanged on every harness, so there is nothing to resolve. Verification: unverified on every harness.
 - **`frontmatter_cursor_only`** (frontmatter: `mode`, `icon`, `color`, `reminder`). Cursor presentation only, and inert rather than broken elsewhere. OMP preserves unrecognized keys as unknown metadata and the other three ignore them. Left in place: removing them would widen the refresh diff against upstream for no behavior change, and they are correct when the target is Cursor. Unchanged on every harness, so there is nothing to resolve. Verification: unverified on every harness.
 
 ## Conformance
 
-Conformance scenarios cover the 9 of 24 domains judged high-risk.
+Conformance scenarios cover the 9 of 25 domains judged high-risk.
 Every scenario applies to all 5 harnesses, so the 9 of them cover every one of the 45 high-risk cells.
-1 further scenario covers an elective domain, so scenarios reach 50 of the 120 cells in the matrix.
-The other 15 domains are resolved in prose on purpose.
+2 further scenarios cover an elective domain, so scenarios reach 55 of the 125 cells in the matrix.
+The other 16 domains are resolved in prose on purpose.
 A scenario defines what to run and what to inspect; it does not claim a result.
 
 | domain | scenario | observations | runs | verification |
@@ -171,6 +172,7 @@ A scenario defines what to run and what to inspect; it does not claim a result.
 | `worker_defaults.identity` | `worker_defaults_identity` | 4 | 7 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
 | `worker_defaults.model` | `worker_defaults_model` | 5 | 5 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
 | `human_question` | `human_question` | 5 | 5 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
+| `mcp_discovery` | `mcp_discovery` | 2 | 0 | all harnesses: unverified |
 | `pack_path` | `skill_identify` | 5 | 8 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
 
 Cursor follows the same evidence rules as every other harness, and cannot reach `static` only because this repo has no saved Cursor source to cite.
@@ -179,11 +181,11 @@ Cursor follows the same evidence rules as every other harness, and cannot reach 
 
 | measure | value |
 | --- | --- |
-| scenarios | 10 defined |
+| scenarios | 11 defined |
 | attestations | 53 recorded |
 | evidence classes | 47 exercised, 6 superseded |
 | run directories | 51 complete, 3 incomplete, 2 void |
-| cells exercised | 40 of 120, a subset of the 40 verified cells in Totals |
+| cells exercised | 40 of 125, a subset of the 40 verified cells in Totals |
 
 5 of 56 run directories are not complete against their scenario's evidence contract, so nothing may be attested from them: `probe_worker.pi.2026-09-02.01` (incomplete), `probe_worker.pi.2026-09-02.02` (incomplete), `spawn_worker.pi.2026-09-03.01` (void), `worker_defaults_identity.codex.2026-09-02.01` (incomplete), `worker_defaults_identity.pi.2026-09-03.01` (void).
 
@@ -243,65 +245,65 @@ Domains: `human_question`, `skill_authoring`, `transcript_dir`. Resolutions are 
 
 Use for "how does X work", code walkthroughs before changing something...
 
-Reached: 2 declared occurrences across 1 file, 2 resolved.
+Reached: 3 declared occurrences across 1 file, 3 resolved.
 
-Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
+Domains: `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
 
 | file | status | domains |
 | --- | --- | --- |
-| `skills/how/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles` |
+| `skills/how/SKILL.md` | resolved | `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles` |
 
 ### `interrogate`
 
 Use for "interrogate", "adversarial review", "multi-model review", "challenge this", "stress test this code", "find blind spots"...
 
-Reached: 2 declared occurrences across 1 file, 2 resolved.
+Reached: 3 declared occurrences across 1 file, 3 resolved.
 
-Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
+Domains: `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
 
 | file | status | domains |
 | --- | --- | --- |
-| `skills/interrogate/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles` |
+| `skills/interrogate/SKILL.md` | resolved | `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles` |
 
 ### `no-comments`
 
 Spawn Comment Sicko, fix accepted findings, and offer encodings for claimed constraints.
 
-Reached: 1 declared occurrence across 1 file, 1 resolved.
+Reached: 2 declared occurrences across 1 file, 2 resolved.
 
-Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`. Resolutions are in [Domain resolutions](#domain-resolutions).
+Domains: `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`. Resolutions are in [Domain resolutions](#domain-resolutions).
 
 | file | status | domains |
 | --- | --- | --- |
-| `skills/no-comments/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model` |
+| `skills/no-comments/SKILL.md` | resolved | `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model` |
 
 ### `poteto-mode`
 
 poteto's agent style for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work.
 
-Reached: 68 declared occurrences across 17 files, 67 resolved, 1 not checked.
+Reached: 69 declared occurrences across 17 files, 68 resolved, 1 not checked.
 
-Domains: `spawn_worker`, `worker_durability`, `probe_worker`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `human_question`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `skill_authoring`, `model_roles`, `graphite`, `pack_path`, `trunk_reread`, `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions).
+Domains: `spawn_worker`, `worker_durability`, `probe_worker`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `human_question`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `skill_authoring`, `model_roles`, `graphite`, `github_cli`, `pack_path`, `trunk_reread`, `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions).
 
 | file | status | domains |
 | --- | --- | --- |
 | `skills/poteto-mode/playbooks/authoring-a-skill.md` | resolved | `skill_authoring` |
 | `skills/poteto-mode/playbooks/autonomous-run.md` | resolved | `wake_on_event`, `human_question` |
-| `skills/poteto-mode/playbooks/autopilot-full.md` | resolved | `spawn_worker`, `wake_on_event`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `graphite`, `pack_path` |
-| `skills/poteto-mode/playbooks/autopilot-stack.md` | resolved | `spawn_worker`, `wake_on_event`, `review_automation`, `slop_strip`, `graphite`, `pack_path` |
-| `skills/poteto-mode/playbooks/babysit.md` | resolved | `wake_on_event`, `review_automation`, `graphite` |
+| `skills/poteto-mode/playbooks/autopilot-full.md` | resolved | `spawn_worker`, `wake_on_event`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `github_cli`, `pack_path`, `trunk_reread` |
+| `skills/poteto-mode/playbooks/autopilot-stack.md` | resolved | `spawn_worker`, `wake_on_event`, `review_automation`, `slop_strip`, `github_cli`, `pack_path`, `trunk_reread` |
+| `skills/poteto-mode/playbooks/babysit.md` | resolved | `wake_on_event`, `review_automation`, `github_cli` |
 | `skills/poteto-mode/playbooks/bug-fix.md` | resolved | `wake_on_event` |
 | `skills/poteto-mode/playbooks/eval.md` | resolved | `transcript_dir` |
-| `skills/poteto-mode/playbooks/multi-phase-plan.md` | resolved | `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `graphite`, `pack_path`, `trunk_reread` |
-| `skills/poteto-mode/playbooks/opening-a-pr.md` | resolved | `slop_strip`, `ui_driver`, `cli_driver`, `graphite` |
+| `skills/poteto-mode/playbooks/multi-phase-plan.md` | resolved | `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `github_cli`, `pack_path`, `trunk_reread` |
+| `skills/poteto-mode/playbooks/opening-a-pr.md` | resolved | `slop_strip`, `ui_driver`, `cli_driver`, `github_cli` |
 | `skills/poteto-mode/playbooks/orchestrate.md` | resolved | `spawn_worker`, `worker_durability`, `probe_worker`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `human_question`, `ui_driver`, `cli_driver`, `graphite`, `transcript_dir` |
 | `skills/poteto-mode/playbooks/pause-safely.md` | resolved | `worker_durability` |
 | `skills/poteto-mode/playbooks/session-pickup.md` | resolved | `worker_durability`, `transcript_dir` |
-| `skills/poteto-mode/playbooks/shipping.md` | resolved | `spawn_worker`, `probe_worker`, `wake_on_event`, `ui_driver`, `cli_driver`, `graphite` |
+| `skills/poteto-mode/playbooks/shipping.md` | resolved | `spawn_worker`, `probe_worker`, `wake_on_event`, `ui_driver`, `cli_driver`, `github_cli` |
 | `skills/poteto-mode/playbooks/visual-parity.md` | resolved | `wake_on_event`, `ui_driver` |
 | `skills/poteto-mode/references/bugbot-triage.md` | resolved | `review_automation` |
 | `skills/poteto-mode/scripts/check-plan.mjs` | not checked | `model_roles` |
-| `skills/poteto-mode/SKILL.md` | resolved | `spawn_worker`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `human_question`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `skill_authoring`, `model_roles`, `graphite` |
+| `skills/poteto-mode/SKILL.md` | resolved | `spawn_worker`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `human_question`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `skill_authoring`, `model_roles` |
 
 1 row above reads `not checked`; the reason is in [Work remaining](#work-remaining).
 
@@ -321,14 +323,17 @@ Domains: `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resol
 
 Spawn three parallel review subagents over the active transcript, surface learnings, and route each to a concrete edit on an existing skill.
 
-Reached: 6 declared occurrences across 2 files, 6 resolved.
+Reached: 10 declared occurrences across 5 files, 10 resolved.
 
-Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `review_automation`, `skill_authoring`, `model_roles`, `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions).
+Domains: `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `review_automation`, `skill_authoring`, `model_roles`, `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions).
 
 | file | status | domains |
 | --- | --- | --- |
+| `skills/reflect/references/divergent-reviewer.md` | resolved | `spawn_worker` |
+| `skills/reflect/references/judgment-reviewer.md` | resolved | `spawn_worker` |
 | `skills/reflect/references/synthesizer.md` | resolved | `review_automation`, `skill_authoring` |
-| `skills/reflect/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `skill_authoring`, `model_roles`, `transcript_dir` |
+| `skills/reflect/references/tooling-reviewer.md` | resolved | `spawn_worker` |
+| `skills/reflect/SKILL.md` | resolved | `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `skill_authoring`, `model_roles`, `transcript_dir` |
 
 ### `setup-pstack-anywhere`
 
@@ -373,18 +378,18 @@ Domains: `worker_durability`, `worker_defaults.background`, `worker_defaults.rea
 
 Use for 'why does X work this way', 'why we picked Y', design rationale, regressions, postmortems, or data-backed thresholds.
 
-Reached: 2 declared occurrences across 1 file, 2 resolved.
+Reached: 3 declared occurrences across 1 file, 3 resolved.
 
-Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
+Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`, `mcp_discovery`. Resolutions are in [Domain resolutions](#domain-resolutions).
 
 | file | status | domains |
 | --- | --- | --- |
-| `skills/why/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles` |
+| `skills/why/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`, `mcp_discovery` |
 
 ## Skills the port has not reached
 
 These are the skills the lint found coupling in. Their hits are porting work,
-not regressions. The 32 skills with neither a declared occurrence nor a token
+not regressions. The 34 skills with neither a declared occurrence nor a token
 hit are not listed.
 
 
@@ -397,7 +402,6 @@ tracked site to check. Their resolutions are in
 
 | domain | why no site is tracked |
 | --- | --- |
-| `github_cli` (prerequisite) | Named only inside skills/poteto-mode/scripts/, which lint.scan does not reach. Nothing in the Markdown prose depends on the binary by name, so there is no occurrence for a refresh diff to catch. |
 | `bun` (prerequisite) | The dependency is a shebang inside skills/poteto-mode/scripts/, which lint.scan does not reach. Nothing in the Markdown prose runs the binary by name, so there is no occurrence for a refresh diff to catch. |
 | `setup_entrypoint` (naming) | The rename is complete in the ported skills, so there is no site to track. The token stays to catch a reintroduction. |
 | `frontmatter_portable` (frontmatter) | A frontmatter surface spans every skill, so an occurrence list would be the skill index. The counted assert is the anchor instead, and the report prints its result. |

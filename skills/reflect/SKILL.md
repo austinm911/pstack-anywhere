@@ -10,53 +10,45 @@ Mine the current conversation for durable learnings, then route them into skill 
 
 ## When to invoke
 
-- The user said "reflect" or "/reflect".
-- A complex task (5+ tool calls) just landed cleanly and the recipe is worth keeping.
-- The agent hit dead ends, found the working path, and the path generalizes.
-- The user corrected the agent's approach mid-task.
-- A non-trivial workflow emerged that isn't captured anywhere.
-
-Skip when the conversation is trivial, off-topic, or already covered by an existing skill the parent followed correctly. One-offs are not learnings.
+Invoke when the user says "reflect" or "/reflect". Skip when the conversation is trivial, off-topic, or already covered by an existing skill the parent followed correctly. One-offs are not learnings.
 
 ## Process
 
 ### 1. Locate the active transcript
 
-The parent finds its own transcript file before fanning out. The system prompt names the active workspace's session directory (the `transcript_dir` row in `../poteto-mode/capabilities.md`); use that path. Do not glob across the harness's other workspace directories. That crosses workspace boundaries and reads private chats from unrelated projects.
+The parent finds its own transcript file before fanning out. The system prompt names the active workspace's session directory (the `transcript_dir` row in `../poteto-mode/capabilities.md`). Use that path. Do not glob across the harness's other workspace directories. That crosses workspace boundaries and reads private chats from unrelated projects.
 
 ```bash
 ls -t <transcript_dir>/*.jsonl <transcript_dir>/*/*.jsonl <transcript_dir>/*/subagents/*.jsonl 2>/dev/null | head -10
 ```
 
-Three transcript layouts: legacy flat (`<id>.jsonl`), current nested (`<id>/<id>.jsonl`), and subagent (`<parent>/subagents/<child>.jsonl`).
-
-For each candidate, read the first JSONL line and check that `message.content[0].text` contains the conversation's opening user prompt. Take the matching path. If no path resolves, write a tight digest of the session and pass that instead.
+Inspect the harness's actual transcript layout and record format. Confirm the active workspace and conversation from its metadata and opening user prompt before passing a transcript to reviewers. If the transcript cannot be identified, write a tight digest of this session and pass that instead.
 
 ### 2. Spawn three reviewers in parallel
 
-One message, three `Task` calls, the delegate identity your harness uses (see the `identity` row in `../poteto-mode/capabilities.md`), explicit `model:` on each, agent mode (`readonly: false`). Reviewers need MCP access for context lookups (tickets, chat threads, observability traces referenced in the transcript); readonly strips MCPs. The prompt forbids file writes; the parent applies edits.
+One message, three delegates through `spawn_worker`, using the `identity` and `readonly` rows in `../poteto-mode/capabilities.md`. Select each model by role. Reviewers need access to the evidence tools for context lookups. The prompt forbids file writes. The parent applies edits.
 
 | Lens | `model` | Prompt template |
 |---|---|---|
-| Judgment | your configured reflect-judgment model (your strong judgment model; default: the parent chat model) | `references/judgment-reviewer.md` |
-| Tooling | your configured reflect-tooling model (your strong instruction-following model; default: the parent chat model) | `references/tooling-reviewer.md` |
-| Divergent | your configured reflect-judgment model (your strong judgment model; default: the parent chat model) | `references/divergent-reviewer.md` |
+| Judgment | your configured reflect-judgment model (your strong judgment model, default: the parent chat model) | `references/judgment-reviewer.md` |
+| Tooling | your configured reflect-tooling model (your strong instruction-following model, default: the parent chat model) | `references/tooling-reviewer.md` |
+| Divergent | your configured reflect-judgment model (your strong judgment model, default: the parent chat model) | `references/divergent-reviewer.md` |
 
-Pass each template verbatim, substituting the transcript path or digest where marked. Reviewers return findings in the `Task` response body.
+Pass each template verbatim, substituting the transcript path or digest where marked. Collect reviewers' findings through the harness's delegate result mechanism.
 
 ### 3. Synthesize
 
-One `Task` call, the delegate identity your harness uses (see the `identity` row in `../poteto-mode/capabilities.md`), using your configured reflect-judgment model (your strong judgment model; default: the parent chat model), agent mode (`readonly: false`). The synthesizer's quality check includes spot-verifying citations, which can require MCP access; readonly strips MCPs. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
+Spawn one synthesizer using the `identity` and `readonly` rows in `../poteto-mode/capabilities.md`, on your configured reflect-judgment model (default: the parent chat model). Its quality check includes spot-verifying citations, so retain access to the evidence tools. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
 
 ### 4. Structural enforcement check
 
-Sanity-check the synthesizer's Accepted list. For any item that would be enforced more reliably by a lint rule, script, metadata flag, or runtime check, move it from Accepted to Backlog. The synthesizer already applies this criterion; this is a final pass before edits land. See the **encode-lessons-in-structure** principle skill.
+Sanity-check the synthesizer's Accepted list. For any item that would be enforced more reliably by a lint rule, script, metadata flag, or runtime check, move it from Accepted to Backlog. See the **encode-lessons-in-structure** principle skill.
 
 ### 5. Apply
 
-Before applying any Accepted edit, present the synthesizer's full Accepted/Rejected/Backlog output to the user and wait for explicit approval. The user picks which subset to apply and may redirect routings. Skill changes affect every future agent in the org; do not auto-apply.
+Before applying any Accepted edit, present the synthesizer's full Accepted/Rejected/Backlog output to the user and wait for explicit approval. The user picks which subset to apply and may redirect routings. Skill changes affect every future agent in the org. Do not auto-apply.
 
-Backlog items file to whatever devex / backlog tracker your team uses automatically. Those are tracker submissions, not skill edits. Only the Accepted list waits for approval.
+Backlog items file to whatever devex / backlog tracker your team uses automatically. Only the Accepted list waits for approval.
 
 For each approved Accepted item, follow the Routing field exactly:
 

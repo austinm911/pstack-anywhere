@@ -4,7 +4,7 @@
 
 [pstack](https://github.com/cursor/plugins/tree/main/pstack) by
 [Lauren Tan (@poteto)](https://x.com/poteto) is a pack of skills and principles
-for rigorous AI-assisted engineering: 21 principle skills, a `/poteto-mode`
+for rigorous AI-assisted engineering: 23 principle skills, a `/poteto-mode`
 router, and playbooks for stacked PRs and subagent fleets. It ships as a Cursor
 plugin and assumes Cursor primitives throughout. This repo is a port. Same
 skills, same mode names, same playbook vocabulary, with the Cursor-specific
@@ -76,10 +76,10 @@ These terms are used the same way in every doc and ledger in this repo.
 
 **harness**: one of Cursor (upstream), Claude Code, Codex, pi, Oh My Pi (OMP).
 
-**domain**: one axis, or one axis plus one parameter for a parameter set. 21
-axes make 24 domains.
+**domain**: one axis, or one axis plus one parameter for a parameter set. 22
+axes make 25 domains.
 
-**cell**: one domain on one harness. 24 x 5 = 120 cells.
+**cell**: one domain on one harness. 25 x 5 = 125 cells.
 
 **occurrence**: one domain in one file. Its status is resolved, unresolved,
 missing, or not checked.
@@ -129,12 +129,12 @@ table below is rendered from coupling.yaml.
 
 | measure | value |
 | --- | --- |
-| upstream pin | `b9ddc83`, path `pstack` |
-| skills reached | 13 of 45, [see PORTABILITY.md](PORTABILITY.md#skills-the-port-reached) |
-| skills with work left | 0 of 45 |
-| occurrences | 92 resolved, 0 unresolved, 0 missing, 2 not checked |
+| upstream pin | `71ed0d1`, path `pstack` |
+| skills reached | 13 of 47, [see PORTABILITY.md](PORTABILITY.md#skills-the-port-reached) |
+| skills with work left | 0 of 47 |
+| occurrences | 101 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions |
-| verification | 40 of 120 cells verified, 53 attestations, 10 scenarios defined |
+| verification | 40 of 125 cells verified, 53 attestations, 11 scenarios defined |
 
 `bun scripts/coupling.mjs check` is the gate. The work left, the per-harness
 resolutions, and the evidence state are in [PORTABILITY.md](PORTABILITY.md).

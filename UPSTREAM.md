@@ -2,8 +2,8 @@
 
 Source: https://github.com/cursor/plugins/tree/main/pstack
 Author: Lauren Tan (@poteto) · MIT
-Pinned SHA: b9ddc83c32972210b8a94d389130713e8eed346e (2026-08-31)
-Upstream version: pstack 0.14.5
+Pinned SHA: 71ed0d1076fec562c1b74ee353121a8d00f75382 (2026-09-07)
+Upstream version: pstack 0.15.0
 
 ## Refresh
 
@@ -173,7 +173,7 @@ their `kind` value:
 - parameter_set: `worker_defaults`
 - role: `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `skill_authoring`, `model_roles`
 - prerequisite: `graphite`, `github_cli`, `bun`
-- path_assumption: `pack_path`, `trunk_reread`, `transcript_dir`
+- path_assumption: `pack_path`, `trunk_reread`, `mcp_discovery`, `transcript_dir`
 - naming: `setup_entrypoint`
 - frontmatter: `frontmatter_portable`, `frontmatter_cursor_only`
 

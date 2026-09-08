@@ -63,8 +63,8 @@ not have.
 
 Tools, not harness features. Missing one removes the playbooks that depend on it.
 
-- **`gt`.** Stacked PR tooling. Upstream's stack playbooks assume it throughout. Absent: Stack playbooks do not apply. Shipping, autopilot-stack, and the stack safety section have no plain-git equivalent worth faking.
-- **`gh`.** scripts/watch-pr reads PR state through it. Absent: The Babysit playbook's watcher cannot run.
+- **`gt`.** Orchestrate's Graphite frontier and the bundled orch frontier helper. Absent: Orchestrate's Graphite frontier operations are unavailable. Shipping and the autopilot playbooks use base-branch stacks through the resolved forge and no longer require Graphite.
+- **`gh`.** GitHub PR operations and scripts/watch-pr read PR state through it. Absent: The GitHub path cannot run. Use the Origin path only when its CLI is available and resolves the repository.
 - **`bun`.** Runtime for scripts/watch-pr and scripts/orch. Absent: Those levers cannot run.
 
 ## Paths
@@ -76,4 +76,5 @@ Tools, not harness features. Missing one removes the playbooks that depend on it
   - pi: ../<name>/<file> under ~/.agents/skills; the skill is hidden from the model's listing, so the path is the only pointer
   - omp: ../<name>/<file> under ~/.agents/skills; skill://Poteto Mode/<file> also works, keyed by frontmatter name
 - **trunk_reread.** Upstream used `git show origin/main:pstack/skills/...`. Drop the git indirection. Re-read the playbook through the harness's own skill addressing, which is already current. The staleness the trunk read guarded against was context staleness, not disk staleness, and a plain re-read fixes that.
-- **transcript_dir.** Upstream used `agent-transcripts/`. Per-harness session directory. Left as a role-style slot because the path is user and harness specific, and no playbook depends on its shape.
+- **mcp_discovery.** Upstream used `mcps/`. Use the session's tool catalog or its documented discovery mechanism. Report unavailable discovery as a coverage gap.
+- **transcript_dir.** Upstream used `agent-transcripts/`. Use the current harness's session directory and inspect its record format to identify the active conversation. Report unavailable history rather than assuming Cursor's layout or JSON fields.

@@ -91,8 +91,9 @@ the candidate and let the user confirm, since a plausible name is not proof.
 
 **Services and binaries.** For `review_automation`, ask. It is a GitHub-side
 service and nothing in the session proves which one the user's repos run. Check
-`gt`, `gh`, and `bun` on PATH and report which are missing, since each absence
-removes playbooks.
+`gh`, `origin`, `gt`, and `bun` on PATH. GitHub operations use `gh`, and the
+shipping playbooks can use Origin when it resolves the repository. Orchestrate's
+Graphite frontier still requires `gt`. The bundled scripts require `bun`.
 
 ### 2. Load current state
 
@@ -110,7 +111,7 @@ Use your harness's structured question primitive where it has one, per the
 `human_question` row in `capabilities.md`. Where it does not, ask in prose and
 number the options.
 
-For panel roles (how critics, arena runners, architect runners, interrogate
+For panel roles (arena runners, architect runners, interrogate
 reviewers) the value is a list, and one delegate runs per entry, alias entries
 included, so the list length sets the fan-out. `arena cross-judge pool` is also
 a list, but Arena selects one value from it whose model family differs from the
@@ -155,7 +156,6 @@ judgment and prose: auto
 hardest tasks: auto
 how explorer: auto
 how explainer: auto
-how critics: auto, auto, auto
 why investigators: auto
 why synthesizer: auto
 reflect tooling: auto

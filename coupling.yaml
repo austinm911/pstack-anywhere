@@ -19,7 +19,7 @@ version: 2
 upstream:
   repo: https://github.com/cursor/plugins
   path: pstack
-  sha: b9ddc83c32972210b8a94d389130713e8eed346e
+  sha: 71ed0d1076fec562c1b74ee353121a8d00f75382
 
 # `registry` is whether the harness has a harnesses.yaml entry, and
 # `evidence_dir` whether pinned upstream source is saved for it. Cursor has
@@ -67,6 +67,8 @@ axes:
       pi: { parity: extension, use: 'subagent({agent:"<name>"}) via pi-subagents; fresh child context from .pi/agent/extensions/subagent/config.json', fallback: "without pi-subagents, no delegation primitive" }
       omp: { parity: substitute, use: "task tool, agent field selects the specialist" }
     tokens:
+      - pattern: '`Task`|\bTask\s+(tool|calls?|subagents?|response)\b'
+        why: Cursor's delegate tool must resolve through spawn_worker
       - pattern: 'environment:\s*"cloud"'
         why: a cloud worker couples spawn_worker and worker_durability
         also: [worker_durability]
@@ -76,6 +78,13 @@ axes:
       - path: skills/poteto-mode/playbooks/autopilot-stack.md
       - path: skills/poteto-mode/playbooks/shipping.md
       - path: skills/poteto-mode/playbooks/orchestrate.md
+      - path: skills/how/SKILL.md
+      - path: skills/interrogate/SKILL.md
+      - path: skills/no-comments/SKILL.md
+      - path: skills/reflect/SKILL.md
+      - path: skills/reflect/references/divergent-reviewer.md
+      - path: skills/reflect/references/judgment-reviewer.md
+      - path: skills/reflect/references/tooling-reviewer.md
 
   - id: worker_durability
     kind: capability
@@ -329,7 +338,7 @@ axes:
 
   - id: model_roles
     kind: role
-    was: 'grok-4.6-fast-xhigh, claude-fable-5-thinking-max, gpt-5.6-sol-max'
+    was: 'grok-4.6-fast-xhigh, claude-fable-5-1-thinking-max, gpt-5.6-sol-max'
     what: >-
       Upstream already assigns these slugs to roles. Port the roles into the
       prose and leave the slugs to the override file, so a model release does
@@ -369,33 +378,30 @@ axes:
   - id: graphite
     kind: prerequisite
     binary: gt
-    what: Stacked PR tooling. Upstream's stack playbooks assume it throughout.
+    what: Orchestrate's Graphite frontier and the bundled orch frontier helper.
     invariant:
       parity: drop
       use: >-
-        Stack playbooks do not apply. Shipping, autopilot-stack, and the stack
-        safety section have no plain-git equivalent worth faking.
+        Orchestrate's Graphite frontier operations are unavailable. Shipping
+        and the autopilot playbooks use base-branch stacks through the resolved
+        forge and no longer require Graphite.
     occurrences:
-      - path: skills/poteto-mode/SKILL.md
-      - path: skills/poteto-mode/playbooks/shipping.md
-      - path: skills/poteto-mode/playbooks/babysit.md
-      - path: skills/poteto-mode/playbooks/opening-a-pr.md
-      - path: skills/poteto-mode/playbooks/multi-phase-plan.md
-      - path: skills/poteto-mode/playbooks/autopilot-full.md
-      - path: skills/poteto-mode/playbooks/autopilot-stack.md
       - path: skills/poteto-mode/playbooks/orchestrate.md
 
   - id: github_cli
     kind: prerequisite
     binary: gh
-    what: scripts/watch-pr reads PR state through it.
+    what: GitHub PR operations and scripts/watch-pr read PR state through it.
     invariant:
       parity: drop
-      use: The Babysit playbook's watcher cannot run.
-    no_occurrences: >-
-      Named only inside skills/poteto-mode/scripts/, which lint.scan does not
-      reach. Nothing in the Markdown prose depends on the binary by name, so
-      there is no occurrence for a refresh diff to catch.
+      use: The GitHub path cannot run. Use the Origin path only when its CLI is available and resolves the repository.
+    occurrences:
+      - path: skills/poteto-mode/playbooks/babysit.md
+      - path: skills/poteto-mode/playbooks/shipping.md
+      - path: skills/poteto-mode/playbooks/opening-a-pr.md
+      - path: skills/poteto-mode/playbooks/autopilot-full.md
+      - path: skills/poteto-mode/playbooks/autopilot-stack.md
+      - path: skills/poteto-mode/playbooks/multi-phase-plan.md
 
   - id: bun
     kind: prerequisite
@@ -455,16 +461,32 @@ axes:
         why: a trunk re-read of the pack depends on pack_path
     occurrences:
       - path: skills/poteto-mode/playbooks/multi-phase-plan.md
+      - path: skills/poteto-mode/playbooks/autopilot-full.md
+      - path: skills/poteto-mode/playbooks/autopilot-stack.md
+
+  - id: mcp_discovery
+    kind: path_assumption
+    was: 'mcps/'
+    what: Discover the evidence tools available to the current session.
+    invariant:
+      parity: substitute
+      use: Use the session's tool catalog or its documented discovery mechanism. Report unavailable discovery as a coverage gap.
+    tokens:
+      - pattern: '`mcps/'
+        why: The Cursor tool directory is not a shared filesystem convention.
+    occurrences:
+      - path: skills/why/SKILL.md
 
   - id: transcript_dir
     kind: path_assumption
     was: 'agent-transcripts/'
-    what: Local transcripts a worker may need to read.
+    what: Local transcripts a worker may need to read, including their record format.
     invariant:
       parity: substitute
       use: >-
-        Per-harness session directory. Left as a role-style slot because the path
-        is user and harness specific, and no playbook depends on its shape.
+        Use the current harness's session directory and inspect its record
+        format to identify the active conversation. Report unavailable history
+        rather than assuming Cursor's layout or JSON fields.
     tokens:
       - pattern: '\bagent-transcripts\b'
         why: agent-transcripts is the transcript_dir path assumption
@@ -511,8 +533,8 @@ axes:
       kind: frontmatter_key_count
       key: disable-model-invocation
       spellings: [disable-model-invocation, disableModelInvocation]
-      expect: 39
-      of: 45
+      expect: 46
+      of: 47
     no_occurrences: >-
       A frontmatter surface spans every skill, so an occurrence list would be
       the skill index. The counted assert is the anchor instead, and the report
