@@ -1,23 +1,24 @@
 #!/usr/bin/env bun
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 
-const importRef = "refs/heads/upstream/pstack";
+const legacyImportRef = "refs/heads/upstream/pstack";
 const oid = /^[a-f0-9]{40}$/;
 let repository = process.cwd();
 
 function run(args, options = {}) {
   const result = spawnSync("git", args, {
     cwd: repository,
-    encoding: "utf8",
+    encoding: options.binary ? null : "utf8",
     maxBuffer: 16 * 1024 * 1024,
     input: options.input,
     env: { ...process.env, ...options.env },
   });
   if (result.error) throw result.error;
   if (result.status !== 0 && !options.allowFailure) {
-    throw new Error(result.stderr.trim() || result.stdout.trim() || `git ${args[0]} failed`);
+    throw new Error(result.stderr.toString().trim() || result.stdout.toString().trim() || `git ${args[0]} failed`);
   }
   return result;
 }
@@ -52,12 +53,24 @@ function readImport(ref, upstream, source) {
   return { commit, revision };
 }
 
-function importedBaseline(upstream, source) {
+function latestImport(upstream, source, refs = ["HEAD"]) {
   const matches = git([
-    "log", "HEAD", "--format=%H", `--grep=^Pstack-Upstream-Commit: ${upstream.sha}$`,
+    "log", "--topo-order", "--format=%H", "--grep=^Pstack-Upstream-Commit: ", ...refs,
   ]).split("\n").filter(Boolean);
-  if (matches.length > 1) throw new Error("Multiple imports match the pinned revision; inspect the history");
-  return matches.length === 0 ? null : readImport(matches[0], upstream, source);
+  if (matches.length === 0) return null;
+  const latest = readImport(matches[0], upstream, source);
+  if (matches.slice(1).some(commit => !ancestor(commit, latest.commit))) {
+    throw new Error("This branch contains divergent upstream import histories; reconcile them before updating");
+  }
+  return latest;
+}
+
+function importedBaseline(upstream, source) {
+  const latest = latestImport(upstream, source);
+  if (latest && latest.revision !== upstream.sha) {
+    throw new Error(`coupling.yaml upstream.sha must match this branch's accepted import ${latest.revision}`);
+  }
+  return latest;
 }
 
 function makeImport(revision, parent, upstream) {
@@ -75,44 +88,19 @@ function makeImport(revision, parent, upstream) {
   });
 }
 
-function importTip() {
-  return succeeds(["show-ref", "--verify", "--quiet", importRef])
-    ? git(["rev-parse", importRef])
-    : null;
-}
-
 function initialize(upstream, source, branch) {
   ensureCommit(upstream.sha, source);
   const baseline = importedBaseline(upstream, source);
-  const tip = importTip();
   if (baseline) {
-    if (tip) {
-      readImport(tip, upstream, source);
-      if (!ancestor(baseline.commit, tip)) throw new Error("The import branch diverges from the pinned baseline");
-    } else {
-      git(["update-ref", importRef, baseline.commit, ""]);
-    }
     console.log(`Import baseline already connected at ${baseline.revision}.`);
     return;
   }
-
-  const initial = tip ? readImport(tip, upstream, source) : null;
-  if (initial && initial.revision !== upstream.sha) {
-    throw new Error("The existing import branch is not at the pinned baseline");
-  }
-  const imported = initial?.commit ?? makeImport(upstream.sha, null, upstream);
+  const imported = makeImport(upstream.sha, null, upstream);
   const head = git(["rev-parse", "HEAD"]);
   const bridge = git(["commit-tree", `${head}^{tree}`, "-p", head, "-p", imported], {
     input: `Establish pstack upstream baseline\n\nRecord ${upstream.sha} as already ported. Preserve the current tree.\n`,
   });
-  git(["update-ref", "-m", "Establish pstack import baseline", "--stdin"], {
-    input: [
-      "start",
-      tip ? `verify ${importRef} ${tip}` : `create ${importRef} ${imported}`,
-      `update ${branch} ${bridge} ${head}`,
-      "prepare", "commit", "",
-    ].join("\n"),
-  });
+  git(["update-ref", "-m", "Establish pstack import baseline", branch, bridge, head]);
   console.log(`Connected ${upstream.sha} through baseline commit ${bridge}.`);
   console.log("The HEAD tree, index, and working files are unchanged.");
 }
@@ -123,23 +111,21 @@ function mergeRevision(revision, upstream, source) {
   }
   const baseline = importedBaseline(upstream, source);
   if (!baseline) throw new Error("Run update-upstream.mjs init before the first upstream update");
-  const previous = importTip();
-  const tip = previous ? readImport(previous, upstream, source) : baseline;
-  if (!ancestor(baseline.commit, tip.commit)) throw new Error("The import branch diverges from the pinned baseline");
-  if (tip.revision !== upstream.sha && ancestor(tip.commit, "HEAD")) {
-    throw new Error(`Update coupling.yaml upstream.sha to the reviewed import ${tip.revision} before another update`);
-  }
   ensureCommit(revision, source);
-  if (!ancestor(tip.revision, revision)) {
-    throw new Error("The requested source revision does not descend from the latest import; refusing to rewind it");
+  if (!ancestor(baseline.revision, revision)) {
+    throw new Error("The requested source revision does not descend from this branch's accepted pin; refusing to rewind it");
   }
-  const imported = revision === tip.revision ? tip.commit : makeImport(revision, tip.commit, upstream);
+  const imported = revision === baseline.revision ? baseline.commit : makeImport(revision, baseline.commit, upstream);
   if (ancestor(imported, "HEAD")) {
     console.log("That upstream revision is already included.");
     return 0;
   }
-  if (imported !== previous) git(["update-ref", importRef, imported, previous ?? ""]);
-  const result = run(["merge", "--no-autostash", "--no-ff", "--no-commit", imported], { allowFailure: true });
+  const ignored = run(["ls-files", "--others", "--ignored", "--exclude-standard", "-z"]).stdout.split("\0").filter(Boolean);
+  const incoming = run(["ls-tree", "-r", "--name-only", "-z", imported]).stdout.split("\0").filter(Boolean);
+  const collision = ignored.find(local => incoming.some(path =>
+    local === path || local.startsWith(`${path}/`) || path.startsWith(`${local}/`)));
+  if (collision) throw new Error(`Ignored local content would overlap the import: ${collision}; move it aside before merging`);
+  const result = run(["merge", "--no-autostash", "--no-overwrite-ignore", "--no-ff", "--no-commit", imported], { allowFailure: true });
   process.stdout.write(result.stdout);
   process.stderr.write(result.stderr);
   console.log(result.status === 0
@@ -148,16 +134,74 @@ function mergeRevision(revision, upstream, source) {
   return result.status ?? 1;
 }
 
+const orchestrationPath = "skills/poteto-mode/scripts/orch/";
+const digest = bytes => createHash("sha256").update(bytes).digest("hex");
+
+function upstreamHashes(revision, upstream, source) {
+  ensureCommit(revision, source);
+  const prefix = `${upstream.path}/`;
+  const paths = run(["ls-tree", "-r", "--name-only", "-z", revision, "--", `${prefix}${orchestrationPath}`])
+    .stdout.split("\0").filter(Boolean);
+  if (paths.length === 0) throw new Error("The upstream orchestration directory is missing; review the runtime ownership policy");
+  return {
+    upstream: upstream.repo,
+    commit: revision,
+    files: Object.fromEntries(paths.map(path => [
+      path.slice(prefix.length), digest(run(["show", `${revision}:${path}`], { binary: true }).stdout),
+    ])),
+  };
+}
+
+function localFiles(path) {
+  return readdirSync(resolve(repository, path), { withFileTypes: true }).flatMap(entry => {
+    const child = `${path}${entry.name}`;
+    if (entry.isSymbolicLink()) throw new Error(`Unexpected symlink in the upstream runtime: ${child}`);
+    return entry.isDirectory() ? localFiles(`${child}/`) : [child];
+  }).sort();
+}
+
+function verify(upstream, source) {
+  if (git(["diff", "--name-only", "--diff-filter=U"])) throw new Error("Resolve all merge conflicts before verification");
+  const merging = succeeds(["rev-parse", "--verify", "MERGE_HEAD"]);
+  const imported = latestImport(upstream, source, merging ? ["HEAD", "MERGE_HEAD"] : ["HEAD"]);
+  if (!imported || imported.revision !== upstream.sha) {
+    throw new Error(`The recorded pin must match the latest imported snapshot${imported ? ` ${imported.revision}` : "; no import exists"}`);
+  }
+  if (merging && git(["rev-parse", "MERGE_HEAD"]) !== imported.commit) {
+    throw new Error("The active merge is not the recorded upstream import");
+  }
+  const expected = upstreamHashes(upstream.sha, upstream, source);
+  const manifest = JSON.parse(readFileSync(resolve(repository, "conformance/upstream-orch.json"), "utf8"));
+  const paths = Object.keys(expected.files).sort();
+  if (manifest.upstream !== expected.upstream || manifest.commit !== expected.commit ||
+      JSON.stringify(Object.keys(manifest.files ?? {}).sort()) !== JSON.stringify(paths) ||
+      paths.some(path => manifest.files[path] !== expected.files[path])) {
+    throw new Error("The orchestration manifest differs from the upstream source; generate it with upstream hashes <sha>");
+  }
+  if (JSON.stringify(localFiles(orchestrationPath)) !== JSON.stringify(paths)) {
+    throw new Error("The local orchestration file inventory differs from upstream");
+  }
+  for (const path of paths) {
+    if (digest(readFileSync(resolve(repository, path))) !== expected.files[path]) {
+      throw new Error(`Upstream-owned runtime differs from the source: ${path}`);
+    }
+  }
+  console.log(`Verified import ${upstream.sha} and ${paths.length} orchestration files against upstream source.`);
+}
+
 function main(args) {
   if (args.length === 0 || args[0] === "--help") {
     console.log("Usage: bun scripts/update-upstream.mjs init [--source <clone-or-url>]");
     console.log("       bun scripts/update-upstream.mjs merge <full-commit-sha> [--source <clone-or-url>]");
+    console.log("       bun scripts/update-upstream.mjs hashes <full-commit-sha> [--source <clone-or-url>]");
+    console.log("       bun scripts/update-upstream.mjs verify [--source <clone-or-url>]");
     return 0;
   }
   const [command, ...rest] = args;
-  const revision = command === "merge" ? rest.shift() : undefined;
-  if (!["init", "merge"].includes(command) || (command === "merge" && !oid.test(revision ?? ""))) {
-    throw new Error("Use init or merge with an explicit full upstream commit SHA");
+  const takesRevision = ["merge", "hashes"].includes(command);
+  const revision = takesRevision ? rest.shift() : undefined;
+  if (!["init", "merge", "hashes", "verify"].includes(command) || (takesRevision && !oid.test(revision ?? ""))) {
+    throw new Error("Use init, verify, or merge/hashes with an explicit full upstream commit SHA");
   }
   if (rest.length !== 0 && (rest.length !== 2 || rest[0] !== "--source" || !rest[1] || rest[1].startsWith("-"))) {
     throw new Error("Expected --source <clone-or-url>");
@@ -170,13 +214,24 @@ function main(args) {
     throw new Error("coupling.yaml must name an upstream repository, directory, and full pinned SHA");
   }
   const source = rest[1] ?? upstream.repo;
+  if (command === "hashes") {
+    console.log(JSON.stringify(upstreamHashes(revision, upstream, source), null, 2));
+    return 0;
+  }
+  if (git(["rev-parse", "--is-shallow-repository"]) === "true") {
+    throw new Error("Recover this shallow clone's full port history before initializing, merging, or verifying an import");
+  }
+  if (command === "verify") {
+    verify(upstream, source);
+    return 0;
+  }
   for (const name of ["MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply", "sequencer"]) {
     if (existsSync(resolve(repository, git(["rev-parse", "--git-path", name])))) {
       throw new Error("Finish or abort the active Git operation before updating upstream");
     }
   }
   const branch = git(["symbolic-ref", "--quiet", "HEAD"]);
-  if (branch === importRef) throw new Error("Run this from a port development branch, not upstream/pstack");
+  if (branch === legacyImportRef) throw new Error("Run this from a port development branch, not the legacy upstream/pstack snapshot branch");
   return command === "init"
     ? (initialize(upstream, source, branch), 0)
     : mergeRevision(revision, upstream, source);

@@ -7,62 +7,132 @@ Upstream version: pstack 0.14.5
 
 ## Refresh
 
-The `upstream/pstack` branch contains unmodified snapshots of Cursor's `pstack/`
-directory mapped to this repository's root. Each selected revision adds a commit
-parented to the previous import, with the original Cursor SHA recorded in its
-message. This imports release snapshots, not every commit in the plugins repo.
-Port corrections live directly in `skills/` and merge against that shared base.
+The port keeps ordinary Git merge ancestry. Each import is an unmodified
+snapshot of Cursor's `pstack/` directory mapped to this repository's root,
+parented to this branch's previously accepted import. Its commit message records
+the original Cursor SHA. Port corrections live directly in `skills/` and merge
+against that shared base. This preserves upstream deletions and local changes
+without maintaining a second patch stack.
 
-Connect the current pin once:
+The accepted baseline comes from the current branch's ancestry and must agree
+with `coupling.yaml`. The old `upstream/pstack` branch is no longer read or
+updated. It may remain in older clones as a historical reference. Imports are
+retained through `MERGE_HEAD` while reviewing and through the final merge commit
+after acceptance. An aborted attempt cannot control another branch's update.
 
-```sh
-bun run upstream init
-```
+### Prepare
 
-Initialization adds a baseline merge commit with exactly the previous HEAD tree.
-It records that the pinned snapshot has already been ported, without modifying
-the index or working files. Existing staged and unstaged changes remain pending.
-It does not rewrite published history. On a fresh clone, the same command
-recovers the import branch from ancestry already included in the port branch.
+1. Record the current port commit and working-tree status. Preserve pending work
+   in a reviewed commit when authorized. If the tree is already clean, its HEAD
+   is the checkpoint. Use a development branch for the update.
+2. Run `bun run validate` to establish the baseline. A pre-existing failure must
+   be explained or fixed before it can be distinguished from a regression.
+3. Select one full Cursor commit SHA that descends from the accepted pin. When
+   asked for the latest pstack, resolve upstream's default branch, then identify
+   its newest commit affecting `pstack/`. Record its version from
+   `pstack/.cursor-plugin/plugin.json`. Keep that SHA fixed for the entire update.
+   Review the commit log and full path inventory between the pins.
 
-For an update, commit the current work on a development branch, select an
-explicit full Cursor commit SHA, and run:
+On a checkout without recorded import ancestry, run `bun run upstream init`
+before validation. Initialization records the current pin as already ported and
+preserves the HEAD tree, index, and working files. This is a one-time assertion
+about the existing port, not a way to accept a new pin. On established histories
+it validates the accepted pin and does nothing else. A fresh full clone contains
+the required ancestry. A shallow clone must recover that history first.
+
+### Import and review
 
 ```sh
 bun run upstream merge <full-cursor-commit-sha>
+git status --short
 git diff --cached
 ```
 
-Both commands accept `--source <existing-clone-or-url>` to fetch from a different
-source. The default is `upstream.repo` in `coupling.yaml`. They never choose the
-latest revision, push, or rewrite upstream commits. The import branch accepts
-only revisions descending from its latest imported source revision.
-Use a complete clone for a local source. If a partial clone cannot serve missing
-objects, omit `--source` to fetch from the public upstream repository.
+The importer requires a clean worktree, rejects ignored-file collisions, and
+stops before committing. It accepts only descendants of this branch's accepted
+pin. The upstream source can be fetched by SHA without changing another branch.
+Commands accept `--source <complete-clone-or-url>` for a different fetch source.
+Use the public upstream repository if a partial clone cannot serve its objects.
 
-Update merges require a clean worktree and always stop before committing.
-Resolve conflicts and review the full result, including new files in omitted
-Cursor directories and changes to the renamed setup skill. A clean textual
-merge does not establish behavioral compatibility. `git merge --abort` cancels
-the merge; the imported snapshot remains available for retrying the same SHA
-or importing a descendant. Do not edit the import branch itself.
+Review every changed upstream path, including paths Git merged cleanly. Record
+accepted changes, portability adaptations, and omitted paths in
+`maintenance/updates/<date>-<version>.md`. The report must account for the full
+upstream diff, not just conflicts. In particular:
 
-After reviewing the merge, update `coupling.yaml`'s upstream SHA and this
-document's pin and version. Keep orchestration scripts byte-identical to the
-reviewed Cursor pin. Their SHA-256 hashes, derived from
-`git show <pin>:pstack/skills/poteto-mode/scripts/orch/...`, are recorded in
-`conformance/upstream-orch.json` and enforced by `test/upstream-orch.test.mjs`.
-Update those hashes only from the reviewed upstream source, never from local
-runtime edits to make a test pass.
+- Preserve the omitted Cursor packaging, automations, guide, and duplicate root
+  scripts listed below. New files in an omitted directory can reappear during a
+  merge. Reconcile the upstream README with this port's README.
+- Reconcile changes and new files under `skills/setup-pstack` into the renamed
+  `skills/setup-pstack-anywhere`. Keep upstream-compatible skill and mode names.
+- Accept upstream improvements and remove local corrections that they replace.
+  Record any retained divergence here before changing the skill content.
+- Review new instructions for unsupported capabilities. Extend `coupling.yaml`
+  and its conformance scenarios where needed. Known-token lint does not detect
+  every new dependency, semantic change, or broken prose reference.
+- Account for new and deleted skills in installation inventories and every
+  sibling reference. An explicit manager allowlist will not discover additions
+  automatically. Remove obsolete owned definitions without deleting unrelated
+  user definitions or intentional overrides.
+- Keep orchestration scripts byte-identical to the selected upstream source.
+  Review runtime changes before executing them. Recovery guidance and install
+  diagnostics belong to setup-pstack-anywhere.
 
-Skill and mode names stay upstream-compatible except for the setup rename
-recorded below. Portability substitutions remain in `coupling.yaml` and the
-divergence table. Remove a local correction when upstream supplies its equivalent.
-Recovery instructions and install diagnostics belong to setup-pstack-anywhere.
-Run `bun run render`, `bun run check`, and `bun test test/`, then commit the
-reviewed merge and pin changes before proposing a new port revision.
-Installations then update to that reviewed port revision. Updating an installed
-copy does not advance the Cursor pin or merge upstream changes into this port.
+### Record and validate
+
+Update `coupling.yaml`'s upstream SHA and this document's pin and upstream
+version. Increment the port's own plugin version for a published update and keep
+its marketplace version aligned. The port version is independent of Cursor's.
+Generate the orchestration manifest from the selected source, never from locally
+edited runtime files:
+
+```sh
+manifest_tmp=$(mktemp)
+bun run upstream hashes <full-cursor-commit-sha> > "$manifest_tmp" && mv "$manifest_tmp" conformance/upstream-orch.json
+bun run render
+bun run validate
+```
+
+`validate` runs strict portability lint, all repository tests, source-backed
+import verification, and Git whitespace checks. Source verification checks that
+the pin matches the active or accepted import and that the orchestration file
+inventory and bytes match upstream, even if someone changed the local manifest.
+The import tests exercise conflicts, abort/retry, branch isolation, dirty and
+ignored files, fresh clones, incorrect pins, and edited runtime hashes.
+
+Review generated changes and the evidence state. Saved observations describe
+their recorded versions and scenarios. A successful static check does not prove
+changed workflows run correctly on every agent. Exercise affected behavior where
+the current environment permits it and label the remaining behavior unverified.
+
+Review the staged result, including the pins, then commit the merge. Run
+`bun run upstream verify` once more on the committed state and record the port
+commit and results in the handoff. The final working tree should be clean.
+
+### Publish and install
+
+Publishing and installation are separate actions. When authorized, push the
+reviewed port commit and verify it is available from the distribution remote.
+Then advance the existing skill manager's pin to that port commit, refresh its
+vendor and projection, review overrides against the new definitions, and run the
+installed `setup-pstack-anywhere/scripts/doctor.mjs`. Check added and removed
+skills as well as the version pin. Use a fresh agent session to confirm discovery.
+The manager owns these commands and inventories. This repository does not add a
+competing installer or manager-specific configuration.
+
+### Recovery
+
+During a merge, inspect `git status`, `MERGE_HEAD`, and the report. Resume the
+same review or use `git merge --abort` to restore the pre-merge tracked state.
+Preserve any work created since the merge before aborting. Retrying the same SHA
+recreates the same import, and selecting another descendant starts from the
+accepted baseline. A source rewind or changed upstream directory requires an
+explicit migration plan rather than bypassing the ancestry check.
+
+For an installed regression, restore the previous manager pin and refresh its
+projection. Preserve the failed release and report for diagnosis. Reverting a
+published merge requires a separate review of its ancestry and recorded pin.
+An ordinary `git revert -m 1` leaves the import in ancestry and cannot be treated
+as a fresh baseline for the next update.
 
 ## Intentional divergence
 

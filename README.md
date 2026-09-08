@@ -141,6 +141,12 @@ resolutions, and the evidence state are in [PORTABILITY.md](PORTABILITY.md).
 
 <!-- END GENERATED coupling-summary -->
 
+## Maintenance
+
+Use the repository's [update-pstack-anywhere skill](.agents/skills/update-pstack-anywhere/SKILL.md)
+for upstream updates. The [refresh procedure](UPSTREAM.md#refresh) owns the
+steps and recovery rules. `bun run validate` runs the maintenance checks.
+
 ## Credit
 
 MIT, same as upstream. All skill content is Lauren Tan's work unless a file says
