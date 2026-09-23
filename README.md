@@ -129,7 +129,7 @@ table below is rendered from coupling.yaml.
 
 | measure | value |
 | --- | --- |
-| upstream pin | `71ed0d1`, path `pstack` |
+| upstream pin | `b42effe`, path `pstack` |
 | skills reached | 13 of 47, [see PORTABILITY.md](PORTABILITY.md#skills-the-port-reached) |
 | skills with work left | 0 of 47 |
 | occurrences | 101 resolved, 0 unresolved, 0 missing, 2 not checked |

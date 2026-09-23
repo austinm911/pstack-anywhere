@@ -29,7 +29,7 @@ With evidence means a recorded run or a cited source file backs the cell; the re
 
 | measure | value |
 | --- | --- |
-| ledger | v2, upstream `71ed0d1` |
+| ledger | v2, upstream `b42effe` |
 | domains | 25, from 22 axes, because `worker_defaults` resolves per parameter |
 | harness cells | 40 verified of 125 (25 domains x 5 harnesses) |
 | occurrences | 101 resolved, 0 unresolved, 0 missing, 2 not checked |
@@ -337,7 +337,7 @@ Domains: `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly
 
 ### `setup-pstack-anywhere`
 
-Configure which tools and models pstack uses per role.
+Configure which tools and models pstack uses per role, and at what reasoning budget.
 
 Reached: 2 declared occurrences across 2 files, 1 resolved, 1 not checked.
 

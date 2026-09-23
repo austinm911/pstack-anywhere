@@ -8,7 +8,7 @@
       "name": "pstack-anywhere",
       "source": "./",
       "description": "A port of pstack for Claude Code, Codex, pi, and OMP.",
-      "version": "0.2.0"
+      "version": "0.2.1"
     }
   ]
 }

@@ -1,6 +1,6 @@
 ---
 name: setup-pstack-anywhere
-description: Configure which tools and models pstack uses per role. Detects what this harness and machine actually have, then writes an override block your harness loads every session. Use for /setup-pstack-anywhere, "configure pstack", "pstack uses the wrong model", or telling pstack which review bot, UI driver, or slop-strip skill you use.
+description: Configure which tools and models pstack uses per role, and at what reasoning budget. Detects what this harness and machine actually have, then writes an override block your harness loads every session. Use for /setup-pstack-anywhere, "configure pstack", "pstack budget", "pstack uses the wrong model", or telling pstack which review bot, UI driver, or slop-strip skill you use.
 ---
 
 # Setup pstack anywhere
@@ -97,13 +97,36 @@ Graphite frontier still requires `gt`. The bundled scripts require `bun`.
 
 ### 2. Load current state
 
-If the target file already holds a pstack block, read it and treat its values as
-the current choices. Otherwise start from the defaults in step 5.
+If the target file already holds a pstack block, read it and treat its `# budget`
+line and its role values as the current choices. Otherwise start from the
+defaults in step 5.
 
-### 3. Map and confirm
+### 3. Budget, map, and confirm
 
-Show every role with its current value, marking any value not in the detected
-set as needing a choice. Ask whether to accept as-is or change specific roles.
+**(a) Ask for a budget.** Offer these four options with these exact labels, and
+name the current budget when the block records one.
+
+- `unlimited — keep max`
+- `large — xhigh reasoning`
+- `medium — high reasoning`
+- `small — medium reasoning`
+
+**(b) Apply it.** Build the working table from the step 5 defaults, and on a
+re-run keep any role the user changed. `unlimited` leaves every effort as it is.
+`large`, `medium`, and `small` set the effort of every model value that carries
+one, panel entries included, to `xhigh`, `high`, or `medium`, on the ladder
+`max` > `xhigh` > `high` > `medium` > `low`. A model value carries an effort when
+the harness encodes it in the identifier: an effort token in the slug, as in
+Cursor's `claude-opus-5-5-max`, or a `:level` suffix, as in pi's
+`provider/model:high`. If the result is not a detected value, use the same
+family's detected value with the highest effort at or below the target, else
+mark the role as needing a choice. `inherit-parent`, `auto`, and values with no
+effort in the identifier do not change. When nothing in the table carries an
+effort, say that the budget is recorded but changes no role.
+
+**(c) Show the roles and confirm.** Show every role with its value, marking any
+value not in the detected set as needing a choice. Ask whether to accept as-is
+or change specific roles.
 Offer the detected values plus `inherit-parent` and `auto` for model roles, and
 `none` for every role, which selects the absent path in `capabilities.md`.
 
@@ -139,6 +162,7 @@ block so re-runs stay idempotent.
 # pstack configuration. One line per role. Delete a line to fall back to the skill default.
 # `none` selects the absent path in ../poteto-mode/capabilities.md.
 # `inherit-parent` or `auto` on a model role: the role runs on the parent chat model.
+# budget: unlimited (max)
 
 ## Tools
 review automation: none
@@ -179,7 +203,7 @@ file is pstack's alone.
 
 ### 6. Confirm
 
-Say which file you wrote, which roles are set, and which are `none` with what
+Say which file you wrote, the budget, which roles are set, and which are `none` with what
 that costs. Name any missing binary from step 1. State that the block applies to
 new sessions.
 

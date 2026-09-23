@@ -19,7 +19,7 @@ version: 2
 upstream:
   repo: https://github.com/cursor/plugins
   path: pstack
-  sha: 71ed0d1076fec562c1b74ee353121a8d00f75382
+  sha: b42effe0aa50f59c693d7e2924714e015e00bf7c
 
 # `registry` is whether the harness has a harnesses.yaml entry, and
 # `evidence_dir` whether pinned upstream source is saved for it. Cursor has
@@ -338,7 +338,7 @@ axes:
 
   - id: model_roles
     kind: role
-    was: 'grok-4.6-fast-xhigh, claude-fable-5-1-thinking-max, gpt-5.6-sol-max'
+    was: 'grok-4.7-xhigh-fast, claude-opus-5-5-max, gpt-5.6-sol-max'
     what: >-
       Upstream already assigns these slugs to roles. Port the roles into the
       prose and leave the slugs to the override file, so a model release does
