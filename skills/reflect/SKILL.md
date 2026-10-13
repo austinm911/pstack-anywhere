@@ -6,60 +6,54 @@ disable-model-invocation: true
 
 # Reflect
 
-Mine the current conversation for durable learnings, then route them into skill edits.
+Read `../poteto-mode/capabilities.md` for `spawn_worker` and `worker_defaults`. Use the delegate identity and background controls the current harness actually offers. Keep reviews read-only through their briefs and available permission controls without broadening the caller's access.
 
-## When to invoke
+Mine the current conversation for durable learnings, then route them into skill edits.
 
 Invoke when the user says "reflect" or "/reflect". Skip when the conversation is trivial, off-topic, or already covered by an existing skill the parent followed correctly. One-offs are not learnings.
 
-## Process
+## 1. Locate the active transcript
 
-### 1. Locate the active transcript
+Find this conversation's transcript through the current harness's session path and record format (`transcript_dir` in `../poteto-mode/capabilities.md`). Stay inside the current project's sessions. Match its opening user message, rather than assuming a JSON field layout. If no transcript resolves, pass a tight digest of this session instead.
 
-The parent finds its own transcript file before fanning out. The system prompt names the active workspace's session directory (the `transcript_dir` row in `../poteto-mode/capabilities.md`). Use that path. Do not glob across the harness's other workspace directories. That crosses workspace boundaries and reads private chats from unrelated projects.
+## 2. Spawn three reviewers in parallel
 
-```bash
-ls -t <transcript_dir>/*.jsonl <transcript_dir>/*/*.jsonl <transcript_dir>/*/subagents/*.jsonl 2>/dev/null | head -10
-```
+One batch, three `spawn_worker` calls. Reviewers need MCP access to look up the tickets, chat threads, and observability traces the transcript references. Keep their work read-only by instruction and preserve the caller's access mode.
 
-Inspect the harness's actual transcript layout and record format. Confirm the active workspace and conversation from its metadata and opening user prompt before passing a transcript to reviewers. If the transcript cannot be identified, write a tight digest of this session and pass that instead.
+Resolve model roles from the override block `/setup-pstack-anywhere` writes. Missing roles, `auto`, and `inherit-parent` use the parent model. An alias panel entry still creates one seat. If a configured model is rejected, discover the current tool's available models and prefer one from the same family, otherwise use the parent model. Report the substitution and any lost model diversity. Never invent a model identifier.
 
-### 2. Spawn three reviewers in parallel
+| Lens | Role line | Fallback model | Prompt template |
+|---|---|---|---|
+| Judgment | `reflect judgment, divergent, synthesizer` | `auto` | `references/judgment-reviewer.md` |
+| Tooling | `reflect tooling` | `auto` | `references/tooling-reviewer.md` |
+| Divergent | `reflect judgment, divergent, synthesizer` | `auto` | `references/divergent-reviewer.md` |
 
-One message, three delegates through `spawn_worker`, using the `identity` and `readonly` rows in `../poteto-mode/capabilities.md`. Select each model by role. Reviewers need access to the evidence tools for context lookups. The prompt forbids file writes. The parent applies edits.
+Pass each template verbatim, substituting the transcript path or digest where marked. Reviewers return findings through the current harness's delegate result channel.
 
-| Lens | `model` | Prompt template |
-|---|---|---|
-| Judgment | your configured reflect-judgment model (your strong judgment model, default: the parent chat model) | `references/judgment-reviewer.md` |
-| Tooling | your configured reflect-tooling model (your strong instruction-following model, default: the parent chat model) | `references/tooling-reviewer.md` |
-| Divergent | your configured reflect-judgment model (your strong judgment model, default: the parent chat model) | `references/divergent-reviewer.md` |
+## 3. Synthesize
 
-Pass each template verbatim, substituting the transcript path or digest where marked. Collect reviewers' findings through the harness's delegate result mechanism.
+One `spawn_worker` call using `reflect judgment, divergent, synthesizer`, or the parent model when missing. The synthesizer spot-verifies citations through available MCP access. Keep it read-only by instruction and preserve the caller's access mode. Pass `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. It returns an Accepted / Rejected / Backlog list.
 
-### 3. Synthesize
+## 4. Structural enforcement check
 
-Spawn one synthesizer using the `identity` and `readonly` rows in `../poteto-mode/capabilities.md`, on your configured reflect-judgment model (default: the parent chat model). Its quality check includes spot-verifying citations, so retain access to the evidence tools. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.
+Move any Accepted item that a lint rule, script, metadata flag, or runtime check would enforce more reliably to Backlog. See the **encode-lessons-in-structure** principle skill.
 
-### 4. Structural enforcement check
+## 5. Apply
 
-Sanity-check the synthesizer's Accepted list. For any item that would be enforced more reliably by a lint rule, script, metadata flag, or runtime check, move it from Accepted to Backlog. See the **encode-lessons-in-structure** principle skill.
+Present the synthesizer's full Accepted / Rejected / Backlog output and wait for explicit approval before applying any Accepted edit. The user picks the subset and may redirect routings. Skill changes affect every future agent in the org. Do not auto-apply.
 
-### 5. Apply
+File each Backlog item to your team's devex or backlog tracker without waiting. Only the Accepted list waits for approval.
 
-Before applying any Accepted edit, present the synthesizer's full Accepted/Rejected/Backlog output to the user and wait for explicit approval. The user picks which subset to apply and may redirect routings. Skill changes affect every future agent in the org. Do not auto-apply.
+Follow each approved row's Routing exactly. Resolve `skill_authoring` through the override block, or use `../poteto-mode/playbooks/authoring-a-skill.md` when absent:
 
-Backlog items file to whatever devex / backlog tracker your team uses automatically. Only the Accepted list waits for approval.
+- Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): the parent does it directly.
+- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): hand to the configured `skill_authoring` skill and run its draft / test / iterate loop.
+- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): hand to `skill_authoring` and run its description-optimization loop.
+- `new skill via skill_authoring: <kebab-name>`: hand creation to `skill_authoring`. Do not invent the shape ad hoc.
 
-For each approved Accepted item, follow the Routing field exactly:
+If your environment ships a SKILL.md validator, run it on every touched skill before declaring done.
 
-- Trivial existing-skill edit (a one-line bullet, a tightened sentence, a stale fact corrected): parent does directly.
-- Substantive existing-skill edit (a new section, a new pattern table, more than ~10 lines): follow the skill_authoring rules in `../poteto-mode/playbooks/authoring-a-skill.md` and run its draft / test / iterate loop.
-- `tune description: <skill path>` (the skill exists but didn't trigger when it should have): follow the skill_authoring rules in `../poteto-mode/playbooks/authoring-a-skill.md` and run its description-optimization loop.
-- `new skill via skill_authoring: <kebab-name>`: follow the skill_authoring rules in `../poteto-mode/playbooks/authoring-a-skill.md`. Do not invent the shape ad hoc.
-
-If your environment ships a SKILL.md validator, run it on every touched skill before declaring done. Skip this step if it doesn't.
-
-### 6. Summarize for the user
+## 6. Summarize for the user
 
 Short list, no preamble:
 

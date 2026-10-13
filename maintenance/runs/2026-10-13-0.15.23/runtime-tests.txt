@@ -1,0 +1,80 @@
+$ bun test orch watch-pr check-plan.test.ts
+bun test v1.4.3 (c6da4a4d3)
+
+check-plan.test.ts:
+(pass) accepts ordinary, indented, and longer closing fences [188.31ms]
+(pass) accepts nested backticks and tilde info strings [95.82ms]
+(pass) keeps mismatched, shorter, and suffixed closers inside the fence [207.16ms]
+(pass) rejects headings and prose outside a proper close [168.28ms]
+(pass) rejects backtick info strings containing a backtick [56.98ms]
+
+orch/orch.test.ts:
+(pass) Store > initializes an idempotent plain-file store and releases its lock [21.43ms]
+(pass) Store > composes unit add, set, get, list, and counts [20.97ms]
+(pass) Store > records, replaces, checks, and summarizes typed ledger verdicts [8.25ms]
+(pass) Store > pushes, peeks, and atomically drains inbox pointers [13.81ms]
+(pass) Store > replaces a stale lock whose holder pid is dead [25.95ms]
+(pass) Store > blocks a writer and steals the pid lock only with force [70.75ms]
+(pass) Store > parks gates, stores standing orders, and renders status [34.44ms]
+(pass) Store > resolves the ordered Graphite frontier and validates an optional pin [1085.83ms]
+(pass) Store > rejects unparseable Graphite output loudly [316.42ms]
+(pass) Store > rejects malformed TSV, verdict, frontier, and inbox data [16.66ms]
+(pass) Store > rejects operations after close [32.62ms]
+(pass) orch CLI > prints commander help and rejects invalid parsing with exit 1 [222.83ms]
+(pass) orch CLI > accepts ORCH_STORE and emits complete JSON [198.67ms]
+(pass) orch CLI > maps user and not-found outcomes to the preserved exit codes [233.52ms]
+
+watch-pr/policy.test.ts:
+(pass) readiness truth table > covers every specified row and every UNKNOWN rollup value [0.07ms]
+(pass) readiness truth table > turns a clean visible list plus GitHub refusal into an explicit CI blocker [0.53ms]
+(pass) snapshot query planning > does not query commit rollups while queued checks are pending [0.06ms]
+(pass) snapshot query planning > queries rollups for settled and failed lists [0.06ms]
+(pass) snapshot query planning > short-circuits merged rows before threads and checks [0.03ms]
+(pass) scans stacks tier-major so an upstack conflict outranks frontier CI [0.08ms]
+(pass) attributes a stack wait to the PR whose checks are pending, not the bottom [0.06ms]
+(pass) waits on a draft while checks are pending, then reports the draft gate [0.05ms]
+(pass) queued-stack cadence > drops a sweep head only after its snapshot succeeds [0.14ms]
+(pass) queued-stack cadence > resumes the sweep at the PR whose read failed [0.52ms]
+(pass) queued-stack cadence > emits a completed sweep only after its final successful snapshot [0.06ms]
+(pass) queued-stack cadence > ADVANCE continues directly to the new frontier without sleeping [0.17ms]
+(pass) queued-stack cadence > deduplicates identical waits and schedules the next due sweep [0.06ms]
+(pass) uses the specified retry floor and cap
+
+watch-pr/github.test.ts:
+(pass) checks fallback chain > uses a non-empty fast-path result without a rollup query [0.09ms]
+(pass) checks fallback chain > paginates GraphQL when the fast path is unusable [0.08ms]
+(pass) checks fallback chain > falls back when valid fast-path JSON represented an empty list [0.04ms]
+(pass) checks fallback chain > fails closed when both paths are empty [0.09ms]
+(pass) rollup node mapping > maps terminal and non-terminal CheckRun states fail closed [0.11ms]
+(pass) rollup node mapping > classifies an in-progress Code Review Gate from the rollup as the gate [0.02ms]
+(pass) rollup node mapping > maps StatusContext states and drops unknown typenames [0.01ms]
+(pass) closed enum parsing > accepts mergeStateStatus CONFLICTING [0.05ms]
+(pass) closed enum parsing > reads gh's empty reviewDecision as no decision rather than a parse failure
+(pass) closed enum parsing > still rejects an unknown reviewDecision [0.05ms]
+(pass) closed enum parsing > rejects unknown enum values as retryable errors carrying the raw value [0.02ms]
+(pass) annotates Bugbot threads with distinct review-pass counts [0.21ms]
+(pass) review thread pagination > keeps walking pages until the cursor is exhausted [0.05ms]
+(pass) review thread pagination > sees an unresolved thread that sits past the first page [0.03ms]
+(pass) review thread pagination > stops after a single page when the cursor is exhausted [0.02ms]
+(pass) review thread pagination > counts Bugbot review passes across every page [0.03ms]
+(pass) review thread pagination > drops resolved threads from later pages too [0.02ms]
+(pass) review thread pagination > rejects a page that omits pageInfo instead of assuming one page [0.02ms]
+(pass) context and stack discovery > returns a fully explicit context without any reader call [0.06ms]
+(pass) context and stack discovery > uses the local origin before currentPr for an explicit number [0.03ms]
+(pass) context and stack discovery > orders the connected stack bottom-to-top [0.09ms]
+
+watch-pr/cli.test.ts:
+(pass) parseArgs > uses the specified defaults [1.19ms]
+(pass) parseArgs > parses a frozen queued stack bottom-to-top [1.40ms]
+(pass) parseArgs > rejects every invalid mode and numeric shape as usage [1.22ms]
+(pass) rendering > emits compact valid JSON by default [0.04ms]
+(pass) rendering > renders the Markdown table from the same verdict only [0.10ms]
+(pass) main > returns EX_USAGE 64 and writes usage errors only to stderr [0.09ms]
+(pass) main > bypasses the queue machine for queued-stack status-only [0.38ms]
+(pass) main > returns exit 4 for a hidden GitHub-side CI refusal [1.42ms]
+(pass) main > shows help without touching the reader [3.58ms]
+
+ 63 pass
+ 0 fail
+ 232 expect() calls
+Ran 63 tests across 5 files. [3.08s]

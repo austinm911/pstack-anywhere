@@ -26,7 +26,7 @@ Update mode changes the rest of the flow:
 
 ### 1. Mine their history
 
-Locate the active workspace's transcripts before fanning out. The system prompt names the harness's session directory (the `transcript_dir` row in `../poteto-mode/capabilities.md`). Use only that path. Don't glob across other workspaces' session directories. That crosses workspace boundaries and reads private chats from unrelated projects.
+Locate the active workspace's transcripts before fanning out. Resolve an explicit session path or workspace-scoped history tool through `transcript_dir` in `../poteto-mode/capabilities.md`. Its observed defaults are only discovery hints. Select the active workspace from metadata before reading conversation bodies. If that scope cannot be established, name the history gap and continue with the user's answers. Don't glob across other workspaces' session directories. That crosses workspace boundaries and reads private chats from unrelated projects.
 
 Survey recent agent conversations within that scope for recurring patterns. Run multiple parallel subagents across slices of history (e.g. last 2-4 weeks, split into 3 slices so each has enough material). Each slice mining subagent reads transcripts from the workspace-scoped path the parent provides, looks for the signals below, and returns a short structured list of patterns it saw with evidence pointers. Default signals worth hunting:
 

@@ -99,22 +99,23 @@ Graphite frontier still requires `gt`. The bundled scripts require `bun`.
 
 If the target file already holds a pstack block, read it and treat its `# budget`
 line and its role values as the current choices. Otherwise start from the
-defaults in step 5.
+defaults in step 5. Drop a role absent from step 5, such as the retired
+`how critics`, and report each removed line during confirmation.
 
 ### 3. Budget, map, and confirm
 
 **(a) Ask for a budget.** Offer these four options with these exact labels, and
 name the current budget when the block records one.
 
-- `unlimited — keep max`
+- `unlimited — max reasoning`
 - `large — xhigh reasoning`
 - `medium — high reasoning`
 - `small — medium reasoning`
 
 **(b) Apply it.** Build the working table from the step 5 defaults, and on a
-re-run keep any role the user changed. `unlimited` leaves every effort as it is.
-`large`, `medium`, and `small` set the effort of every model value that carries
-one, panel entries included, to `xhigh`, `high`, or `medium`, on the ladder
+re-run keep any role the user changed. `unlimited`, `large`, `medium`, and `small` set the effort of every model
+value that carries one, panel entries included, to `max`, `xhigh`, `high`,
+or `medium`, on the ladder
 `max` > `xhigh` > `high` > `medium` > `low`. A model value carries an effort when
 the harness encodes it in the identifier: an effort token in the slug, as in
 Cursor's `claude-opus-5-5-max`, or a `:level` suffix, as in pi's
@@ -162,7 +163,7 @@ block so re-runs stay idempotent.
 # pstack configuration. One line per role. Delete a line to fall back to the skill default.
 # `none` selects the absent path in ../poteto-mode/capabilities.md.
 # `inherit-parent` or `auto` on a model role: the role runs on the parent chat model.
-# budget: unlimited (max)
+# budget: large (xhigh)
 
 ## Tools
 review automation: none
@@ -184,17 +185,18 @@ why investigators: auto
 why synthesizer: auto
 reflect tooling: auto
 reflect judgment, divergent, synthesizer: auto
-arena runners: auto, auto, auto
-arena cross-judge pool: auto, auto, auto
+arena runners: auto, auto
+arena cross-judge pool: auto, auto
 swarm workers: auto
-architect runners: auto, auto, auto
-interrogate reviewers: auto, auto, auto
+architect runners: auto, auto
+interrogate reviewers: auto, auto
 <!-- pstack-anywhere:end -->
 ```
 
 Those are the defaults, not a recommendation. `auto` everywhere is the honest
 starting point on a harness whose models you have not detected. Panel roles show
-three entries because that is the smallest useful panel. Add entries to widen the
+two parent-model seats. Configure distinct available models when model diversity
+matters, and report when it is absent. Add entries to widen the
 fan-out.
 
 On Cursor, write the same body inside the `.mdc` frontmatter shape upstream used,

@@ -4,7 +4,7 @@
 
 [pstack](https://github.com/cursor/plugins/tree/main/pstack) by
 [Lauren Tan (@poteto)](https://x.com/poteto) is a pack of skills and principles
-for rigorous AI-assisted engineering: 23 principle skills, a `/poteto-mode`
+for rigorous AI-assisted engineering: 24 principle skills, a `/poteto-mode`
 router, and playbooks for stacked PRs and subagent fleets. It ships as a Cursor
 plugin and assumes Cursor primitives throughout. This repo is a port. Same
 skills, same mode names, same playbook vocabulary, with the Cursor-specific
@@ -129,10 +129,10 @@ table below is rendered from coupling.yaml.
 
 | measure | value |
 | --- | --- |
-| upstream pin | `b42effe`, path `pstack` |
-| skills reached | 13 of 47, [see PORTABILITY.md](PORTABILITY.md#skills-the-port-reached) |
-| skills with work left | 0 of 47 |
-| occurrences | 101 resolved, 0 unresolved, 0 missing, 2 not checked |
+| upstream pin | `dbf4981`, path `pstack` |
+| skills reached | 14 of 53, [see PORTABILITY.md](PORTABILITY.md#skills-the-port-reached) |
+| skills with work left | 0 of 53 |
+| occurrences | 116 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions |
 | verification | 16 of 125 cells verified, 23 attestations, 11 scenarios defined |
 

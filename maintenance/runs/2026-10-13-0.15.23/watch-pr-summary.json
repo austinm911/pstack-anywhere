@@ -1,0 +1,30 @@
+[
+  {
+    "observedAt": "2026-10-13T19:05:05.794Z",
+    "exitCode": 0,
+    "kind": "merged",
+    "context": {
+      "owner": "cursor",
+      "repo": "plugins",
+      "number": 606
+    },
+    "state": "MERGED",
+    "head": "d191a87ab52662ef728ff8034db8aa92c5b26298",
+    "unresolvedThreadCount": 0,
+    "ciKind": null
+  },
+  {
+    "observedAt": "2026-10-13T19:08:55.196Z",
+    "exitCode": 0,
+    "kind": "open",
+    "context": {
+      "owner": "cursor",
+      "repo": "plugins",
+      "number": 608
+    },
+    "state": "OPEN",
+    "head": "123d8531afa10757cb8488c6542e3d2b8e2aabcb",
+    "unresolvedThreadCount": 2,
+    "ciKind": "ci-clean"
+  }
+]

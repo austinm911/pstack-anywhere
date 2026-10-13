@@ -29,15 +29,15 @@ With evidence means a recorded run or a cited source file backs the cell; the re
 
 | measure | value |
 | --- | --- |
-| ledger | v2, upstream `b42effe` |
+| ledger | v2, upstream `dbf4981` |
 | domains | 25, from 22 axes, because `worker_defaults` resolves per parameter |
 | harness cells | 16 verified of 125 (25 domains x 5 harnesses) |
-| occurrences | 101 resolved, 0 unresolved, 0 missing, 2 not checked |
+| occurrences | 116 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions, 0 in total |
-| skills reached | 13 of 47: `architect` (1 of 1 checked), `arena` (2 of 2 checked), `automate-me` (3 of 3 checked), `how` (3 of 3 checked), `interrogate` (3 of 3 checked), `no-comments` (2 of 2 checked), `poteto-mode` (68 of 69 checked), `recall` (1 of 1 checked), `reflect` (10 of 10 checked), `setup-pstack-anywhere` (1 of 2 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (3 of 3 checked) |
-| skills with work left | 0 of 47; the other 34 carry neither a declared occurrence nor a token hit |
+| skills reached | 14 of 53: `architect` (1 of 1 checked), `arena` (3 of 3 checked), `automate-me` (3 of 3 checked), `how` (3 of 3 checked), `interrogate` (3 of 3 checked), `no-comments` (2 of 2 checked), `poteto-help` (13 of 13 checked), `poteto-mode` (69 of 70 checked), `recall` (1 of 1 checked), `reflect` (10 of 10 checked), `setup-pstack-anywhere` (1 of 2 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (3 of 3 checked) |
+| skills with work left | 0 of 53; the other 39 carry neither a declared occurrence nor a token hit |
 | regressions | 0 |
-| `frontmatter_portable` assert | 46 of 47 skills carry `disable-model-invocation`, counted from the tree on every run |
+| `frontmatter_portable` assert | 52 of 53 skills carry `disable-model-invocation`, counted from the tree on every run |
 
 ## Work remaining
 
@@ -148,7 +148,7 @@ The other 15 domains resolve the same way on every harness:
 - **`bun`** (prerequisite, drop). Runtime for scripts/watch-pr and scripts/orch. **Without the binary:** Those levers cannot run. Verification: unverified on every harness.
 - **`trunk_reread`** (path_assumption, substitute). A multi-day program re-grounds on trunk's copy of a playbook rather than its own possibly-stale context. Depends on pack_path being inside the repo. **Same on every harness:** Drop the git indirection. Re-read the playbook through the harness's own skill addressing, which is already current. The staleness the trunk read guarded against was context staleness, not disk staleness, and a plain re-read fixes that. Verification: unverified on every harness.
 - **`mcp_discovery`** (path_assumption, substitute). Discover the evidence tools available to the current session. **Same on every harness:** Use the session's tool catalog or its documented discovery mechanism. Report unavailable discovery as a coverage gap. Verification: unverified on every harness.
-- **`transcript_dir`** (path_assumption, substitute). Local transcripts a worker may need to read, including their record format. **Same on every harness:** Use the current harness's session directory and inspect its record format to identify the active conversation. Report unavailable history rather than assuming Cursor's layout or JSON fields. Verification: unverified on every harness.
+- **`transcript_dir`** (path_assumption, substitute). Local transcripts a worker may need to read, including their record format. **Same on every harness:** Prefer an explicit current-session path or workspace-scoped history tool. Observed defaults recorded in harnesses.yaml are Claude ~/.claude/projects/&lt;cwd-slug&gt; (each non-alphanumeric byte becomes '-'), Codex ~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl, pi ~/.pi/agent/sessions/--&lt;cwd-with-slashes-and-colons-replaced-by-hyphens&gt;--, and OMP ~/.omp/agent/sessions/&lt;cwd-slug&gt; (relative-to-HOME or TMPDIR slugs, otherwise pi's form). These are observed defaults, not source-pinned guarantees. Resolve the actual configured root and select the active workspace using metadata before reading conversation bodies. Codex's default root is shared across projects, not a workspace directory. Never scan unrelated conversation bodies. Inspect the record format and report unavailable history rather than assuming Cursor's JSON fields. Verification: unverified on every harness.
 - **`setup_entrypoint`** (naming, substitute). Upstream's installer command. This port renames it, so the old name in a ported file is a regression rather than a coupling left to resolve. v1 enforced the token with no axis owning it; this is that owner. **Same on every harness:** The skill is /setup-pstack-anywhere. Verification: unverified on every harness.
 - **`frontmatter_portable`** (frontmatter: `name`, `description`, `disable-model-invocation`). All three are Agent Skills standard fields. Every target honors disable-model-invocation, so the mode gating that keeps a skill out of automatic model invocation ports with no change: Claude and pi accept both the kebab-case and camelCase spellings, Codex carries it alongside its own allow_implicit_invocation, and OMP normalizes the kebab-case form to its internal `hide`. Unchanged on every harness, so there is nothing to resolve. Verification: unverified on every harness.
 - **`frontmatter_cursor_only`** (frontmatter: `mode`, `icon`, `color`, `reminder`). Cursor presentation only, and inert rather than broken elsewhere. OMP preserves unrecognized keys as unknown metadata and the other three ignore them. Left in place: removing them would widen the refresh diff against upstream for no behavior change, and they are correct when the target is Cursor. Unchanged on every harness, so there is nothing to resolve. Verification: unverified on every harness.
@@ -221,13 +221,13 @@ Domains: `model_roles`. Resolutions are in [Domain resolutions](#domain-resoluti
 
 Spawn N parallel candidates at the same task, pick a base, graft the strongest parts of the losers into it.
 
-Reached: 2 declared occurrences across 1 file, 2 resolved.
+Reached: 3 declared occurrences across 1 file, 3 resolved.
 
-Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
+Domains: `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles`. Resolutions are in [Domain resolutions](#domain-resolutions).
 
 | file | status | domains |
 | --- | --- | --- |
-| `skills/arena/SKILL.md` | resolved | `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles` |
+| `skills/arena/SKILL.md` | resolved | `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `model_roles` |
 
 ### `automate-me`
 
@@ -277,11 +277,25 @@ Domains: `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly
 | --- | --- | --- |
 | `skills/no-comments/SKILL.md` | resolved | `spawn_worker`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model` |
 
+### `poteto-help`
+
+Guides users through pstack setup, /poteto-mode, and picking the skill, playbook, or principle for a task.
+
+Reached: 13 declared occurrences across 3 files, 13 resolved.
+
+Domains: `spawn_worker`, `worker_durability`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `skill_authoring`, `model_roles`, `pack_path`. Resolutions are in [Domain resolutions](#domain-resolutions).
+
+| file | status | domains |
+| --- | --- | --- |
+| `skills/poteto-help/references/prompting.md` | resolved | `wake_on_event` |
+| `skills/poteto-help/references/recipes.md` | resolved | `wake_on_event` |
+| `skills/poteto-help/SKILL.md` | resolved | `spawn_worker`, `worker_durability`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `skill_authoring`, `model_roles`, `pack_path` |
+
 ### `poteto-mode`
 
 poteto's agent style for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work.
 
-Reached: 69 declared occurrences across 17 files, 68 resolved, 1 not checked.
+Reached: 70 declared occurrences across 17 files, 69 resolved, 1 not checked.
 
 Domains: `spawn_worker`, `worker_durability`, `probe_worker`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `human_question`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `skill_authoring`, `model_roles`, `graphite`, `github_cli`, `pack_path`, `trunk_reread`, `transcript_dir`. Resolutions are in [Domain resolutions](#domain-resolutions).
 
@@ -303,7 +317,7 @@ Domains: `spawn_worker`, `worker_durability`, `probe_worker`, `wake_on_event`, `
 | `skills/poteto-mode/playbooks/visual-parity.md` | resolved | `wake_on_event`, `ui_driver` |
 | `skills/poteto-mode/references/bugbot-triage.md` | resolved | `review_automation` |
 | `skills/poteto-mode/scripts/check-plan.mjs` | not checked | `model_roles` |
-| `skills/poteto-mode/SKILL.md` | resolved | `spawn_worker`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `human_question`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `skill_authoring`, `model_roles` |
+| `skills/poteto-mode/SKILL.md` | resolved | `spawn_worker`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `worker_defaults.identity`, `worker_defaults.model`, `human_question`, `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `skill_authoring`, `model_roles`, `pack_path` |
 
 1 row above reads `not checked`; the reason is in [Work remaining](#work-remaining).
 
@@ -389,7 +403,7 @@ Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defau
 ## Skills the port has not reached
 
 These are the skills the lint found coupling in. Their hits are porting work,
-not regressions. The 34 skills with neither a declared occurrence nor a token
+not regressions. The 39 skills with neither a declared occurrence nor a token
 hit are not listed.
 
 

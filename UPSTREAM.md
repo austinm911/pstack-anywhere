@@ -2,8 +2,8 @@
 
 Source: https://github.com/cursor/plugins/tree/main/pstack
 Author: Lauren Tan (@poteto) · MIT
-Pinned SHA: b42effe0aa50f59c693d7e2924714e015e00bf7c (2026-09-23)
-Upstream version: pstack 0.15.3
+Pinned SHA: dbf49813a39c1a5389c5e28cb8e4c1c2379e2454 (2026-10-13)
+Upstream version: pstack 0.15.23
 
 ## Refresh
 
@@ -152,10 +152,16 @@ This permits reviewed overlays without treating arbitrary drift as a pass.
 
 | Path | Change | Why |
 |---|---|---|
+| `skills/poteto-help/`, `skills/ketchup/` | Resolve installation, mode persistence, visuals, and optional skills through current harness capabilities. Guide links point to the pinned public upstream copy. | Cursor-only modes, bundled guide paths, and `/visualize` are unavailable on other harnesses. |
+| `skills/benchmark-checklist/SKILL.md` | Detect logical cores with `nproc`, `sysctl -n hw.logicalcpu`, or `getconf _NPROCESSORS_ONLN`. | `nproc` is not installed on stock macOS. |
+| `skills/poteto-mode/scripts/check-plan.mjs`, `skills/poteto-mode/scripts/check-plan.test.ts` | Check installed-skill re-reads and an hourly `wake_on_event` audit rather than trunk paths and `/loop`. | Validate the portable plan the playbook actually generates. |
+| Transcript-dependent playbooks and `skills/automate-me/SKILL.md` | Resolve explicit history tooling or metadata-scoped observed session defaults through `transcript_dir`. | The system prompt does not always expose a session path, and Codex's store is shared across projects. |
+| `skills/poteto-mode/playbooks/multi-phase-plan.md` | Default plans to the project's `docs/plans/`, or the established program run store. | Other harnesses do not necessarily have an agent store. |
+| `skills/poteto-mode/scripts/worktree-audit.sh` | Accept `PSTACK_TRANSCRIPT_DIR`, handle paths with spaces and platform-specific timestamps, and emit `unverified-chat` when transcript coverage is absent. | A guessed Cursor transcript root cannot prove another harness's checkout is inactive. |
 | `skills/create-verification-skill/SKILL.md` | Keep `features/` inside the skill directory chosen in step 2 | Step 3 hardcoded a different directory. The correction lives in the skill and is preserved through upstream merges. |
 | `skills/poteto-mode/playbooks/orchestrate.md`, `skills/setup-pstack-anywhere/references/recovery.md` | Project-local `.pstack/runs/<run-id>` store and reconciliation protocol | Persist briefs, gates and reports independently of the chat using the unchanged upstream store. |
 | `automations/benny/` | dropped | Pure Cursor Automations + Cursor Slack actions, nothing portable |
-| `.cursor-plugin/plugin.json` | dropped | Cursor packaging |
+| `.cursor-plugin/plugin.json`, `plugin.json`, `agents/` | dropped | Upstream packaging and agent definitions belong to Cursor. Retain the port's existing Claude and Codex manifests rather than shipping a competing `pstack` identity. |
 | `docs/` (upstream guide) | dropped | Mirrored prose plus 2.3MB of images, readable upstream at the pinned SHA |
 | `scripts/` (repo root) | dropped | Byte-identical duplicate of `skills/poteto-mode/scripts/`; skills stay self-contained |
 | `skills/setup-pstack` | renamed `setup-pstack-anywhere` | Installs skills, not a Cursor plugin |

@@ -1,0 +1,3 @@
+warn: no transcript coverage; set PSTACK_TRANSCRIPT_DIR for this harness and verify live usage before removal
+# base: HEAD
+SIZE	AGE	MERGED	DIRTY	REMOTE	PR	LAST_CHAT	BUCKET	WORKTREE

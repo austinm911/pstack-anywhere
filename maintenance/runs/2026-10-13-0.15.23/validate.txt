@@ -1,0 +1,66 @@
+$ bun run lint && bun test test/ && bun run upstream verify && git diff --check
+$ bun scripts/coupling.mjs check
+clean, 110 markdown files
+runs: 42 complete, 12 incomplete, 2 void
+bun test v1.4.3 (c6da4a4d3)
+
+test/recovery.test.mjs:
+(pass) saved reports recover an interrupted coordinator with the unchanged upstream store [40.10ms]
+
+test/upstream-update.test.mjs:
+(pass) baseline connects histories without changing HEAD tree, staged edits, or working files [662.27ms]
+(pass) upstream updates merge around local edits and remain uncommitted for review [1564.51ms]
+(pass) conflicting edits remain visible and an aborted merge can be retried [1017.24ms]
+(pass) a fresh clone recovers the baseline from merged ancestry without an import branch [730.28ms]
+(pass) dirty updates and unrelated revisions cannot move any branch [794.29ms]
+(pass) an aborted newer import does not prevent selecting an earlier descendant of the accepted pin [1008.99ms]
+(pass) init cannot bless an edited pin when this branch already has an import history [636.32ms]
+(pass) an ignored file in the import's destination is preserved [964.47ms]
+(pass) source verification rejects a locally edited runtime even when its recorded hash was changed too [627.81ms]
+(pass) verification requires the active import pin and upstream-derived runtime inventory [1736.11ms]
+(pass) another worktree's prepared import cannot control this branch's next update [1062.09ms]
+(pass) a shallow clone cannot create a replacement baseline [690.81ms]
+
+test/worktree-audit.test.mjs:
+(pass) worktree audit preserves literal paths and detects recent transcripts [448.57ms]
+(pass) worktree audit names missing transcript coverage [286.38ms]
+(pass) worktree audit names unavailable rg as a coverage gap [221.95ms]
+
+test/evidence-packaging.test.mjs:
+(pass) published evidence logs are not ignored [26.34ms]
+
+test/upstream-orch.test.mjs:
+(pass) orchestration scripts match the recorded Cursor upstream pin [1.60ms]
+
+test/coupling.test.mjs:
+(pass) check on an unmodified copy > is clean and exits 0 [115.02ms]
+(pass) upstream primitive regressions > rejects reintroduced instruction: Use the Task tool to launch an investigator. [308.56ms]
+(pass) upstream primitive regressions > rejects reintroduced instruction: Read the `mcps/` directory. [328.21ms]
+(pass) ledger validation > a fallback on a non-extension cell is a ledger error [222.38ms]
+(pass) ledger validation > an extension cell without a fallback is a ledger error [196.44ms]
+(pass) ledger validation > an unknown parity value names the five it could be [207.31ms]
+(pass) ledger validation > a derived key persisted into the ledger is rejected by name [283.65ms]
+(pass) command line > an unknown flag exits 5 [21.92ms]
+(pass) command line > an unknown command prints the usage line and exits 5 [18.87ms]
+(pass) render > --check finds every generated file current in a fresh copy [126.41ms]
+(pass) render > --only with an unknown renderer exits 5 [110.18ms]
+(pass) render > rendering into the fixture rewrites nothing [599.65ms]
+(pass) probe > prepare leaves an unexecuted run and refuses to prepare it twice [767.35ms]
+(pass) probe > a run.yaml that is not a map is void [339.69ms]
+(pass) probe > a run whose files carry a secret is void, and lookalikes are not [405.86ms]
+(pass) probe > a scenario on a path_assumption axis validates [446.76ms]
+(pass) probe > skill_identify covers pack_path [111.18ms]
+
+test/install.test.mjs:
+(pass) install > --dry-run prints one link per skill per root and writes nothing [11.49ms]
+(pass) install > links every skill into both default roots and the doctor passes [49.85ms]
+(pass) install > a foreign entry at a skill's name is a collision and nothing is written [12.36ms]
+(pass) doctor > an explicit optional skip preserves a foreign skill but cannot skip a dependency [150.65ms]
+(pass) doctor > a root holding only the setup skill is missing its siblings [20.23ms]
+
+ 40 pass
+ 0 fail
+ 299 expect() calls
+Ran 40 tests across 7 files. [18.89s]
+$ bun scripts/update-upstream.mjs verify
+Verified import dbf49813a39c1a5389c5e28cb8e4c1c2379e2454 and 3 orchestration files against upstream source.
