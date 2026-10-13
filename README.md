@@ -134,7 +134,7 @@ table below is rendered from coupling.yaml.
 | skills with work left | 0 of 47 |
 | occurrences | 101 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions |
-| verification | 40 of 125 cells verified, 53 attestations, 11 scenarios defined |
+| verification | 16 of 125 cells verified, 23 attestations, 11 scenarios defined |
 
 `bun scripts/coupling.mjs check` is the gate. The work left, the per-harness
 resolutions, and the evidence state are in [PORTABILITY.md](PORTABILITY.md).

@@ -18,10 +18,10 @@ column names the domains that lose something on that harness.
 | harness | how the 25 domains resolve | with evidence | loses something |
 | --- | --- | --- | --- |
 | Cursor (upstream) | 🟢 10 substitute, 🔴 3 drop, ⚫ 10 native | 0 of 25 domains | `graphite`, `github_cli`, `bun` |
-| Claude Code | 🟢 17 substitute, 🟡 2 degrade, 🔴 4 drop | 10 of 25 domains | `worker_durability`, `probe_worker`, `worker_defaults.readonly`, `graphite`, `github_cli`, `bun` |
-| Codex | 🟢 16 substitute, 🟡 2 degrade, 🔴 5 drop | 10 of 25 domains | `worker_durability`, `wake_on_event`, `worker_defaults.readonly`, `human_question`, `graphite`, `github_cli`, `bun` |
-| pi | 🟢 11 substitute, 🟡 4 degrade, 🔴 4 drop, 🧩 4 extension | 10 of 25 domains | `worker_durability`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `human_question`, `graphite`, `github_cli`, `bun` |
-| Oh My Pi | 🟢 19 substitute, 🔴 4 drop | 10 of 25 domains | `worker_durability`, `graphite`, `github_cli`, `bun` |
+| Claude Code | 🟢 17 substitute, 🟡 2 degrade, 🔴 4 drop | 4 of 25 domains | `worker_durability`, `probe_worker`, `worker_defaults.readonly`, `graphite`, `github_cli`, `bun` |
+| Codex | 🟢 16 substitute, 🟡 2 degrade, 🔴 5 drop | 4 of 25 domains | `worker_durability`, `wake_on_event`, `worker_defaults.readonly`, `human_question`, `graphite`, `github_cli`, `bun` |
+| pi | 🟢 11 substitute, 🟡 4 degrade, 🔴 4 drop, 🧩 4 extension | 4 of 25 domains | `worker_durability`, `wake_on_event`, `worker_defaults.background`, `worker_defaults.readonly`, `human_question`, `graphite`, `github_cli`, `bun` |
+| Oh My Pi | 🟢 19 substitute, 🔴 4 drop | 4 of 25 domains | `worker_durability`, `graphite`, `github_cli`, `bun` |
 
 With evidence means a recorded run or a cited source file backs the cell; the rest are unverified.
 
@@ -31,7 +31,7 @@ With evidence means a recorded run or a cited source file backs the cell; the re
 | --- | --- |
 | ledger | v2, upstream `b42effe` |
 | domains | 25, from 22 axes, because `worker_defaults` resolves per parameter |
-| harness cells | 40 verified of 125 (25 domains x 5 harnesses) |
+| harness cells | 16 verified of 125 (25 domains x 5 harnesses) |
 | occurrences | 101 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions, 0 in total |
 | skills reached | 13 of 47: `architect` (1 of 1 checked), `arena` (2 of 2 checked), `automate-me` (3 of 3 checked), `how` (3 of 3 checked), `interrogate` (3 of 3 checked), `no-comments` (2 of 2 checked), `poteto-mode` (68 of 69 checked), `recall` (1 of 1 checked), `reflect` (10 of 10 checked), `setup-pstack-anywhere` (1 of 2 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (3 of 3 checked) |
@@ -62,14 +62,14 @@ Next:
 | domain | Cursor (upstream) | Claude Code | Codex | pi | Oh My Pi |
 | --- | --- | --- | --- | --- | --- |
 | `spawn_worker` (capability) | ⚫ native | 🟢 substitute | 🟢 substitute | 🧩 extension | 🟢 substitute |
-| `worker_durability` (capability) | ⚫ native | 🔴 drop | 🔴 drop | 🟡 degrade | 🔴 drop |
-| `probe_worker` (capability) | ⚫ native | 🟡 degrade | 🟢 substitute | 🧩 extension | 🟢 substitute |
-| `wake_on_event` (capability) | ⚫ native | 🟢 substitute | 🟡 degrade | 🟡 degrade | 🟢 substitute |
+| `worker_durability` (capability) | ⚫ native | 🔴 drop (unverified) | 🔴 drop (unverified) | 🟡 degrade (unverified) | 🔴 drop (unverified) |
+| `probe_worker` (capability) | ⚫ native | 🟡 degrade (unverified) | 🟢 substitute (unverified) | 🧩 extension (unverified) | 🟢 substitute (unverified) |
+| `wake_on_event` (capability) | ⚫ native | 🟢 substitute (unverified) | 🟡 degrade (unverified) | 🟡 degrade (unverified) | 🟢 substitute (unverified) |
 | `worker_defaults.background` (parameter_set) | ⚫ native | 🟢 substitute | 🟢 substitute | 🟡 degrade | 🟢 substitute |
 | `worker_defaults.readonly` (parameter_set) | ⚫ native | 🟡 degrade | 🔴 drop | 🔴 drop | 🟢 substitute |
-| `worker_defaults.identity` (parameter_set) | ⚫ native | 🟢 substitute | 🟢 substitute | 🧩 extension | 🟢 substitute |
-| `worker_defaults.model` (parameter_set) | ⚫ native | 🟢 substitute | 🟢 substitute | 🧩 extension | 🟢 substitute |
-| `human_question` (capability) | ⚫ native | 🟢 substitute | 🟡 degrade | 🟡 degrade | 🟢 substitute |
+| `worker_defaults.identity` (parameter_set) | ⚫ native | 🟢 substitute (unverified) | 🟢 substitute (unverified) | 🧩 extension (unverified) | 🟢 substitute (unverified) |
+| `worker_defaults.model` (parameter_set) | ⚫ native | 🟢 substitute (unverified) | 🟢 substitute (unverified) | 🧩 extension (unverified) | 🟢 substitute (unverified) |
+| `human_question` (capability) | ⚫ native | 🟢 substitute (unverified) | 🟡 degrade (unverified) | 🟡 degrade (unverified) | 🟢 substitute (unverified) |
 | `pack_path` (path_assumption) | ⚫ native | 🟢 substitute | 🟢 substitute | 🟢 substitute | 🟢 substitute |
 
 What each harness uses, per domain in the table:
@@ -164,14 +164,14 @@ A scenario defines what to run and what to inspect; it does not claim a result.
 | domain | scenario | observations | runs | verification |
 | --- | --- | --- | --- | --- |
 | `spawn_worker` | `spawn_worker` | 5 | 6 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
-| `worker_durability` | `worker_durability` | 5 | 5 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
-| `probe_worker` | `probe_worker` | 5 | 6 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
-| `wake_on_event` | `wake_on_event` | 5 | 5 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
+| `worker_durability` | `worker_durability` | 5 | 5 | all harnesses: unverified |
+| `probe_worker` | `probe_worker` | 5 | 6 | all harnesses: unverified |
+| `wake_on_event` | `wake_on_event` | 5 | 5 | all harnesses: unverified |
 | `worker_defaults.background` | `worker_defaults_background` | 5 | 4 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
 | `worker_defaults.readonly` | `worker_defaults_readonly` | 5 | 5 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
-| `worker_defaults.identity` | `worker_defaults_identity` | 4 | 7 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
-| `worker_defaults.model` | `worker_defaults_model` | 5 | 5 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
-| `human_question` | `human_question` | 5 | 5 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
+| `worker_defaults.identity` | `worker_defaults_identity` | 4 | 7 | all harnesses: unverified |
+| `worker_defaults.model` | `worker_defaults_model` | 5 | 5 | all harnesses: unverified |
+| `human_question` | `human_question` | 5 | 5 | all harnesses: unverified |
 | `mcp_discovery` | `mcp_discovery` | 2 | 0 | all harnesses: unverified |
 | `pack_path` | `skill_identify` | 5 | 8 | Cursor: unverified; Claude Code, Codex, pi, Oh My Pi: exercised |
 
@@ -182,12 +182,12 @@ Cursor follows the same evidence rules as every other harness, and cannot reach 
 | measure | value |
 | --- | --- |
 | scenarios | 11 defined |
-| attestations | 53 recorded |
-| evidence classes | 47 exercised, 6 superseded |
-| run directories | 51 complete, 3 incomplete, 2 void |
-| cells exercised | 40 of 125, a subset of the 40 verified cells in Totals |
+| attestations | 23 recorded |
+| evidence classes | 18 exercised, 5 superseded |
+| run directories | 42 complete, 12 incomplete, 2 void |
+| cells exercised | 16 of 125, a subset of the 16 verified cells in Totals |
 
-5 of 56 run directories are not complete against their scenario's evidence contract, so nothing may be attested from them: `probe_worker.pi.2026-09-02.01` (incomplete), `probe_worker.pi.2026-09-02.02` (incomplete), `spawn_worker.pi.2026-09-03.01` (void), `worker_defaults_identity.codex.2026-09-02.01` (incomplete), `worker_defaults_identity.pi.2026-09-03.01` (void).
+14 of 56 run directories are not complete against their scenario's evidence contract, so nothing may be attested from them: `probe_worker.claude.2026-09-02.01` (incomplete), `probe_worker.codex.2026-09-02.01` (incomplete), `probe_worker.omp.2026-09-02.01` (incomplete), `probe_worker.pi.2026-09-02.01` (incomplete), `probe_worker.pi.2026-09-02.02` (incomplete), `probe_worker.pi.2026-09-03.01` (incomplete), `spawn_worker.pi.2026-09-03.01` (void), `worker_defaults_identity.codex.2026-09-02.01` (incomplete), `worker_defaults_identity.pi.2026-09-03.01` (void), `worker_durability.claude.2026-09-02.01` (incomplete), `worker_durability.codex.2026-09-02.01` (incomplete), `worker_durability.omp.2026-09-02.01` (incomplete), `worker_durability.pi.2026-09-02.01` (incomplete), `worker_durability.pi.2026-09-03.01` (incomplete).
 
 Every digest is sha256, recomputed from disk on each run.
 
