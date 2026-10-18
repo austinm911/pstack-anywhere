@@ -10,7 +10,7 @@ Read `../poteto-mode/capabilities.md` for `spawn_worker` and `worker_defaults`. 
 
 Investigate the motivation and intent behind code. The companion `how` skill answers what the code does and how it works. `why` answers what forces led to its shape.
 
-Resolve model roles from the override block `/setup-pstack-anywhere` writes. Missing roles, `auto`, and `inherit-parent` use the parent model. An alias panel entry still creates one seat. If a configured model is rejected, discover the current tool's available models and prefer one from the same family, otherwise use the parent model. Report the substitution and any lost model diversity. Never invent a model identifier.
+Resolve model roles from the override block `/setup-pstack-anywhere` writes. Missing roles, `auto`, and `inherit-parent` use the parent model. An alias panel entry still creates one seat. If a configured model is rejected, discover the current tool's available models and prefer one from the same family, otherwise use the parent model. Report the substitution and any lost model diversity. Never invent a model identifier. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
 Read `../poteto-mode/capabilities.md` for `spawn_worker` and `worker_defaults`. Use the delegate identity and background controls the current harness actually offers. Keep reviews read-only through their briefs and available permission controls without broadening the caller's access. Investigators and the synthesizer need available MCP access for lookups and citation checks, but their briefs forbid writes.
 

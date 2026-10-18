@@ -20,7 +20,7 @@ Find this conversation's transcript through the current harness's session path a
 
 One batch, three `spawn_worker` calls. Reviewers need MCP access to look up the tickets, chat threads, and observability traces the transcript references. Keep their work read-only by instruction and preserve the caller's access mode.
 
-Resolve model roles from the override block `/setup-pstack-anywhere` writes. Missing roles, `auto`, and `inherit-parent` use the parent model. An alias panel entry still creates one seat. If a configured model is rejected, discover the current tool's available models and prefer one from the same family, otherwise use the parent model. Report the substitution and any lost model diversity. Never invent a model identifier.
+Resolve model roles from the override block `/setup-pstack-anywhere` writes. Missing roles, `auto`, and `inherit-parent` use the parent model. An alias panel entry still creates one seat. If a configured model is rejected, discover the current tool's available models and prefer one from the same family, otherwise use the parent model. Report the substitution and any lost model diversity. Never invent a model identifier. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
 | Lens | Role line | Fallback model | Prompt template |
 |---|---|---|---|

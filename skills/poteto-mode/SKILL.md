@@ -1,5 +1,5 @@
 ---
-name: Poteto Mode
+name: poteto-mode
 description: poteto's agent style for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. Use for poteto, /poteto-mode, or requests to work in this style.
 disable-model-invocation: true
 ---
@@ -44,7 +44,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 - **Laziness Protocol.** Refactoring, sizing a diff, or tempted to add abstractions, layers, or signal threading. Bias to deletion and the smallest change that solves the problem.
 - **Foundational Thinking.** Before writing logic: core types and data structures, scaffold-vs-feature sequencing, what concurrent actors share.
 - **Redesign from First Principles.** Integrating a new requirement into an existing design. Redesign as if it had been foundational from day one.
-- **Attack the Premise.** Two or more fixes that share one premise have failed the same gate. Take a census of which actors hold the imbalance before the next fix, then question the premise instead of writing another fix that assumes it.
+- **Attack the Premise.** Two or more fixes that share one premise have failed the same gate. Write the premise down and test it directly before you write another fix that assumes it.
 - **Subtract Before You Add.** Sequencing an addition, refactor, or rewrite. Remove dead weight first, then build on the simpler base.
 - **Minimize Reader Load.** Reviewing or shaping code that's hard to trace. Count layers and hidden state, collapse one-caller wrappers, shrink mutable scope.
 - **Outcome-Oriented Execution.** Planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture, don't preserve throwaway compatibility states.
@@ -64,9 +64,9 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 **Verification**
 
 - **Prove It Works.** After a task, before declaring done. Verify against the real artifact, not a proxy or "it compiles".
-- **Fix Root Causes.** Debugging. Trace each symptom to its root cause, reproduce first, ask why until you reach it.
+- **Fix Root Causes.** Debugging. Trace each symptom back to the first place the system went wrong and fix it there. A guard is a fix only when the state it handles is legitimate.
 - **Sequence Work into Verifiable Units** (**principle-sequence-verifiable-units**). Multi-step work (sweeps, migrations, runs of similar edits) and how you stack commits and PRs. Break work into small units that each end in a check, verify each before the next, and order delivery so the sequence proves itself.
-- **Test Behavior, Not Implementation.** Writing, changing, or keeping a test. Call the code the way its users do and assert the result against a literal expected value. If the test would still pass when every imported function returns `undefined`, rewrite the assertion or delete the test.
+- **Test Behavior, Not Implementation.** Writing, changing, or keeping a test. Assert what the code's users can observe, so the test fails when that behavior breaks and keeps passing when only the internals change.
 - **Explain the Number.** Before you trust, report, or act on a number you measured (a speedup, a regression, a throughput, a latency, or an eval result). Find what limits it, and rule out that it measured something other than the work you think.
 
 **Delegation**
@@ -93,6 +93,8 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 Use `spawn_worker` and `worker_defaults` from `capabilities.md` for subagents inside playbook steps. Use a named `poteto-agent` only when the current tool actually exposes it, otherwise give an ordinary worker this skill's absolute path and the exact brief. The chat receiving `/poteto-mode` runs the playbook. Never delegate the whole playbook to another coordinator. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) keep their own review roles.
 
 **Defaults for delegates.** Background where supported, file pointers instead of inlined bulk, and the model from the role override. Resolve model roles from the override block `/setup-pstack-anywhere` writes. Missing roles, `auto`, and `inherit-parent` use the parent model. An alias panel entry still creates one seat. If a configured model is rejected, discover the current tool's available models and prefer one from the same family, otherwise use the parent model. Report the substitution and any lost model diversity. Never invent a model identifier. Each code playbook reads its line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`). The hardest changes read `hardest tasks`, and prose and judgment read `judgment and prose`. Keep reviews read-only without broadening the caller's access. Mechanical code uses the fast code role. Cross-cutting design, concurrency, and subtle algorithms use the strongest judgment role available.
+
+**Match the model to the job.** Before each spawn, start from the role's line or default and pick the reasoning level and speed the job needs. The `/setup-pstack-anywhere` budget sets each role's starting level, xhigh by default. Raise it one step, up to max, for the hardest or subtlest work. Lower it one step for judgment and two or more steps for routine work. Use a fast mode only when the job is urgent, meaning CI or trunk is red or a person is blocked on the result right now. Otherwise use standard speed. Verification is the exception and stays on the `swarm workers` model and speed. Change only the reasoning level and speed, and keep the family the role names, so a diverse panel stays diverse. If the current tool has no control for that level or speed, use its nearest setting and say so. A role on `auto` or `inherit-parent` stays on the parent model. If `spawn_worker` rejects the adjusted setting, do not try another adjusted setting. Use the role's line or default and say so.
 
 You own every subagent's work. Review the diff and write your own summary, don't pass through what it said. A second opinion is the same prompt against a different model. Agreement is high-signal.
 

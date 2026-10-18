@@ -29,15 +29,15 @@ With evidence means a recorded run or a cited source file backs the cell; the re
 
 | measure | value |
 | --- | --- |
-| ledger | v2, upstream `dbf4981` |
+| ledger | v2, upstream `0148b78` |
 | domains | 25, from 22 axes, because `worker_defaults` resolves per parameter |
 | harness cells | 16 verified of 125 (25 domains x 5 harnesses) |
 | occurrences | 116 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions, 0 in total |
-| skills reached | 14 of 53: `architect` (1 of 1 checked), `arena` (3 of 3 checked), `automate-me` (3 of 3 checked), `how` (3 of 3 checked), `interrogate` (3 of 3 checked), `no-comments` (2 of 2 checked), `poteto-help` (13 of 13 checked), `poteto-mode` (69 of 70 checked), `recall` (1 of 1 checked), `reflect` (10 of 10 checked), `setup-pstack-anywhere` (1 of 2 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (3 of 3 checked) |
-| skills with work left | 0 of 53; the other 39 carry neither a declared occurrence nor a token hit |
+| skills reached | 14 of 55: `architect` (1 of 1 checked), `arena` (3 of 3 checked), `automate-me` (3 of 3 checked), `how` (3 of 3 checked), `interrogate` (3 of 3 checked), `no-comments` (2 of 2 checked), `poteto-help` (13 of 13 checked), `poteto-mode` (69 of 70 checked), `recall` (1 of 1 checked), `reflect` (10 of 10 checked), `setup-pstack-anywhere` (1 of 2 checked), `show-me-your-work` (1 of 1 checked), `swarm` (3 of 3 checked), `why` (3 of 3 checked) |
+| skills with work left | 0 of 55; the other 41 carry neither a declared occurrence nor a token hit |
 | regressions | 0 |
-| `frontmatter_portable` assert | 52 of 53 skills carry `disable-model-invocation`, counted from the tree on every run |
+| `frontmatter_portable` assert | 54 of 55 skills carry `disable-model-invocation`, counted from the tree on every run |
 
 ## Work remaining
 
@@ -403,7 +403,7 @@ Domains: `worker_defaults.background`, `worker_defaults.readonly`, `worker_defau
 ## Skills the port has not reached
 
 These are the skills the lint found coupling in. Their hits are porting work,
-not regressions. The 39 skills with neither a declared occurrence nor a token
+not regressions. The 41 skills with neither a declared occurrence nor a token
 hit are not listed.
 
 

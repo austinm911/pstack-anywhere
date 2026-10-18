@@ -2,8 +2,8 @@
 
 Source: https://github.com/cursor/plugins/tree/main/pstack
 Author: Lauren Tan (@poteto) · MIT
-Pinned SHA: dbf49813a39c1a5389c5e28cb8e4c1c2379e2454 (2026-10-13)
-Upstream version: pstack 0.15.23
+Pinned SHA: 0148b78c56c72a1b8412055913c79f767095b217 (2026-10-18)
+Upstream version: pstack 0.15.27
 
 ## Refresh
 
@@ -159,7 +159,7 @@ This permits reviewed overlays without treating arbitrary drift as a pass.
 | `skills/poteto-mode/playbooks/multi-phase-plan.md` | Default plans to the project's `docs/plans/`, or the established program run store. | Other harnesses do not necessarily have an agent store. |
 | `skills/poteto-mode/scripts/worktree-audit.sh` | Accept `PSTACK_TRANSCRIPT_DIR`, handle paths with spaces and platform-specific timestamps, and emit `unverified-chat` when transcript coverage is absent. | A guessed Cursor transcript root cannot prove another harness's checkout is inactive. |
 | `skills/create-verification-skill/SKILL.md` | Keep `features/` inside the skill directory chosen in step 2 | Step 3 hardcoded a different directory. The correction lives in the skill and is preserved through upstream merges. |
-| `skills/poteto-mode/playbooks/orchestrate.md`, `skills/setup-pstack-anywhere/references/recovery.md` | Project-local `.pstack/runs/<run-id>` store and reconciliation protocol | Persist briefs, gates and reports independently of the chat using the unchanged upstream store. |
+| `skills/poteto-mode/playbooks/orchestrate.md`, `skills/poteto-mode/playbooks/autopilot-full.md`, `skills/setup-pstack-anywhere/references/recovery.md` | Project-local `.pstack/runs/<run-id>` store and reconciliation protocol | Persist briefs, gates and reports independently of the chat using the unchanged upstream store. |
 | `automations/benny/` | dropped | Pure Cursor Automations + Cursor Slack actions, nothing portable |
 | `.cursor-plugin/plugin.json`, `plugin.json`, `agents/` | dropped | Upstream packaging and agent definitions belong to Cursor. Retain the port's existing Claude and Codex manifests rather than shipping a competing `pstack` identity. |
 | `docs/` (upstream guide) | dropped | Mirrored prose plus 2.3MB of images, readable upstream at the pinned SHA |
