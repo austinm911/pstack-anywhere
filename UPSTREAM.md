@@ -166,6 +166,7 @@ This permits reviewed overlays without treating arbitrary drift as a pass.
 | `scripts/` (repo root) | dropped | Byte-identical duplicate of `skills/poteto-mode/scripts/`; skills stay self-contained |
 | `skills/setup-pstack` | renamed `setup-pstack-anywhere` | Installs skills, not a Cursor plugin |
 | `skill://<name>/...` in skill text (23 refs) | `../<name>/...`, relative to the reading skill's directory | The port's own first replacement for `pstack/skills/...`; `skill_identify` showed no harness resolves it as written (omp keys the scheme by frontmatter name, the others have no scheme, claude and pi hide a `disable-model-invocation` skill from the model). A sibling path under one skill root resolves on all four. |
+| `setup-pstack-anywhere` block contents | Write only roles that differ from their absent path, not every role | The block is loaded into every session's context. Lines equal to the absent path (`none`, `auto`, `inherit-parent`, two parent-model panel seats) change no behavior and cost tokens on every turn. |
 | `setup-pstack-anywhere` Cursor config target | `~/.cursor/rules/pstack-models.mdc` → project `.cursor/rules/pstack-models.mdc` or project `AGENTS.md` | Cursor has no file-based user scope. User rules live in Settings, and the CLI reads project `.cursor/rules`, `AGENTS.md`, and `CLAUDE.md` (cursor.com/docs/rules, /docs/cli/using). Upstream's path is a directory Cursor does not load. |
 
 ## What was Cursor-specific

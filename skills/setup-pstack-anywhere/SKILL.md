@@ -158,46 +158,29 @@ sends the agent after something that is not there.
 Replace everything between the markers. Keep the markers. Overwrite the whole
 block so re-runs stay idempotent.
 
+The harness loads this block into every session, so write only the lines that
+change behavior. Omit a role whose value equals its absent path: a tool role
+set to `none`, a model role set to `auto` or `inherit-parent`, and a panel role
+set to exactly two parent-model seats. Skills treat a missing line the same way.
+An example with a budget, three tools, and one widened panel:
+
 ```
 <!-- pstack-anywhere:begin -->
-# pstack configuration. One line per role. Delete a line to fall back to the skill default.
-# `none` selects the absent path in ../poteto-mode/capabilities.md.
-# `inherit-parent` or `auto` on a model role: the role runs on the parent chat model.
+# pstack overrides. Unlisted roles use their absent path in ../poteto-mode/capabilities.md.
 # budget: large (xhigh)
-
-## Tools
-review automation: none
-slop strip: none
-ui driver: none
-cli driver: none
-skill authoring: none
-
-## Models
-feature, refactoring: auto
-bug-fix: auto
-perf-issue: auto
-hillclimb: auto
-judgment and prose: auto
-hardest tasks: auto
-how explorer: auto
-how explainer: auto
-why investigators: auto
-why synthesizer: auto
-reflect tooling: auto
-reflect judgment, divergent, synthesizer: auto
-arena runners: auto, auto
-arena cross-judge pool: auto, auto
-swarm workers: auto
-architect runners: auto, auto
-interrogate reviewers: auto, auto
+slop strip: unslop
+ui driver: interceptor-browser
+skill authoring: writing-for-agents
+arena runners: auto, auto, auto
 <!-- pstack-anywhere:end -->
 ```
 
-Those are the defaults, not a recommendation. `auto` everywhere is the honest
-starting point on a harness whose models you have not detected. Panel roles show
-two parent-model seats. Configure distinct available models when model diversity
-matters, and report when it is absent. Add entries to widen the
-fan-out.
+Write the `# budget:` line only when the user chose a budget. When every role is
+at its absent path and no budget is set, write the markers with only the header
+comment, so a re-run still finds the block. `auto` everywhere is the honest
+starting point on a harness whose models you have not detected. Configure
+distinct available models when model diversity matters, and report when it is
+absent. Add entries to a panel role to widen the fan-out.
 
 On Cursor, write the same body inside the `.mdc` frontmatter shape upstream used,
 with `description` and `alwaysApply: true`, and drop the HTML markers since the
@@ -205,8 +188,8 @@ file is pstack's alone.
 
 ### 6. Confirm
 
-Say which file you wrote, the budget, which roles are set, and which are `none` with what
-that costs. Name any missing binary from step 1. State that the block applies to
+Say which file you wrote, the budget, which roles are set, and which roles were
+left at their absent path with what that costs. Name any missing binary from step 1. State that the block applies to
 new sessions.
 
 ### 7. Offer a verification skill
