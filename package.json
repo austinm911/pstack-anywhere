@@ -5,12 +5,12 @@
   "scripts": {
     "agents:sync": "ruler apply --local-only --agents claude,codex",
     "check": "bun scripts/coupling.mjs check --gate",
-    "validate": "bun run lint && bun test test/ && bun run upstream verify && git diff --check",
+    "validate": "bun run lint && bun test ./test/ && bun run upstream verify && git diff --check",
     "lint": "bun scripts/coupling.mjs check",
     "render": "bun scripts/coupling.mjs render",
     "status": "bun scripts/coupling.mjs status",
     "upstream": "bun scripts/update-upstream.mjs",
-    "test": "bun test test/"
+    "test": "bun test ./test/"
   },
   "devDependencies": {
     "@intellectronica/ruler": "^0.3.44"

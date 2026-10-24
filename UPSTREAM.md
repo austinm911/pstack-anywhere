@@ -2,8 +2,8 @@
 
 Source: https://github.com/cursor/plugins/tree/main/pstack
 Author: Lauren Tan (@poteto) · MIT
-Pinned SHA: 0148b78c56c72a1b8412055913c79f767095b217 (2026-10-18)
-Upstream version: pstack 0.15.27
+Pinned SHA: e73df471cd4bd918367e99f3dd9c51bd53ddf5f0 (2026-10-23)
+Upstream version: pstack 0.15.32
 
 ## Refresh
 
