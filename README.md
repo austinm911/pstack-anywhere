@@ -129,12 +129,12 @@ table below is rendered from coupling.yaml.
 
 | measure | value |
 | --- | --- |
-| upstream pin | `e73df47`, path `pstack` |
+| upstream pin | `c742dd6`, path `pstack` |
 | skills reached | 14 of 58, [see PORTABILITY.md](PORTABILITY.md#skills-the-port-reached) |
 | skills with work left | 0 of 58 |
-| occurrences | 116 resolved, 0 unresolved, 0 missing, 2 not checked |
+| occurrences | 117 resolved, 0 unresolved, 0 missing, 2 not checked |
 | token hits | 0 attributed to a domain, 0 unattributed Cursor mentions |
-| verification | 16 of 125 cells verified, 23 attestations, 11 scenarios defined |
+| verification | 16 of 125 cells verified, 23 attestations, 12 scenarios defined |
 
 `bun scripts/coupling.mjs check` is the gate. The work left, the per-harness
 resolutions, and the evidence state are in [PORTABILITY.md](PORTABILITY.md).

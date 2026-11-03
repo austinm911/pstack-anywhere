@@ -138,8 +138,9 @@ number the options.
 For panel roles (arena runners, architect runners, interrogate
 reviewers) the value is a list, and one delegate runs per entry, alias entries
 included, so the list length sets the fan-out. `arena cross-judge pool` is also
-a list, but Arena selects one value from it whose model family differs from the
-parent's when possible. `swarm workers` is the default for every worker unless a
+a list, but Arena tries real entries from a family other than the parent's in
+list order. `auto` and `inherit-parent` never judge. If no model from another
+family runs, Arena skips the judge. `swarm workers` is the default for every worker unless a
 race or matrix names its own.
 
 ### 4. Validate

@@ -142,7 +142,6 @@ function upstreamHashes(revision, upstream, source) {
   const prefix = `${upstream.path}/`;
   const paths = run(["ls-tree", "-r", "--name-only", "-z", revision, "--", `${prefix}${orchestrationPath}`])
     .stdout.split("\0").filter(Boolean);
-  if (paths.length === 0) throw new Error("The upstream orchestration directory is missing; review the runtime ownership policy");
   return {
     upstream: upstream.repo,
     commit: revision,
@@ -153,6 +152,7 @@ function upstreamHashes(revision, upstream, source) {
 }
 
 function localFiles(path) {
+  if (!existsSync(resolve(repository, path))) return [];
   return readdirSync(resolve(repository, path), { withFileTypes: true }).flatMap(entry => {
     const child = `${path}${entry.name}`;
     if (entry.isSymbolicLink()) throw new Error(`Unexpected symlink in the upstream runtime: ${child}`);

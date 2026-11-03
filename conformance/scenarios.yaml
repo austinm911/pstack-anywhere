@@ -229,6 +229,44 @@ evidence_contract:
 # ---------------------------------------------------------------------------
 
 scenarios:
+  - id: project_store
+    axis: project_store
+    applies_to: [cursor, claude, codex, pi, omp]
+    risk: Lost assignments or pending gates can cause duplicated work after interruption.
+    question: Can a coordinator recover exact briefs, results, and unanswered gates using native file tools?
+    setup:
+      preconditions:
+        - A scratch project with an ignored .pstack/runs/<run-id>/ directory or an established harness project store.
+      steps:
+        - Save notes.md, an exact brief, its result path, and an unanswered gate using native file tools.
+        - Complete one harmless file write and save its report, then stop before accepting the unit in notes.md.
+        - Resume from those files, reconcile the actual effect, and accept it without replaying the write.
+        - Read an older units.tsv once if present and keep notes.md as the single tracker.
+    observations:
+      - id: store.saved
+        observe: The exact brief, report, tracker, and pending gate survive independently of completion events.
+        grounds: Recovery has durable inputs.
+      - id: store.reconciled
+        observe: The existing effect is accepted once and the unanswered gate stays pending.
+        grounds: Recovery does not assume that a missing notification means missing work.
+    parity:
+      allowed:
+        - Use an established harness project store instead of .pstack/runs/<run-id>/.
+      prohibited:
+        - Use the removed orchestration CLI or maintain two authoritative trackers.
+        - Replay an uncertain external write or treat a proposed default as approval.
+    parity_criteria:
+      native: The harness Project store preserves all observations through native tools.
+      substitute: Native file tools in the project-local store preserve all observations.
+      extension: A named extension preserves all observations.
+      degrade: A missing saved input requires manual reconstruction, with the weaker path named.
+      drop: No durable store is available.
+    evidence:
+      extends: evidence_contract
+      artifacts:
+        - path: recovery.txt
+          holds: Native writes and reads, the unchanged effect, and the pending gate after recovery.
+
   - id: mcp_discovery
     axis: mcp_discovery
     applies_to: [cursor, claude, codex, pi, omp]

@@ -63,12 +63,12 @@ not have.
 
 Tools, not harness features. Missing one removes the playbooks that depend on it.
 
-- **`gt`.** Orchestrate's Graphite frontier and the bundled orch frontier helper. Absent: Orchestrate's Graphite frontier operations are unavailable. Shipping and the autopilot playbooks use base-branch stacks through the resolved forge and no longer require Graphite.
 - **`gh`.** GitHub PR operations and scripts/watch-pr read PR state through it. Absent: The GitHub path cannot run. Use the Origin path only when its CLI is available and resolves the repository.
-- **`bun`.** Runtime for scripts/watch-pr and scripts/orch. Absent: Those levers cannot run.
+- **`bun`.** Runtime for scripts/watch-pr. Absent: Those levers cannot run.
 
 ## Paths
 
+- **project_store.** Upstream used `undefined`. Use notes.md and native file tools under the project's ignored .pstack/runs/<run-id>/ directory, or the established harness project store. Each file has one writer. Save exact briefs, reports, and pending gates independently of completion notifications. Reconcile older run files before replacement work.
 - **pack_path.** Upstream used `pstack/skills/...`.
   - cursor: pstack/skills/... in the vendored pack
   - claude: ../<name>/<file> under ~/.claude/skills; the skill is hidden from the model's listing, so the path is the only pointer

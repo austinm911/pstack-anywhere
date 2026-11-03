@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test";
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { resolve } from "node:path";
 
@@ -10,7 +10,7 @@ test("orchestration scripts match the recorded Cursor upstream pin", () => {
   const ledger = Bun.YAML.parse(readFileSync(resolve(root, "coupling.yaml"), "utf8"));
   expect(manifest.commit).toBe(ledger.upstream.sha);
   const prefix = "skills/poteto-mode/scripts/orch/";
-  expect(readdirSync(resolve(root, prefix)).sort()).toEqual(
+  expect(existsSync(resolve(root, prefix)) ? readdirSync(resolve(root, prefix)).sort() : []).toEqual(
     Object.keys(manifest.files).map(path => path.slice(prefix.length)).sort()
   );
   for (const [path, expected] of Object.entries(manifest.files)) {

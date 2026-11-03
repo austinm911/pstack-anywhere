@@ -2,8 +2,8 @@
 
 Source: https://github.com/cursor/plugins/tree/main/pstack
 Author: Lauren Tan (@poteto) · MIT
-Pinned SHA: e73df471cd4bd918367e99f3dd9c51bd53ddf5f0 (2026-10-23)
-Upstream version: pstack 0.15.32
+Pinned SHA: c742dd61706fbacc1b95f1a20b7b988cf096ce6c (2026-10-27)
+Upstream version: pstack 0.15.36
 
 ## Refresh
 
@@ -82,7 +82,8 @@ upstream diff, not just conflicts. In particular:
 Update `coupling.yaml`'s upstream SHA and this document's pin and upstream
 version. Increment the port's own plugin version for a published update and keep
 its marketplace version aligned. The port version is independent of Cursor's.
-Generate the orchestration manifest from the selected source, never from locally
+Generate the orchestration manifest from the selected source, including an empty
+inventory when upstream removed the runtime, never from locally
 edited runtime files:
 
 ```sh
@@ -159,7 +160,7 @@ This permits reviewed overlays without treating arbitrary drift as a pass.
 | `skills/poteto-mode/playbooks/multi-phase-plan.md` | Default plans to the project's `docs/plans/`, or the established program run store. | Other harnesses do not necessarily have an agent store. |
 | `skills/poteto-mode/scripts/worktree-audit.sh` | Accept `PSTACK_TRANSCRIPT_DIR`, handle paths with spaces and platform-specific timestamps, and emit `unverified-chat` when transcript coverage is absent. | A guessed Cursor transcript root cannot prove another harness's checkout is inactive. |
 | `skills/create-verification-skill/SKILL.md` | Keep `features/` inside the skill directory chosen in step 2 | Step 3 hardcoded a different directory. The correction lives in the skill and is preserved through upstream merges. |
-| `skills/poteto-mode/playbooks/orchestrate.md`, `skills/poteto-mode/playbooks/autopilot-full.md`, `skills/setup-pstack-anywhere/references/recovery.md` | Project-local `.pstack/runs/<run-id>` store and reconciliation protocol | Persist briefs, gates and reports independently of the chat using the unchanged upstream store. |
+| `skills/poteto-mode/playbooks/orchestrate.md`, `skills/poteto-mode/playbooks/autopilot-full.md`, `skills/setup-pstack-anywhere/references/recovery.md` | Project-local `.pstack/runs/<run-id>` store and reconciliation protocol | Persist briefs, gates and reports independently of the chat with native file tools after upstream removed the orchestration CLI. Read older run files once and retain a single authoritative tracker. |
 | `automations/benny/` | dropped | Pure Cursor Automations + Cursor Slack actions, nothing portable |
 | `.cursor-plugin/plugin.json`, `plugin.json`, `agents/` | dropped | Upstream packaging and agent definitions belong to Cursor. Retain the port's existing Claude and Codex manifests rather than shipping a competing `pstack` identity. |
 | `docs/` (upstream guide) | dropped | Mirrored prose plus 2.3MB of images, readable upstream at the pinned SHA |
@@ -179,8 +180,8 @@ their `kind` value:
 - capability: `spawn_worker`, `worker_durability`, `probe_worker`, `wake_on_event`, `human_question`
 - parameter_set: `worker_defaults`
 - role: `review_automation`, `slop_strip`, `ui_driver`, `cli_driver`, `skill_authoring`, `model_roles`
-- prerequisite: `graphite`, `github_cli`, `bun`
-- path_assumption: `pack_path`, `trunk_reread`, `mcp_discovery`, `transcript_dir`
+- prerequisite: `github_cli`, `bun`
+- path_assumption: `pack_path`, `trunk_reread`, `mcp_discovery`, `transcript_dir`, `project_store`
 - naming: `setup_entrypoint`
 - frontmatter: `frontmatter_portable`, `frontmatter_cursor_only`
 

@@ -1,26 +1,27 @@
 # Recovery across sessions
 
 Use the existing orchestration store at `<repo>/.pstack/runs/<run-id>/`.
-Ignore `.pstack/` in Git and pass the absolute store path to upstream orch with
-`--store` or `ORCH_STORE`. Do not mirror `units.tsv` into another task database.
-These are portable operating instructions. Upstream orchestration scripts are unchanged.
+Ignore `.pstack/` in Git, or use the established harness project store. Keep
+`notes.md` as the tracker, with one owner for each file. Use native file tools,
+not the removed orchestration CLI. Existing `units.tsv` and `gates.md` remain
+recovery inputs for older runs. Record their current state in `notes.md` once,
+then keep one authoritative tracker.
 
 Before dispatch, save the exact assignment to `briefs/<unit>-<attempt>.md` and
-register its absolute path with `orch unit add --brief`. The brief names the
+register its absolute path in `notes.md`. The brief names the
 repository, starting revision, allowed changes, verifier, and absolute result
 path `reports/<unit>-<attempt>.md`. Never overwrite an earlier attempt. Write
 `dispatching` to the unit before launch and `running` after a worker identifier
 is returned. Record the parent session ID, worker ID, and supported resume command in the result trail. An ID may restore saved history without reconnecting to a still-running process.
 
 Write the full worker result to the promised report file before pushing or
-collecting any completion pointer. The inbox is only a notification queue;
-upstream `inbox drain` deletes collected pointers. Reports and briefs must live
-outside it. Keep unresolved human questions in the existing `gates.md` through
-`orch gates`. A proposed default is never approval.
+collecting any completion pointer. Native completion events are only notifications.
+Reports and briefs must live independently of them. Keep unresolved human
+questions in `gates.md` using native file tools. A proposed default is never approval.
 
 After interruption:
 
-1. Read `units.tsv`, `gates.md`, and each nonterminal unit's exact saved brief.
+1. Read `notes.md`, `gates.md`, any legacy `units.tsv`, and each nonterminal unit's exact saved brief.
    Read the report at the path in that brief even if the inbox is empty.
 2. Reconcile the report with actual checkout changes, commits, or the external
    destination through read-only tools. A missing message is not missing work.

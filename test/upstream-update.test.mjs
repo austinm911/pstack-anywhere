@@ -257,6 +257,24 @@ test("another worktree's prepared import cannot control this branch's next updat
   expect(git(f.port, "ls-files", "second.txt")).toBe("");
 });
 
+test("an upstream runtime deletion is accepted only when the local runtime is absent", () => {
+  const f = fixture();
+  expect(f.cli("init").status).toBe(0);
+  const path = "skills/poteto-mode/scripts/orch/store.ts";
+  git(f.source, "rm", `pstack/${path}`);
+  const next = commit(f.source, "remove the upstream runtime");
+  expect(f.cli("merge", next).status).toBe(0);
+  f.ledger.upstream.sha = next;
+  write(f.port, "coupling.yaml", JSON.stringify(f.ledger));
+  const hashes = f.cli("hashes", next);
+  expect(hashes.status, hashes.stderr).toBe(0);
+  expect(JSON.parse(hashes.stdout).files).toEqual({});
+  write(f.port, "conformance/upstream-orch.json", hashes.stdout);
+  expect(f.cli("verify").status).toBe(0);
+  write(f.port, path, "obsolete runtime\n");
+  expect(f.cli("verify").status).toBe(1);
+});
+
 test("a shallow clone cannot create a replacement baseline", () => {
   const f = fixture();
   expect(f.cli("init").status).toBe(0);

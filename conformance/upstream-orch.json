@@ -1,9 +1,5 @@
 {
   "upstream": "https://github.com/cursor/plugins",
-  "commit": "e73df471cd4bd918367e99f3dd9c51bd53ddf5f0",
-  "files": {
-    "skills/poteto-mode/scripts/orch/orch.test.ts": "c15bbcc17700acb812722bf3330e2b2ee2838407636cdb86784cdd9bb8ee93f3",
-    "skills/poteto-mode/scripts/orch/orch.ts": "47c92c57e8276616d8de94665a126bd832e748036afa8d0ffdbacb7946decb5c",
-    "skills/poteto-mode/scripts/orch/store.ts": "bf0ed29c44093ee3b333aa10b138612f773c81eda73df7dc5337c59713f35a97"
-  }
+  "commit": "c742dd61706fbacc1b95f1a20b7b988cf096ce6c",
+  "files": {}
 }

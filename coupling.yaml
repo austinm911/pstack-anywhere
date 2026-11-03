@@ -19,7 +19,7 @@ version: 2
 upstream:
   repo: https://github.com/cursor/plugins
   path: pstack
-  sha: e73df471cd4bd918367e99f3dd9c51bd53ddf5f0
+  sha: c742dd61706fbacc1b95f1a20b7b988cf096ce6c
 
 # `registry` is whether the harness has a harnesses.yaml entry, and
 # `evidence_dir` whether pinned upstream source is saved for it. Cursor has
@@ -92,8 +92,8 @@ axes:
     kind: capability
     what: >-
       A spawned worker that outlives the session. Upstream leans on this hard:
-      orchestrate.md tells a resumed coordinator that local agents are dead but
-      cloud work is not, and to reattach by PR and branch rather than agent id.
+      orchestrate.md needs to distinguish surviving workers from saved state
+      and reconcile PRs, branches, and reports before replacing work.
     resolution:
       cursor: { parity: native, use: "cloud agents run off-machine and survive a restart" }
       claude: { parity: drop, use: "uninterrupted execution is not guaranteed after process exit; saved sessions and eligible subagents can resume with their history" }
@@ -388,18 +388,20 @@ axes:
       - path: skills/why/SKILL.md
       - path: skills/poteto-help/SKILL.md
 
-  - id: graphite
-    kind: prerequisite
-    binary: gt
-    what: Orchestrate's Graphite frontier and the bundled orch frontier helper.
+  - id: project_store
+    kind: path_assumption
+    what: Orchestrate assumes a harness Project tracker and Project store.
     invariant:
-      parity: drop
+      parity: substitute
       use: >-
-        Orchestrate's Graphite frontier operations are unavailable. Shipping
-        and the autopilot playbooks use base-branch stacks through the resolved
-        forge and no longer require Graphite.
+        Use notes.md and native file tools under the project's ignored
+        .pstack/runs/<run-id>/ directory, or the established harness project
+        store. Each file has one writer. Save exact briefs, reports, and pending
+        gates independently of completion notifications. Reconcile older run
+        files before replacement work.
     occurrences:
       - path: skills/poteto-mode/playbooks/orchestrate.md
+      - path: skills/setup-pstack-anywhere/references/recovery.md
 
   - id: github_cli
     kind: prerequisite
@@ -419,7 +421,7 @@ axes:
   - id: bun
     kind: prerequisite
     binary: bun
-    what: Runtime for scripts/watch-pr and scripts/orch.
+    what: Runtime for scripts/watch-pr.
     invariant:
       parity: drop
       use: Those levers cannot run.
